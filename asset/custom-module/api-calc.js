@@ -52,44 +52,44 @@ let Modules = await importModuleManager();
  * description            :   DB에서 가져온 값을 이용해 진화 카르마 랭크를 계산해 extractValue에 반영
  * USE_TN                 :   사용
  *********************************************************************************************************************** */
-function evoKarmaRank(evoKarma, extractValue) {
-    if (evoKarma >= 21) {
-        extractValue.karmaObj.evolutionKarmaRank = 6;
-        extractValue.arkObj.evolutionDamage += 0.06;
-        extractValue.arkObj.stigmaPer += 6;
-    }
-    else if (evoKarma >= 17) {
-        extractValue.karmaObj.evolutionKarmaRank = 5;
-        extractValue.arkObj.evolutionDamage += 0.05;
-        extractValue.arkObj.stigmaPer += 5;
-    }
-    else if (evoKarma >= 13) {
-        extractValue.karmaObj.evolutionKarmaRank = 4;
-        extractValue.arkObj.evolutionDamage += 0.04;
-        extractValue.arkObj.stigmaPer += 4;
-    }
-    else if (evoKarma >= 9) {
-        extractValue.karmaObj.evolutionKarmaRank = 3;
-        extractValue.arkObj.evolutionDamage += 0.03;
-        extractValue.arkObj.stigmaPer += 3;
-    }
-    else if (evoKarma >= 5) {
-        extractValue.karmaObj.evolutionKarmaRank = 2;
-        extractValue.arkObj.evolutionDamage += 0.02;
-        extractValue.arkObj.stigmaPer += 2;
-    }
-    else if (evoKarma >= 1) {
-        extractValue.karmaObj.evolutionKarmaRank = 1;
-        extractValue.arkObj.evolutionDamage += 0.01;
-        extractValue.arkObj.stigmaPer += 1;
-    }
-    else if (evoKarma === 0) {
-        extractValue.karmaObj.evolutionKarmaRank = 0;
-    }
-    else extractValue.karmaObj.evolutionKarmaRank = null; //미등록
-    extractValue.arkObj.statHp = evoKarma * 400
-    extractValue.karmaObj.evolutionKarmaLevel = evoKarma;
-}
+//function evoKarmaRank(evoKarma, extractValue) {
+//    if (evoKarma >= 21) {
+//        extractValue.karmaObj.evolutionKarmaRank = 6;
+//        extractValue.arkObj.evolutionDamage += 0.06;
+//        extractValue.arkObj.stigmaPer += 6;
+//    }
+//    else if (evoKarma >= 17) {
+//        extractValue.karmaObj.evolutionKarmaRank = 5;
+//        extractValue.arkObj.evolutionDamage += 0.05;
+//        extractValue.arkObj.stigmaPer += 5;
+//    }
+//    else if (evoKarma >= 13) {
+//        extractValue.karmaObj.evolutionKarmaRank = 4;
+//        extractValue.arkObj.evolutionDamage += 0.04;
+//        extractValue.arkObj.stigmaPer += 4;
+//    }
+//    else if (evoKarma >= 9) {
+//        extractValue.karmaObj.evolutionKarmaRank = 3;
+//        extractValue.arkObj.evolutionDamage += 0.03;
+//        extractValue.arkObj.stigmaPer += 3;
+//    }
+//    else if (evoKarma >= 5) {
+//        extractValue.karmaObj.evolutionKarmaRank = 2;
+//        extractValue.arkObj.evolutionDamage += 0.02;
+//        extractValue.arkObj.stigmaPer += 2;
+//    }
+//    else if (evoKarma >= 1) {
+//        extractValue.karmaObj.evolutionKarmaRank = 1;
+//        extractValue.arkObj.evolutionDamage += 0.01;
+//        extractValue.arkObj.stigmaPer += 1;
+//    }
+//    else if (evoKarma === 0) {
+//        extractValue.karmaObj.evolutionKarmaRank = 0;
+//    }
+//    else extractValue.karmaObj.evolutionKarmaRank = null; //미등록
+//    extractValue.arkObj.statHp = evoKarma * 400
+//    extractValue.karmaObj.evolutionKarmaLevel = evoKarma;
+//}
 
 /* **********************************************************************************************************************
  * name		              :	  apiCalcValue
@@ -118,7 +118,7 @@ export async function apiCalcValue(inputName) {
     extractValue.defaultObj.totalStatus = dataBase.totalStatus ? dataBase.totalStatus : 0;
     extractValue.defaultObj.statusHaste = dataBase.statusHaste ? dataBase.statusHaste : 0;
     extractValue.defaultObj.statusSpecial = dataBase.statusSpecial ? dataBase.statusSpecial : 0;
-    evoKarmaRank(dataBase.evoKarma, extractValue);
+    //evoKarmaRank(dataBase.evoKarma, extractValue);
 
     // if (dataBase.evoKarma >= 21) extractValue.karmaObj.evolutionKarmaRank = 6; <== 추후 삭제 예정
     // else if (dataBase.evoKarma >= 17) extractValue.karmaObj.evolutionKarmaRank = 5;

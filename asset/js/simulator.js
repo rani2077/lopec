@@ -1101,8 +1101,8 @@ async function simulatorInputCalc() {
                 }
 
                 let skill
-                if (!(gemInfo.Element_006.value.Element_001 == undefined)) {
-                    skill = gemInfo.Element_006.value.Element_001.match(/>([^<]+)</)[1]
+                if (!(gemInfo.Element_007.value.Element_001 == undefined)) {
+                    skill = gemInfo.Element_007.value.Element_001.match(/>([^<]+)</)[1]
                 } else {
                 }
 

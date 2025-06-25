@@ -351,54 +351,64 @@ export async function specPointCalc(inputObj) {
         let nextTierValue = 0;
         let nowTierValue = 0;
         let tierIndex = 0;
-        let tierNameArray = ['브론즈', '실버', '골드', '다이아몬드', '마스터', '에스더'];
-        let tierNameEngArray = ['bronze', 'silver', 'gold', 'diamond', 'master', 'esther'];
+        let tierNameArray = ['브론즈', '실버', '골드', '다이아몬드', '마스터', '그랜드마스터','에스더'];
+        let tierNameEngArray = ['bronze', 'silver', 'gold', 'diamond', 'master', 'grandmaster','esther'];
         if (inputObj.etcObj.supportCheck !== "서폿") {
-            if ((lastFinalValue / 2020) >= 3000) {
+            if ((lastFinalValue / 2020) >= 3300) {
                 nextTierValue = 0;
                 nowTierValue = 0;
-                tierIndex = 5;
-            } else if ((lastFinalValue / 2020) >= 2400) {
+                tierIndex = 6;
+            } else if ((lastFinalValue / 2020) >= 3000) {
                 nextTierValue = 3000;
                 nowTierValue = 2400;
-                tierIndex = 4;
-            } else if ((lastFinalValue / 2020) >= 1900) {
+                tierIndex = 5;
+            } else if ((lastFinalValue / 2020) >= 2400) {
                 nextTierValue = 2400;
                 nowTierValue = 1900;
-                tierIndex = 3;
-            } else if ((lastFinalValue / 2020) >= 1600) {
+                tierIndex = 4;
+            } else if ((lastFinalValue / 2020) >= 1900) {
                 nextTierValue = 1900;
                 nowTierValue = 1600;
-                tierIndex = 2;
-            } else if ((lastFinalValue / 2020) >= 1400) {
+                tierIndex = 3;
+            } else if ((lastFinalValue / 2020) >= 1600) {
                 nextTierValue = 1600;
                 nowTierValue = 1400;
+                tierIndex = 2;
+            } else if ((lastFinalValue / 2020) >= 1400) {
+                nextTierValue = 1400;
+                nowTierValue = 1;
                 tierIndex = 1;
             } else if ((lastFinalValue / 2020) < 1400) {
                 nextTierValue = 1400;
                 nowTierValue = 1;
                 tierIndex = 0;
             }
+
+
         } else {
-            if (supportSpecPoint >= 3000) {
+            if (supportSpecPoint >= 3300) {
                 nextTierValue = 0;
                 nowTierValue = 0;
-                tierIndex = 5;
-            } else if (supportSpecPoint >= 2400) {
+                tierIndex = 6;
+            } else if (supportSpecPoint >= 3000) {
                 nextTierValue = 3000;
                 nowTierValue = 2400;
-                tierIndex = 4;
-            } else if (supportSpecPoint >= 1900) {
+                tierIndex = 5;
+            } else if (supportSpecPoint >= 2400) {
                 nextTierValue = 2400;
                 nowTierValue = 1600;
+                tierIndex = 4;
+            } else if (supportSpecPoint >= 1900) {
+                nextTierValue = 1900;
+                nowTierValue = 1400;
                 tierIndex = 3;
             } else if (supportSpecPoint >= 1600) {
-                nextTierValue = 1900;
+                nextTierValue = 1600;
                 nowTierValue = 1400;
                 tierIndex = 2;
             } else if (supportSpecPoint >= 1400) {
-                nextTierValue = 1600;
-                nowTierValue = 1400;
+                nextTierValue = 1400;
+                nowTierValue = 1;
                 tierIndex = 1;
             } else if (supportSpecPoint < 1400) {
                 nextTierValue = 1400;

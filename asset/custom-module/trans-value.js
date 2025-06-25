@@ -190,8 +190,10 @@ export async function getCharacterProfile(data, dataBase) {
     data.ArmoryEquipment.forEach(function (arry) {
         if (arry.Type == "팔찌") {
             let bangleTier = JSON.parse(arry.Tooltip).Element_001.value.leftStr2.replace(/<[^>]*>/g, '').replace(/\D/g, '')
-            let bangleTool = JSON.parse(arry.Tooltip).Element_004.value.Element_001
-            bangleTierFnc(bangleTier, bangleTool)
+            let bangleTool = JSON.parse(arry.Tooltip)?.Element_005?.value?.Element_001
+            if(bangleTier && bangleTool) {
+                bangleTierFnc(bangleTier, bangleTool)
+            }
         }
     })
 
@@ -462,7 +464,7 @@ export async function getCharacterProfile(data, dataBase) {
         data.ArmoryEquipment.forEach(function (equipArry) {
             let accOption
             try {
-                accOption = JSON.parse(equipArry.Tooltip).Element_005.value.Element_001
+                accOption = JSON.parse(equipArry.Tooltip).Element_006.value.Element_001
                 accessoryFilterFnc(accOption)
             }
             catch { }
@@ -473,8 +475,10 @@ export async function getCharacterProfile(data, dataBase) {
 
     equimentCalPoint()
     function accessoryFilterFnc(accessoryOption) {
+        const cleanAccessoryOption = accessoryOption.replace(/<[^>]*>/g, ' ');
+
         Modules.originFilter.calAccessoryFilter.forEach(function (filterArry) {
-            let optionCheck = accessoryOption.includes(filterArry.name)
+            let optionCheck = cleanAccessoryOption.includes(filterArry.name)
             if (optionCheck && filterArry.attr == "AddDamagePer") { //추가 피해 %
                 accObj.addDamagePer += filterArry.value
             } else if (optionCheck && filterArry.attr == "FinalDamagePer") { //에게 주는 피해가 %
@@ -578,15 +582,19 @@ export async function getCharacterProfile(data, dataBase) {
         let statsArry = ["치명:crit", "특화:special", "신속:haste", "힘:str", "민첩:dex", "지능:int", "최대 생명력:statHp"];
 
         statsArry.forEach(function (stats) {
-            let regex = new RegExp(`${stats.split(":")[0]}\\s*\\+\\s*(\\d+)`);
-            if (regex.test(realBangleArry)) {
+            const statName = stats.split(":")[0];
+            const statKey = stats.split(":")[1];
 
-                // console.log(realBangleArry.match(regex)[1])
-                bangleObj[stats.split(":")[1]] += Number(realBangleArry.match(regex)[1]);
-
+            if (realBangleArry === statName) {
+                const valueString = bangleOptionArry[realIdx + 1];
+                if (valueString) {
+                    const valueMatch = valueString.match(/\d+/);
+                    if (valueMatch && valueMatch[0]) {
+                        bangleObj[statKey] += Number(valueMatch[0]);
+                    }
+                }
             }
-
-        })
+        });
 
 
         Modules.originFilter.bangleFilter.forEach(function (filterArry) {
@@ -2209,8 +2217,8 @@ export async function getCharacterProfile(data, dataBase) {
             }
 
             let skill
-            if (!(gemInfo.Element_006.value.Element_001 == undefined)) {
-                skill = gemInfo.Element_006.value.Element_001.match(/>([^<]+)</)[1]
+            if (!(gemInfo.Element_007.value.Element_001 == undefined)) {
+                skill = gemInfo.Element_007.value.Element_001.match(/>([^<]+)</)[1]
             } else {
             }
 
@@ -2405,20 +2413,37 @@ export async function getCharacterProfile(data, dataBase) {
         leapKarmaRank: null,
     }
 
-    let enlightKarmaRankValue = (arkPassiveValue(1) - (data.ArmoryProfile.CharacterLevel - 50) - accObj.enlightPoint - 14);
-    arkObj.weaponAtkPer = 1;
-    if (enlightKarmaRankValue >= 6) arkObj.weaponAtkPer = 1.021;
-    else if (enlightKarmaRankValue >= 5) arkObj.weaponAtkPer = 1.017;
-    else if (enlightKarmaRankValue >= 4) arkObj.weaponAtkPer = 1.013;
-    else if (enlightKarmaRankValue >= 3) arkObj.weaponAtkPer = 1.009;
-    else if (enlightKarmaRankValue >= 2) arkObj.weaponAtkPer = 1.005;
-    else if (enlightKarmaRankValue >= 1) arkObj.weaponAtkPer = 1.001;
+    const evolutionKarma = data.ArkPassive.Points[0].Description;
+    const enlightKarma = data.ArkPassive.Points[1].Description;
+    const leapKarma = data.ArkPassive.Points[2].Description;
 
-    let leapKarmaRankValue = (arkPassiveValue(2) - (data.ArmoryProfile.CharacterLevel - 50) * 2 - bangleObj.leapPoint) / 2;
+    const rankRegex = /(\d+)랭크/;
+    const levelRegex = /(\d+)레벨/;
 
-    karmaObj.enlightKarmaRank = enlightKarmaRankValue;
-    karmaObj.leapKarmaRank = leapKarmaRankValue
+    const evolutionRankMatch = evolutionKarma.match(rankRegex);
+    const evolutionLevelMatch = evolutionKarma.match(levelRegex);
 
+    const enlightRankMatch = enlightKarma.match(rankRegex);
+    const enlightLevelMatch = enlightKarma.match(levelRegex);
+
+    const leapRankMatch = leapKarma.match(rankRegex);
+    const leapLevelMatch = leapKarma.match(levelRegex);
+
+    karmaObj.evolutionKarmaRank = evolutionRankMatch ? parseInt(evolutionRankMatch[1], 10) : 0;
+    karmaObj.evolutionKarmaLevel = evolutionLevelMatch ? parseInt(evolutionLevelMatch[1], 10) : 0;
+
+    karmaObj.enlightKarmaRank = enlightRankMatch ? parseInt(enlightRankMatch[1], 10) : 0;
+    karmaObj.enlightKarmaLevel = enlightLevelMatch ? parseInt(enlightLevelMatch[1], 10) : 0;
+    
+    karmaObj.leapKarmaRank = leapRankMatch ? parseInt(leapRankMatch[1], 10) : 0;
+    karmaObj.leapKarmaLevel = leapLevelMatch ? parseInt(leapLevelMatch[1], 10) : 0;
+
+    arkObj.evolutionDamage = arkObj.evolutionDamage + (karmaObj.evolutionKarmaRank * 0.01)
+    arkObj.stigmaPer = arkObj.stigmaPer + karmaObj.evolutionKarmaRank
+    arkObj.statHp = karmaObj.evolutionKarmaLevel * 400
+    arkObj.weaponAtkPer = 1 + (karmaObj.enlightKarmaLevel * 0.001)
+
+    
     function karmaPointCalc() {
         let cardHP = totalMaxHpBonus;
         let maxHealth = defaultObj.maxHp;
@@ -2434,62 +2459,6 @@ export async function getCharacterProfile(data, dataBase) {
     };
     karmaPointCalc();
 
-    /* **********************************************************************************************************************
-     * name		              :	  calculatePossiblePotionSums
-     * version                :   2.0
-     * description            :   깨달음 카르마 추론 알고리즘
-     * USE_TN                 :   미사용
-     *********************************************************************************************************************** */
-    // 직업 주 스탯 확인
-    //let mainStatTypeForKarma = 'str'; // 기본값
-    //let userClassForKarma = data.ArmoryProfile.CharacterClassName;
-    //let bangleJobFilterForKarma = Modules.originFilter.bangleJobFilter;
-    //let vailedStatInfoForKarma = bangleJobFilterForKarma.find(item => item.job === userClassForKarma);
-    //if (vailedStatInfoForKarma) {
-    //    mainStatTypeForKarma = vailedStatInfoForKarma.stats;
-    //}
-    //
-    //// 전투 레벨 스탯 계산 (전투레벨 50 이상 가정)
-    //let fightLevelStatValue = 0
-    //if (characterLevel === 60) fightLevelStatValue = 429;
-    //if (characterLevel === 61) fightLevelStatValue = 433;
-    //if (characterLevel === 62) fightLevelStatValue = 437;
-    //if (characterLevel === 63) fightLevelStatValue = 441;
-    //if (characterLevel === 64) fightLevelStatValue = 445;
-    //if (characterLevel === 65) fightLevelStatValue = 450;
-    //if (characterLevel === 66) fightLevelStatValue = "???";
-    //if (characterLevel === 67) fightLevelStatValue = "???";
-    //if (characterLevel === 68) fightLevelStatValue = "???";
-    //if (characterLevel === 69) fightLevelStatValue = 471;
-    //if (characterLevel === 70) fightLevelStatValue = 477;
-
-    //console.log(fightLevelStatValue)
-
-
-    //const karmaInputData = {
-    //    realAttackPower: defaultObj.attackPow,
-    //    CalcarmorStatus: etcObj.armorStatus || 0,
-    //    CalcfightLevelStats: fightLevelStatValue,
-    //    CalcexpeditionStats: etcObj.expeditionStats || 0,
-    //    CalchyperStr: hyperObj[mainStatTypeForKarma] || 0,
-    //    CalcelixirStr: elixirObj[mainStatTypeForKarma] || 0,
-    //    CalcbangleStr: bangleObj[mainStatTypeForKarma] || 0,
-    //    CalcavatarStats: (etcObj.avatarStats || 1) - 1,
-    //    CalckarmaRank: etcObj.enlightkarmaRank,
-    //    CalcdefaultWeaponAtk: defaultObj.weaponAtk || 0,
-    //    CalchyperWeaponAtkPlus: hyperObj.weaponAtkPlus || 0,
-    //    CalcelixirWeaponAtkPlus: elixirObj.weaponAtkPlus || 0,
-    //    CalcaccWeaponAtkPlus: accObj.weaponAtkPlus || 0,
-    //    CalcbangleWeaponAtkPlus: bangleObj.weaponAtkPlus || 0,
-    //    CalcaccWeaponAtkPer: (accObj.weaponAtkPer || 0) / 100, // 복원됨: 악세 무기 공격력 %
-    //    CalcelixirAtkPlus: elixirObj.atkPlus || 0,
-    //    CalchyperAtkPlus: hyperObj.atkPlus || 0,
-    //    CalcaccAtkPlus: accObj.atkPlus || 0,
-    //    CalcaccAtkPer: (accObj.atkPer || 0) / 100,          // 복원됨: 악세 공격력 %
-    //    CalcelixirAtkPer: (elixirObj.atkPer || 0) / 100,
-    //    CalcattackBonus: (((etcObj.gemAttackBonus || 0) + (etcObj.abilityAttackBonus || 0)) / 100) + 1
-    //};
-    //console.log(karmaInputData)
 
 
     /* **********************************************************************************************************************
@@ -2611,46 +2580,68 @@ export async function getCharacterProfile(data, dataBase) {
     function stoneInfoExtract() {
         let result = null;
         data.ArmoryEquipment.forEach(stone => {
+            if (stone.Type !== "어빌리티 스톤") {
+                return;
+            }
+
             let obj = {};
-            if (stone.Type === "어빌리티 스톤") {
-                let betweenText = stone.Tooltip.match(/>([^<]+)</g)?.map(match => match.slice(1, -1)) || [];
-                let tier = betweenText[4].match(/\d+/)[0];
+            try {
+                const stoneParsed = JSON.parse(stone.Tooltip);
+                const itemTitle = stoneParsed.Element_001?.value;
 
+                // 티어 정보 추출
+                const tierStr = itemTitle?.leftStr2 || '';
+                const tierMatch = tierStr.match(/\d+/);
+                obj.tier = tierMatch ? tierMatch[0] : null;
+
+                // 체력 정보 추출
                 let totalHealth = 0;
-                let stoneParsed = JSON.parse(stone.Tooltip);
+                // Element_004 (기본 효과)
+                const baseEffectHealth = stoneParsed.Element_004?.value?.Element_001 || '';
+                const baseHealthMatch = baseEffectHealth.match(/체력 \+(\d+)/);
+                if (baseHealthMatch && baseHealthMatch[1]) {
+                    totalHealth += parseInt(baseHealthMatch[1], 10);
+                }
+                // Element_006 (세공 단계 보너스)
+                const bonusEffectHealth = stoneParsed.Element_006?.value?.Element_001 || '';
+                const bonusHealthMatch = bonusEffectHealth.match(/체력 \+(\d+)/);
+                if (bonusHealthMatch && bonusHealthMatch[1]) {
+                    totalHealth += parseInt(bonusHealthMatch[1], 10);
+                }
+                obj.health = totalHealth;
 
-                // 모든 Element를 순회하며 체력 값 찾기
-                for (const key in stoneParsed) {
-                    if (key.startsWith('Element_') && stoneParsed[key].value) {
-                        const element = stoneParsed[key];
-                        if (element.type === 'ItemPartBox' && element.value && element.value.Element_001) {
-                            const healthMatch = element.value.Element_001.match(/체력 \+(\d+)/);
-                            if (healthMatch && healthMatch[1]) {
-                                totalHealth += parseInt(healthMatch[1], 10);
-                            }
+                // 각인 정보 추출
+                const engravings = stoneParsed.Element_007?.value?.Element_000?.contentStr;
+                let optionArray = [];
+                if (engravings) {
+                    for (const key in engravings) {
+                        const engraveStr = engravings[key]?.contentStr;
+                        if (engraveStr && engraveStr.includes("Lv.")) {
+                             const nameMatch = engraveStr.match(/<FONT COLOR='#FFFFAC'>(.*?)<\/FONT>/);
+                             const levelMatch = engraveStr.match(/Lv\.(\d+)/);
+                             
+                             if(nameMatch && nameMatch[1] && levelMatch && levelMatch[1]){
+                                optionArray.push({
+                                    name: nameMatch[1],
+                                    level: levelMatch[1]
+                                });
+                             }
                         }
                     }
                 }
-
-                let optionArray = betweenText.map((text, idx) => {
-                    if (Modules.originFilter.engravingFilter.some(filter => text === filter.name)) {
-                        let obj = {};
-                        obj.name = text;
-                        obj.level = betweenText[idx + 2].match(/\d+/)[0];
-                        return obj
-                    } else {
-                        return null;
-                    }
-                }).filter(item => item !== null);
                 obj.optionArray = optionArray;
-                obj.tier = tier
+                
+                // 나머지 기본 정보
                 obj.grade = stone.Grade;
                 obj.name = stone.Name;
                 obj.icon = stone.Icon;
-                obj.health = totalHealth;
                 result = obj;
+
+            } catch (e) {
+                console.error("어빌리티 스톤 정보 처리 중 오류:", e);
+                result = null; // 오류 발생 시 null 반환
             }
-        })
+        });
         return result;
     }
     htmlObj.stoneInfo = stoneInfoExtract();
@@ -2688,10 +2679,16 @@ export async function getCharacterProfile(data, dataBase) {
                         return true;
                     };
                 });
-                let specialStats = betweenText.filter(text => /(치명|특화|신속)\s*\+(\d+)/g.test(text.trim()));
-                let normalStats = betweenText.filter(text => /(힘|민첩|지능|체력)\s*\+(\d+)/g.test(text.trim()));
-                specialStats = specialStats.map(stat => stat.match(/(치명|특화|신속)\s*\+(\d+)/g)[0])
-                normalStats = normalStats.map(stat => stat.match(/(힘|민첩|지능|체력)\s*\+(\d+)/g)[0])
+
+                const bangleParsed = JSON.parse(bangle.Tooltip);
+                const optionsHtml = bangleParsed.Element_005?.value?.Element_001 || '';
+                const cleanLines = optionsHtml.split(/<BR>/i)
+                    .map(line => line.replace(/<[^>]*>/g, '').trim())
+                    .filter(line => line.length > 0);
+                
+                let specialStats = cleanLines.filter(text => /^(치명|특화|신속)\s*\+/.test(text));
+                let normalStats = cleanLines.filter(text => /^(힘|민첩|지능|체력)\s*\+/.test(text));
+
                 obj.normalStatsArray = normalStats;
                 obj.specialStatsArray = specialStats;
                 obj.optionArray = options;
@@ -2706,6 +2703,7 @@ export async function getCharacterProfile(data, dataBase) {
         return result;
     }
     htmlObj.bangleInfo = bangleInfoExtract();
+
 
     /* **********************************************************************************************************************
      * name		                   :   DB READ
@@ -2781,7 +2779,7 @@ export async function getCharacterProfile(data, dataBase) {
 
         if (data.ArmoryEngraving) {
             data.ArmoryEngraving.ArkPassiveEffects.forEach(eng => {
-                let obj = {};
+            let obj = {};
                 let icon = Modules.originFilter.engravingImg.find(filter => filter.split("^")[0] === eng.Name);
 
                 obj.stone = eng.AbilityStoneLevel;
@@ -2815,84 +2813,84 @@ export async function getCharacterProfile(data, dataBase) {
         };
         let itemLevel = Number(data.ArmoryProfile.ItemAvgLevel.replace(",", ""));
         if (itemLevel >= 1660 && itemLevel < 1665) {
-            result.dealerMedianValue = 866.79;
+            result.dealerMedianValue = 868.96;
         } else if (itemLevel >= 1665 && itemLevel < 1670) {
-            result.dealerMedianValue = 938.98;
+            result.dealerMedianValue = 940.66;
         } else if (itemLevel >= 1670 && itemLevel < 1675) {
-            result.dealerMedianValue = 987.73;
+            result.dealerMedianValue = 987.40;
         } else if (itemLevel >= 1675 && itemLevel < 1680) {
             result.dealerMedianValue = 1025.51;
         } else if (itemLevel >= 1680 && itemLevel < 1685) {
-            result.dealerMedianValue = 1395.35;
+            result.dealerMedianValue = 1403.02;
         } else if (itemLevel >= 1685 && itemLevel < 1690) {
-            result.dealerMedianValue = 1567.98;
+            result.dealerMedianValue = 1573.29;
         } else if (itemLevel >= 1690 && itemLevel < 1695) {
-            result.dealerMedianValue = 1634.47;
+            result.dealerMedianValue = 1637.71;
         } else if (itemLevel >= 1695 && itemLevel < 1700) {
-            result.dealerMedianValue = 1708.85;
+            result.dealerMedianValue = 1718.38;
         } else if (itemLevel >= 1700 && itemLevel < 1705) {
-            result.dealerMedianValue = 1812.85;
+            result.dealerMedianValue = 1820.77;
         } else if (itemLevel >= 1705 && itemLevel < 1710) {
-            result.dealerMedianValue = 1972.55;
+            result.dealerMedianValue = 1983.61;
         } else if (itemLevel >= 1710 && itemLevel < 1715) {
-            result.dealerMedianValue = 2053.66;
+            result.dealerMedianValue = 2064.04;
         } else if (itemLevel >= 1715 && itemLevel < 1720) {
-            result.dealerMedianValue = 2086.88;
+            result.dealerMedianValue = 2095.34;
         } else if (itemLevel >= 1720 && itemLevel < 1725) {
-            result.dealerMedianValue = 2273.02;
+            result.dealerMedianValue = 2282.78;
         } else if (itemLevel >= 1725 && itemLevel < 1730) {
-            result.dealerMedianValue = 2403.83;
+            result.dealerMedianValue = 2414.28;
         } else if (itemLevel >= 1730 && itemLevel < 1735) {
-            result.dealerMedianValue = 2545.78;
+            result.dealerMedianValue = 2556.52;
         } else if (itemLevel >= 1735 && itemLevel < 1740) {
-            result.dealerMedianValue = 2710.10;
+            result.dealerMedianValue = 2720.08;
         } else if (itemLevel >= 1740 && itemLevel < 1745) {
-            result.dealerMedianValue = 2891.27;
+            result.dealerMedianValue = 2900.83;
         } else if (itemLevel >= 1745 && itemLevel < 1750) {
-            result.dealerMedianValue = 3133.71;
+            result.dealerMedianValue = 3142.27;
         } else if (itemLevel >= 1750) {
-            result.dealerMedianValue = 3439.89;
+            result.dealerMedianValue = 3443.63;
         }
 
         // console.log(itemLevel)
         if (itemLevel >= 1660 && itemLevel < 1665) {
             result.supportMedianValue = 1215.18;
         } else if (itemLevel >= 1665 && itemLevel < 1670) {
-            result.supportMedianValue = 1249.40;
+            result.supportMedianValue = 1252.41;
         } else if (itemLevel >= 1670 && itemLevel < 1675) {
-            result.supportMedianValue = 1286.76;
+            result.supportMedianValue = 1283.27;
         } else if (itemLevel >= 1675 && itemLevel < 1680) {
-            result.supportMedianValue = 1286.79;
+            result.supportMedianValue = 1325.56;
         } else if (itemLevel >= 1680 && itemLevel < 1685) {
-            result.supportMedianValue = 1541.17;
+            result.supportMedianValue = 1547.34;
         } else if (itemLevel >= 1685 && itemLevel < 1690) {
             result.supportMedianValue = 1635.77;
         } else if (itemLevel >= 1690 && itemLevel < 1695) {
-            result.supportMedianValue = 1682.01;
+            result.supportMedianValue = 1688.33;
         } else if (itemLevel >= 1695 && itemLevel < 1700) {
-            result.supportMedianValue = 1730.53;
+            result.supportMedianValue = 1741.57;
         } else if (itemLevel >= 1700 && itemLevel < 1705) {
-            result.supportMedianValue = 1837.16;
+            result.supportMedianValue = 1843.10;
         } else if (itemLevel >= 1705 && itemLevel < 1710) {
-            result.supportMedianValue = 1963.17;
+            result.supportMedianValue = 1970.16;
         } else if (itemLevel >= 1710 && itemLevel < 1715) {
-            result.supportMedianValue = 2028.29;
+            result.supportMedianValue = 2038.04;
         } else if (itemLevel >= 1715 && itemLevel < 1720) {
-            result.supportMedianValue = 2054.95;
+            result.supportMedianValue = 2070.57;
         } else if (itemLevel >= 1720 && itemLevel < 1725) {
-            result.supportMedianValue = 2225.50;
+            result.supportMedianValue = 2235.26;
         } else if (itemLevel >= 1725 && itemLevel < 1730) {
-            result.supportMedianValue = 2435.90;
+            result.supportMedianValue = 2441.70;
         } else if (itemLevel >= 1730 && itemLevel < 1735) {
-            result.supportMedianValue = 2603.09;
+            result.supportMedianValue = 2606.24;
         } else if (itemLevel >= 1735 && itemLevel < 1740) {
-            result.supportMedianValue = 2749.19;
+            result.supportMedianValue = 2759.04;
         } else if (itemLevel >= 1740 && itemLevel < 1745) {
-            result.supportMedianValue = 2877.74;
+            result.supportMedianValue = 2885.86;
         } else if (itemLevel >= 1745 && itemLevel < 1750) {
-            result.supportMedianValue = 3018.23;
+            result.supportMedianValue = 3042.77;
         } else if (itemLevel >= 1750) {
-            result.supportMedianValue = 3238.66;
+            result.supportMedianValue = 3238.56;
         }
 
         return result;
