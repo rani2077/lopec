@@ -130,7 +130,7 @@ export async function specPointCalc(inputObj) {
 
     let finalStigmaPer = ((10 * ((inputObj.accObj.stigmaPer + inputObj.arkObj.stigmaPer + inputObj.hyperObj.stigmaPer) / 100 + 1)).toFixed(1)) // 낙인력 
     let atkBuff = (1 + ((inputObj.accObj.atkBuff + inputObj.elixirObj.atkBuff + inputObj.hyperObj.atkBuff + inputObj.bangleObj.atkBuff + inputObj.gemObj.atkBuff) / 100)) // 아공강 
-    let finalAtkBuff = (totalAtk2 * 0.15 * atkBuff) // 최종 공증
+    let finalAtkBuff = (totalAtk2 * 0.22 * atkBuff) // 최종 공증
     let damageBuff = (inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff + inputObj.gemObj.damageBuff) / 100 + 1 // 아피강
     let hyperBuff = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각성
     let statDamageBuff = (fakeSpecial / 20.791) / 100 + 1 // 특화 딜증
@@ -261,7 +261,7 @@ export async function specPointCalc(inputObj) {
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint = ((calcSupportCombinedPower ** 4.285) * 32.67)
+    let supportSpecPoint = ((calcSupportCombinedPower ** 3.905) * 32.67)
 
 
     /* **********************************************************************************************************************
@@ -359,27 +359,27 @@ export async function specPointCalc(inputObj) {
                 nowTierValue = 0;
                 tierIndex = 6;
             } else if ((lastFinalValue / 2020) >= 3000) {
-                nextTierValue = 3000;
-                nowTierValue = 2400;
+                nextTierValue = 3300;
+                nowTierValue = 3000;
                 tierIndex = 5;
             } else if ((lastFinalValue / 2020) >= 2400) {
-                nextTierValue = 2400;
-                nowTierValue = 1900;
+                nextTierValue = 3000;
+                nowTierValue = 2400;
                 tierIndex = 4;
             } else if ((lastFinalValue / 2020) >= 1900) {
-                nextTierValue = 1900;
-                nowTierValue = 1600;
+                nextTierValue = 2400;
+                nowTierValue = 1900;
                 tierIndex = 3;
             } else if ((lastFinalValue / 2020) >= 1600) {
-                nextTierValue = 1600;
-                nowTierValue = 1400;
+                nextTierValue = 1900;
+                nowTierValue = 1600;
                 tierIndex = 2;
             } else if ((lastFinalValue / 2020) >= 1400) {
-                nextTierValue = 1400;
-                nowTierValue = 1;
+                nextTierValue = 1600;
+                nowTierValue = 1400;
                 tierIndex = 1;
             } else if ((lastFinalValue / 2020) < 1400) {
-                nextTierValue = 1400;
+                nextTierValue = 1600;
                 nowTierValue = 1;
                 tierIndex = 0;
             }
@@ -391,24 +391,24 @@ export async function specPointCalc(inputObj) {
                 nowTierValue = 0;
                 tierIndex = 6;
             } else if (supportSpecPoint >= 3000) {
-                nextTierValue = 3000;
-                nowTierValue = 2400;
+                nextTierValue = 3300;
+                nowTierValue = 3000;
                 tierIndex = 5;
             } else if (supportSpecPoint >= 2400) {
-                nextTierValue = 2400;
-                nowTierValue = 1600;
+                nextTierValue = 3000;
+                nowTierValue = 2400;
                 tierIndex = 4;
             } else if (supportSpecPoint >= 1900) {
-                nextTierValue = 1900;
-                nowTierValue = 1400;
+                nextTierValue = 2400;
+                nowTierValue = 1900;
                 tierIndex = 3;
             } else if (supportSpecPoint >= 1600) {
-                nextTierValue = 1600;
-                nowTierValue = 1400;
+                nextTierValue = 1900;
+                nowTierValue = 1600;
                 tierIndex = 2;
             } else if (supportSpecPoint >= 1400) {
-                nextTierValue = 1400;
-                nowTierValue = 1;
+                nextTierValue = 1600;
+                nowTierValue = 1400;
                 tierIndex = 1;
             } else if (supportSpecPoint < 1400) {
                 nextTierValue = 1400;

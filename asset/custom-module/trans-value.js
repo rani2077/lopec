@@ -1681,8 +1681,20 @@ export async function getCharacterProfile(data, dataBase) {
                     let gemName;
                     let level = null;
                     if (results[1].match(/홍염|작열|멸화|겁화|광휘/) != null) {
-                        gemName = results[1].match(/홍염|작열|멸화|겁화|딜광휘|쿨광휘/)[0];
+                        gemName = results[1].match(/홍염|작열|멸화|겁화|광휘/)[0];
                         level = Number(results[1].match(/(\d+)레벨/)[1])
+
+                        // '광휘' 보석 타입 구분
+                        if (gemName === '광휘') {
+                            // 툴팁 전체에서 HTML 태그를 제거하여 순수 텍스트만 남김
+                            const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
+                            
+                            if (tooltipText.includes('피해')) {
+                                gemName = '딜광휘'; // 피해 옵션이 있으면 '딜광휘'로 이름 변경
+                            } else if (tooltipText.includes('재사용')) {
+                                gemName = '쿨광휘'; // 재사용(쿨타임) 옵션이 있으면 '쿨광휘'로 이름 변경
+                            }
+                        }
                     } else {
                         gemName = "기타보석"
                     }
@@ -2489,7 +2501,14 @@ export async function getCharacterProfile(data, dataBase) {
                 let qualityIndex = betweenText.findIndex(text => text === "품질");
                 let qualityValue = betweenText[qualityIndex + 3].match(/"qualityValue":\s*(\d+)/)[1];
 
-                let tierValue = betweenText.find(text => /\(티어\s[0-9]+\)/.test(text)).match(/\(티어\s([0-9]+)\)/)[1];
+                let tierValue = null; // 기본값을 null로 설정
+                const tierText = betweenText.find(text => /\(티어\s[0-9]+\)/.test(text));
+                if (tierText) { // tierText가 존재하는 경우에만 match 실행
+                    const tierMatch = tierText.match(/\(티어\s([0-9]+)\)/);
+                    if (tierMatch && tierMatch[1]) {
+                        tierValue = tierMatch[1];
+                    }
+                }
 
                 let hyperIndex = betweenText.findIndex(text => text === "[초월]");
                 let hyperLevel = betweenText[hyperIndex + 2];

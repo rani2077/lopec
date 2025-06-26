@@ -153,7 +153,7 @@ async function mainSearchFunction() {
         if (gemArray.length !== 0) {
             gemArray.forEach((gemItem, idx) => {
                 let sortTag = 0;
-                if (/멸화|겁화/.test(gemItem.name)) {
+                if (/멸화|겁화|딜광휘/.test(gemItem.name)) {
                     sortTag = 1;
                 } else {
                     sortTag = 2;
@@ -170,7 +170,7 @@ async function mainSearchFunction() {
                     gradeClassName = "hero-background";
                 }
                 let gemDealInfo = "";
-                if (/홍염|작열/.test(gemItem.name)) {
+                if (/홍염|작열|쿨광휘/.test(gemItem.name)) {
                     gemDealInfo = gemItem.skill;
                 } else {
                     gemDealInfo = `${gemItem.skill} <br> 딜 지분 : ${gemItem.skillPer !== "none" ? `${(gemItem.skillPer * 100).toFixed(1)}%` : "데이터 없음"}`;
@@ -1006,7 +1006,7 @@ async function mainSearchFunction() {
         let specPointInfo = [
             { name: "달성 최고 점수", value: bestSpecPoint, icon: "medal-solid" },
             { name: "현재 레벨 중앙값", value: dealerMedianValue, icon: "chart-simple-solid" },
-            { name: "최고 점수 달성일", value: archiveDate, icon: "calendar-check-solid" },
+            { name: "인게임 전투력", value: data.ArmoryProfile.CombatPower.replace(/,/g, ''), icon: "bolt-solid" },
         ]
         let armorInfo = [
             { name: "공격력", value: Number(specPoint.dealerAttackPowResult).toFixed(0), icon: "bolt-solid" },
@@ -1041,8 +1041,9 @@ async function mainSearchFunction() {
         let supportSpecPointInfo = [
             { name: "달성 최고 점수", value: bestSpecPoint, icon: "medal-solid" },
             { name: "현재 레벨 중앙값", value: supportMedianValue, icon: "chart-simple-solid" }, //value: supportMedianValue
+            { name: "인게임 전투력", value: data.ArmoryProfile.CombatPower.replace(/,/g, ''), icon: "bolt-lightning-solid" },
             //{ name: "딜러 환산 점수", value: dealerSupportConversion.toFixed(2), icon: "arrows-left-right-to-line-solid" },
-            { name: "최고 점수 달성일", value: archiveDate, icon: "calendar-check-solid" },
+            //{ name: "최고 점수 달성일", value: archiveDate, icon: "calendar-check-solid" },
         ]
         let supportImportantBuffInfo = [
             //{ name: "공격력 증가", value: Number(specPoint.supportFinalAtkBuff).toFixed(0) /* 추가됨 */, icon: "bolt-solid" },
