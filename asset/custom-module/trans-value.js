@@ -2215,12 +2215,21 @@ export async function getCharacterProfile(data, dataBase) {
     if (!(data.ArmoryGem.Gems == null) && supportCheck() == "서폿") {
         data.ArmoryGem.Gems.forEach(function (gem) {
             let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물']
-            let damageBuff = ['신성의 오라', '세레나데 스킬', '음양 스킬']
+            let damageBuff = ['신앙 스킬', '세레나데 스킬', '음양 스킬']
             let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기']
             let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물']
 
             let gemInfo = JSON.parse(gem.Tooltip)
             let type = gemInfo.Element_000.value
+
+            if (type.includes("광휘")) {
+                const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
+                if (tooltipText.includes('피해')) {
+                    type = type.replace('광휘', '딜광휘');
+                } else if (tooltipText.includes('재사용')) {
+                    type = type.replace('광휘', '쿨광휘');
+                }
+            }
 
             let level
             if (!(gemInfo.Element_004.value == null)) {

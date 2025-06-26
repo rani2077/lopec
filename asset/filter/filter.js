@@ -2177,6 +2177,53 @@ export let arkCalFilter = [
     { name: "단련", level: 4, criticalChancePer: 4 },
     { name: "단련", level: 5, criticalChancePer: 5 },
 
+
+    //서폿 낙인력 깨달음
+
+    //홀나
+    { name: "빠른 구원", level: 1, stigmaPer: 0 },
+    { name: "빠른 구원", level: 2, stigmaPer: 1 },
+    { name: "빠른 구원", level: 3, stigmaPer: 2 },
+    { name: "빠른 구원", level: 4, stigmaPer: 3 },
+    { name: "빠른 구원", level: 5, stigmaPer: 4 },
+
+    { name: "빛의 흔적", level: 1, stigmaPer: 0 },
+    { name: "빛의 흔적", level: 2, stigmaPer: 1 },
+    { name: "빛의 흔적", level: 3, stigmaPer: 2 },
+    { name: "빛의 흔적", level: 4, stigmaPer: 3 },
+    { name: "빛의 흔적", level: 5, stigmaPer: 4 },
+
+
+    //바드
+    { name: "포용의 세레나데", level: 1, stigmaPer: 0 },
+    { name: "포용의 세레나데", level: 2, stigmaPer: 1 },
+    { name: "포용의 세레나데", level: 3, stigmaPer: 2 },
+    { name: "포용의 세레나데", level: 4, stigmaPer: 3 },
+    { name: "포용의 세레나데", level: 5, stigmaPer: 4 },
+
+    { name: "낙인의 세레나데", level: 1, stigmaPer: 0 },
+    { name: "낙인의 세레나데", level: 2, stigmaPer: 1 },
+    { name: "낙인의 세레나데", level: 3, stigmaPer: 2 },
+    { name: "낙인의 세레나데", level: 4, stigmaPer: 3 },
+    { name: "낙인의 세레나데", level: 5, stigmaPer: 4 },
+
+
+    //도화가
+    { name: "엥? 하나 더!", level: 1, stigmaPer: 0 },
+    { name: "엥? 하나 더!", level: 2, stigmaPer: 1 },
+    { name: "엥? 하나 더!", level: 3, stigmaPer: 2 },
+    { name: "엥? 하나 더!", level: 4, stigmaPer: 3 },
+    { name: "엥? 하나 더!", level: 5, stigmaPer: 4 },
+
+    { name: "낙인 강화", level: 1, stigmaPer: 0 },
+    { name: "낙인 강화", level: 2, stigmaPer: 1 },
+    { name: "낙인 강화", level: 3, stigmaPer: 2 },
+    { name: "낙인 강화", level: 4, stigmaPer: 3 },
+    { name: "낙인 강화", level: 5, stigmaPer: 4 },
+
+
+
+
     //도약
     { name: "잠재력 해방", level: 1, cdrPercent: 0.02 },
     { name: "잠재력 해방", level: 2, cdrPercent: 0.04 },
