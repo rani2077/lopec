@@ -1897,7 +1897,7 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "사멸 억모닉";
         } else if (classCheck("이슬비") && skillCheck(gemSkillArry, "뙤약볕", dmg) && skillCheck(gemSkillArry, "싹쓸바람", dmg) && skillCheck(gemSkillArry, "소용돌이", dmg) && skillCheck(gemSkillArry, "여우비 스킬", dmg) && skillCheck(gemSkillArry, "소나기", dmg) && skillCheck(gemSkillArry, "날아가기", dmg) && skillCheck(gemSkillArry, "센바람", dmg)) {
             specialClass = "7겁 이슬비";
-        } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감")) {
+        } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사")) {
             specialClass = "데이터 없음";
         } else {
             specialClass = supportCheck();
@@ -2024,7 +2024,7 @@ export async function getCharacterProfile(data, dataBase) {
 
 
 
-            let careSkills = ['수호의 연주', '윈드 오브 뮤직', '빛의 광시곡', '천상의 연주', '필법 : 흩뿌리기', '필법 : 콩콩이', '묵법 : 환영의 문', '묵법 : 해그리기', '묵법 : 미리내', '천상의 축복', '신성 지역', '신의 율법', '신성한 보호'];
+            let careSkills = ['수호의 연주', '윈드 오브 뮤직', '빛의 광시곡', '천상의 연주', '필법 : 흩뿌리기', '필법 : 콩콩이', '묵법 : 환영의 문', '묵법 : 해그리기', '묵법 : 미리내', '천상의 축복', '신성 지역', '신의 율법', '신성한 보호', '구원의 터', '구원의 은총'];
 
             // 특정 스킬만 대상으로 하는 쿨감 계산
             let careSkillGemCount = 0;
@@ -2192,7 +2192,7 @@ export async function getCharacterProfile(data, dataBase) {
         supportSkillObj.atkBuffACool = 27
         supportSkillObj.atkBuffADuration = 8
         supportSkillObj.atkBuffBCool = 30
-        if (data.ArmorySkills[12].Tripods[0].Level == 5) {
+        if (data.ArmorySkills[12].Tripods[0].isSelected = true) {
             supportSkillObj.atkBuffBCool = 24
         }
         supportSkillObj.atkBuffBDuration = 6
@@ -2203,21 +2203,26 @@ export async function getCharacterProfile(data, dataBase) {
         supportSkillObj.atkBuffBDuration = 8
     } else if (data.ArmoryProfile.CharacterClassName == "바드") {
         supportSkillObj.atkBuffACool = 30
-        if (data.ArmorySkills[11].Tripods[0].Level == 5) {
+        if (data.ArmorySkills[11].Tripods[0].isSelected = true) {
             supportSkillObj.atkBuffACool = 24
         }
         supportSkillObj.atkBuffADuration = 8
         supportSkillObj.atkBuffBCool = 24
         supportSkillObj.atkBuffBDuration = 5
+    }  else if (data.ArmoryProfile.CharacterClassName == "발키리") {
+        supportSkillObj.atkBuffACool = 27
+        supportSkillObj.atkBuffADuration = 8
+        supportSkillObj.atkBuffBCool = 36
+        supportSkillObj.atkBuffBDuration = 8
     }
 
 
     if (!(data.ArmoryGem.Gems == null) && supportCheck() == "서폿") {
         data.ArmoryGem.Gems.forEach(function (gem) {
-            let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물']
+            let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약']
             let damageBuff = ['신앙 스킬', '세레나데 스킬', '음양 스킬']
-            let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기']
-            let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물']
+            let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기', '숭고한 맹세']
+            let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물', '숭고한 도약']
 
             let gemInfo = JSON.parse(gem.Tooltip)
             let type = gemInfo.Element_000.value

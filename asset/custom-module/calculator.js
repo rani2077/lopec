@@ -163,7 +163,7 @@ export async function specPointCalc(inputObj) {
     let hyperUptime = ((24.45 / (1 - hyperCdrPercent)) / 100).toFixed(4) // 초각성 가동률
 
 
-    let defaultAtkBuff = ((110000 + finalAtkBuff * atkBuffUptime)) / 110000 //기준딜러 공증 상승량
+    let defaultAtkBuff = ((130000 + finalAtkBuff * atkBuffUptime)) / 130000 //기준딜러 공증 상승량
 
     let allTimeBuffv2 = defaultAtkBuff * (finalStigmaPer / 100 + 1) * ((1.45 + evolutionBuff) / 1.45) * inputObj.bangleObj.atkBuffPlus //상시 버프력
     let identityBuffv2 = (13 * damageBuff * statDamageBuff) / 100 + 1 // 아덴 피증
@@ -234,7 +234,7 @@ export async function specPointCalc(inputObj) {
     let calcHyperUptime = ((24.45 / (1 - calcHyperCdrPercent)) / 100).toFixed(4) // 초각성 가동률
 
 
-    let calcDefaultAtkBuff = ((110000 + finalAtkBuff * calcAtkBuffUptime)) / 110000 //기준딜러 공증 상승량
+    let calcDefaultAtkBuff = ((120000 + finalAtkBuff * calcAtkBuffUptime)) / 120000 //기준딜러 공증 상승량
 
     let calcAllTimeBuffv2 = calcDefaultAtkBuff * (finalStigmaPer / 100 + 1) * ((1.45 + evolutionBuff) / 1.45) * inputObj.bangleObj.atkBuffPlus //상시 버프력
     let calcIdentityBuffv2 = (13 * damageBuff * calcStatDamageBuff) / 100 + 1 // 아덴 피증
@@ -261,7 +261,7 @@ export async function specPointCalc(inputObj) {
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint = ((calcSupportCombinedPower ** 3.905) * 32.67)
+    let supportSpecPoint = ((calcSupportCombinedPower ** 3.795) * 42.11)
 
 
     /* **********************************************************************************************************************

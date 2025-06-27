@@ -191,6 +191,7 @@ function profileImagePosition(jobName) {
             posObj.left = -214;
             posObj.top = -60;
             break;
+        case "발키리":
         case "슬레이어":
             posObj.left = -215;
             posObj.top = -77;
