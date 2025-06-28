@@ -3956,11 +3956,10 @@ async function selectCreate(data, Modules) {
                 } else if (accessoryTierNumber === 4) {
                     accessoryFilter = Modules.simulatorFilter.accessoryOptionData.t4Data;
                 }
-                // console.log(tooltipData)
                 let userAccessoryOptionArray = mergeFilter(accessoryFilter).filter(filter => {
                     return tooltipData.some((item, idx) => {
                         // 필터의 악세서리 옵션명에서 +숫자값%를 제거하고 이름만 남김
-                        if (typeof item === 'string' && item === filter.name.replace(/[^가-힣\s]/g, '').trim()) {
+                        if (typeof item === 'string' && item === filter.name.replace(/[^가-힣\s,]/g, '').trim()) {
                             if (tooltipData[idx + 1] === filter.optionValue) {
                                 return true;
                             }
