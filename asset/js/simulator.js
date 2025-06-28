@@ -905,6 +905,7 @@ async function simulatorInputCalc() {
                 }
             }
         }
+        console.log(totalHealth)
 
         // 팔찌 체력값 계산
         const bangleStatsElements = document.querySelectorAll(".accessory-item.bangle .stats");
@@ -1086,14 +1087,14 @@ async function simulatorInputCalc() {
 
         if (!(cachedData.ArmoryGem.Gems == null) && supportCheck == "서폿") {
             cachedData.ArmoryGem.Gems.forEach(function (gem) {
-                let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물']
+                let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약']
                 let damageBuff = ['신성의 오라', '세레나데 스킬', '음양 스킬']
-                let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기']
-                let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물']
+                let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기', '숭고한 맹세']
+                let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물', '숭고한 도약']
 
                 let gemInfo = JSON.parse(gem.Tooltip)
                 let type = gemInfo.Element_000.value
-
+                console.log(type)
                 let level
                 if (!(gemInfo.Element_004.value == null)) {
                     level = gemInfo.Element_004.value.replace(/\D/g, "")
@@ -1174,17 +1175,22 @@ async function simulatorInputCalc() {
      * function name		:	karmaRankToValue()
      * description			: 	깨달음 카르마 랭크를 arkObj.weaponAtkPer 수치로 변환 
      *********************************************************************************************************************** */
-    function karmaRankToValue() {
+    function enlightKarmaRankToValue() {
         let result = 1
-        let enlightKarmaElements = document.querySelectorAll(".ark-list.enlightenment .ark-item")[1].querySelectorAll("input[type=radio]");
-        enlightKarmaElements.forEach((karma, idx) => {
-            if (karma.checked) {
-                result = Number(karma.value);
-            }
-        })
+        let enlightKarmaLevel = Number(document.querySelector(".ark-list.enlightenment .ark-item .input-number").value);
+        result = enlightKarmaLevel * 0.001 + 1;
         return result;
     }
-    // console.log("카르마",karmaRankToValue())
+    /* **********************************************************************************************************************
+     * function name		:	leapKarmaRankToValue()
+     * description			: 	도약 카르마 랭크를 ??? 수치로 변환 
+     *********************************************************************************************************************** */
+    function leapKarmaRankToValue() {
+        let result = 1
+        let leapKarmaLevel = Number(document.querySelector(".ark-list.leap .ark-item .input-number").value);
+        result = Math.max(((leapKarmaLevel - 21) * 0.015 / 100), 0);
+        return result;
+    }
     /* **********************************************************************************************************************
      * function name		:	evolutionKarmaRankToValue()
      * description			: 	진화 카르마 랭크를 변환 
@@ -1240,6 +1246,7 @@ async function simulatorInputCalc() {
         } else if (evolutionElement >= 40) {
             result.evolutionDamage += 1
         }
+
 
         if (evolutionKarmaRank === 6) {
             result.evolutionDamage += 0.06;
@@ -1372,7 +1379,8 @@ async function simulatorInputCalc() {
             result.leapBuff += 1
         }
 
-        result.weaponAtkPer = karmaRankToValue();
+        result.weaponAtkPer = enlightKarmaRankToValue();
+        result.leapDamage = result.leapDamage + leapKarmaRankToValue();
         result.evolutionBuff = evloutionArkCheck().evolutionBuff;
         result.stigmaPer += evloutionArkCheck().stigmaPer;
         result.cdrPercent = leapArkCheck().cdrPercent
@@ -1458,7 +1466,7 @@ async function simulatorInputCalc() {
             let gemAttackBonus = [0, 0.05, 0.1, 0.2, 0.3, 0.45, 0.6, 0.8, 1.00, 1.2];
             let gemAttackBonus2 = [0, 0.075, 0.15, 0.3, 0.45, 0.675, 0.9, 1.2, 1.5, 1.8];
             gemCalcResultAllInfo.gemSkillArry.forEach((gemTag, idx) => {
-                if (/겁화|작열/.test(gemTag.name)) {
+                if (/겁화|작열|광휘/.test(gemTag.name)) {
                     result += gemAttackBonus[gemTag.level - 1];
                 } else if (/광휘/.test(gemTag.name)) {
                     result += gemAttackBonus2[gemTag.level - 1];
@@ -1502,6 +1510,8 @@ async function simulatorInputCalc() {
         extractValue.etcObj.supportCheck = supportCheck;
         // 여기에 체력 값 추가
         extractValue.etcObj.healthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue()) * extractValue.jobObj.healthPer;
+
+        console.log(accessoryInputHealthValue())
         extractValue.etcObj.gemCheckFnc.specialSkill = extractValue.etcObj.gemCheckFnc.specialSkill;
         extractValue.etcObj.gemCheckFnc.originGemValue = extractValue.etcObj.gemCheckFnc.originGemValue;
         extractValue.etcObj.gemCheckFnc.gemValue = extractValue.etcObj.gemCheckFnc.gemValue;
@@ -2264,7 +2274,7 @@ async function selectCreate(data, Modules) {
                 valueParts.push(`${item.grade}`);
 
                 for (const key in item) {
-                    if (key !== 'name' && key !== 'grade') {
+                    if (key !== 'name' && key !== 'grade' && key !== 'optionValue') {
                         valueParts.push(`${key}:${item[key]}`);
                     }
                 }
@@ -2561,117 +2571,106 @@ async function selectCreate(data, Modules) {
                 }
                 // console.log(collectValue)
             })
-            // document.querySelectorAll(".ark-list.enlightenment .ark-item")[5].querySelectorAll("input[type=radio]").forEach(radio => {
-            //     radio.disabled = true;
-            // })
         } else {
             collectElements.forEach(element => {
                 element.checked = true;
             })
-            let karma = Math.max(1, Math.min(7, data.ArkPassive.Points[1].Value - userLevelAccessoryToEnlight() - 14 + 1));
-            document.querySelector(".ark-list.enlightenment .ark-item.karma-radio").querySelectorAll("input[type=radio]")[karma - 1].checked = true;
+            // let karma = Math.max(1, Math.min(7, data.ArkPassive.Points[1].Value - userLevelAccessoryToEnlight() - 14 + 1)); <== 삭제예정
+            document.querySelector(".ark-list.enlightenment .ark-item.karma-radio").querySelectorAll("input[type=radio]")[cachedDetailInfo.extractValue.karmaObj.enlightKarmaRank].checked = true;
         }
     }
     collectToKarma()
     /* **********************************************************************************************************************
     * function name		:	evloutionKarmaRankSelected()
-    * description	    : 	진화 카르마 랭크를 유저에게 표시해줌
+    * description	    : 	진화 카르마 랭크와 레벨을 유저에게 표시해줌
     *********************************************************************************************************************** */
     function evloutionKarmaRankSelected() {
-        let karmaRankElements = document.querySelector(".ark-list.evolution .ark-item.karma-radio").querySelectorAll("input[type=radio]");
-        let karmaRank = cachedDetailInfo.extractValue.karmaObj.evolutionKarmaRank ? cachedDetailInfo.extractValue.karmaObj.evolutionKarmaRank : 0;
-        let karmaLevelElement = document.querySelector(".ark-list.evolution .ark-item .input-number")
-        karmaRankElements[karmaRank].checked = true;
-        karmaLevelElement.value = cachedDetailInfo.extractValue.karmaObj.evolutionKarmaLevel ? cachedDetailInfo.extractValue.karmaObj.evolutionKarmaLevel : 0;
+        let evolutionKarmaRankElements = document.querySelector(".ark-list.evolution .ark-item.karma-radio").querySelectorAll("input[type=radio]");
+        let evolutionKarmaRankValue = cachedDetailInfo.extractValue.karmaObj.evolutionKarmaRank
+        let evolutionKarmaLevelElement = document.querySelector(".ark-list.evolution .ark-item .input-number")
+        evolutionKarmaRankElements[evolutionKarmaRankValue].checked = true;
+        evolutionKarmaLevelElement.value = cachedDetailInfo.extractValue.karmaObj.evolutionKarmaLevel;
+
+        let enlightenmentKarmaRankElements = document.querySelector(".ark-list.enlightenment .ark-item.karma-radio").querySelectorAll("input[type=radio]");
+        let enlightenmentKarmaRankValue = cachedDetailInfo.extractValue.karmaObj.enlightKarmaRank
+        let enlightenmentKarmaLevelElement = document.querySelector(".ark-list.enlightenment .ark-item .input-number")
+        enlightenmentKarmaRankElements[enlightenmentKarmaRankValue].checked = true;
+        enlightenmentKarmaLevelElement.value = cachedDetailInfo.extractValue.karmaObj.enlightKarmaLevel;
+
+        let leapKarmaRankElements = document.querySelector(".ark-list.leap .ark-item.karma-radio").querySelectorAll("input[type=radio]");
+        let leapKarmaRankValue = cachedDetailInfo.extractValue.karmaObj.leapKarmaRank
+        let leapKarmaLevelElement = document.querySelector(".ark-list.leap .ark-item .input-number")
+        leapKarmaRankElements[leapKarmaRankValue].checked = true;
+        leapKarmaLevelElement.value = cachedDetailInfo.extractValue.karmaObj.leapKarmaLevel;
+
     }
     evloutionKarmaRankSelected();
 
-    /* **********************************************************************************************************************
-    * function name		:	numberPlusMinusBtn
-    * description			: 	카르마 진화레벨을 +-할 수 있는 함수
-    *********************************************************************************************************************** */
-    function evolutionKarmaRangeLimited() {
-        let rankElements = document.querySelector(".ark-list.evolution .ark-item.karma-radio").querySelectorAll("input[type=radio]");
-        let count = 0;
-        rankElements.forEach(element => {
-            element.addEventListener("change", () => {
-                rangeChange();
-            })
-        })
-        function rangeChange() {
-            let rankValue = Array.from(rankElements).findIndex(element => element.checked === true);
-            let levelElement = document.querySelector(".ark-list.evolution .ark-item .input-number");
-            let levelValue = Number(levelElement.value);
-
-            const rankRanges = [
-                { rank: 0, min: 0, max: 0 },
-                { rank: 1, min: 1, max: 4 },
-                { rank: 2, min: 5, max: 8 },
-                { rank: 3, min: 9, max: 12 },
-                { rank: 4, min: 13, max: 16 },
-                { rank: 5, min: 17, max: 20 },
-                { rank: 6, min: 21, max: 30 }
-            ];
-            console.log(rankValue)
-            let currentRange = rankRanges.find(range => range.rank === rankValue);
-            if (currentRange) {
-                levelElement.setAttribute('min', String(currentRange.min));
-                levelElement.setAttribute('max', String(currentRange.max));
-            } else {
-                levelElement.setAttribute('min', '0');
-                levelElement.setAttribute('max', '0');
-            }
-            if (count !== 0) {
-                levelElement.value = currentRange.min;
-            } else {
-                count++;
-            }
-        }
-        rangeChange();
-    }
-    evolutionKarmaRangeLimited();
 
     /* **********************************************************************************************************************
-    * function name		:	numberPlusMinusBtn
-    * description			: 	카르마 진화레벨을 +-할 수 있는 함수
+    * function name     :	numberPlusMinusBtn
+    * description       : 	카르마 진화레벨을 +-할 수 있는 함수
     *********************************************************************************************************************** */
     function numberPlusMinusBtn() {
-        const decrementButton = document.querySelector('.group-equip .input-number-decrement');
-        const incrementButton = document.querySelector('.group-equip .input-number-increment');
-        const inputNumber = document.querySelector('.group-equip .input-number');
+        const decrementButtons = document.querySelectorAll('.group-equip .input-number-decrement');
+        const incrementButtons = document.querySelectorAll('.group-equip .input-number-increment');
+        const inputNumbers = document.querySelectorAll('.group-equip .input-number');
 
-        decrementButton.addEventListener('click', () => {
-            let currentValue = parseInt(inputNumber.value);
-            let min = parseInt(inputNumber.getAttribute('min'));
-            if (currentValue > min) {
-                inputNumber.value = currentValue - 1;
-                inputNumber.dispatchEvent(new Event('change', { bubbles: true }));
-            }
+        // 감소 버튼
+        decrementButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 인접 요소 input 검사
+                const inputNumber = button.nextElementSibling;
+                if (inputNumber && inputNumber.classList.contains('input-number')) {
+                    let currentValue = parseInt(inputNumber.value, 10);
+                    const min = parseInt(inputNumber.getAttribute('min'), 10);
+                    if (currentValue > min) {
+                        inputNumber.value = currentValue - 1;
+                        // change 이벤트를 발생
+                        inputNumber.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
+            });
         });
 
-        incrementButton.addEventListener('click', () => {
-            let currentValue = parseInt(inputNumber.value);
-            let max = parseInt(inputNumber.getAttribute('max'));
-            if (currentValue < max) {
-                inputNumber.value = currentValue + 1;
-                inputNumber.dispatchEvent(new Event('change', { bubbles: true }));
-            }
+        // 증가 버튼
+        incrementButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 인접 요소 input 검사
+                const inputNumber = button.previousElementSibling;
+                if (inputNumber && inputNumber.classList.contains('input-number')) {
+                    let currentValue = parseInt(inputNumber.value, 10);
+                    const max = parseInt(inputNumber.getAttribute('max'), 10);
+                    if (currentValue < max) {
+                        inputNumber.value = currentValue + 1;
+                        // change 이벤트를 발생
+                        inputNumber.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
+            });
         });
 
-        inputNumber.addEventListener('change', () => {
-            let currentValue = parseInt(inputNumber.value);
-            let min = parseInt(inputNumber.getAttribute('min'));
-            let max = parseInt(inputNumber.getAttribute('max'));
+        // 각 숫자 입력 필드에 대한 유효성 검사 이벤트 리스너를 추가합니다.
+        inputNumbers.forEach(inputNumber => {
+            inputNumber.addEventListener('change', () => {
+                let currentValue = parseInt(inputNumber.value, 10);
+                const min = parseInt(inputNumber.getAttribute('min'), 10);
+                const max = parseInt(inputNumber.getAttribute('max'), 10);
 
-            if (isNaN(currentValue) || currentValue < min) {
-                inputNumber.value = min;
-            } else if (currentValue > max) {
-                inputNumber.value = max;
-            }
+                // 입력값이 숫자가 아니거나 최소값보다 작으면 최소값으로 설정합니다.
+                if (isNaN(currentValue) || currentValue < min) {
+                    inputNumber.value = min;
+                }
+                // 입력값이 최대값보다 크면 최대값으로 설정합니다.
+                else if (currentValue > max) {
+                    inputNumber.value = max;
+                }
+            });
         });
-
     }
-    numberPlusMinusBtn()
+
+    // 함수를 호출하여 이벤트 리스너를 활성화합니다.
+    numberPlusMinusBtn();
     /* **********************************************************************************************************************
     * function name		:	enlightValueChange()
     * description	    : 	깨달음 포인트를 유저에게 표시해줌
@@ -2726,6 +2725,9 @@ async function selectCreate(data, Modules) {
         //console.log(karmaValue)
         radioElements[karmaValue].checked = true;
     }
+    leafPointToKarmaSelect()
+
+    //arkObj.weapenAtkPer = (깨달음카르마 레벨 * 0.001 + 1
 
     /* **********************************************************************************************************************
     * function name		:	showLeafInfo
@@ -2743,6 +2745,89 @@ async function selectCreate(data, Modules) {
         let leaf = document.querySelector(".ark-list.leap .title");
         leaf.textContent = leafPoint;
     }
+    /* **********************************************************************************************************************
+    * function name     :	evolutionKarmaRangeLimited
+    * description       : 	카르마 진화레벨을 조절하는 함수
+    *********************************************************************************************************************** */
+    // function evolutionKarmaRangeLimited() { <== 삭제예정
+    //     let rankElements = document.querySelector(".ark-list.evolution .ark-item.karma-radio").querySelectorAll("input[type=radio]");
+    //     let count = 0;
+    //     rankElements.forEach(element => {
+    //         element.addEventListener("change", () => {
+    //             rangeChange();
+    //         })
+    //     })
+    //     function rangeChange() {
+    //         let rankValue = Array.from(rankElements).findIndex(element => element.checked === true);
+    //         let levelElement = document.querySelector(".ark-list.evolution .ark-item .input-number");
+    //         let levelValue = Number(levelElement.value);
+
+    //         const rankRanges = [
+    //             { rank: 0, min: 0, max: 0 },
+    //             { rank: 1, min: 1, max: 4 },
+    //             { rank: 2, min: 5, max: 8 },
+    //             { rank: 3, min: 9, max: 12 },
+    //             { rank: 4, min: 13, max: 16 },
+    //             { rank: 5, min: 17, max: 20 },
+    //             { rank: 6, min: 21, max: 30 }
+    //         ];
+    //         console.log(rankValue)
+    //         let currentRange = rankRanges.find(range => range.rank === rankValue);
+    //         if (currentRange) {
+    //             levelElement.setAttribute('min', String(currentRange.min));
+    //             levelElement.setAttribute('max', String(currentRange.max));
+    //         } else {
+    //             levelElement.setAttribute('min', '0');
+    //             levelElement.setAttribute('max', '0');
+    //         }
+    //         if (count !== 0) {
+    //             levelElement.value = currentRange.min;
+    //         } else {
+    //             count++;
+    //         }
+    //     }
+    //     rangeChange();
+    // }
+    // evolutionKarmaRangeLimited();
+    function everyKarmaLevelLimited() {
+        let arkListElements = document.querySelectorAll(".group-equip .ark-list");
+        arkListElements.forEach(arkListElement => {
+            arkListElement.querySelector(".ark-item.karma-radio").addEventListener("change", () => { rangeChange() })
+
+            let count = 0;
+            function rangeChange() {
+                let rankElement = arkListElement.querySelector(".ark-item.karma-radio").querySelectorAll("input[type=radio]");
+                let rankValue = Array.from(rankElement).findIndex(radioElement => radioElement.checked);
+                let levelElement = arkListElement.querySelector(".ark-item .input-number");
+                let levelValue = Number(levelElement.value);
+                const rankRanges = [
+                    { rank: 0, min: 0, max: 0 },
+                    { rank: 1, min: 1, max: 4 },
+                    { rank: 2, min: 5, max: 8 },
+                    { rank: 3, min: 9, max: 12 },
+                    { rank: 4, min: 13, max: 16 },
+                    { rank: 5, min: 17, max: 20 },
+                    { rank: 6, min: 21, max: 30 }
+                ];
+                let currentRange = rankRanges.find(range => range.rank === rankValue);
+                if (currentRange) {
+                    levelElement.setAttribute('min', String(currentRange.min));
+                    levelElement.setAttribute('max', String(currentRange.max));
+                } else {
+                    levelElement.setAttribute('min', '0');
+                    levelElement.setAttribute('max', '0');
+                }
+                if (count !== 0) {
+                    levelElement.value = currentRange.min;
+                } else {
+                    count++;
+                }
+
+            };
+            rangeChange();
+        })
+    }
+    everyKarmaLevelLimited();
 
     /* **********************************************************************************************************************
     * function name		:	userGemEquipmentToOption()
@@ -2756,15 +2841,14 @@ async function selectCreate(data, Modules) {
             let customHtml = "";
             element.innerHTML = "";
             gemCalcResultAllInfo.gemSkillArry.forEach((gemElementObj, idx) => {
-                // console.log(gemElementObj)
                 let gemTag = ``;
-                if (/멸화|겁화/.test(gemElementObj.name)) {
+                if (/멸화|겁화|딜광휘/.test(gemElementObj.name)) {
                     gemTag = `
                         <option value="멸화">멸화</option>
                         <option value="겁화">겁화</option>
                         <option value="딜광휘">광휘</option>
                         `;
-                } else if (/홍염|작열/.test(gemElementObj.name)) {
+                } else if (/홍염|작열|쿨광휘/.test(gemElementObj.name)) {
                     gemTag = `
                         <option value="홍염">홍염</option>
                         <option value="작열">작열</option>;
@@ -3169,10 +3253,10 @@ async function selectCreate(data, Modules) {
 
                 if (armory.Type === partsName) {
                     normalUpgradeValue = numberExtract(betweenText.find(text => text.includes("+")));                           // +강화 수치값
-                    armoryTierValue = tierValueExtract(betweenText.find(text => /\(\D*\d+\D*\)/.test(text)));                   // 티어 숫자값
                     armoryTierName = betweenText.find(text => /고대|유물|에스더/.test(text));                                   // 고대 유물 티어 풀 문자열
                     armoryTierName = armoryTierName.match(/(고대|유물|에스더)/g)[0];
                     if (armoryTierName !== "에스더") {
+                        armoryTierValue = tierValueExtract(betweenText.find(text => /\(\D*\d+\D*\)/.test(text)));                   // 티어 숫자값
                         armoryTierName = `T${armoryTierValue} ${armoryTierName}`;                                               // 등급 풀네임 조합 예) T4 고대
                     } else if (armoryTierName === "에스더") {
                         let ellaLevel = Number(betweenText[betweenText.indexOf("엘라 부여") + 1].match(/\d+/g)[0])
@@ -3670,115 +3754,8 @@ async function selectCreate(data, Modules) {
     avatarAutoSelect()
 
     /* **********************************************************************************************************************
-    * function name		:	accessoryAutoSelect() <== 삭제예정
-    * description	    : 	악세서리를 자동으로 선택하는 함수
-    *********************************************************************************************************************** */
-    function accessoryAutoSelect() {
-
-        partsAutoSelect("목걸이");
-        partsAutoSelect("귀걸이");
-        partsAutoSelect("반지");
-
-        function partsAutoSelect(partsName) {
-            let accessoryCount = 0; // 귀걸이와 반지 개수를 세기 위한 변수
-
-            data.ArmoryEquipment.forEach((accessory, idx) => {
-                if (accessory.Type === partsName) {
-                    let selectorIndex = 0;
-                    let accessoryOptionCount = 0;
-
-                    let tooltipData = betweenTextExtract(accessory.Tooltip);
-                    let accessoryTierName = tooltipData[5].match(/(고대|유물)/g)[0];
-                    let accessoryTierNumber = Number(tooltipData[10].match(/\d+/));
-                    let accessoryFilter = Modules.simulatorFilter.accessoryOptionData;
-                    if (accessoryTierNumber == 3) {
-                        if (accessoryTierName === "유물") {
-                            accessoryFilter = extractItem(accessoryFilter.t3RelicData);
-                        } else if (accessoryTierName === "고대") {
-                            accessoryFilter = extractItem(accessoryFilter.t3MythicData);
-                        }
-                    } else if (accessoryTierNumber == 4) {
-                        accessoryFilter = extractItem(accessoryFilter.t4Data);
-
-                    }
-
-
-                    let accessoryItem = document.querySelectorAll(".accessory-list .accessory-item.accessory");
-
-                    let accessoryStatsName = /(힘|민첩|지능)\s*\+(\d+)/g.exec(tooltipData)[1]
-                    let accessoryStatsValue = Number(/(힘|민첩|지능)\s*\+(\d+)/g.exec(tooltipData)[2])
-
-                    let matchTooltipArr = [];
-                    tooltipData.forEach(tooltip => {
-                        let tooltipCheck = accessoryFilter.find(filter => tooltip.includes(filter));
-                        if (tooltipCheck !== undefined && !(tooltipCheck.includes("공격력 +195"))) {
-                            matchTooltipArr.push(accessoryFilter.find(filter => tooltip.includes(filter)))
-                        } else if (tooltipCheck !== undefined && tooltipCheck.includes("공격력 +195")) {
-                            if ((tooltip.includes("무기 공격력 +195"))) {
-                                matchTooltipArr.push("무기 공격력 +195")
-                            } else {
-                                matchTooltipArr.push("공격력 +195")
-                            }
-                        }
-                    })
-                    // console.log(accessoryTierName)
-                    // console.log(accessoryTierNumber)
-                    // console.log(Modules.simulatorFilter.accessoryOptionData)
-                    // console.log(accessoryFilter)
-                    if (partsName === "목걸이") {
-                        let necklace = document.querySelectorAll('.accessory-list .accessory-item.accessory .tier')[0];
-                        let necklaceStatsElement = document.querySelectorAll('.accessory-list .accessory-item.accessory input.progress')[0];
-                        let necklaceOptions = accessoryItem[0].querySelectorAll(".option");
-                        optionElementAutoCheck(necklace, `T${accessoryTierNumber}${accessoryTierName}`, 'textContent');
-                        necklace.dispatchEvent(new Event("change"));
-                        matchTooltipArr.forEach((matchTooltip, idx) => {
-                            optionElementAutoCheck(necklaceOptions[idx], matchTooltip, 'textContent');
-                        })
-                        necklaceStatsElement.value = accessoryStatsValue;
-                    } else if (partsName === "귀걸이" || partsName === "반지") {
-                        //귀걸이와 반지일경우
-                        if (partsName === "귀걸이") {
-                            selectorIndex = 1 + accessoryCount; // 귀걸이 1,2번
-                        } else if (partsName === "반지") {
-                            selectorIndex = 3 + accessoryCount; // 반지 3,4번
-                        }
-
-                        let accessoryStatsElement = document.querySelectorAll('.accessory-list .accessory-item.accessory input.progress')[selectorIndex];
-                        let accessoryElement = document.querySelectorAll('.accessory-list .accessory-item.accessory .tier')[selectorIndex];
-                        optionElementAutoCheck(accessoryElement, `T${accessoryTierNumber}${accessoryTierName}`, 'textContent');
-                        accessoryElement.dispatchEvent(new Event("change"));
-                        let accessoryDuplicationElement = accessoryItem[selectorIndex].querySelectorAll(".option");
-                        matchTooltipArr.forEach((matchTooltip, idx) => {
-                            optionElementAutoCheck(accessoryDuplicationElement[idx], matchTooltip, 'textContent');
-                        })
-                        accessoryStatsElement.value = accessoryStatsValue;
-                        accessoryCount++;
-                        //두번째반복문이 필요없어진이유 : partsName이 귀걸이 또는 반지일때만 selectorIndex를 정하고, 값을 입력하기 때문
-                        if (accessoryCount >= 2) {
-                            accessoryCount = 0
-                        }
-                    }
-
-                }
-            });
-        }
-
-        function extractItem(accessoryData) {
-            const names = [];
-            for (const type in accessoryData) {
-                accessoryData[type].forEach(item => {
-                    names.push(item.name);
-                });
-            }
-            // 중복 제거
-            return [...new Set(names)];
-        }
-
-    }
-    // accessoryAutoSelect();
-    /* **********************************************************************************************************************
     * function name		:	accessoryTierAutoSelect()
-    * description	    : 	악세서리를 자동으로 선택하는 함수
+    * description	    : 	악세서리 티어와 스텟을 자동으로 선택하는 함수
     *********************************************************************************************************************** */
     function accessoryTierAutoSelect() {
         let elements = document.querySelectorAll(".accessory-item .accessory");
@@ -3874,41 +3851,46 @@ async function selectCreate(data, Modules) {
                 } else if (accessoryTierNumber === 4) {
                     accessoryFilter = Modules.simulatorFilter.accessoryOptionData.t4Data;
                 }
-
                 let userAccessoryOptionArray = mergeFilter(accessoryFilter).filter(filter => {
                     return tooltipData.some((item, idx) => {
-                        if (typeof item === 'string' && item.includes(filter)) {
-                            tooltipData.splice(idx, 1);
-                            return true;
+                        // console.log(item)
+                        if (typeof item === 'string' && filter.name.includes(item)) {
+                            if (tooltipData[idx + 1] === filter.optionValue) {
+                                // console.log(tooltipData)
+                                // tooltipData.splice(idx, 1);
+                                // tooltipData.splice(idx+1, 1);
+                                return true;
+                            }
+                            // console.log(item);
                         }
                     });
                 });
 
                 if (accessory.Type === "목걸이") {
                     userAccessoryOptionArray.forEach((option, idx) => {
-                        optionElementAutoCheck(necklaceElement.querySelectorAll("select.option")[idx], option, 'textContent');
+                        optionElementAutoCheck(necklaceElement.querySelectorAll("select.option")[idx], option.name, 'textContent');
                     })
                 } else if (accessory.Type === "귀걸이") {
                     if (earRingCount === 0) {
                         userAccessoryOptionArray.forEach((option, idx) => {
-                            optionElementAutoCheck(earRingElement1.querySelectorAll("select.option")[idx], option, 'textContent');
+                            optionElementAutoCheck(earRingElement1.querySelectorAll("select.option")[idx], option.name, 'textContent');
                         })
                         earRingCount++;
                     } else if (earRingCount === 1) {
                         userAccessoryOptionArray.forEach((option, idx) => {
-                            optionElementAutoCheck(earRingElement2.querySelectorAll("select.option")[idx], option, 'textContent');
+                            optionElementAutoCheck(earRingElement2.querySelectorAll("select.option")[idx], option.name, 'textContent');
                         })
 
                     }
                 } else if (accessory.Type === "반지") {
                     if (ringCount === 0) {
                         userAccessoryOptionArray.forEach((option, idx) => {
-                            optionElementAutoCheck(ringElement1.querySelectorAll("select.option")[idx], option, 'textContent');
+                            optionElementAutoCheck(ringElement1.querySelectorAll("select.option")[idx], option.name, 'textContent');
                         })
                         ringCount++;
                     } else if (ringCount === 1) {
                         userAccessoryOptionArray.forEach((option, idx) => {
-                            optionElementAutoCheck(ringElement2.querySelectorAll("select.option")[idx], option, 'textContent');
+                            optionElementAutoCheck(ringElement2.querySelectorAll("select.option")[idx], option.name, 'textContent');
                         })
                     }
                 }
@@ -3917,19 +3899,38 @@ async function selectCreate(data, Modules) {
 
         })
 
+        // function mergeFilter(filterData) { <== 삭제예정
+        //     const names = [];
+        //     for (const key in filterData) {
+        //         if (filterData.hasOwnProperty(key) && Array.isArray(filterData[key])) {
+        //             filterData[key].forEach(item => {
+        //                 if (item.hasOwnProperty("name")) {
+        //                     names.push(item.name);
+        //                 }
+        //             });
+        //         }
+        //     }
+        //     return names
+        // }
         function mergeFilter(filterData) {
-            const names = [];
+            const mergedArray = [];
+
             for (const key in filterData) {
                 if (filterData.hasOwnProperty(key) && Array.isArray(filterData[key])) {
                     filterData[key].forEach(item => {
-                        if (item.hasOwnProperty("name")) {
-                            names.push(item.name);
+                        if (item.hasOwnProperty("name") && item.hasOwnProperty("optionValue")) {
+                            mergedArray.push({
+                                name: item.name,
+                                optionValue: item.optionValue
+                            });
                         }
                     });
                 }
             }
-            return names
+
+            return mergedArray;
         }
+
     }
     accessoryOptionsAutoSelect();
     enlightValueAttributeSet();
@@ -4129,7 +4130,7 @@ async function selectCreate(data, Modules) {
     collectToKarma()
     enlightValueChange()
     ellaOptionSetting(); // 엘라옵션 선택 조절
-    leafPointToKarmaSelect()
+    // leafPointToKarmaSelect() <== 함수 순서 변경으로 인해 삭제예정
     showLeafInfo()
     userLevelAndArmorToEvolution()
     // evloutionKarmaRankChange()
@@ -4272,11 +4273,17 @@ async function calculateGemData(data) {
         while ((match = regex.exec(gem.Tooltip)) !== null) {
             results.push(match[1]);
         }
-
+        // console.log(results)
         results.forEach(function (toolTip, idx) {
             toolTip = toolTip.replace(/"/g, '');
-
             if (toolTip.includes(data.ArmoryProfile.CharacterClassName) && /(^|[^"])\[([^\[\]"]+)\](?=$|[^"])/.test(toolTip) && toolTip.includes("Element")) {
+                if (results[1].includes("광휘")) {
+                    if (results.filter(arry => arry.includes("재사용 대기시간"))) {
+                        results[1] = results[1].replace("광휘", "쿨광휘")
+                    } else if (results.filter(arry => arry.includes("피해"))) {
+                        results[1] = results[1].replace("광휘", "딜광휘")
+                    }
+                }
                 let etcGemValue = results[idx + 2].substring(0, results[idx + 2].indexOf('"'));
                 let gemName;
                 let level = null;
@@ -4489,7 +4496,7 @@ async function calculateGemData(data) {
 
             let excludedAverageValue = excludedCoolGemCount > 0 ? sumCoolValues / excludedCoolGemCount : 0;
 
-            let careSkills = ['수호의 연주', '윈드 오브 뮤직', '빛의 광시곡', '천상의 연주', '필법 : 흩뿌리기', '필법 : 콩콩이', '묵법 : 환영의 문', '묵법 : 해그리기', '묵법 : 미리내', '천상의 축복', '신성 지역', '신의 율법', '신성한 보호'];
+            let careSkills = ['수호의 연주', '윈드 오브 뮤직', '빛의 광시곡', '천상의 연주', '필법 : 흩뿌리기', '필법 : 콩콩이', '묵법 : 환영의 문', '묵법 : 해그리기', '묵법 : 미리내', '천상의 축복', '신성 지역', '신의 율법', '신성한 보호', '구원의 터', '구원의 은총'];
 
             // 특정 스킬만 대상으로 하는 쿨감 계산
             let careSkillGemCount = 0;

@@ -191,7 +191,7 @@ export async function getCharacterProfile(data, dataBase) {
         if (arry.Type == "팔찌") {
             let bangleTier = JSON.parse(arry.Tooltip).Element_001.value.leftStr2.replace(/<[^>]*>/g, '').replace(/\D/g, '')
             let bangleTool = JSON.parse(arry.Tooltip)?.Element_005?.value?.Element_001
-            if(bangleTier && bangleTool) {
+            if (bangleTier && bangleTool) {
                 bangleTierFnc(bangleTier, bangleTool)
             }
         }
@@ -1590,6 +1590,7 @@ export async function getCharacterProfile(data, dataBase) {
 
         arkObj.leapDamage += 1.14
         arkObj.leapBuff += 1.04545
+
     } else if (arkPassiveValue(2) >= 66) {
 
         arkObj.leapDamage += 1.13
@@ -1688,7 +1689,7 @@ export async function getCharacterProfile(data, dataBase) {
                         if (gemName === '광휘') {
                             // 툴팁 전체에서 HTML 태그를 제거하여 순수 텍스트만 남김
                             const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
-                            
+
                             if (tooltipText.includes('피해')) {
                                 gemName = '딜광휘'; // 피해 옵션이 있으면 '딜광휘'로 이름 변경
                             } else if (tooltipText.includes('재사용')) {
@@ -2209,7 +2210,7 @@ export async function getCharacterProfile(data, dataBase) {
         supportSkillObj.atkBuffADuration = 8
         supportSkillObj.atkBuffBCool = 24
         supportSkillObj.atkBuffBDuration = 5
-    }  else if (data.ArmoryProfile.CharacterClassName == "발키리") {
+    } else if (data.ArmoryProfile.CharacterClassName == "발키리") {
         supportSkillObj.atkBuffACool = 27
         supportSkillObj.atkBuffADuration = 8
         supportSkillObj.atkBuffBCool = 36
@@ -2405,9 +2406,14 @@ export async function getCharacterProfile(data, dataBase) {
 
             if (/^(투구|상의|하의|장갑|어깨|목걸이|귀걸이|반지|어빌리티 스톤|팔찌)$/.test(armor.Type)) {
 
-
                 if (armor.Tooltip && typeof armor.Tooltip === 'string') {
-                    const allMatches = armor.Tooltip.match(/체력 \+\d+/g);
+                    let textToParse = armor.Tooltip;
+                    // 팔찌 타입에만 HTML 태그 제거 로직 적용
+                    if (armor.Type === "팔찌") {
+                        textToParse = armor.Tooltip.replace(/<[^>]*>/g, ' ');
+                    }
+
+                    const allMatches = textToParse.match(/체력\s+\+\d+/g);
 
                     if (allMatches) {
                         allMatches.forEach(matchText => {
@@ -2460,16 +2466,16 @@ export async function getCharacterProfile(data, dataBase) {
 
     karmaObj.enlightKarmaRank = enlightRankMatch ? parseInt(enlightRankMatch[1], 10) : 0;
     karmaObj.enlightKarmaLevel = enlightLevelMatch ? parseInt(enlightLevelMatch[1], 10) : 0;
-    
+
     karmaObj.leapKarmaRank = leapRankMatch ? parseInt(leapRankMatch[1], 10) : 0;
     karmaObj.leapKarmaLevel = leapLevelMatch ? parseInt(leapLevelMatch[1], 10) : 0;
 
-    arkObj.evolutionDamage = arkObj.evolutionDamage + (karmaObj.evolutionKarmaRank * 0.01)
-    arkObj.stigmaPer = arkObj.stigmaPer + karmaObj.evolutionKarmaRank
-    arkObj.statHp = karmaObj.evolutionKarmaLevel * 400
-    arkObj.weaponAtkPer = 1 + (karmaObj.enlightKarmaLevel * 0.001)
+    arkObj.evolutionDamage = arkObj.evolutionDamage + (karmaObj.evolutionKarmaRank * 0.01);
+    arkObj.stigmaPer = arkObj.stigmaPer + karmaObj.evolutionKarmaRank;
+    arkObj.statHp = karmaObj.evolutionKarmaLevel * 400;
+    arkObj.weaponAtkPer = 1 + (karmaObj.enlightKarmaLevel * 0.001);
+    arkObj.leapDamage = arkObj.leapDamage + Math.max(((karmaObj.leapKarmaLevel - 21) * 0.015 / 100), 0);
 
-    
     function karmaPointCalc() {
         let cardHP = totalMaxHpBonus;
         let maxHealth = defaultObj.maxHp;
@@ -2522,6 +2528,8 @@ export async function getCharacterProfile(data, dataBase) {
                     if (tierMatch && tierMatch[1]) {
                         tierValue = tierMatch[1];
                     }
+                } else if (betweenText.find(text => text.includes("에스더"))) { // 에스더 장비 티어 깨짐 검사
+                    tierValue = "E"
                 }
 
                 let hyperIndex = betweenText.findIndex(text => text === "[초월]");
@@ -2621,12 +2629,10 @@ export async function getCharacterProfile(data, dataBase) {
             try {
                 const stoneParsed = JSON.parse(stone.Tooltip);
                 const itemTitle = stoneParsed.Element_001?.value;
-
                 // 티어 정보 추출
                 const tierStr = itemTitle?.leftStr2 || '';
-                const tierMatch = tierStr.match(/\d+/);
+                const tierMatch = tierStr.replace(/<[^>]*>/g, "").match(/\d+/);
                 obj.tier = tierMatch ? tierMatch[0] : null;
-
                 // 체력 정보 추출
                 let totalHealth = 0;
                 // Element_004 (기본 효과)
@@ -2650,20 +2656,20 @@ export async function getCharacterProfile(data, dataBase) {
                     for (const key in engravings) {
                         const engraveStr = engravings[key]?.contentStr;
                         if (engraveStr && engraveStr.includes("Lv.")) {
-                             const nameMatch = engraveStr.match(/<FONT COLOR='#FFFFAC'>(.*?)<\/FONT>/);
-                             const levelMatch = engraveStr.match(/Lv\.(\d+)/);
-                             
-                             if(nameMatch && nameMatch[1] && levelMatch && levelMatch[1]){
+                            const nameMatch = engraveStr.match(/<FONT COLOR='#FFFFAC'>(.*?)<\/FONT>/);
+                            const levelMatch = engraveStr.match(/Lv\.(\d+)/);
+
+                            if (nameMatch && nameMatch[1] && levelMatch && levelMatch[1]) {
                                 optionArray.push({
                                     name: nameMatch[1],
                                     level: levelMatch[1]
                                 });
-                             }
+                            }
                         }
                     }
                 }
                 obj.optionArray = optionArray;
-                
+
                 // 나머지 기본 정보
                 obj.grade = stone.Grade;
                 obj.name = stone.Name;
@@ -2718,7 +2724,7 @@ export async function getCharacterProfile(data, dataBase) {
                 const cleanLines = optionsHtml.split(/<BR>/i)
                     .map(line => line.replace(/<[^>]*>/g, '').trim())
                     .filter(line => line.length > 0);
-                
+
                 let specialStats = cleanLines.filter(text => /^(치명|특화|신속)\s*\+/.test(text));
                 let normalStats = cleanLines.filter(text => /^(힘|민첩|지능|체력)\s*\+/.test(text));
 
@@ -2812,7 +2818,7 @@ export async function getCharacterProfile(data, dataBase) {
 
         if (data.ArmoryEngraving) {
             data.ArmoryEngraving.ArkPassiveEffects.forEach(eng => {
-            let obj = {};
+                let obj = {};
                 let icon = Modules.originFilter.engravingImg.find(filter => filter.split("^")[0] === eng.Name);
 
                 obj.stone = eng.AbilityStoneLevel;

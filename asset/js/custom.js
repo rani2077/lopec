@@ -309,7 +309,7 @@ async function mainSearchFunction() {
             <li class="armor-item">
                 <div class="img-box radius ${backgroundClassName}-background">
                     <img src="${item.icon}" alt="착용장비프로필">
-                    <span class="tier">T${item.tier}</span>
+                    <span class="tier">${item.tier === "E" ? "E" : "T" + item.tier}</span>
                     <span class="progress ${progressClassName}-progressbar">${item.quality}</span>
                 </div>
                 <div class="text-box">
@@ -439,7 +439,7 @@ async function mainSearchFunction() {
 
     /* **********************************************************************************************************************
     * function name		:	accessoryAreaCreate
-    * description       : 	armor-area html을 생성함
+    * description       : 	accessory-area html을 생성함
     *********************************************************************************************************************** */
     function accessoryAreaCreate() {
         let elements = document.querySelectorAll(".group-equip .accessory-area .accessory-item");
@@ -553,7 +553,7 @@ async function mainSearchFunction() {
     *********************************************************************************************************************** */
     function stoneItemCreate() {
         let element = document.querySelectorAll(".group-equip .accessory-area .accessory-item")[5];
-        let stone = extractValue.htmlObj.stoneInfo
+        let stone = extractValue.htmlObj.stoneInfo;
         if (stone) {
             let buff = "";
             stone.optionArray.forEach(item => {
