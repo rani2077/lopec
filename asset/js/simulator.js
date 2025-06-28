@@ -905,7 +905,7 @@ async function simulatorInputCalc() {
                 }
             }
         }
-        console.log(totalHealth)
+        //console.log(totalHealth)
 
         // 팔찌 체력값 계산
         const bangleStatsElements = document.querySelectorAll(".accessory-item.bangle .stats");
@@ -1088,13 +1088,13 @@ async function simulatorInputCalc() {
         if (!(cachedData.ArmoryGem.Gems == null) && supportCheck == "서폿") {
             cachedData.ArmoryGem.Gems.forEach(function (gem) {
                 let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약']
-                let damageBuff = ['신성의 오라', '세레나데 스킬', '음양 스킬']
+                let damageBuff = ['신앙 스킬', '세레나데 스킬', '음양 스킬']
                 let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기', '숭고한 맹세']
                 let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물', '숭고한 도약']
 
                 let gemInfo = JSON.parse(gem.Tooltip)
                 let type = gemInfo.Element_000.value
-                console.log(type)
+                //console.log(type)
                 let level
                 if (!(gemInfo.Element_004.value == null)) {
                     level = gemInfo.Element_004.value.replace(/\D/g, "")
@@ -1275,43 +1275,43 @@ async function simulatorInputCalc() {
 
         if (enlightElement >= 100) { // enlightElement == 깨달음수치
             result.enlightenmentDamage += 1.42
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.42
         } else if (enlightElement >= 98) {
             result.enlightenmentDamage += 1.40
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.40
         } else if (enlightElement >= 97) {
             result.enlightenmentDamage += 1.37
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.37
         } else if (enlightElement >= 96) {
             result.enlightenmentDamage += 1.37
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.37
         } else if (enlightElement >= 95) {
             result.enlightenmentDamage += 1.36
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.365
         } else if (enlightElement >= 94) {
             result.enlightenmentDamage += 1.36
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.365
         } else if (enlightElement >= 93) {
             result.enlightenmentDamage += 1.35
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.36
         } else if (enlightElement >= 92) {
             result.enlightenmentDamage += 1.35
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.36
         } else if (enlightElement >= 90) {
             result.enlightenmentDamage += 1.34
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.355
         } else if (enlightElement >= 88) {
             result.enlightenmentDamage += 1.33
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.35
         } else if (enlightElement >= 86) {
             result.enlightenmentDamage += 1.28
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.345
         } else if (enlightElement >= 84) {
             result.enlightenmentDamage += 1.27
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.34
         } else if (enlightElement >= 82) {
             result.enlightenmentDamage += 1.26
-            result.enlightenmentBuff += 1.33
+            result.enlightenmentBuff += 1.335
         } else if (enlightElement >= 80) {
             result.enlightenmentDamage += 1.25
             result.enlightenmentBuff += 1.33
@@ -1382,7 +1382,7 @@ async function simulatorInputCalc() {
         result.weaponAtkPer = enlightKarmaRankToValue();
         result.leapDamage = result.leapDamage + leapKarmaRankToValue();
         result.evolutionBuff = evloutionArkCheck().evolutionBuff;
-        result.stigmaPer += evloutionArkCheck().stigmaPer;
+        result.stigmaPer += evloutionArkCheck().stigmaPer + enlightArkCheck().stigmaPer;
         result.cdrPercent = leapArkCheck().cdrPercent
         return result
     }
@@ -1421,7 +1421,7 @@ async function simulatorInputCalc() {
 
     /* **********************************************************************************************************************
     * function name		:	leapArkCheck()
-    * description	    : 	깨달음 노드 검사
+    * description	    : 	도약 노드 검사
     *********************************************************************************************************************** */
     function leapArkCheck() {
         let result = {
@@ -1448,6 +1448,111 @@ async function simulatorInputCalc() {
         })
         return result;
     }
+
+    /* **********************************************************************************************************************
+    * function name		:	enlightArkCheck()
+    * description	    : 	깨달음 노드 검사
+    *********************************************************************************************************************** */
+    function enlightArkCheck() {
+        let result = { stigmaPer: 0 };
+        let stigmaArkPassiveArray = ["빠른 구원", "빛의 흔적", "포용의 세레나데", "낙인의 세레나데", "엥? 하나 더!", "낙인 강화", "해방자의 흔적", "빛의 검기"]
+        let enlightArkPassive = cachedData.ArkPassive.Effects.filter(data => data.Name === "깨달음");
+        enlightArkPassive = enlightArkPassive.map(enlight => enlight.Description.match(/>([^<]+)</g)[2].slice(1, -1));
+
+        convertToNameLevelObjects(enlightArkPassive).forEach(arkPassiveObj => {
+            // 낙인력 보너스 아크패시브 확인
+            if (stigmaArkPassiveArray.includes(arkPassiveObj.name)) {
+                result.stigmaPer += Number(arkPassiveObj.level - 1);
+            }
+        })
+
+        // 아크패시브 배열을 이름과 레벨의 객체로 변환
+        function convertToNameLevelObjects(dataArray) {
+            // 결과를 저장할 빈 배열을 선언합니다.
+            const resultArray = [];
+
+            // 각 문자열을 처리하기 위해 배열을 순회합니다.
+            dataArray.forEach(item => {
+                const match = item.match(/(.*) Lv\.(\d+)/);
+
+                if (match) {
+                    // match[1]은 첫 번째 캡처 그룹(이름), match[2]는 두 번째 캡처 그룹(레벨)입니다.
+                    const name = match[1].trim(); // 공백 제거
+                    const level = Number(match[2]); // 숫자로 변환
+
+                    // 새로운 객체를 생성하여 결과 배열에 추가
+                    resultArray.push({
+                        name: name,
+                        level: level
+                    });
+                } else {
+                    // 정규식 패턴과 일치하지 않는 경우
+                    console.warn(`"${item}"은(는) 예상된 형식과 일치하지 않아 변환할 수 없습니다.`);
+                }
+            });
+
+            return resultArray;
+        }
+        return result;
+    };
+    //
+    //홀나
+    // { name: "빠른 구원", level: 1, stigmaPer: 0 },
+    // { name: "빠른 구원", level: 2, stigmaPer: 1 },
+    // { name: "빠른 구원", level: 3, stigmaPer: 2 },
+    // { name: "빠른 구원", level: 4, stigmaPer: 3 },
+    // { name: "빠른 구원", level: 5, stigmaPer: 4 },
+
+    // { name: "빛의 흔적", level: 1, stigmaPer: 0 },
+    // { name: "빛의 흔적", level: 2, stigmaPer: 1 },
+    // { name: "빛의 흔적", level: 3, stigmaPer: 2 },
+    // { name: "빛의 흔적", level: 4, stigmaPer: 3 },
+    // { name: "빛의 흔적", level: 5, stigmaPer: 4 },
+
+
+    // //바드
+    // { name: "포용의 세레나데", level: 1, stigmaPer: 0 },
+    // { name: "포용의 세레나데", level: 2, stigmaPer: 1 },
+    // { name: "포용의 세레나데", level: 3, stigmaPer: 2 },
+    // { name: "포용의 세레나데", level: 4, stigmaPer: 3 },
+    // { name: "포용의 세레나데", level: 5, stigmaPer: 4 },
+
+    // { name: "낙인의 세레나데", level: 1, stigmaPer: 0 },
+    // { name: "낙인의 세레나데", level: 2, stigmaPer: 1 },
+    // { name: "낙인의 세레나데", level: 3, stigmaPer: 2 },
+    // { name: "낙인의 세레나데", level: 4, stigmaPer: 3 },
+    // { name: "낙인의 세레나데", level: 5, stigmaPer: 4 },
+
+
+    // //도화가
+    // { name: "엥? 하나 더!", level: 1, stigmaPer: 0 },
+    // { name: "엥? 하나 더!", level: 2, stigmaPer: 1 },
+    // { name: "엥? 하나 더!", level: 3, stigmaPer: 2 },
+    // { name: "엥? 하나 더!", level: 4, stigmaPer: 3 },
+    // { name: "엥? 하나 더!", level: 5, stigmaPer: 4 },
+
+    // { name: "낙인 강화", level: 1, stigmaPer: 0 },
+    // { name: "낙인 강화", level: 2, stigmaPer: 1 },
+    // { name: "낙인 강화", level: 3, stigmaPer: 2 },
+    // { name: "낙인 강화", level: 4, stigmaPer: 3 },
+    // { name: "낙인 강화", level: 5, stigmaPer: 4 },
+
+    // 발키리
+    // { name: "해방자의 흔적", level: 1, stigmaPer: 0 },
+    // { name: "해방자의 흔적", level: 2, stigmaPer: 1 },
+    // { name: "해방자의 흔적", level: 3, stigmaPer: 2 },
+    // { name: "해방자의 흔적", level: 4, stigmaPer: 3 },
+    // { name: "해방자의 흔적", level: 5, stigmaPer: 4 },
+
+    // { name: "빛의 검기", level: 1, stigmaPer: 0 },
+    // { name: "빛의 검기", level: 2, stigmaPer: 1 },
+    // { name: "빛의 검기", level: 3, stigmaPer: 2 },
+    // { name: "빛의 검기", level: 4, stigmaPer: 3 },
+    // { name: "빛의 검기", level: 5, stigmaPer: 4 },
+
+
+
+
 
 
     /* **********************************************************************************************************************
@@ -1511,7 +1616,7 @@ async function simulatorInputCalc() {
         // 여기에 체력 값 추가
         extractValue.etcObj.healthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue()) * extractValue.jobObj.healthPer;
 
-        console.log(accessoryInputHealthValue())
+        //console.log(accessoryInputHealthValue())
         extractValue.etcObj.gemCheckFnc.specialSkill = extractValue.etcObj.gemCheckFnc.specialSkill;
         extractValue.etcObj.gemCheckFnc.originGemValue = extractValue.etcObj.gemCheckFnc.originGemValue;
         extractValue.etcObj.gemCheckFnc.gemValue = extractValue.etcObj.gemCheckFnc.gemValue;
@@ -2598,7 +2703,7 @@ async function selectCreate(data, Modules) {
         enlightenmentKarmaLevelElement.value = cachedDetailInfo.extractValue.karmaObj.enlightKarmaLevel;
 
         let leapKarmaRankElements = document.querySelector(".ark-list.leap .ark-item.karma-radio").querySelectorAll("input[type=radio]");
-        let leapKarmaRankValue = cachedDetailInfo.extractValue.karmaObj.leapKarmaRank
+        let leapKarmaRankValue = cachedDetailInfo.extractValue.karmaObj.leapKarmaRank;
         let leapKarmaLevelElement = document.querySelector(".ark-list.leap .ark-item .input-number")
         leapKarmaRankElements[leapKarmaRankValue].checked = true;
         leapKarmaLevelElement.value = cachedDetailInfo.extractValue.karmaObj.leapKarmaLevel;
@@ -2715,17 +2820,17 @@ async function selectCreate(data, Modules) {
     }
 
     /* **********************************************************************************************************************
-    * function name		:	leafPointToKarmaSelect
+    * function name		:	leafPointToKarmaSelect <== 삭제예정
     * description	    : 	유저의 도약 카르마랭크를 선택함
     *********************************************************************************************************************** */
 
-    function leafPointToKarmaSelect() {
-        let karmaValue = Math.min((data.ArkPassive.Points[2].Value - bangleToLeafPoint()) / 2, 6);
-        let radioElements = document.querySelectorAll('.ark-list.leap input[type=radio]');
-        //console.log(karmaValue)
-        radioElements[karmaValue].checked = true;
-    }
-    leafPointToKarmaSelect()
+    // function leafPointToKarmaSelect() {
+    //     let karmaValue = Math.min((data.ArkPassive.Points[2].Value - bangleToLeafPoint()) / 2, 6);
+    //     let radioElements = document.querySelectorAll('.ark-list.leap input[type=radio]');
+    //     //console.log(karmaValue)
+    //     radioElements[karmaValue].checked = true;
+    // }
+    // leafPointToKarmaSelect()
 
     //arkObj.weapenAtkPer = (깨달음카르마 레벨 * 0.001 + 1
 
@@ -2802,11 +2907,11 @@ async function selectCreate(data, Modules) {
                 let levelValue = Number(levelElement.value);
                 const rankRanges = [
                     { rank: 0, min: 0, max: 0 },
-                    { rank: 1, min: 1, max: 4 },
-                    { rank: 2, min: 5, max: 8 },
-                    { rank: 3, min: 9, max: 12 },
-                    { rank: 4, min: 13, max: 16 },
-                    { rank: 5, min: 17, max: 20 },
+                    { rank: 1, min: 1, max: 5 },
+                    { rank: 2, min: 5, max: 9 },
+                    { rank: 3, min: 9, max: 13 },
+                    { rank: 4, min: 13, max: 17 },
+                    { rank: 5, min: 17, max: 21 },
                     { rank: 6, min: 21, max: 30 }
                 ];
                 let currentRange = rankRanges.find(range => range.rank === rankValue);
@@ -3851,17 +3956,14 @@ async function selectCreate(data, Modules) {
                 } else if (accessoryTierNumber === 4) {
                     accessoryFilter = Modules.simulatorFilter.accessoryOptionData.t4Data;
                 }
+                // console.log(tooltipData)
                 let userAccessoryOptionArray = mergeFilter(accessoryFilter).filter(filter => {
                     return tooltipData.some((item, idx) => {
-                        // console.log(item)
-                        if (typeof item === 'string' && filter.name.includes(item)) {
+                        // 필터의 악세서리 옵션명에서 +숫자값%를 제거하고 이름만 남김
+                        if (typeof item === 'string' && item === filter.name.replace(/[^가-힣\s]/g, '').trim()) {
                             if (tooltipData[idx + 1] === filter.optionValue) {
-                                // console.log(tooltipData)
-                                // tooltipData.splice(idx, 1);
-                                // tooltipData.splice(idx+1, 1);
                                 return true;
                             }
-                            // console.log(item);
                         }
                     });
                 });
@@ -4391,7 +4493,7 @@ async function calculateGemData(data) {
         specialClass = "사멸 억모닉";
     } else if (classCheck("이슬비") && skillCheck(gemSkillArry, "뙤약볕", dmg) && skillCheck(gemSkillArry, "싹쓸바람", dmg) && skillCheck(gemSkillArry, "소용돌이", dmg) && skillCheck(gemSkillArry, "여우비 스킬", dmg) && skillCheck(gemSkillArry, "소나기", dmg) && skillCheck(gemSkillArry, "날아가기", dmg) && skillCheck(gemSkillArry, "센바람", dmg)) {
         specialClass = "7겁 이슬비";
-    } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감")) {
+    } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사")) {
         specialClass = "데이터 없음";
     } else {
         specialClass = supportCheck;

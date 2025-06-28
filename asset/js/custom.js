@@ -1006,7 +1006,7 @@ async function mainSearchFunction() {
         let specPointInfo = [
             { name: "달성 최고 점수", value: bestSpecPoint, icon: "medal-solid" },
             { name: "현재 레벨 중앙값", value: dealerMedianValue, icon: "chart-simple-solid" },
-            { name: "인게임 전투력", value: data.ArmoryProfile.CombatPower.replace(/,/g, ''), icon: "bolt-solid" },
+            { name: "인게임 전투력", value: data.ArmoryProfile.CombatPower.replace(/,/g, ''), icon: "bolt-lightning-solid" },
         ]
         let armorInfo = [
             { name: "공격력", value: Number(specPoint.dealerAttackPowResult).toFixed(0), icon: "bolt-solid" },
