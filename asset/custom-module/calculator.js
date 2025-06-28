@@ -263,7 +263,7 @@ export async function specPointCalc(inputObj) {
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint = ((calcSupportCombinedPower ** 3.765) * 34.675)
+    let supportSpecPoint = ((calcSupportCombinedPower ** 3.568) * 51.827)
 
 
     /* **********************************************************************************************************************
@@ -338,8 +338,8 @@ export async function specPointCalc(inputObj) {
     let supportCarePower_MinusBangle = (((finalCarePower_MinusBangle / ((1 - cdrPercentOnlyCare_MinusBangle)))) / 100 + 1)
 
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle ** 3.765) * 34.675
-    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 4.58
+    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle  ** 3.568) * 51.827
+    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 4.30
 
 
 
