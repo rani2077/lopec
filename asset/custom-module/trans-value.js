@@ -1691,7 +1691,7 @@ export async function getCharacterProfile(data, dataBase) {
                             // 툴팁 전체에서 HTML 태그를 제거하여 순수 텍스트만 남김
                             const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
 
-                            if (tooltipText.includes('피해')) {
+                            if (tooltipText.includes('피해') || tooltipText.includes('지원')) {
                                 gemName = '딜광휘'; // 피해 옵션이 있으면 '딜광휘'로 이름 변경
                             } else if (tooltipText.includes('재사용')) {
                                 gemName = '쿨광휘'; // 재사용(쿨타임) 옵션이 있으면 '쿨광휘'로 이름 변경
@@ -2231,7 +2231,7 @@ export async function getCharacterProfile(data, dataBase) {
 
             if (type.includes("광휘")) {
                 const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
-                if (tooltipText.includes('피해')) {
+                if (tooltipText.includes('피해') || tooltipText.includes('지원')) {
                     type = type.replace('광휘', '딜광휘');
                 } else if (tooltipText.includes('재사용')) {
                     type = type.replace('광휘', '쿨광휘');

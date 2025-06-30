@@ -4379,7 +4379,7 @@ async function calculateGemData(data) {
                 if (results[1].includes("광휘")) {
                     if (results.filter(arry => arry.includes("재사용 대기시간")).length > 0) {
                         results[1] = results[1].replace("광휘", "쿨광휘")
-                    } else if (results.filter(arry => arry.includes("피해")).length > 0) {
+                    } else if (results.filter(arry => arry.includes("피해") || arry.includes("지원")).length > 0) {
                         results[1] = results[1].replace("광휘", "딜광휘")
                     }
                 }
