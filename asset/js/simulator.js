@@ -1084,7 +1084,7 @@ async function simulatorInputCalc() {
             { name: "작열", level1: 6, level2: 8, level3: 10, level4: 12, level5: 14, level6: 16, level7: 18, level8: 20, level9: 22, level10: 24 },
             { name: "쿨광휘", level1: 6, level2: 8, level3: 10, level4: 12, level5: 14, level6: 16, level7: 18, level8: 20, level9: 22, level10: 24 },
         ]
-
+        
         if (!(cachedData.ArmoryGem.Gems == null) && supportCheck == "서폿") {
             cachedData.ArmoryGem.Gems.forEach(function (gem) {
                 let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약']
@@ -1135,6 +1135,7 @@ async function simulatorInputCalc() {
                             if (gemData && level) {
                                 // 레벨에 맞는 실제 값 가져오기
                                 const coolValue = gemData[`level${level}`];
+                                console.log(`스킬: ${skill}, 보석 종류: ${gemType}, 레벨: ${level}, 쿨감 값: ${coolValue}`);
                                 result.atkBuffACdr += coolValue; // 레벨 대신 실제 값 사용
                             } else {
                             }
@@ -1569,12 +1570,9 @@ async function simulatorInputCalc() {
             //     { name: "작열", level1: 0, level2: 0.05, level3: 0.1, level4: 0.2, level5: 0.3, level6: 0.45, level7: 0.6, level8: 0.8, level9: 1.00, level10: 1.2 },
             // ];
             let gemAttackBonus = [0, 0.05, 0.1, 0.2, 0.3, 0.45, 0.6, 0.8, 1.00, 1.2];
-            let gemAttackBonus2 = [0, 0.075, 0.15, 0.3, 0.45, 0.675, 0.9, 1.2, 1.5, 1.8];
             gemCalcResultAllInfo.gemSkillArry.forEach((gemTag, idx) => {
                 if (/겁화|작열|광휘/.test(gemTag.name)) {
                     result += gemAttackBonus[gemTag.level - 1];
-                } else if (/광휘/.test(gemTag.name)) {
-                    result += gemAttackBonus2[gemTag.level - 1];
                 }
             })
         }
@@ -4379,9 +4377,9 @@ async function calculateGemData(data) {
             toolTip = toolTip.replace(/"/g, '');
             if (toolTip.includes(data.ArmoryProfile.CharacterClassName) && /(^|[^"])\[([^\[\]"]+)\](?=$|[^"])/.test(toolTip) && toolTip.includes("Element")) {
                 if (results[1].includes("광휘")) {
-                    if (results.filter(arry => arry.includes("재사용 대기시간"))) {
+                    if (results.filter(arry => arry.includes("재사용 대기시간")).length > 0) {
                         results[1] = results[1].replace("광휘", "쿨광휘")
-                    } else if (results.filter(arry => arry.includes("피해"))) {
+                    } else if (results.filter(arry => arry.includes("피해")).length > 0) {
                         results[1] = results[1].replace("광휘", "딜광휘")
                     }
                 }
