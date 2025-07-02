@@ -2226,6 +2226,20 @@ export let arkCalFilter = [
     { name: "낙인 강화", level: 5, stigmaPer: 4 },
 
 
+    //발키리
+    { name: "해방자의 흔적", level: 1, stigmaPer: 0 },
+    { name: "해방자의 흔적", level: 2, stigmaPer: 1 },
+    { name: "해방자의 흔적", level: 3, stigmaPer: 2 },
+    { name: "해방자의 흔적", level: 4, stigmaPer: 3 },
+    { name: "해방자의 흔적", level: 5, stigmaPer: 4 },
+
+    { name: "빛의 검기", level: 1, stigmaPer: 0 },
+    { name: "빛의 검기", level: 2, stigmaPer: 1 },
+    { name: "빛의 검기", level: 3, stigmaPer: 2 },
+    { name: "빛의 검기", level: 4, stigmaPer: 3 },
+    { name: "빛의 검기", level: 5, stigmaPer: 4 },
+
+
 
 
     //도약
