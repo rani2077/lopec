@@ -204,7 +204,7 @@ export async function evoKarmaDataBase(inputName, extractValue) {
  * inputName			  :	  닉네임
  * extractValue			  :   특성합
  *********************************************************************************************************************** */
-export async function dataBaseResponse(inputName, extractValue) {
+export async function dataBaseResponse(inputName, extractValue, data) {
 
 	let characterInfoObj = {
 		nickname: inputName,
@@ -212,6 +212,7 @@ export async function dataBaseResponse(inputName, extractValue) {
 		totalStatus: extractValue.defaultObj.totalStatus,
 		statusSpecial: extractValue.defaultObj.statusSpecial,
 		statusHaste: extractValue.defaultObj.statusHaste,
+		combatPower: Number(data.ArmoryProfile.CombatPower.replace(/,/g, '')),
 	}
 	let response = await fetch("https://api.lopec.kr/api/character/stats", {
 		method: "POST",
@@ -220,6 +221,7 @@ export async function dataBaseResponse(inputName, extractValue) {
 	})
 
 	let responseData = await response.json()
+	// console.log(`${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`)
 	let rankData = await fetchLostArkRankingData(inputName, `${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`)
 	responseData.classRank = rankData.classRank;
 	responseData.totalRank = rankData.totalRank;

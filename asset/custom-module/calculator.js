@@ -470,7 +470,7 @@ export async function specPointCalc(inputObj) {
         highTierSpecPointObj.completeSpecPoint = lastFinalValue / 2020
     } else if (inputObj.etcObj.supportCheck == "서폿") {
         //highTierSpecPointObj.completeSpecPoint = supportSpecPoint
-        highTierSpecPointObj.completeSpecPoint = supportSpecPoint 
+        highTierSpecPointObj.completeSpecPoint = supportSpecPoint
     }
     highTierSpecPointObj.supportSpecPoint = isNaN(highTierSpecPointObj.supportSpecPoint) ? 0 : highTierSpecPointObj.supportSpecPoint;
 

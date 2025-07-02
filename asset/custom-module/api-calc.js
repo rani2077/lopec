@@ -114,7 +114,7 @@ export async function apiCalcValue(inputName) {
     // 스펙포인트 계산
     let extractValue = await Modules.transValue.getCharacterProfile(data);
     await Modules.dataBase.evoKarmaDataBase(inputName, extractValue); // 카르마 계산에 필요한 값을 서버로 전송하는 함수
-    let dataBase = await Modules.dataBase.dataBaseResponse(inputName, extractValue);
+    let dataBase = await Modules.dataBase.dataBaseResponse(inputName, extractValue, data);
     extractValue.defaultObj.totalStatus = dataBase.totalStatus ? dataBase.totalStatus : 0;
     extractValue.defaultObj.statusHaste = dataBase.statusHaste ? dataBase.statusHaste : 0;
     extractValue.defaultObj.statusSpecial = dataBase.statusSpecial ? dataBase.statusSpecial : 0;
@@ -131,7 +131,7 @@ export async function apiCalcValue(inputName) {
     let calcValue = await Modules.calcValue.specPointCalc(extractValue);
     let devilDmgCheck = localStorage.getItem("devilDamage")
     if (
-        window.location.href.includes("lopec.kr") &&               // url이 lopec.kr일 경우
+        window.location.href.includes("lopec.kr") &&                // url이 lopec.kr일 경우
         calcValue.completeSpecPoint > dataBase.totalSum &&          // 계산된 스펙포인트가 DB값보다 큰 경우
         devilDmgCheck !== "true" &&                                 // 악추피 체크를 안한 경우
         !gemSetCheck                                                // 저장된 보석설정을 로드한 경우

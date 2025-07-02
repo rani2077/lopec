@@ -2,7 +2,7 @@
 * variable name		:	mobileCheck
 * description       : 	현재 접속한 디바이스 기기가 모바일, 태블릿일 경우 true를 반환
 *********************************************************************************************************************** */
-let mobileCheck = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(navigator.userAgent.toLowerCase());
+let mobileCheck = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(navigator.userAgent.toLowerCase()) || (window.innerWidth < 1100);
 /* **********************************************************************************************************************
  * function name		:	importModuleManager()
  * description			: 	사용하는 모든 외부 module파일 import
