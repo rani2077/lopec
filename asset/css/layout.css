@@ -43,7 +43,7 @@ header {
     top: 0;
     z-index: 3;
     width: 100%;
-    min-width:1300px;
+    min-width: 1300px;
     height: 60px;
     background: #fff;
     border-bottom: 0px solid #03dac5;
@@ -69,6 +69,7 @@ header:after {
     display: flex;
     width: 1300px;
     justify-content: space-between;
+    position: relative;
 }
 
 .sc-header .logo-group {
@@ -110,7 +111,75 @@ header:after {
 .sc-header .group-search {
     display: flex;
     align-items: center;
+    gap: 5px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 10px;
 }
+
+.sc-header .group-search>* {
+    transition: opacity 300ms;
+}
+
+.sc-header .group-search:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    opacity: 0;
+    background: #3cb7fa;
+    transition: opacity 300ms;
+}
+
+.sc-header .group-search.dragging>*:not(after) {
+    opacity: 0.4;
+}
+
+.sc-header .group-search.dragging:after {
+    opacity: 1;
+}
+
+.sc-header .handle-area {
+    width: 8px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: e-resize;
+}
+
+.sc-header .group-search:has(.handle-area .handle:hover):after {
+    opacity: 1;
+}
+
+.sc-header .handle-area .handle {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    width: 100%;
+    height: 100%;
+    gap: 2px;
+}
+
+.sc-header .handle-area .dot {
+    width: 3px;
+    height: 3px;
+    background-color: #555;
+    border-radius: 50%;
+    place-self: center;
+    opacity: 0.7;
+    transition: opacity 300ms;
+}
+
+.sc-header .handle-area .handle:hover .dot {
+    opacity: 1;
+}
+
 
 .sc-header .search-area {
     display: flex;
@@ -157,70 +226,78 @@ header:after {
 }
 
 /* 프로필 */
-.sc-profile{
+.sc-profile {
     display: flex;
     justify-content: flex-start;
     gap: 20px;
     margin-top: 130px;
 }
-.sc-profile .group-img{
+
+.sc-profile .group-img {
     width: 72px;
     height: 72px;
-    border-radius:50px;
+    border-radius: 50px;
     overflow: hidden;
     position: relative;
 }
+
 .sc-profile .group-img img {
     display: block;
     position: absolute;
     /* left: -206px;
     top: -87px; */
-    width:500px;
+    width: 500px;
 }
 
-.sc-profile .group-profile{
+.sc-profile .group-profile {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: space-between;
 }
-.sc-profile .name-area{
+
+.sc-profile .name-area {
     display: flex;
     align-items: center;
-    gap:8px;
+    gap: 8px;
 }
-.sc-profile .name-area .name{
+
+.sc-profile .name-area .name {
     font-weight: 600;
     font-size: 24px;
 }
-.sc-profile .name-area .job{
+
+.sc-profile .name-area .job {
     color: #464646;
-    font-weight:inherit;
+    font-weight: inherit;
     font-size: 20px;
 }
 
-.sc-profile .info-area{
+.sc-profile .info-area {
     display: flex;
     gap: 20px;
 }
-.sc-profile .info-area .info-box{
+
+.sc-profile .info-area .info-box {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.sc-profile .info-area .info-box .name{
+
+.sc-profile .info-area .info-box .name {
     position: relative;
     padding-left: 10px;
 }
-.sc-profile .info-area .info-box .name:after{
-    content:"";
+
+.sc-profile .info-area .info-box .name:after {
+    content: "";
     display: block;
-    position:absolute;
+    position: absolute;
     left: 0;
     top: 0;
     width: 5px;
     height: 100%;
     background: #464646;
-    border-radius:5px;
+    border-radius: 5px;
 }
 
 /* 네비게이션 */
@@ -230,7 +307,7 @@ header:after {
     justify-content: flex-start;
     height: 41px;
     gap: 10px;
-    border-bottom:1px solid #e9e9ea;
+    border-bottom: 1px solid #e9e9ea;
     margin-top: 25px;
 }
 
@@ -238,19 +315,22 @@ header:after {
     padding: 0 12px;
     display: flex;
     align-items: center;
-    opacity:0.7;
+    opacity: 0.7;
     position: relative;
     width: auto;
-    transition:opacity 300ms;
+    transition: opacity 300ms;
 }
-.sc-nav .link:hover{
+
+.sc-nav .link:hover {
     opacity: 0.9;
 }
-.sc-nav .link.on{
+
+.sc-nav .link.on {
     opacity: 1;
 }
-.sc-nav .link.on:after{
-    content:'';
+
+.sc-nav .link.on:after {
+    content: '';
     width: 100%;
     height: 3px;
     display: block;
@@ -258,7 +338,7 @@ header:after {
     position: absolute;
     bottom: 0;
     left: 0;
-    border-radius:3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
     overflow: hidden;
 }
 

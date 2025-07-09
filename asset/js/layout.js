@@ -2,7 +2,7 @@
 * variable name		:	mobileCheck
 * description       : 	현재 접속한 디바이스 기기가 모바일, 태블릿일 경우 true를 반환
 *********************************************************************************************************************** */
-let mobileCheck = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(navigator.userAgent.toLowerCase()) || (window.innerWidth < 1100);
+let mobileCheck = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(navigator.userAgent.toLowerCase())
 
 /* **********************************************************************************************************************
  * function name		:	importModuleManager()
@@ -163,6 +163,18 @@ function scHeaderCreate() {
                         </h1>
                     </div>
                     <div class="group-search">
+                        <div class="handle-area" title="좌우로 드래그하여 위치 조절 가능 합니다.">
+                            <div class="handle">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
                         <form action="/search/search.html" class="search-area search-page on">
                             <input id="headerInput" autocomplete="off" name="headerCharacterName" class="header-input character-name-search" type="text" value="" placeholder="캐릭터 검색">
                             <button class="search-btn"></button>
@@ -183,6 +195,98 @@ function scHeaderCreate() {
         }
     }
     document.body.insertAdjacentHTML('afterbegin', headerElement());
+
+    function handleDragAndDrop() {
+        let handleElement = document.querySelector(".sc-header .group-search .handle");
+        let targetElement = document.querySelector(".sc-header .group-search"); // 실제로 움직일 요소
+
+        // 요소가 없을 경우 경고 및 함수 종료
+        if (!handleElement || !targetElement) {
+            console.warn("필요한 요소를 찾을 수 없습니다. '.sc-header .group-search .handle' 또는 '.sc-header .group-search' 셀렉터를 확인하세요.");
+            return;
+        }
+
+        let isDragging = false;       // 드래그 중인지 여부
+        let startMouseX;            // 마우스 클릭 시 X 좌표
+        let startTargetRight;       // 드래그 시작 시 targetElement의 현재 right 값
+
+        // 4. 세션 스토리지에서 저장된 right 값 불러오기
+        const savedRight = sessionStorage.getItem('targetRightPosition'); // 키 이름을 변경했습니다.
+        if (savedRight !== null) {
+            targetElement.style.right = `${savedRight}px`;
+        }
+
+        // mousedown 이벤트: 드래그 시작 (handleElement 위에서 감지)
+        handleElement.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            console.log("클릭")
+            // 시각적 피드백을 위해 targetElement에 클래스 추가 (선택 사항)
+            targetElement.classList.add('dragging');
+
+            // 현재 마우스 X 좌표 저장
+            startMouseX = e.clientX;
+
+            // targetElement의 현재 right 값을 얻습니다.
+            startTargetRight = parseFloat(window.getComputedStyle(targetElement).right);
+
+            // 텍스트 선택 방지
+            e.preventDefault();
+
+            // --- 커서 일관성 유지 로직 시작 ---
+            // 드래그 시작 시 body에 e-resize 커서를 적용
+            document.body.style.cursor = 'e-resize';
+            // 요소 드래그 중 사용자 경험을 위해 기본 텍스트 선택 방지
+            document.body.style.userSelect = 'none';
+            // --- 커서 일관성 유지 로직 끝 ---
+
+            // document 전체에 mousemove와 mouseup 이벤트 리스너를 추가
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        // mousemove 이벤트: 드래그 중 이동 (좌우만)
+        function onMouseMove(e) {
+            if (!isDragging) return;
+
+            // 현재 마우스 위치와 시작 위치의 차이를 계산
+            const deltaX = e.clientX - startMouseX;
+
+            // 새로운 right 값 계산
+            // 마우스 이동 거리에 따라 targetElement의 right 값을 조절합니다.
+            let newRight = startTargetRight - deltaX;
+
+            // 음수 값이 되지 않도록 (화면 밖으로 나가지 않도록) 최소값 0 설정
+            // 필요에 따라 최대값을 설정하여 너무 왼쪽으로 이동하는 것을 제한할 수 있습니다.
+            // 예를 들어, newRight = Math.max(0, Math.min(MaxRightValue, newRight));
+            newRight = Math.max(0, Math.min(700, newRight));
+
+            targetElement.style.right = `${newRight}px`;
+
+            // 4. 세션 스토리지에 값 저장
+            sessionStorage.setItem('targetRightPosition', newRight); // 키 이름을 변경했습니다.
+        }
+
+        // mouseup 이벤트: 드래그 종료
+        function onMouseUp() {
+            isDragging = false;
+
+            // 시각적 피드백 클래스 제거
+            targetElement.classList.remove('dragging');
+
+            // --- 커서 일관성 유지 로직 시작 ---
+            // 드래그 종료 시 body의 커서를 기본값으로 되돌림
+            document.body.style.cursor = 'default'; // 또는 'auto'
+            // 텍스트 선택 허용
+            document.body.style.userSelect = ''; // 또는 'auto'
+            // --- 커서 일관성 유지 로직 끝 ---
+
+
+            // 이벤트 리스너 제거
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+    }
+    handleDragAndDrop();
 
     if (mobileCheck) {
         // 사이드메뉴 토글
