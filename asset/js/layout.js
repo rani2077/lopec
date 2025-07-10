@@ -219,7 +219,6 @@ function scHeaderCreate() {
         // mousedown 이벤트: 드래그 시작 (handleElement 위에서 감지)
         handleElement.addEventListener("mousedown", (e) => {
             isDragging = true;
-            console.log("클릭")
             // 시각적 피드백을 위해 targetElement에 클래스 추가 (선택 사항)
             targetElement.classList.add('dragging');
 

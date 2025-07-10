@@ -3,12 +3,14 @@ async function importModuleManager() {
     let modules = await Promise.all([
         import(`../filter/filter.js?${Math.floor((new Date).getTime() / interValTime)}`),              // CDN 로드 주석 처리
         import(`../filter/simulator-filter.js?${Math.floor((new Date).getTime() / interValTime)}`),   // CDN 로드 주석 처리
+        import(`../filter/offcial-combat-dealer.js?${Math.floor((new Date).getTime() / interValTime)}`),   // CDN 로드 주석 처리
         //import("../filter/filter.js" + `?${Math.floor((new Date).getTime() / interValTime)}`),              // 기존 타임스탬프 방식 복구
         //import("../filter/simulator-filter.js" + `?${Math.floor((new Date).getTime() / interValTime)}`), // 기존 타임스탬프 방식 복구
     ])
     let moduleObj = {
         originFilter: modules[0],
         simulatorFilter: modules[1],
+        officialCombatDealer: modules[2].officialCombatDealer,
     }
     return moduleObj
 }
@@ -2746,69 +2748,6 @@ export async function getCharacterProfile(data, dataBase) {
 
 
     /* **********************************************************************************************************************
-     * name		                   :   DB READ
-     * version                     :   2.0
-     * description                 :   DB 조회용 코드
-     * USE_TN                      :   layout.js로 이전됨
-     * getCombinedCharacterData    :   단일 요청으로 캐릭터 종합 데이터 조회
-     *********************************************************************************************************************** */
-    // getCombinedCharacterData(
-    //     data.ArmoryProfile.CharacterName,
-    //     supportCheck() == "서폿" ? "SUP" : "DEAL"
-    // ).then(function (response) {
-    //     if (response.result === "S") {
-    //         const combinedData = response.data;
-    //         const characterClass = data.ArmoryProfile.CharacterClassName;
-    //         const isSupport = supportCheck() === "서폿";
-    //         const rankingType = isSupport ? "SUP" : "DEAL";
-
-    //         // 1. 캐릭터 최고 점수 정보 출력
-    //         if (combinedData.characterBest) {
-    //             const characterData = combinedData.characterBest;
-    //             console.log("=== 달성 최고 점수 정보 ===");
-    //             console.log("달성 최고 점수(서포트):", characterData.LCHB_TOTALSUMSUPPORT);
-    //             console.log("달성 최고 점수(딜러):", characterData.LCHB_TOTALSUM);
-    //             console.log("달성 일시:", characterData.LCHB_ACHIEVE_DATE);
-    //         }
-
-    //         // 2. 직업별 랭킹 정보 출력
-    //         if (combinedData.classRanking) {
-    //             const rankingData = combinedData.classRanking;
-    //             let CLASS_PERCENTILE = ((rankingData.CLASS_RANK / rankingData.TOTAL_IN_CLASS) * 100).toFixed(2)
-
-    //             // 직접 객체 사용 (배열이 아님)
-    //             console.log("=== 직업 랭킹 정보 ===");
-    //             console.log(`${characterClass} 직업 내 순위: ${rankingData.CLASS_RANK}위`);
-    //             console.log(`전체 ${rankingData.TOTAL_IN_CLASS}명 중 상위 ${CLASS_PERCENTILE}%`);
-    //         } else {
-    //             console.log(`${characterClass} 직업 랭킹 정보를 찾을 수 없습니다.`);
-    //         }
-
-    //         // 3. 캐릭터 랭킹 정보 출력
-    //         if (combinedData.characterRanking) {
-    //             const rankData = combinedData.characterRanking;
-    //             console.log("랭킹:", rankData.RANKING_NUM);
-    //             console.log("점수:", rankData.LCHB_TOTALSUM);
-    //         } else {
-    //             console.log("랭킹에 해당 캐릭터 정보가 없습니다.");
-    //         }
-
-    //         // 4. 전체 랭킹 백분율 정보 출력
-    //         if (combinedData.percentile) {
-    //             const rankData = combinedData.percentile;
-    //             console.log("=== 전체 랭킹 정보 ===");
-    //             console.log(`전체 순위: ${rankData.OVERALL_RANK}위`);
-    //             console.log(`전체 ${rankData.TOTAL_CHARACTERS}명 중 상위 ${rankData.OVERALL_PERCENTILE}%`);
-    //         }
-    //     } else {
-    //         console.log("종합 데이터 조회 실패:", response.error);
-    //     }
-    // }).catch(function (error) {
-    //     console.error("종합 데이터 조회 중 오류 발생:", error);
-    // });
-
-
-    /* **********************************************************************************************************************
      * name		              :	  engravingInfoExtract
      * version                :   2.0
      * description            :   html에 사용될 각인정보를 반환
@@ -2853,84 +2792,84 @@ export async function getCharacterProfile(data, dataBase) {
         };
         let itemLevel = Number(data.ArmoryProfile.ItemAvgLevel.replace(",", ""));
         if (itemLevel >= 1660 && itemLevel < 1665) {
-            result.dealerMedianValue = 868.96;
+            result.dealerMedianValue = 907.34;
         } else if (itemLevel >= 1665 && itemLevel < 1670) {
-            result.dealerMedianValue = 940.66;
+            result.dealerMedianValue = 960.67;
         } else if (itemLevel >= 1670 && itemLevel < 1675) {
-            result.dealerMedianValue = 987.40;
+            result.dealerMedianValue = 1020.01;
         } else if (itemLevel >= 1675 && itemLevel < 1680) {
-            result.dealerMedianValue = 1025.51;
+            result.dealerMedianValue = 1061.79;
         } else if (itemLevel >= 1680 && itemLevel < 1685) {
-            result.dealerMedianValue = 1403.02;
+            result.dealerMedianValue = 1431.43;
         } else if (itemLevel >= 1685 && itemLevel < 1690) {
-            result.dealerMedianValue = 1573.29;
+            result.dealerMedianValue = 1595.64;
         } else if (itemLevel >= 1690 && itemLevel < 1695) {
-            result.dealerMedianValue = 1637.71;
+            result.dealerMedianValue = 1649.36;
         } else if (itemLevel >= 1695 && itemLevel < 1700) {
-            result.dealerMedianValue = 1718.38;
+            result.dealerMedianValue = 1737.60;
         } else if (itemLevel >= 1700 && itemLevel < 1705) {
-            result.dealerMedianValue = 1820.77;
+            result.dealerMedianValue = 1861.26;
         } else if (itemLevel >= 1705 && itemLevel < 1710) {
-            result.dealerMedianValue = 1983.61;
+            result.dealerMedianValue = 2021.84;
         } else if (itemLevel >= 1710 && itemLevel < 1715) {
-            result.dealerMedianValue = 2064.04;
+            result.dealerMedianValue = 2105.93;
         } else if (itemLevel >= 1715 && itemLevel < 1720) {
-            result.dealerMedianValue = 2095.34;
+            result.dealerMedianValue = 2169.32;
         } else if (itemLevel >= 1720 && itemLevel < 1725) {
-            result.dealerMedianValue = 2282.78;
+            result.dealerMedianValue = 2285.51;
         } else if (itemLevel >= 1725 && itemLevel < 1730) {
-            result.dealerMedianValue = 2414.28;
+            result.dealerMedianValue = 2424.91;
         } else if (itemLevel >= 1730 && itemLevel < 1735) {
-            result.dealerMedianValue = 2556.52;
+            result.dealerMedianValue = 2570.91;
         } else if (itemLevel >= 1735 && itemLevel < 1740) {
-            result.dealerMedianValue = 2720.08;
+            result.dealerMedianValue = 2740.05;
         } else if (itemLevel >= 1740 && itemLevel < 1745) {
-            result.dealerMedianValue = 2900.83;
+            result.dealerMedianValue = 2926.34;
         } else if (itemLevel >= 1745 && itemLevel < 1750) {
-            result.dealerMedianValue = 3142.27;
+            result.dealerMedianValue = 3167.41;
         } else if (itemLevel >= 1750) {
-            result.dealerMedianValue = 3443.63;
+            result.dealerMedianValue = 3493.69;
         }
 
         // console.log(itemLevel)
         if (itemLevel >= 1660 && itemLevel < 1665) {
-            result.supportMedianValue = 1215.18;
+            result.supportMedianValue = 1227.34;
         } else if (itemLevel >= 1665 && itemLevel < 1670) {
-            result.supportMedianValue = 1252.41;
+            result.supportMedianValue = 1338.69;
         } else if (itemLevel >= 1670 && itemLevel < 1675) {
-            result.supportMedianValue = 1283.27;
+            result.supportMedianValue = 1325.20;
         } else if (itemLevel >= 1675 && itemLevel < 1680) {
-            result.supportMedianValue = 1325.56;
+            result.supportMedianValue = 1432.32;
         } else if (itemLevel >= 1680 && itemLevel < 1685) {
-            result.supportMedianValue = 1547.34;
+            result.supportMedianValue = 1642.51;
         } else if (itemLevel >= 1685 && itemLevel < 1690) {
-            result.supportMedianValue = 1635.77;
+            result.supportMedianValue = 1751.22;
         } else if (itemLevel >= 1690 && itemLevel < 1695) {
-            result.supportMedianValue = 1688.33;
+            result.supportMedianValue = 1804.98;
         } else if (itemLevel >= 1695 && itemLevel < 1700) {
-            result.supportMedianValue = 1741.57;
+            result.supportMedianValue = 1883.22;
         } else if (itemLevel >= 1700 && itemLevel < 1705) {
-            result.supportMedianValue = 1843.10;
+            result.supportMedianValue = 1984.63;
         } else if (itemLevel >= 1705 && itemLevel < 1710) {
-            result.supportMedianValue = 1970.16;
+            result.supportMedianValue = 2136.65;
         } else if (itemLevel >= 1710 && itemLevel < 1715) {
-            result.supportMedianValue = 2038.04;
+            result.supportMedianValue = 2215.98;
         } else if (itemLevel >= 1715 && itemLevel < 1720) {
-            result.supportMedianValue = 2070.57;
+            result.supportMedianValue = 2281.83;
         } else if (itemLevel >= 1720 && itemLevel < 1725) {
-            result.supportMedianValue = 2235.26;
+            result.supportMedianValue = 2396.38;
         } else if (itemLevel >= 1725 && itemLevel < 1730) {
-            result.supportMedianValue = 2441.70;
+            result.supportMedianValue = 2601.91;
         } else if (itemLevel >= 1730 && itemLevel < 1735) {
-            result.supportMedianValue = 2606.24;
+            result.supportMedianValue = 2768.27;
         } else if (itemLevel >= 1735 && itemLevel < 1740) {
-            result.supportMedianValue = 2759.04;
+            result.supportMedianValue = 2943.87;
         } else if (itemLevel >= 1740 && itemLevel < 1745) {
-            result.supportMedianValue = 2885.86;
+            result.supportMedianValue = 3072.58;
         } else if (itemLevel >= 1745 && itemLevel < 1750) {
-            result.supportMedianValue = 3042.77;
+            result.supportMedianValue = 3218.05;
         } else if (itemLevel >= 1750) {
-            result.supportMedianValue = 3238.56;
+            result.supportMedianValue = 3493.73;
         }
 
         return result;
@@ -3014,12 +2953,190 @@ export async function getCharacterProfile(data, dataBase) {
         return reulst;
     }
     htmlObj.hyperInfo = hyperInfoExtract();
+
+
+    /* **********************************************************************************************************************
+     * name		              :	  
+     * version                :   2.0
+     * description            :   로스트아크 공식 전투력 계산 관련 값 추출 목록들
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    let officialCombatObj = {};
+
+    /* **********************************************************************************************************************
+     * name		              :	  characterLevelToOffcialCombat
+     * version                :   2.0
+     * description            :   
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    function characterLevelToOffcialCombat() {
+        return Modules.officialCombatDealer.attack.level[characterLevel];
+    };
+    officialCombatObj.level = characterLevelToOffcialCombat() / 10000 + 1;
+
+    /* **********************************************************************************************************************
+     * name		              :	  weaponQualityToOffcialCombat
+     * version                :   2.0
+     * description            :   
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    function weaponQualityToOffcialCombat() {
+        //JSON.parse(equip.Tooltip).Element_001.value.qualityValue;
+        let weaponTooltip = data.ArmoryEquipment.filter(armory => armory.Type === "무기")[0].Tooltip;
+        let weaponQuality = JSON.parse(weaponTooltip).Element_001.value.qualityValue
+        let offcialCombatWeapon = Modules.officialCombatDealer.attack.weapon_quality[weaponQuality];
+        return offcialCombatWeapon;
+    };
+    officialCombatObj.weapon = weaponQualityToOffcialCombat() / 10000 + 1;
+
+    /* **********************************************************************************************************************
+     * name		              :	  characterArkToOffcialCombat
+     * version                :   2.0
+     * description            :   
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    function characterArkToOffcialCombat() {
+        let result = {};
+        let evolutionValue = (Math.max(data.ArkPassive.Points[0].Value - 40, 0) * 50) / 10000 + 1;
+        let enlightValue = (Math.max(data.ArkPassive.Points[1].Value, 0) * 70) / 10000 + 1;
+        let leapValue = (Math.max(data.ArkPassive.Points[2].Value, 0) * 20) / 10000 + 1;
+
+        result.evolution = evolutionValue;
+        result.enlight = enlightValue;
+        result.leap = leapValue;
+        return result;
+    }
+    officialCombatObj.arkpassive = characterArkToOffcialCombat();
+
+    /* **********************************************************************************************************************
+     * name		              :	  characterKarmaToOffcialCombat
+     * version                :   2.0
+     * description            :   
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    function characterKarmaToOffcialCombat() {
+        let result = {};
+        result.evolutionKarmaValue = (karmaObj.evolutionKarmaRank * 0.6) / 100 + 1 ;
+        result.leapKarmaValue = (karmaObj.leapKarmaLevel * 0.02) / 100 + 1 ;
+        return result;
+    }
+    officialCombatObj.karma = characterKarmaToOffcialCombat();
+
+    /* **********************************************************************************************************************
+     * name		              :	  engravingToOffcialCombat
+     * version                :   2.0
+     * description            :   
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    function engravingToOffcialCombat() {
+        let arkpassiveValueObj = data.ArmoryEngraving.ArkPassiveEffects.map(arkpassive => {
+            //AbilityStoneLevel * 20 + level + 9 = 활성도 //유물
+            //AbilityStoneLevel * 20 + level + 5 = 활성도 //전설
+            let result = {};
+            let activityValue = 0;
+            let stoneLevel = arkpassive.AbilityStoneLevel ? arkpassive.AbilityStoneLevel : 0;
+            if (arkpassive.Grade === "유물") {
+                activityValue = stoneLevel * 20 + arkpassive.Level + 9;
+            } else if (arkpassive.Grade === "전설") {
+                activityValue = stoneLevel * 20 + arkpassive.Level + 5;
+            } else {
+                activityValue = 0;
+            }
+            result[arkpassive.Name] = activityValue;
+            return result;
+        })
+
+        let offcialCombatEngraving = arkpassiveValueObj.map(arkpassive => {
+            let arkpassiveName = Object.keys(arkpassive)[0];
+            let arkpassiveValue = arkpassive[arkpassiveName]
+            let offcialArkpassiveObj = Modules.officialCombatDealer.attack.ability_attack[arkpassiveName];
+            let result = {
+                name: arkpassiveName,
+                value: offcialArkpassiveObj[arkpassiveValue] / 10000 + 1
+            }
+            return result;
+        })
+
+        return offcialCombatEngraving;
+    };
+    officialCombatObj.engraving = engravingToOffcialCombat();
+
+    /* **********************************************************************************************************************
+     * name		              :	  elixirToOffcialCombat
+     * version                :   2.0
+     * description            :   
+     * USE_TN                 :   사용
+     *********************************************************************************************************************** */
+    function elixirToOffcialCombat() {
+        let helmetElxirTooltip = data.ArmoryEquipment.filter(helmet => helmet.Type === "투구")[0].Tooltip;
+        let result = {};
+
+        const elixirValues = {
+            "행운 (1단계)": 1.05,
+            "행운 (2단계)": 1.10,
+            "회심 (1단계)": 1.060,
+            "회심 (2단계)": 1.12,
+            "달인 (1단계)": 1.06,
+            "달인 (2단계)": 1.12,
+            "강맹 (1단계)": 1.035,
+            "강맹 (2단계)": 1.070,
+            "칼날 방패 (1단계)": 1.04,
+            "칼날 방패 (2단계)": 1.08,
+            "선봉대 (1단계)": 1.06,
+            "선봉대 (2단계)": 1.11,
+            "선각자 (2단계)": 1.05,
+            "진군 (1단계)": 1.02,
+            "진군 (2단계)": 1.02
+        };
+        for (const elixirName in elixirValues) {
+            if (helmetElxirTooltip.includes(elixirName)) {
+                // console.log(`${elixirName} 엘릭서 효과가 있습니다. 값: ${elixirValues[elixirName]}`);
+                result.set = elixirValues[elixirName];
+            }
+        }
+
+
+        const allElixirScores = armoryInfoExtract().flatMap(armory => {
+            const ELIXIR_VALUES_MAP = Modules.officialCombatDealer.attack.elixir_grade_attack;
+            // 각 아이템의 elixir 배열을 처리합니다.
+            if (armory.elixir && armory.elixir.length > 0) {
+                return armory.elixir.map(elixir => {
+                    const elixirKey = `${elixir.name} ${elixir.level}`;
+                    let value = 0;
+
+                    // ELIXIR_VALUES_MAP에서 해당 엘릭서의 값을 찾습니다.
+                    if (ELIXIR_VALUES_MAP.hasOwnProperty(elixirKey)) {
+                        value = ELIXIR_VALUES_MAP[elixirKey];
+                    }
+
+                    // 원하시는 형태로 새로운 객체를 반환합니다.
+                    const resultObject = {
+                        name: elixirKey,
+                        value: value / 10000 + 1
+                    };
+                    return resultObject;
+                });
+            }
+            return [];
+        });
+        result.armoryValue = allElixirScores;
+        // 결과 확인
+
+        return result;
+    };
+    officialCombatObj.elixir = elixirToOffcialCombat();
+
+    // 엘릭서2. 각 개별 엘릭서 요소마다 들어가는 점수
+
+
     /* **********************************************************************************************************************
      * name		              :	  
      * version                :   2.0
      * description            :   export할 값들을 정리
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
+    console.log("공식 전투력 필터", Modules.officialCombatDealer)
+    console.log("officialCombatObj", officialCombatObj)
     let extractValue = {
         defaultObj,
         engObj,

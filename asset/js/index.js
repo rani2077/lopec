@@ -840,6 +840,14 @@ let noticeArry = [
         감사합니다.`
         
     },
+        {
+        name: `<em style="font-weight:900;font-size:17px;"> 25년 7월 2주차 중앙값 통계 </em>`,
+        desc:
+        `7월 2주차 중앙값 통계입니다.
+        
+        <img src="/asset/image/median-20250709.png">`
+        
+    },
 ]
 
 // notice 공지 생성
