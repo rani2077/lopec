@@ -1711,14 +1711,20 @@ export async function getCharacterProfile(data, dataBase) {
                     //console.log(toolTip)
                     let gemName;
                     let level = null;
-                    if (results[1].match(/홍염|작열|멸화|겁화|광휘/) != null) {
-                        gemName = results[1].match(/홍염|작열|멸화|겁화|딜광휘|쿨광휘/)[0];
-                        level = Number(results[1].match(/(\d+)레벨/)[1])
+                    const gemMatch = results[1].match(/홍염|작열|멸화|겁화|딜광휘|쿨광휘/);
+                    
+                    if (gemMatch) {
+                        gemName = gemMatch[0];
+                        
+                        const levelMatch = results[1].match(/(\d+)레벨/);
+                        if (levelMatch) {
+                            level = Number(levelMatch[1]);
+                        }
                     } else {
-                        gemName = "기타보석"
+                        gemName = "기타보석";
                     }
                     let obj = { skill: "직업보석이 아닙니다", name: gemName, level: level };
-                    gemSkillArry.push(obj)
+                    gemSkillArry.push(obj);
 
                 }
 
