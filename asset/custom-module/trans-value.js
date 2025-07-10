@@ -3025,7 +3025,7 @@ export async function getCharacterProfile(data, dataBase) {
     /* **********************************************************************************************************************
      * name		              :	  engravingToOffcialCombat
      * version                :   2.0
-     * description            :   
+     * description            :   유저 각인 인겜 전투력 데이터 변환
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
     function engravingToOffcialCombat() {
@@ -3052,7 +3052,7 @@ export async function getCharacterProfile(data, dataBase) {
             let offcialArkpassiveObj = Modules.officialCombatDealer.attack.ability_attack[arkpassiveName];
             let result = {
                 name: arkpassiveName,
-                value: offcialArkpassiveObj[arkpassiveValue] / 10000 + 1
+                value: offcialArkpassiveObj ? offcialArkpassiveObj[arkpassiveValue] : 0 / 10000 + 1
             }
             return result;
         })
