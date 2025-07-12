@@ -3,14 +3,14 @@ async function importModuleManager() {
     let modules = await Promise.all([
         import(`../filter/filter.js?${Math.floor((new Date).getTime() / interValTime)}`),              // CDN 로드 주석 처리
         import(`../filter/simulator-filter.js?${Math.floor((new Date).getTime() / interValTime)}`),   // CDN 로드 주석 처리
-        import(`../filter/offcial-combat-dealer.js?${Math.floor((new Date).getTime() / interValTime)}`),   // CDN 로드 주석 처리
+        // import(`../filter/offcial-combat-dealer.js?${Math.floor((new Date).getTime() / interValTime)}`),   // CDN 로드 주석 처리
         //import("../filter/filter.js" + `?${Math.floor((new Date).getTime() / interValTime)}`),              // 기존 타임스탬프 방식 복구
         //import("../filter/simulator-filter.js" + `?${Math.floor((new Date).getTime() / interValTime)}`), // 기존 타임스탬프 방식 복구
     ])
     let moduleObj = {
         originFilter: modules[0],
         simulatorFilter: modules[1],
-        officialCombatDealer: modules[2].officialCombatDealer,
+        //officialCombatDealer: modules[2].officialCombatDealer,
     }
     return moduleObj
 }
@@ -265,6 +265,7 @@ export async function getCharacterProfile(data, dataBase) {
      *********************************************************************************************************************** */
 
     let defaultObj = {
+        combatPower: 0,
         attackPow: 0,
         baseAttackPow: 0,
         criticalChancePer: 0,
@@ -283,6 +284,7 @@ export async function getCharacterProfile(data, dataBase) {
         estherDeal: 1,
         estherSupport: 1,
     }
+    defaultObj.combatPower = parseFloat(data.ArmoryProfile.CombatPower.replace(/,/g, ''));
     data.ArmoryProfile.Stats.forEach(function (statsArry) {
         if (statsArry.Type == "공격력") {
             defaultObj.attackPow = Number(statsArry.Value)
@@ -1712,10 +1714,10 @@ export async function getCharacterProfile(data, dataBase) {
                     let gemName;
                     let level = null;
                     const gemMatch = results[1].match(/홍염|작열|멸화|겁화|딜광휘|쿨광휘/);
-                    
+
                     if (gemMatch) {
                         gemName = gemMatch[0];
-                        
+
                         const levelMatch = results[1].match(/(\d+)레벨/);
                         if (levelMatch) {
                             level = Number(levelMatch[1]);
@@ -2659,7 +2661,10 @@ export async function getCharacterProfile(data, dataBase) {
                 obj.health = totalHealth;
 
                 // 각인 정보 추출
-                const engravings = stoneParsed.Element_007?.value?.Element_000?.contentStr;
+                let engravings = stoneParsed.Element_007?.value?.Element_000?.contentStr;
+                if (!engravings) {
+                    engravings = stoneParsed.Element_006?.value?.Element_000?.contentStr;
+                }
                 let optionArray = [];
                 if (engravings) {
                     for (const key in engravings) {
@@ -2964,185 +2969,9 @@ export async function getCharacterProfile(data, dataBase) {
     /* **********************************************************************************************************************
      * name		              :	  
      * version                :   2.0
-     * description            :   로스트아크 공식 전투력 계산 관련 값 추출 목록들
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    let officialCombatObj = {};
-
-    /* **********************************************************************************************************************
-     * name		              :	  characterLevelToOffcialCombat
-     * version                :   2.0
-     * description            :   
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    function characterLevelToOffcialCombat() {
-        return Modules.officialCombatDealer.attack.level[characterLevel];
-    };
-    officialCombatObj.level = characterLevelToOffcialCombat() / 10000 + 1;
-
-    /* **********************************************************************************************************************
-     * name		              :	  weaponQualityToOffcialCombat
-     * version                :   2.0
-     * description            :   
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    function weaponQualityToOffcialCombat() {
-        //JSON.parse(equip.Tooltip).Element_001.value.qualityValue;
-        let weaponTooltip = data.ArmoryEquipment.filter(armory => armory.Type === "무기")[0].Tooltip;
-        let weaponQuality = JSON.parse(weaponTooltip).Element_001.value.qualityValue
-        let offcialCombatWeapon = Modules.officialCombatDealer.attack.weapon_quality[weaponQuality];
-        return offcialCombatWeapon;
-    };
-    officialCombatObj.weapon = weaponQualityToOffcialCombat() / 10000 + 1;
-
-    /* **********************************************************************************************************************
-     * name		              :	  characterArkToOffcialCombat
-     * version                :   2.0
-     * description            :   
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    function characterArkToOffcialCombat() {
-        let result = {};
-        let evolutionValue = (Math.max(data.ArkPassive.Points[0].Value - 40, 0) * 50) / 10000 + 1;
-        let enlightValue = (Math.max(data.ArkPassive.Points[1].Value, 0) * 70) / 10000 + 1;
-        let leapValue = (Math.max(data.ArkPassive.Points[2].Value, 0) * 20) / 10000 + 1;
-
-        result.evolution = evolutionValue;
-        result.enlight = enlightValue;
-        result.leap = leapValue;
-        return result;
-    }
-    officialCombatObj.arkpassive = characterArkToOffcialCombat();
-
-    /* **********************************************************************************************************************
-     * name		              :	  characterKarmaToOffcialCombat
-     * version                :   2.0
-     * description            :   
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    function characterKarmaToOffcialCombat() {
-        let result = {};
-        result.evolutionKarmaValue = (karmaObj.evolutionKarmaRank * 0.6) / 100 + 1 ;
-        result.leapKarmaValue = (karmaObj.leapKarmaLevel * 0.02) / 100 + 1 ;
-        return result;
-    }
-    officialCombatObj.karma = characterKarmaToOffcialCombat();
-
-    /* **********************************************************************************************************************
-     * name		              :	  engravingToOffcialCombat
-     * version                :   2.0
-     * description            :   유저 각인 인겜 전투력 데이터 변환
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    function engravingToOffcialCombat() {
-        let arkpassiveValueObj = data.ArmoryEngraving.ArkPassiveEffects.map(arkpassive => {
-            //AbilityStoneLevel * 20 + level + 9 = 활성도 //유물
-            //AbilityStoneLevel * 20 + level + 5 = 활성도 //전설
-            let result = {};
-            let activityValue = 0;
-            let stoneLevel = arkpassive.AbilityStoneLevel ? arkpassive.AbilityStoneLevel : 0;
-            if (arkpassive.Grade === "유물") {
-                activityValue = stoneLevel * 20 + arkpassive.Level + 9;
-            } else if (arkpassive.Grade === "전설") {
-                activityValue = stoneLevel * 20 + arkpassive.Level + 5;
-            } else {
-                activityValue = 0;
-            }
-            result[arkpassive.Name] = activityValue;
-            return result;
-        })
-
-        let offcialCombatEngraving = arkpassiveValueObj.map(arkpassive => {
-            let arkpassiveName = Object.keys(arkpassive)[0];
-            let arkpassiveValue = arkpassive[arkpassiveName]
-            let offcialArkpassiveObj = Modules.officialCombatDealer.attack.ability_attack[arkpassiveName];
-            let result = {
-                name: arkpassiveName,
-                value: offcialArkpassiveObj ? offcialArkpassiveObj[arkpassiveValue] : 0 / 10000 + 1
-            }
-            return result;
-        })
-
-        return offcialCombatEngraving;
-    };
-    officialCombatObj.engraving = engravingToOffcialCombat();
-
-    /* **********************************************************************************************************************
-     * name		              :	  elixirToOffcialCombat
-     * version                :   2.0
-     * description            :   
-     * USE_TN                 :   사용
-     *********************************************************************************************************************** */
-    function elixirToOffcialCombat() {
-        let helmetElxirTooltip = data.ArmoryEquipment.filter(helmet => helmet.Type === "투구")[0].Tooltip;
-        let result = {};
-
-        const elixirValues = {
-            "행운 (1단계)": 1.05,
-            "행운 (2단계)": 1.10,
-            "회심 (1단계)": 1.060,
-            "회심 (2단계)": 1.12,
-            "달인 (1단계)": 1.06,
-            "달인 (2단계)": 1.12,
-            "강맹 (1단계)": 1.035,
-            "강맹 (2단계)": 1.070,
-            "칼날 방패 (1단계)": 1.04,
-            "칼날 방패 (2단계)": 1.08,
-            "선봉대 (1단계)": 1.06,
-            "선봉대 (2단계)": 1.11,
-            "선각자 (2단계)": 1.05,
-            "진군 (1단계)": 1.02,
-            "진군 (2단계)": 1.02
-        };
-        for (const elixirName in elixirValues) {
-            if (helmetElxirTooltip.includes(elixirName)) {
-                // console.log(`${elixirName} 엘릭서 효과가 있습니다. 값: ${elixirValues[elixirName]}`);
-                result.set = elixirValues[elixirName];
-            }
-        }
-
-
-        const allElixirScores = armoryInfoExtract().flatMap(armory => {
-            const ELIXIR_VALUES_MAP = Modules.officialCombatDealer.attack.elixir_grade_attack;
-            // 각 아이템의 elixir 배열을 처리합니다.
-            if (armory.elixir && armory.elixir.length > 0) {
-                return armory.elixir.map(elixir => {
-                    const elixirKey = `${elixir.name} ${elixir.level}`;
-                    let value = 0;
-
-                    // ELIXIR_VALUES_MAP에서 해당 엘릭서의 값을 찾습니다.
-                    if (ELIXIR_VALUES_MAP.hasOwnProperty(elixirKey)) {
-                        value = ELIXIR_VALUES_MAP[elixirKey];
-                    }
-
-                    // 원하시는 형태로 새로운 객체를 반환합니다.
-                    const resultObject = {
-                        name: elixirKey,
-                        value: value / 10000 + 1
-                    };
-                    return resultObject;
-                });
-            }
-            return [];
-        });
-        result.armoryValue = allElixirScores;
-        // 결과 확인
-
-        return result;
-    };
-    officialCombatObj.elixir = elixirToOffcialCombat();
-
-    // 엘릭서2. 각 개별 엘릭서 요소마다 들어가는 점수
-
-
-    /* **********************************************************************************************************************
-     * name		              :	  
-     * version                :   2.0
      * description            :   export할 값들을 정리
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
-    console.log("공식 전투력 필터", Modules.officialCombatDealer)
-    console.log("officialCombatObj", officialCombatObj)
     let extractValue = {
         defaultObj,
         engObj,

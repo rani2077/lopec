@@ -26,6 +26,8 @@ export async function importModuleManager() {
         { key: 'simulatorFilter', path: '../filter/simulator-filter.js' },
         { key: 'simulatorData', path: '../filter/simulator-data.js' },
         { key: 'lopecOcr', path: '../custom-module/lopec-ocr.js' },
+        { key: 'officialCombatSimulator', path: '../js/offiicial-combat-simulator.js' },
+        { key: 'officialCombatCalculator', path: '../custom-module/official-combat-calculator.js' },
     ];
 
     const promisesToLoad = [];
@@ -1084,7 +1086,7 @@ async function simulatorInputCalc() {
             { name: "작열", level1: 6, level2: 8, level3: 10, level4: 12, level5: 14, level6: 16, level7: 18, level8: 20, level9: 22, level10: 24 },
             { name: "쿨광휘", level1: 6, level2: 8, level3: 10, level4: 12, level5: 14, level6: 16, level7: 18, level8: 20, level9: 22, level10: 24 },
         ]
-        
+
         if (!(cachedData.ArmoryGem.Gems == null) && supportCheck == "서폿") {
             cachedData.ArmoryGem.Gems.forEach(function (gem) {
                 let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약']
@@ -1781,6 +1783,9 @@ async function simulatorInputCalc() {
                 return `<em style="color:#fff;font-size:${fontSizeValue}">(▬0)</em>`;
             }
         }
+        let combatInfo = [
+            { name: "예상 전투력", value: Number(originSpecPoint.dealerAttackPowResult).toFixed(0) + compareValue(cachedDetailInfo.specPoint.dealerAttackPowResult, originSpecPoint.dealerAttackPowResult), icon: "bolt-lightning-solid" },
+        ]
         let armorInfo = [
             { name: "공격력", value: Number(originSpecPoint.dealerAttackPowResult).toFixed(0) + compareValue(cachedDetailInfo.specPoint.dealerAttackPowResult, originSpecPoint.dealerAttackPowResult), icon: "bolt-solid" },
             { name: "엘릭서", value: Number(originSpecPoint.dealerExlixirValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerExlixirValue, originSpecPoint.dealerExlixirValue), icon: "flask-solid" },
@@ -1843,6 +1848,7 @@ async function simulatorInputCalc() {
         }
         // extractValue.etcObj.supportCheck !== "서폿"
         if (!/서폿|회귀|심판자|진실된 용맹/.test(extractValue.etcObj.supportCheck) || (extractValue.engObj.dealpport === "true")) {
+            result += infoWrap("전투력", combatInfo);
             result += infoWrap("장비 효과", armorInfo);
             result += infoWrap("아크패시브", arkPassiveInfo);
             result += infoWrap("보석 효과", gemInfo);
@@ -1856,9 +1862,16 @@ async function simulatorInputCalc() {
     }
     detailAreaCreate()
 
+
+    // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
+    let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+    let officialCombatCalculatorObj = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+    console.log("공식전투력 계산결과", officialCombatCalculatorObj);
 }
 await simulatorInputCalc()
-document.body.addEventListener('change', () => { simulatorInputCalc() })
+document.body.addEventListener('change', () => {
+    simulatorInputCalc();
+})
 
 
 
