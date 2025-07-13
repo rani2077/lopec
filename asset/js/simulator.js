@@ -85,11 +85,20 @@ async function simulatorInputCalc() {
         let data = apiData.data;
         let extractValue = apiData.extractValue;
         let specPoint = apiData.calcValue;
+
         dataBaseResponse = apiData.dataBase;
         cachedDetailInfo.extractValue = extractValue;
         cachedDetailInfo.specPoint = specPoint;
         cachedData = data;
 
+        /* **********************************************************************************************************************
+        * function name		:	
+        * description       : 	공식 전투력을 캐싱처리함
+        *********************************************************************************************************************** */
+        // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
+        let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+        let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+        cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue;
 
         // await Modules.fetchApi.clearLostarkApiCache(nameParam, document.querySelector(".sc-info .spec-area span.reset")); // 캐싱없이 api갱신
         await originSpecPointToHtml(specPoint, extractValue);
@@ -1695,6 +1704,16 @@ async function simulatorInputCalc() {
     calcSpecPointToHtml();
 
     /* **********************************************************************************************************************
+    * function name		:	officialCombatCalcValue()
+    * description       : 	상세정보의 내용을 생성함
+    *********************************************************************************************************************** */
+    // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
+    let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+    let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+    console.log("공식전투력 계산결과", officialCombatCalcValue);
+
+
+    /* **********************************************************************************************************************
     * function name		:	detailAreaCreate()
     * description       : 	detail-area 상세정보의 내용을 생성함
     *********************************************************************************************************************** */
@@ -1784,7 +1803,7 @@ async function simulatorInputCalc() {
             }
         }
         let combatInfo = [
-            { name: "예상 전투력", value: Number(originSpecPoint.dealerAttackPowResult).toFixed(0) + compareValue(cachedDetailInfo.specPoint.dealerAttackPowResult, originSpecPoint.dealerAttackPowResult), icon: "bolt-lightning-solid" },
+            { name: "예상 전투력(베타)", value: compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower), icon: "bolt-lightning-solid" },
         ]
         let armorInfo = [
             { name: "공격력", value: Number(originSpecPoint.dealerAttackPowResult).toFixed(0) + compareValue(cachedDetailInfo.specPoint.dealerAttackPowResult, originSpecPoint.dealerAttackPowResult), icon: "bolt-solid" },
@@ -1863,10 +1882,6 @@ async function simulatorInputCalc() {
     detailAreaCreate()
 
 
-    // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
-    let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
-    let officialCombatCalculatorObj = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
-    console.log("공식전투력 계산결과", officialCombatCalculatorObj);
 }
 await simulatorInputCalc()
 document.body.addEventListener('change', () => {

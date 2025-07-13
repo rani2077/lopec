@@ -848,6 +848,15 @@ let noticeArry = [
         <img src="/asset/image/median-20250709.png">`
         
     },
+        {
+        name: `<em style="font-weight:900;font-size:17px;"> 2025-07-13 업데이트 안내 </em>`,
+        desc:
+        `● 딜러 직업군 전투력 시뮬레이팅 기능 업데이트
+        &nbsp;&nbsp; - 이제 시뮬레이터를 통해 예상 전투력을 확인할 수 있습니다.
+        &nbsp;&nbsp;  우선 딜러 직업군만 제공되며, 인게임의 소수점 처리 방식을 정확히 파악할 수 없어
+        &nbsp;&nbsp;  1/100 단위로 약간의 오차가 존재할 수 있으니, 감안해주시면 감사하겠습니다.
+        &nbsp;&nbsp;  관련 데이터를 공유해주신 귀인께 진심으로 감사의 말씀을 드립니다.`
+    },
 ]
 
 // notice 공지 생성

@@ -88,10 +88,10 @@ export async function simulatorToOffcialCombatObj() {
         let leapElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.leap .title").textContent);
 
         let evolutionValue = (Math.max(evolutionElementValue - 40, 0) * 50) / 10000 + 1;
-        let enlightValue = (Math.max(enlightElementValue, 0) * 70) / 10000 + 1;
+        let enlightValue = Math.min((Math.max(enlightElementValue, 0) * 70), (100 * 70)) / 10000 + 1;
         let leapValue = (Math.max(leapElementValue, 0) * 20) / 10000 + 1;
 
-        return evolutionValue * enlightValue * leapValue;
+        return (evolutionValue * enlightValue * leapValue).toFixed(4);
     };
     // console.log("아크패시브", characterArkToOffcialCombat());
 
@@ -455,7 +455,7 @@ export async function simulatorToOffcialCombatObj() {
         //     weapon: weaponValue / 10000 + 1,
         //     pants: pantsValue / 10000 + 1
         // }
-        return armoryTotalHyper * weaponValue / 10000 + 1 * pantsValue / 10000 + 1;
+        return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1);
     };
     // console.log("초월", hyperOffcialCombat());
 
