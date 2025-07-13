@@ -468,10 +468,17 @@ export async function simulatorToOffcialCombatObj() {
     function statsOffcialCombat() {
         let baseStats = apiData.dataBase.totalStatus;
 
-        let statsElement = Array.from(document.querySelector(".accessory-area .accessory-item.bangle").querySelectorAll(".option-wrap input.option"));
-        let statsList = statsElement.map(element => Number(element.value))
-        let totalStats = (Number(statsList.reduce((a, b) => a + b)) + baseStats) * 3 / 10000 + 1;
+        let statsElement = Array.from(document.querySelector(".accessory-area .accessory-item.bangle").querySelectorAll(".option-wrap .option-item"));
+        let statsList = statsElement.map(element => {
+            let statsName = element.querySelector("select.stats").value;
+            let statsValue = Number(element.querySelector("input.option").value);
+            if (!/crit|special|haste/.test(statsName)) {
+                statsValue = 0;
+            };
+            return statsValue;
+        })
 
+        let totalStats = (Number(statsList.reduce((a, b) => a + b)) + baseStats) * 3 / 10000 + 1;
         return totalStats;
     };
     // console.log("특성", statsOffcialCombat());
