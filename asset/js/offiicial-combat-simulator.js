@@ -192,7 +192,6 @@ export async function simulatorToOffcialCombatObj() {
             const match = levelString.match(/level:(\d+)/);
             return match ? parseInt(match[1], 10) : 0;
         });
-
         let helmetElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[0].querySelector(".elixir-wrap .elixir");
         let helmetElixirName = helmetElement.options[helmetElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
         // let helmetElixirLevel = Number(helmetElement.value.split("|").filter(elixir => elixir.includes("level"))[0].split(":")[1]);
@@ -213,6 +212,7 @@ export async function simulatorToOffcialCombatObj() {
             { name: '칼날 방패', level: 2, value: 1.08 },
             { name: '선봉대', level: 1, value: 1.06 },
             { name: '선봉대', level: 2, value: 1.11 },
+            { name: '선각자', level: 1, value: 1 },
             { name: '선각자', level: 2, value: 1.05 },
             { name: '진군', level: 1, value: 1.02 },
             { name: '진군', level: 2, value: 1.02 }
@@ -227,7 +227,7 @@ export async function simulatorToOffcialCombatObj() {
                 return a + b;
             }, 0);
             let elixirGrade = 0;
-            if (totalSum >= 45) {
+            if (totalSum >= 40) {
                 elixirGrade = 2;
             } else if (totalSum >= 35) {
                 elixirGrade = 1;
