@@ -101,13 +101,13 @@
     width: calc(100% - 30px);
     padding-left: 30px;
     font-size: 18px;
-    background:none;
-    color:inherit;
+    background: none;
+    color: inherit;
 }
 
 .sc-main-search .group-search .search-btn {
     width: 50px;
-    background:none;
+    background: none;
 }
 
 .notice-wrapper {
@@ -314,15 +314,21 @@
     background: #a7a7a7;
 }
 
-.sc-rank .group-rank .rank-area .rank-box:before {
-    content: "준비중";
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.sc-rank .group-rank .rank-area .rank-box .rank {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
+.sc-rank .group-rank .rank-area .rank-box .name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 125px;
+}
+.sc-rank .group-rank .rank-area .rank-box .score{
+    width: 57px;
+}
 
 .sc-info {
     padding-top: 0;

@@ -409,7 +409,7 @@ let noticeArry = [
             &nbsp;&nbsp; 면 매우 감사하겠습니다.
             
             ● 일부 직업군 메인 화면과 시뮬레이터의 점수가 다른 오류 수정`
-    
+
     },
     {
         name: `2025-04-15 라이브 방송 LOPEC-ON 안내`,
@@ -422,12 +422,12 @@ let noticeArry = [
     
             <a href="https://chzzk.naver.com/addbdedc025f2cffeb2c4855c43a65e9" target="_blink" style="color:blue;text-decoration:underline;"> 방송 링크는 여기를 클릭!</a>
             `
-    
+
     },
     {
         name: `2025-04-16 업데이트 안내`,
         desc:
-        `● 로펙의 신기능 "로펙 딸깍"이 추가되었습니다.
+            `● 로펙의 신기능 "로펙 딸깍"이 추가되었습니다.
           &nbsp;&nbsp; 공대장님들을 위한 속도 이슈 없는 초간단 간이 검색기 입니다.
           &nbsp;&nbsp; 사이트 내에 떠다니는 돋보기 아이콘을 통해 이용 가능합니다.
           &nbsp;&nbsp; 로펙딸깍을 켜지 않고 아이콘인 상태에서 자유롭게 이동 가능합니다.
@@ -435,12 +435,12 @@ let noticeArry = [
 
           &nbsp;&nbsp; <a href="https://www.inven.co.kr/board/lostark/6271/1747273?my=chuchu" target="_blink" style="color:blue;text-decoration:underline;">딸깍 기능 시연 영상</a>
         `
-        
+
     },
     {
         name: `2025-04-17 업데이트 안내`,
         desc:
-        `● DB서버 이전 작업을 진행하였습니다.
+            `● DB서버 이전 작업을 진행하였습니다.
           &nbsp;&nbsp; 기본 검색 속도가 더욱 쾌적해집니다. 
           &nbsp;&nbsp; 이제 피크시간에도 이전보다 훨씬 빠른 검색 속도를 제공합니다.
           &nbsp;&nbsp; 랭킹 정보는 약 3-5일간 제공이 되지 않을 예정입니다. 양해바랍니다.
@@ -485,15 +485,15 @@ let noticeArry = [
     {
         name: `25년 4월 3주차 중앙값 통계`,
         desc:
-        `4월 3주차 중앙값 통계입니다.
+            `4월 3주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250415.png">`
-        
+
     },
     {
         name: `2025-04-19 업데이트 안내 - 2`,
         desc:
-        `● 진화 카르마 알고리즘 5차 고도화
+            `● 진화 카르마 알고리즘 5차 고도화
         &nbsp;&nbsp; 알고리즘 고도화를 진행했습니다.
         &nbsp;&nbsp; 슬슬 마무리단계로 예상되오며, 추정치 오류시 즉시 문의주시면 감사하겠습니다.
         
@@ -509,10 +509,10 @@ let noticeArry = [
     {
         name: `25년 4월 4주차 중앙값 통계`,
         desc:
-        `4월 4주차 중앙값 통계입니다.
+            `4월 4주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250422.png">`
-        
+
     },
     {
         name: `2025-04-22 업데이트 안내`,
@@ -556,10 +556,10 @@ let noticeArry = [
     {
         name: `25년 4월 5주차 중앙값 통계`,
         desc:
-        `4월 5주차 중앙값 통계입니다.
+            `4월 5주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250501.png">`
-        
+
     },
     {
         name: `서폿 대개편에 따른 안내 및 권고`,
@@ -717,7 +717,7 @@ let noticeArry = [
     
             <a href="https://chzzk.naver.com/addbdedc025f2cffeb2c4855c43a65e9" target="_blink" style="color:blue;text-decoration:underline;"> 방송 링크는 여기를 클릭!</a>
             `
-    
+
     },
     {
         name: `진화 카르마 사전 등록기간 안내`,
@@ -734,7 +734,7 @@ let noticeArry = [
             사전 등록 기간이 끝나도 언제든지 등록 및 갱신이 가능합니다.
             감사합니다.`
     },
-        {
+    {
         name: `2025-05-25 업데이트 안내`,
         desc:
             `● 진화 카르마 랭크가 점수에 포함됩니다.
@@ -762,31 +762,31 @@ let noticeArry = [
     {
         name: `25년 5월 4주차 중앙값 통계`,
         desc:
-        `5월 4주차 중앙값 통계입니다.
+            `5월 4주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250529.png">`
-        
+
     },
     {
         name: `25년 6월 1주차 중앙값 통계`,
         desc:
-        `6월 1주차 중앙값 통계입니다.
+            `6월 1주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250604.png">`
-        
+
     },
     {
         name: `25년 6월 2주차 중앙값 통계`,
         desc:
-        `6월 2주차 중앙값 통계입니다.
+            `6월 2주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250612.png">`
-        
+
     },
     {
         name: `로스트아크 대규모 패치에 따른 안내사항`,
         desc:
-        `안녕하세요, 개발자 청염각입니다.
+            `안녕하세요, 개발자 청염각입니다.
         금일 로스트아크의 대규모 패치가 진행되었습니다.
         이에 따른 api 구조가 대폭 변경 되었고, 대응 작업을 열심히 진행 중입니다.
         현재 검색이 안 되던 문제는 해결을 완료하여 검색이 가능한 상태입니다.
@@ -794,12 +794,12 @@ let noticeArry = [
 
         시뮬레이터, 서폿 개편, 밸런스 패치, 신직업 등 조속히 대응을 완료하도록 하겠습니다.
         감사합니다.`
-        
+
     },
-        {
+    {
         name: `2025-06-28 업데이트 안내`,
         desc:
-        `안녕하세요, 개발자 청염각입니다.
+            `안녕하세요, 개발자 청염각입니다.
         대규모 패치 이후, 계속된 대응 작업으로 인해 현재 어느정도 정상화가 완료 되었습니다.
 
         이번 패치를 통해 서폿 직업군이 정말 대격변 수준으로 바뀌었는데요.
@@ -814,12 +814,12 @@ let noticeArry = [
         
         ● 서폿 팔찌 효율 계산식 수정
         &nbsp;&nbsp; -서폿 직업군의 팔찌 효율 계산식을 재작성하여 수치를 안정화 하였습니다. 점수에는 영향 없습니다.`
-        
+
     },
     {
         name: `2025-06-28 업데이트 안내 - 2`,
         desc:
-        `● 서폿 직업군 깨달음 포인트 오류 수정
+            `● 서폿 직업군 깨달음 포인트 오류 수정
         &nbsp;&nbsp; - 서폿 직업군의 깨달음 포인트가 일정 수치 미만일 경우 점수가 대폭 하락 하는 이슈 수정
 
         ● 서폿 직업군 깨달음 밸류 재조정
@@ -827,31 +827,31 @@ let noticeArry = [
 
         현재 서폿 대격변으로 점수가 자주 변동하고 있습니다. 죄송합니다.
         빠른 시일 내로 조정 작업을 마무리하여 점수를 안정화 할 수 있도록 하겠습니다.`
-        
+
     },
     {
         name: `<em style="font-weight:900;font-size:17px;"> 서폿 계산식 개편 사전 안내 </em>`,
         desc:
-        `안녕하세요, 개발자 청염각입니다.
+            `안녕하세요, 개발자 청염각입니다.
         이번 로스트아크의 서폿 개편 패치로 인해 서폿 직업군의 깨달음 노드의 밸류 및 효율에 큰 변화가 일어났습니다.
         현재 계산식을 전면적으로 재검토하여 한번 갈아 엎을 준비를 하고 있습니다.
         지금 제공되는 점수는 유저 여러분의 편의성을 위하여 기존 계산식에 깨달음 밸류값을 약간 높인 수준의 임시처리가 되어있는 상황입니다.
         곧 각 깨달음 노드의 정확한 수치 및 밸류를 수치로 정립하여 계산식에 도입할 예정입니다.
         감사합니다.`
-        
+
     },
-        {
+    {
         name: `<em style="font-weight:900;font-size:17px;"> 25년 7월 2주차 중앙값 통계 </em>`,
         desc:
-        `7월 2주차 중앙값 통계입니다.
+            `7월 2주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250709.png">`
-        
+
     },
-        {
+    {
         name: `<em style="font-weight:900;font-size:17px;"> 2025-07-13 업데이트 안내 </em>`,
         desc:
-        `● 딜러 직업군 전투력 시뮬레이팅 기능 업데이트
+            `● 딜러 직업군 전투력 시뮬레이팅 기능 업데이트
         &nbsp;&nbsp; - 이제 시뮬레이터를 통해 예상 전투력을 확인할 수 있습니다.
         &nbsp;&nbsp;  우선 딜러 직업군만 제공되며, 인게임의 소수점 처리 방식을 정확히 파악할 수 없어
         &nbsp;&nbsp;  1/100 단위로 약간의 오차가 존재할 수 있으니, 감안해주시면 감사하겠습니다.
@@ -915,3 +915,35 @@ document.querySelectorAll(".desc").forEach(function (noticeDesc) {
     noticeDesc.innerHTML = noticeDesc.innerHTML.split("\n").join("<br>");
 });
 
+async function leaderBoard() {
+    let dealerRequest = await fetch("https://api.lopec.kr/api/ranking/deal-top?page=0&size=50");
+    let dealerRanking = await dealerRequest.json();
+    let supportRequest = await fetch("https://api.lopec.kr/api/ranking/support-top?page=0&size=50");
+    let supportRanking = await supportRequest.json();
+    console.log(dealerRanking)
+    console.log(supportRanking)
+    let dealerRankingHTML = "";
+    dealerRanking.content.forEach((rank, idx) => {
+        dealerRankingHTML +=
+            `<a href="/search/search.html?headerCharacterName=${rank.nickName}" target="_blank" class="rank" title="${rank.nickName}님의 스펙포인트 확인하기">
+                <span class="name">${idx + 1}. ${rank.nickName}</span>
+                <span class="score">${rank.score.toFixed(2)}</span>
+            </a>`
+    })
+    let supportRankingHTML = "";
+    supportRanking.content.forEach((rank, idx) => {
+        supportRankingHTML +=
+            `<a href="/search/search.html?headerCharacterName=${rank.nickName}" target="_blank" class="rank" title="${rank.nickName}님의 스펙포인트 확인하기">
+                <span class="name">${idx + 1}. ${rank.nickName}</span>
+                <span class="score">${rank.score.toFixed(2)}</span>
+            </a>`
+    })
+
+    let rankElement = document.querySelector(".group-rank .rank-area");
+    let dealerElement = document.querySelector(".rank-box.dealer");
+    dealerElement.insertAdjacentHTML("beforeend", dealerRankingHTML);
+    let supportElement = document.querySelector(".rank-box.support");
+    supportElement.insertAdjacentHTML("beforeend", supportRankingHTML);
+
+};
+leaderBoard();
