@@ -3499,8 +3499,8 @@ async function selectCreate(data, Modules) {
         }
 
     }
-    armoryTierAutoSelect()
-    hyperStageToStarCreate()
+    armoryTierAutoSelect();
+    hyperStageToStarCreate();
 
     /* **********************************************************************************************************************
     * function name		:	keppAdvancedUpgradeValue
@@ -3734,6 +3734,164 @@ async function selectCreate(data, Modules) {
     }
     avgLevelKarmaYN()
 
+    /* **********************************************************************************************************************
+    * function name		:	enlightKarmaNodeList
+    * description	    : 	도약카르마 노드 선택(서폿전용)
+    *********************************************************************************************************************** */
+    function enlightKarmaNodeList() {
+        let arkListElement = document.querySelector(".ark-area .ark-list.enlightenment .ark-item.node");
+        let firstClass = cachedDetailInfo.extractValue.etcObj.supportCheck;
+        let secondClass = cachedDetailInfo.extractValue.etcObj.characterClass;
+
+        // 1. 직업 목록
+        const classes = [
+            { id: 'supp_dohwaga', name: '서폿 도화가' },
+            { id: 'supp_holyknight', name: '서폿 홀리나이트' },
+            { id: 'supp_bard', name: '서폿 바드' },
+            { id: 'supp_valkyrie', name: '서폿 발키리' },
+        ];
+        // 2. 옵션 목록 (각 옵션이 어떤 클래스에 속하는지 classId로 참조)
+        const options = [
+            { id: 'dohwaga_option_1', classId: 'supp_dohwaga', name: '엥? 하나 더!' },
+            { id: 'dohwaga_option_2', classId: 'supp_dohwaga', name: '낙인 강화' },
+            { id: 'dohwaga_option_3', classId: 'supp_dohwaga', name: '묵법 : 접무' },
+            { id: 'holyknight_option_1', classId: 'supp_holyknight', name: '빠른 구원' },
+            { id: 'holyknight_option_2', classId: 'supp_holyknight', name: '빛의 흔적' },
+            { id: 'holyknight_option_3', classId: 'supp_holyknight', name: '신성 해방' },
+            { id: 'bard_option_1', classId: 'supp_bard', name: '포용의 세레나데' },
+            { id: 'bard_option_2', classId: 'supp_bard', name: '낙인의 세레나데' },
+            { id: 'bard_option_3', classId: 'supp_bard', name: '세레나데 코드' },
+            { id: 'valkyrie_option_1', classId: 'supp_valkyrie', name: '해방자의 흔적' },
+            { id: 'valkyrie_option_2', classId: 'supp_valkyrie', name: '빛의 검기' },
+            { id: 'valkyrie_option_3', classId: 'supp_valkyrie', name: '해방의 날개' }
+        ];
+        // 3. 레벨 목록 (각 레벨이 어떤 옵션에 속하는지 optionId로 참조)
+        const levels = [
+            // 도화가 : 엥? 하나 더!
+            { optionId: 'dohwaga_option_1', value: 'atk:0' },
+            { optionId: 'dohwaga_option_1', value: 'atk:0' },
+            { optionId: 'dohwaga_option_1', value: 'atk:1' },
+            { optionId: 'dohwaga_option_1', value: 'atk:2' },
+            { optionId: 'dohwaga_option_1', value: 'atk:3' },
+            { optionId: 'dohwaga_option_1', value: 'atk:4' },
+            // 도화가 : 낙인 강화
+            { optionId: 'dohwaga_option_2', value: 'atk:0' },
+            { optionId: 'dohwaga_option_2', value: 'atk:0' },
+            { optionId: 'dohwaga_option_2', value: 'atk:1' },
+            { optionId: 'dohwaga_option_2', value: 'atk:2' },
+            { optionId: 'dohwaga_option_2', value: 'atk:3' },
+            { optionId: 'dohwaga_option_2', value: 'atk:4' },
+            // 도화가 : 묵법 : 접무
+            { optionId: 'dohwaga_option_3', value: 'atk:0' },
+            { optionId: 'dohwaga_option_3', value: 'atk:0.1' },
+            { optionId: 'dohwaga_option_3', value: 'atk:0.15' },
+            { optionId: 'dohwaga_option_3', value: 'atk:0.2' },
+            // 홀나 : 빠른 구원
+            { optionId: 'holyknight_option_1', value: 'atk:0' },
+            { optionId: 'holyknight_option_1', value: 'atk:0' },
+            { optionId: 'holyknight_option_1', value: 'atk:1' },
+            { optionId: 'holyknight_option_1', value: 'atk:2' },
+            { optionId: 'holyknight_option_1', value: 'atk:3' },
+            { optionId: 'holyknight_option_1', value: 'atk:4' },
+            // 홀나 : 빛의 흔적
+            { optionId: 'holyknight_option_2', value: 'atk:0' },
+            { optionId: 'holyknight_option_2', value: 'atk:0' },
+            { optionId: 'holyknight_option_2', value: 'atk:1' },
+            { optionId: 'holyknight_option_2', value: 'atk:2' },
+            { optionId: 'holyknight_option_2', value: 'atk:3' },
+            { optionId: 'holyknight_option_2', value: 'atk:4' },
+            // 홀나 : 신성 해방
+            { optionId: 'holyknight_option_3', value: 'atk:0' },
+            { optionId: 'holyknight_option_3', value: 'atk:0.1' },
+            { optionId: 'holyknight_option_3', value: 'atk:0.15' },
+            { optionId: 'holyknight_option_3', value: 'atk:0.2' },
+            // 바드 : 포용의 세레나데
+            { optionId: 'bard_option_1', value: 'atk:0' },
+            { optionId: 'bard_option_1', value: 'atk:0' },
+            { optionId: 'bard_option_1', value: 'atk:1' },
+            { optionId: 'bard_option_1', value: 'atk:2' },
+            { optionId: 'bard_option_1', value: 'atk:3' },
+            { optionId: 'bard_option_1', value: 'atk:40' },
+            // 바드 : 낙인의 세레나데
+            { optionId: 'bard_option_2', value: 'atk:0' },
+            { optionId: 'bard_option_2', value: 'atk:0' },
+            { optionId: 'bard_option_2', value: 'atk:1' },
+            { optionId: 'bard_option_2', value: 'atk:2' },
+            { optionId: 'bard_option_2', value: 'atk:3' },
+            { optionId: 'bard_option_2', value: 'atk:4' },
+            // 바드 : 세레나데 코드
+            { optionId: 'bard_option_3', value: 'atk:0' },
+            { optionId: 'bard_option_3', value: 'atk:0.1' },
+            { optionId: 'bard_option_3', value: 'atk:0.15' },
+            { optionId: 'bard_option_3', value: 'atk:0.2' },
+            // 발키리 : 해방자의 흔적
+            { optionId: 'valkyrie_option_1', value: 'atk:0' },
+            { optionId: 'valkyrie_option_1', value: 'atk:0' },
+            { optionId: 'valkyrie_option_1', value: 'atk:1' },
+            { optionId: 'valkyrie_option_1', value: 'atk:2' },
+            { optionId: 'valkyrie_option_1', value: 'atk:3' },
+            { optionId: 'valkyrie_option_1', value: 'atk:4' },
+            // 발키리 : 빛의 검기
+            { optionId: 'valkyrie_option_2', value: 'atk:0' },
+            { optionId: 'valkyrie_option_2', value: 'atk:0' },
+            { optionId: 'valkyrie_option_2', value: 'atk:1' },
+            { optionId: 'valkyrie_option_2', value: 'atk:2' },
+            { optionId: 'valkyrie_option_2', value: 'atk:3' },
+            { optionId: 'valkyrie_option_2', value: 'atk:4' },
+            // 발키리 : 해방의 날개
+            { optionId: 'valkyrie_option_3', value: 'atk:0' },
+            { optionId: 'valkyrie_option_3', value: 'atk:0.1' },
+            { optionId: 'valkyrie_option_3', value: 'atk:0.15' },
+            { optionId: 'valkyrie_option_3', value: 'atk:0.2' },
+        ];
+
+        function generateSelectsForClass(classId) {
+            let selectHtmlStrings = [];
+
+            const classOptions = options.filter(option => option.classId === classId);
+
+            classOptions.forEach(option => {
+                let optionsHtml = '';
+                const optionLevels = levels.filter(level => level.optionId === option.id);
+
+                // 각 레벨로 <option> 태그를 생성합니다.
+                // **변경 사항:** level.value 대신 index를 사용합니다.
+                optionLevels.forEach((level, index) => {
+                    // index는 0부터 시작하므로 그대로 사용하면 0레벨, 1레벨... 이 됩니다.
+                    // 만약 1레벨부터 시작하게 하고 싶다면 'index + 1'을 사용하세요.
+                    const displayLevel = index; // 0레벨부터 시작
+                    // const displayLevel = index + 1; // 1레벨부터 시작
+
+                    const optionText = `${option.name} LV ${displayLevel}`;
+                    optionsHtml += `<option value="${level.value};">${optionText}</option>`;
+                });
+
+                const selectString =
+                    `<select name="${option.id}">
+                        ${optionsHtml}
+                    </select>`;
+                selectHtmlStrings.push(selectString);
+            });
+
+            return selectHtmlStrings;
+        }
+        classes.forEach(characterClass => {
+            if (characterClass.name === `${firstClass} ${secondClass}`) {
+                console.log(generateSelectsForClass(characterClass.id))
+                arkListElement.insertAdjacentHTML("beforeend", generateSelectsForClass(characterClass.id).join(""));
+            }
+        })
+        // let teafeaefaefaesjfiale = "";
+
+        // let leapNodeHTML =
+        //     `<select>
+        //         <option value="atk:4;">엥? 하나 더! LV 1</option>
+        //         <option value="atk:5;">엥? 하나 더! LV 2</option>
+        //     </select>`
+        // arkListElement.insertAdjacentHTML("beforeend", leapNodeHTML);
+
+    };
+    enlightKarmaNodeList();
     /* **********************************************************************************************************************
     * function name		:	weaponQualitySelect
     * description	    : 	무기의 품질을 자동으로 선택함

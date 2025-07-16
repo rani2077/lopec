@@ -476,3 +476,14 @@ input[type=number]::-ms-expand {
     border-left: none;
     border-radius: 0 4px 4px 0;
 }
+
+.group-equip .ark-list .ark-item.node {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.group-equip .ark-list .ark-item.node select {
+    width: 100%;
+    height: 21px;
+}
