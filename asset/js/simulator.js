@@ -1279,76 +1279,52 @@ async function simulatorInputCalc() {
 
         if (enlightElement >= 100) { // enlightElement == 깨달음수치
             result.enlightenmentDamage += 1.42
-            result.enlightenmentBuff += 1.356
         } else if (enlightElement >= 98) {
             result.enlightenmentDamage += 1.40
-            result.enlightenmentBuff += 1.354
         } else if (enlightElement >= 97) {
             result.enlightenmentDamage += 1.37
-            result.enlightenmentBuff += 1.352
         } else if (enlightElement >= 96) {
             result.enlightenmentDamage += 1.37
-            result.enlightenmentBuff += 1.35
         } else if (enlightElement >= 95) {
             result.enlightenmentDamage += 1.36
-            result.enlightenmentBuff += 1.343
         } else if (enlightElement >= 94) {
             result.enlightenmentDamage += 1.36
-            result.enlightenmentBuff += 1.3425
         } else if (enlightElement >= 93) {
             result.enlightenmentDamage += 1.35
-            result.enlightenmentBuff += 1.342
         } else if (enlightElement >= 92) {
             result.enlightenmentDamage += 1.35
-            result.enlightenmentBuff += 1.3415
         } else if (enlightElement >= 90) {
             result.enlightenmentDamage += 1.34
-            result.enlightenmentBuff += 1.341
         } else if (enlightElement >= 88) {
             result.enlightenmentDamage += 1.33
-            result.enlightenmentBuff += 1.34
         } else if (enlightElement >= 86) {
             result.enlightenmentDamage += 1.28
-            result.enlightenmentBuff += 1.326
         } else if (enlightElement >= 84) {
             result.enlightenmentDamage += 1.27
-            result.enlightenmentBuff += 1.324
         } else if (enlightElement >= 82) {
             result.enlightenmentDamage += 1.26
-            result.enlightenmentBuff += 1.322
         } else if (enlightElement >= 80) {
             result.enlightenmentDamage += 1.25
-            result.enlightenmentBuff += 1.32
         } else if (enlightElement >= 78) {
             result.enlightenmentDamage += 1.18
-            result.enlightenmentBuff += 1.31
         } else if (enlightElement >= 76) {
             result.enlightenmentDamage += 1.17
-            result.enlightenmentBuff += 1.31
         } else if (enlightElement >= 74) {
             result.enlightenmentDamage += 1.16
-            result.enlightenmentBuff += 1.30
         } else if (enlightElement >= 72) {
             result.enlightenmentDamage += 1.15
-            result.enlightenmentBuff += 1.29
         } else if (enlightElement >= 64) {
             result.enlightenmentDamage += 1.13
-            result.enlightenmentBuff += 1.28
         } else if (enlightElement >= 56) {
             result.enlightenmentDamage += 1.125
-            result.enlightenmentBuff += 1.27
         } else if (enlightElement >= 48) {
             result.enlightenmentDamage += 1.12
-            result.enlightenmentBuff += 1.26
         } else if (enlightElement >= 40) {
             result.enlightenmentDamage += 1.115
-            result.enlightenmentBuff += 1.25
         } else if (enlightElement >= 32) {
             result.enlightenmentDamage += 1.11
-            result.enlightenmentBuff += 1.24
         } else if (enlightElement >= 24) {
             result.enlightenmentDamage += 1.10
-            result.enlightenmentBuff += 1.23
         } else {
             result.enlightenmentDamage += 1
         }
@@ -1388,6 +1364,7 @@ async function simulatorInputCalc() {
         result.evolutionBuff = evloutionArkCheck().evolutionBuff;
         result.stigmaPer += evloutionArkCheck().stigmaPer + enlightArkCheck().stigmaPer;
         result.cdrPercent = leapArkCheck().cdrPercent
+        result.enlightenmentBuff += enlightArkCheck().enlightenmentBuff;
         return result
     }
     /* **********************************************************************************************************************
@@ -1458,8 +1435,22 @@ async function simulatorInputCalc() {
     * description	    : 	깨달음 노드 검사
     *********************************************************************************************************************** */
     function enlightArkCheck() {
-        let result = { stigmaPer: 0 };
+        let result = { stigmaPer: 0, enlightenmentBuff: 1 };
         let stigmaArkPassiveArray = ["빠른 구원", "빛의 흔적", "포용의 세레나데", "낙인의 세레나데", "엥? 하나 더!", "낙인 강화", "해방자의 흔적", "빛의 검기"]
+        const mainNodeBuffs = [
+            { name: "신성 해방", level: 1, buff: 0.1 },
+            { name: "신성 해방", level: 2, buff: 0.15 },
+            { name: "신성 해방", level: 3, buff: 0.2 },
+            { name: "세레나데 코드", level: 1, buff: 0.1 },
+            { name: "세레나데 코드", level: 2, buff: 0.15 },
+            { name: "세레나데 코드", level: 3, buff: 0.2 },
+            { name: "묵법 : 접무", level: 1, buff: 0.1 },
+            { name: "묵법 : 접무", level: 2, buff: 0.15 },
+            { name: "묵법 : 접무", level: 3, buff: 0.2 },
+            { name: "해방의 날개", level: 1, buff: 0.1 },
+            { name: "해방의 날개", level: 2, buff: 0.15 },
+            { name: "해방의 날개", level: 3, buff: 0.2 },
+        ];
         let enlightArkPassive = cachedData.ArkPassive.Effects.filter(data => data.Name === "깨달음");
         enlightArkPassive = enlightArkPassive.map(enlight => enlight.Description.match(/>([^<]+)</g)[2].slice(1, -1));
 
@@ -1467,6 +1458,10 @@ async function simulatorInputCalc() {
             // 낙인력 보너스 아크패시브 확인
             if (stigmaArkPassiveArray.includes(arkPassiveObj.name)) {
                 result.stigmaPer += Number(arkPassiveObj.level - 1);
+            }
+            const mainNodeBuff = mainNodeBuffs.find(buff => buff.name === arkPassiveObj.name && buff.level === arkPassiveObj.level);
+            if (mainNodeBuff) {
+                result.enlightenmentBuff += mainNodeBuff.buff;
             }
         })
 
@@ -1499,63 +1494,17 @@ async function simulatorInputCalc() {
         }
         return result;
     };
-    //
-    //홀나
-    // { name: "빠른 구원", level: 1, stigmaPer: 0 },
-    // { name: "빠른 구원", level: 2, stigmaPer: 1 },
-    // { name: "빠른 구원", level: 3, stigmaPer: 2 },
-    // { name: "빠른 구원", level: 4, stigmaPer: 3 },
-    // { name: "빠른 구원", level: 5, stigmaPer: 4 },
-
-    // { name: "빛의 흔적", level: 1, stigmaPer: 0 },
-    // { name: "빛의 흔적", level: 2, stigmaPer: 1 },
-    // { name: "빛의 흔적", level: 3, stigmaPer: 2 },
-    // { name: "빛의 흔적", level: 4, stigmaPer: 3 },
-    // { name: "빛의 흔적", level: 5, stigmaPer: 4 },
 
 
-    // //바드
-    // { name: "포용의 세레나데", level: 1, stigmaPer: 0 },
-    // { name: "포용의 세레나데", level: 2, stigmaPer: 1 },
-    // { name: "포용의 세레나데", level: 3, stigmaPer: 2 },
-    // { name: "포용의 세레나데", level: 4, stigmaPer: 3 },
-    // { name: "포용의 세레나데", level: 5, stigmaPer: 4 },
+    //홀나 메인노드
+    //{ name: "신성 해방", level: 1, enlightenmentBuff: 0.1 },
+    //{ name: "신성 해방", level: 2, enlightenmentBuff: 0.15 },
+    //{ name: "신성 해방", level: 3, enlightenmentBuff: 0.2 },
 
-    // { name: "낙인의 세레나데", level: 1, stigmaPer: 0 },
-    // { name: "낙인의 세레나데", level: 2, stigmaPer: 1 },
-    // { name: "낙인의 세레나데", level: 3, stigmaPer: 2 },
-    // { name: "낙인의 세레나데", level: 4, stigmaPer: 3 },
-    // { name: "낙인의 세레나데", level: 5, stigmaPer: 4 },
-
-
-    // //도화가
-    // { name: "엥? 하나 더!", level: 1, stigmaPer: 0 },
-    // { name: "엥? 하나 더!", level: 2, stigmaPer: 1 },
-    // { name: "엥? 하나 더!", level: 3, stigmaPer: 2 },
-    // { name: "엥? 하나 더!", level: 4, stigmaPer: 3 },
-    // { name: "엥? 하나 더!", level: 5, stigmaPer: 4 },
-
-    // { name: "낙인 강화", level: 1, stigmaPer: 0 },
-    // { name: "낙인 강화", level: 2, stigmaPer: 1 },
-    // { name: "낙인 강화", level: 3, stigmaPer: 2 },
-    // { name: "낙인 강화", level: 4, stigmaPer: 3 },
-    // { name: "낙인 강화", level: 5, stigmaPer: 4 },
-
-    // 발키리
-    // { name: "해방자의 흔적", level: 1, stigmaPer: 0 },
-    // { name: "해방자의 흔적", level: 2, stigmaPer: 1 },
-    // { name: "해방자의 흔적", level: 3, stigmaPer: 2 },
-    // { name: "해방자의 흔적", level: 4, stigmaPer: 3 },
-    // { name: "해방자의 흔적", level: 5, stigmaPer: 4 },
-
-    // { name: "빛의 검기", level: 1, stigmaPer: 0 },
-    // { name: "빛의 검기", level: 2, stigmaPer: 1 },
-    // { name: "빛의 검기", level: 3, stigmaPer: 2 },
-    // { name: "빛의 검기", level: 4, stigmaPer: 3 },
-    // { name: "빛의 검기", level: 5, stigmaPer: 4 },
-
-
-
+    //바드 메인노드
+    //{ name: "세레나데 코드", level: 1, enlightenmentBuff: 0.1 },
+    //{ name: "세레나데 코드", level: 2, enlightenmentBuff: 0.15 },
+    //{ name: "세레나데 코드", level: 3, enlightenmentBuff: 0.2 },
 
 
 

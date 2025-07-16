@@ -281,7 +281,7 @@ export async function specPointCalc(inputObj) {
     let damageBuff_MinusBangle = (inputObj.accObj.damageBuff + inputObj.gemObj.damageBuff) / 100 + 1 // 팔찌 제외 아피강
     let hyperBuff_MinusBangle = (10 * ((inputObj.accObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각성
     let statDamageBuff_MinusBangle = ((calcSpecial_MinusBangle) / 20.791) / 100 + 1 // 팔찌 제외 특화 딜증
-    let finalDamageBuff_MinusBangle = (13 * damageBuff_MinusBangle * statDamageBuff_MinusBangle) / 100 + 1 // 팔찌 제외 최종 피증
+    let finalDamageBuff_MinusBangle = ((13 * enlightBuffResult) * damageBuff_MinusBangle * statDamageBuff_MinusBangle) / 100 + 1 // 팔찌 제외 최종 피증
     let carePower_MinusBangle = (1 + (inputObj.engObj.carePower + inputObj.accObj.carePower + inputObj.elixirObj.carePower)) // 케어력
     let finalCarePower_MinusBangle = (((totalHealth_MinusBangle * 0.3) * carePower_MinusBangle) / 330000) * 100 //최종 케어력
     let allTimeBuff_MinusBangle = (finalStigmaPer / 100 + 1) * 1.0965 // 팔찌 제외 상시 피증증
@@ -329,12 +329,12 @@ export async function specPointCalc(inputObj) {
     let noBuffPower_MinusBangle = allTimeBuff_MinusBangle
 
     let avgBuffPower_MinusBangle = ((doubleBuffUptime_MinusBangle * doubleBuffPower_MinusBangle) + (onlyIdentityUptime_MinusBangle * onlyIdentityPower_MinusBangle) + (onlyHyperUptime_MinusBangle * onlyHyperPower_MinusBangle) + (noBuffUptime_MinusBangle * noBuffPower_MinusBangle)) * defaultAtkBuff_MinusBangle
-    let supportBuffPower_MinusBangle = avgBuffPower_MinusBangle * enlightBuffResult * inputObj.arkObj.leapBuff //** 4.185) * 29.5
+    let supportBuffPower_MinusBangle = avgBuffPower_MinusBangle * inputObj.arkObj.leapBuff //** 4.185) * 29.5
     let supportCarePower_MinusBangle = (((finalCarePower_MinusBangle / ((1 - cdrPercentOnlyCare_MinusBangle)))) / 100 + 1)
 
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle  ** 3.568) * 51.827
-    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 4.30
+    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle ** 4.268) * 70.127
+    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 6.40
 
 
 
