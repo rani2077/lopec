@@ -964,9 +964,9 @@ let cardPointFilter = [
 //        secondCheck의 경우 secondCheck명이 없는 경우 출력되도록 한다
 let bangleFilter = [
     { name: "공격 및 이동 속도가", option: "3%", tier: "Flow1", initial: "공이속 +3%", atkSpeed: 3, moveSpeed: 3, finalDamagePer: 1.0 },
-    { name: "공격 및 이동 속도가", option: "4%", tier: "Flow2", initial: "공이속 +4%", atkSpeed: 4, moveSpeed: 4, finalDamagePer: 1.4 },
-    { name: "공격 및 이동 속도가", option: "5%", tier: "Fmiddle", initial: "공이속 +5%", atkSpeed: 5, moveSpeed: 5, finalDamagePer: 1.8 },
-    { name: "공격 및 이동 속도가", option: "6%", tier: "Fhigh", initial: "공이속 +6%", atkSpeed: 6, moveSpeed: 6, finalDamagePer: 2.2 },
+    { name: "공격 및 이동 속도가", option: "4%", tier: "Flow2", initial: "공이속 +4%", atkSpeed: 4, moveSpeed: 4, finalDamagePer: 1.2 },
+    { name: "공격 및 이동 속도가", option: "5%", tier: "Fmiddle", initial: "공이속 +5%", atkSpeed: 5, moveSpeed: 5, finalDamagePer: 1.5 },
+    { name: "공격 및 이동 속도가", option: "6%", tier: "Fhigh", initial: "공이속 +6%", atkSpeed: 6, moveSpeed: 6, finalDamagePer: 1.9 },
 
     { name: "치명타 적중률이", option: "2.6%", tier: "Plow1", initial: "치적 +2.6% | 치명타 주는 피해 +1.5%", criticalChancePer: 2.6, criFinalDamagePer: 1.5, finalDamagePer: 3.18 },
     { name: "치명타 적중률이", option: "3.4%", tier: "Plow2", initial: "치적 +3.4% | 치명타 주는 피해 +1.5%", criticalChancePer: 3.4, criFinalDamagePer: 1.5, finalDamagePer: 3.78 },
@@ -998,10 +998,10 @@ let bangleFilter = [
     { name: "추가 피해가", option: "3%", tier: "Pmiddle", initial: "추피 +3.0% | 악마&대악마 피해량 +2.5%", addDamagePer: 3, devilDamagePer: 2.5  },
     { name: "추가 피해가", option: "3.5%", tier: "Phigh", initial: "추피 +3.5% | 악마&대악마 피해량 +2.5%", addDamagePer: 3.5, devilDamagePer: 2.5  },
 
-    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1000", tier: "DuelLlow1", initial: "공격 적중 시 무공 1000, 공이속 1% 증가", finalDamagePer: 2.1, weaponAtkPlus: 0, weaponAtkBonus: 6000 },
-    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1160", tier: "DuelLlow2", initial: "공격 적중 시 무공 1160, 공이속 1% 증가", finalDamagePer: 2.1, weaponAtkPlus: 0, weaponAtkBonus: 6960 },
-    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1320", tier: "DuelLmiddle", initial: "공격 적중 시 무공 1320, 공이속 1% 증가", finalDamagePer: 2.1, weaponAtkPlus: 0, weaponAtkBonus: 7920 },
-    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1480", tier: "DuelLhigh", initial: "공격 적중 시 무공 1480, 공이속 1% 증가", finalDamagePer: 2.1, weaponAtkPlus: 0, weaponAtkBonus: 8880 },
+    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1000", tier: "DuelLlow1", initial: "공격 적중 시 무공 1000, 공이속 1% 증가", finalDamagePer: 1.9, weaponAtkPlus: 0, weaponAtkBonus: 6000 },
+    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1160", tier: "DuelLlow2", initial: "공격 적중 시 무공 1160, 공이속 1% 증가", finalDamagePer: 1.9, weaponAtkPlus: 0, weaponAtkBonus: 6960 },
+    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1320", tier: "DuelLmiddle", initial: "공격 적중 시 무공 1320, 공이속 1% 증가", finalDamagePer: 1.9, weaponAtkPlus: 0, weaponAtkBonus: 7920 },
+    { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1480", tier: "DuelLhigh", initial: "공격 적중 시 무공 1480, 공이속 1% 증가", finalDamagePer: 1.9, weaponAtkPlus: 0, weaponAtkBonus: 8880 },
 
     { name: "무기 공격력이", option: "6300", tier: "DuelPlow1", initial: "무공 6300 증가 | 조건부 무공 1800 증가", weaponAtkPlus: 8100 },
     { name: "무기 공격력이", option: "7200", tier: "DuelPlow2", initial: "무공 7200 증가 | 조건부 무공 2000 증가", weaponAtkPlus: 9200 },
@@ -2182,9 +2182,13 @@ export let arkCalFilter = [
     { name: "단련", level: 5, criticalChancePer: 5 },
 
 
-    //서폿 낙인력 깨달음
+    //서폿 깨달음
 
-    //홀나
+    //홀나 메인노드
+    { name: "신성 해방", level: 1, enlightenmentBuff: 0.1 },
+    { name: "신성 해방", level: 2, enlightenmentBuff: 0.15 },
+    { name: "신성 해방", level: 3, enlightenmentBuff: 0.2 },
+    //홀나 낙인력
     { name: "빠른 구원", level: 1, stigmaPer: 0 },
     { name: "빠른 구원", level: 2, stigmaPer: 1 },
     { name: "빠른 구원", level: 3, stigmaPer: 2 },
@@ -2198,7 +2202,11 @@ export let arkCalFilter = [
     { name: "빛의 흔적", level: 5, stigmaPer: 4 },
 
 
-    //바드
+    //바드 메인노드
+    { name: "세레나데 코드", level: 1, enlightenmentBuff: 0.1 },
+    { name: "세레나데 코드", level: 2, enlightenmentBuff: 0.15 },
+    { name: "세레나데 코드", level: 3, enlightenmentBuff: 0.2 },
+    //바드 낙인력
     { name: "포용의 세레나데", level: 1, stigmaPer: 0 },
     { name: "포용의 세레나데", level: 2, stigmaPer: 1 },
     { name: "포용의 세레나데", level: 3, stigmaPer: 2 },
@@ -2212,7 +2220,12 @@ export let arkCalFilter = [
     { name: "낙인의 세레나데", level: 5, stigmaPer: 4 },
 
 
-    //도화가
+    //도화가 메인노드
+    { name: "묵법 : 접무", level: 1, enlightenmentBuff: 0.1 },
+    { name: "묵법 : 접무", level: 2, enlightenmentBuff: 0.15 },
+    { name: "묵법 : 접무", level: 3, enlightenmentBuff: 0.2 },
+
+    //도화가 낙인력
     { name: "엥? 하나 더!", level: 1, stigmaPer: 0 },
     { name: "엥? 하나 더!", level: 2, stigmaPer: 1 },
     { name: "엥? 하나 더!", level: 3, stigmaPer: 2 },
@@ -2225,8 +2238,13 @@ export let arkCalFilter = [
     { name: "낙인 강화", level: 4, stigmaPer: 3 },
     { name: "낙인 강화", level: 5, stigmaPer: 4 },
 
+    //발키리 메인노드
+    { name: "해방의 날개", level: 1, enlightenmentBuff: 0.1 },
+    { name: "해방의 날개", level: 2, enlightenmentBuff: 0.15 },
+    { name: "해방의 날개", level: 3, enlightenmentBuff: 0.2 },
 
-    //발키리
+
+    //발키리 낙인력
     { name: "해방자의 흔적", level: 1, stigmaPer: 0 },
     { name: "해방자의 흔적", level: 2, stigmaPer: 1 },
     { name: "해방자의 흔적", level: 3, stigmaPer: 2 },

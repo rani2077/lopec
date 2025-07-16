@@ -1370,7 +1370,7 @@ export async function getCharacterProfile(data, dataBase) {
         stigmaPer: 0,
         criticalDamagePer: 0,
         evolutionBuff: 0,
-        enlightenmentBuff: 0,
+        enlightenmentBuff: 1,
         leapBuff: 0,
         weaponAtkPer: 1,
         cdrPercent: 0,
@@ -1401,7 +1401,7 @@ export async function getCharacterProfile(data, dataBase) {
     })
 
     function arkAttrCheck(validValue) {
-        let arkAttr = ['skillCool', 'evolutionDamage', 'criticalChancePer', 'moveSpeed', 'atkSpeed', 'stigmaPer', 'criticalDamagePer', 'evolutionBuff', 'cdrPercent']
+        let arkAttr = ['skillCool', 'evolutionDamage', 'criticalChancePer', 'moveSpeed', 'atkSpeed', 'stigmaPer', 'criticalDamagePer', 'evolutionBuff', 'cdrPercent', 'enlightenmentBuff']
         arkAttr.forEach(function (attrArry) {
             if (!(validValue[attrArry] == undefined) && data.ArkPassive.IsArkPassive) {
                 arkObj[attrArry] += validValue[attrArry];
@@ -1464,122 +1464,98 @@ export async function getCharacterProfile(data, dataBase) {
     if (arkPassiveValue(1) >= 100) { // arkPassiveValue(1) == 깨달음수치
 
         arkObj.enlightenmentDamage += 1.42
-        arkObj.enlightenmentBuff += 1.356
 
     } else if (arkPassiveValue(1) >= 98) {
 
         arkObj.enlightenmentDamage += 1.40
-        arkObj.enlightenmentBuff += 1.354
 
     } else if (arkPassiveValue(1) >= 97) {
 
         arkObj.enlightenmentDamage += 1.37
-        arkObj.enlightenmentBuff += 1.352
 
     } else if (arkPassiveValue(1) >= 96) {
 
         arkObj.enlightenmentDamage += 1.37
-        arkObj.enlightenmentBuff += 1.35
 
     } else if (arkPassiveValue(1) >= 95) {
 
         arkObj.enlightenmentDamage += 1.36
-        arkObj.enlightenmentBuff += 1.343
 
     } else if (arkPassiveValue(1) >= 94) {
 
         arkObj.enlightenmentDamage += 1.36
-        arkObj.enlightenmentBuff += 1.3425
 
     } else if (arkPassiveValue(1) >= 93) {
 
         arkObj.enlightenmentDamage += 1.35
-        arkObj.enlightenmentBuff += 1.342
 
     } else if (arkPassiveValue(1) >= 92) {
 
         arkObj.enlightenmentDamage += 1.35
-        arkObj.enlightenmentBuff += 1.3415
 
     } else if (arkPassiveValue(1) >= 90) {
 
         arkObj.enlightenmentDamage += 1.34
-        arkObj.enlightenmentBuff += 1.341
 
     } else if (arkPassiveValue(1) >= 88) {
 
         arkObj.enlightenmentDamage += 1.33
-        arkObj.enlightenmentBuff += 1.34
 
     } else if (arkPassiveValue(1) >= 86) {
 
         arkObj.enlightenmentDamage += 1.28
-        arkObj.enlightenmentBuff += 1.326
 
     } else if (arkPassiveValue(1) >= 84) {
 
         arkObj.enlightenmentDamage += 1.27
-        arkObj.enlightenmentBuff += 1.324
 
     } else if (arkPassiveValue(1) >= 82) {
 
         arkObj.enlightenmentDamage += 1.26
-        arkObj.enlightenmentBuff += 1.322
 
     } else if (arkPassiveValue(1) >= 80) {
 
         arkObj.enlightenmentDamage += 1.25
-        arkObj.enlightenmentBuff += 1.32
 
     } else if (arkPassiveValue(1) >= 78) {
 
         arkObj.enlightenmentDamage += 1.18
-        arkObj.enlightenmentBuff += 1.31
 
     } else if (arkPassiveValue(1) >= 76) {
 
         arkObj.enlightenmentDamage += 1.17
-        arkObj.enlightenmentBuff += 1.31
 
     } else if (arkPassiveValue(1) >= 74) {
 
         arkObj.enlightenmentDamage += 1.16
-        arkObj.enlightenmentBuff += 1.30
 
     } else if (arkPassiveValue(1) >= 72) {
 
         arkObj.enlightenmentDamage += 1.15
-        arkObj.enlightenmentBuff += 1.29
 
     } else if (arkPassiveValue(1) >= 64) {
 
         arkObj.enlightenmentDamage += 1.13
-        arkObj.enlightenmentBuff += 1.28
 
     } else if (arkPassiveValue(1) >= 56) {
 
         arkObj.enlightenmentDamage += 1.125
-        arkObj.enlightenmentBuff += 1.27
 
     } else if (arkPassiveValue(1) >= 48) {
 
         arkObj.enlightenmentDamage += 1.12
-        arkObj.enlightenmentBuff += 1.26
 
     } else if (arkPassiveValue(1) >= 40) {
 
         arkObj.enlightenmentDamage += 1.115
-        arkObj.enlightenmentBuff += 1.25
 
     } else if (arkPassiveValue(1) >= 32) {
 
         arkObj.enlightenmentDamage += 1.11
-        arkObj.enlightenmentBuff += 1.24
 
     } else if (arkPassiveValue(1) >= 24) {
 
         arkObj.enlightenmentDamage += 1.10
-        arkObj.enlightenmentBuff += 1.23
 
     } else {
         arkObj.enlightenmentDamage += 1

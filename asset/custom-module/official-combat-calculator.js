@@ -33,6 +33,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.accessory;
     console.log("원래 베이스 포인트", originBasePoint);
     let originAtk = Math.floor(originBasePoint * 1000000 / 288);
+    console.log("원래 공격력", originAtk);
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStat = ((extractObj.etcObj.armorStatus +
         extractObj.etcObj.expeditionStats +
