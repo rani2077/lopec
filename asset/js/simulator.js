@@ -3912,18 +3912,20 @@ async function selectCreate(data, Modules) {
         let firstOption = enlightElements[0];
         let secondOption = enlightElements[1];
         let thirdOption = enlightElements[2];
-        enlightNode.forEach(node => {
-            let nodeName = node.Description.match(/<\/FONT>.*?<FONT color='#83E9FF'>(.*?)<\/FONT>/)[1];
-            if (nodeName.includes(firstOption.getAttribute("data-node"))) {
-                optionElementAutoCheck(firstOption, nodeName, "textContent")
-            }
-            if (nodeName.includes(secondOption.getAttribute("data-node"))) {
-                optionElementAutoCheck(secondOption, nodeName, "textContent")
-            }
-            if (nodeName.includes(thirdOption.getAttribute("data-node"))) {
-                optionElementAutoCheck(thirdOption, nodeName, "textContent")
-            }
-        })
+        if (firstOption) {
+            enlightNode.forEach(node => {
+                let nodeName = node.Description.match(/<\/FONT>.*?<FONT color='#83E9FF'>(.*?)<\/FONT>/)[1];
+                if (nodeName.includes(firstOption.getAttribute("data-node"))) {
+                    optionElementAutoCheck(firstOption, nodeName, "textContent")
+                }
+                if (nodeName.includes(secondOption.getAttribute("data-node"))) {
+                    optionElementAutoCheck(secondOption, nodeName, "textContent")
+                }
+                if (nodeName.includes(thirdOption.getAttribute("data-node"))) {
+                    optionElementAutoCheck(thirdOption, nodeName, "textContent")
+                }
+            })
+        }
     };
     autoAelectEnlightNode();
 

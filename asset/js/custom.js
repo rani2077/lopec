@@ -51,7 +51,7 @@ async function mainSearchFunction() {
 
     const urlParams = new URLSearchParams(window.location.search);
     // const nameParam = urlParams.get('headerCharacterName');
-    const nameParam = urlParams.get('headerCharacterName').trim();
+    const nameParam = urlParams.get('headerCharacterName');
     document.title = `로펙 : ${nameParam}님의 스펙포인트 및 환산점수`
     // let Modules = await importModuleManager();
     let component = await Modules.component;
