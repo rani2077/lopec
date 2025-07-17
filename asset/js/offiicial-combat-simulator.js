@@ -47,7 +47,7 @@ let Modules = await importModuleManager();
 
 export async function simulatorToOffcialCombatObj() {
     const urlParams = new URLSearchParams(window.location.search);
-    const nameParam = urlParams.get('headerCharacterName');
+    const nameParam = urlParams.get('headerCharacterName').trim();
     let apiData = await Modules.apiCalcValue.apiCalcValue(nameParam);
 
 

@@ -85,7 +85,7 @@ userDeviceToRedirection()
 *********************************************************************************************************************** */
 function scHeaderCreate() {
     const urlParams = new URLSearchParams(window.location.search);
-    const nameParam = urlParams.get('headerCharacterName');
+    const nameParam = urlParams.get('headerCharacterName').trim();
     if (nameParam) {
         let nameListStorage = JSON.parse(localStorage.getItem("nameList")) || []
         // localStorage.removeItem("userBookmark");                                 //로컬스토리지 비우기

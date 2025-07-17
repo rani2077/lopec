@@ -68,7 +68,7 @@ async function simulatorInputCalc() {
     * description		: 	검색 닉네임 정의
     *********************************************************************************************************************** */
     const urlParams = new URLSearchParams(window.location.search);
-    const nameParam = urlParams.get('headerCharacterName');
+    const nameParam = urlParams.get('headerCharacterName').trim();
     document.title = `로펙 : ${nameParam}님의 시뮬레이터`
     /* **********************************************************************************************************************
      * function name		:	
@@ -1212,6 +1212,25 @@ async function simulatorInputCalc() {
     let evolutionKarmaRank = evolutionKarmaRankToValue();
 
     /* **********************************************************************************************************************
+     * function name		:	supportEnlightNodeToValue
+     * description			: 	서폿 깨달음 노드를 수치로 변환
+     *********************************************************************************************************************** */
+    function supportEnlightNodeToValue() {
+        let result = {
+            stigmaPer: 0,
+            enlightenmentBuff: 0
+        }
+        let enlightElement = Array.from(document.querySelectorAll(".ark-area .ark-list.enlightenment .ark-item.node select"));
+        enlightElement.forEach(element => {
+            let name = element.value.split(":")[0];
+            let value = Number(element.value.split(":")[1]);
+            result[name] += value;
+            return result;
+        });
+        return result;
+    };
+    supportEnlightNodeToValue();
+    /* **********************************************************************************************************************
      * function name		:	gemAttackBonusValueCalc
      * description			: 	진,깨,도 수치를 반환
      *********************************************************************************************************************** */
@@ -1362,9 +1381,9 @@ async function simulatorInputCalc() {
         result.weaponAtkPer = enlightKarmaRankToValue();
         result.leapDamage = result.leapDamage + leapKarmaRankToValue();
         result.evolutionBuff = evloutionArkCheck().evolutionBuff;
-        result.stigmaPer += evloutionArkCheck().stigmaPer + enlightArkCheck().stigmaPer;
+        result.stigmaPer += evloutionArkCheck().stigmaPer + supportEnlightNodeToValue().stigmaPer;
         result.cdrPercent = leapArkCheck().cdrPercent
-        result.enlightenmentBuff += enlightArkCheck().enlightenmentBuff;
+        result.enlightenmentBuff += supportEnlightNodeToValue().enlightenmentBuff;
         return result
     }
     /* **********************************************************************************************************************
@@ -3768,81 +3787,81 @@ async function selectCreate(data, Modules) {
         // 3. 레벨 목록 (각 레벨이 어떤 옵션에 속하는지 optionId로 참조)
         const levels = [
             // 도화가 : 엥? 하나 더!
-            { optionId: 'dohwaga_option_1', value: 'atk:0' },
-            { optionId: 'dohwaga_option_1', value: 'atk:0' },
-            { optionId: 'dohwaga_option_1', value: 'atk:1' },
-            { optionId: 'dohwaga_option_1', value: 'atk:2' },
-            { optionId: 'dohwaga_option_1', value: 'atk:3' },
-            { optionId: 'dohwaga_option_1', value: 'atk:4' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:0' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:0' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:1' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:2' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:3' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:4' },
             // 도화가 : 낙인 강화
-            { optionId: 'dohwaga_option_2', value: 'atk:0' },
-            { optionId: 'dohwaga_option_2', value: 'atk:0' },
-            { optionId: 'dohwaga_option_2', value: 'atk:1' },
-            { optionId: 'dohwaga_option_2', value: 'atk:2' },
-            { optionId: 'dohwaga_option_2', value: 'atk:3' },
-            { optionId: 'dohwaga_option_2', value: 'atk:4' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:0' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:0' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:1' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:2' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:3' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:4' },
             // 도화가 : 묵법 : 접무
-            { optionId: 'dohwaga_option_3', value: 'atk:0' },
-            { optionId: 'dohwaga_option_3', value: 'atk:0.1' },
-            { optionId: 'dohwaga_option_3', value: 'atk:0.15' },
-            { optionId: 'dohwaga_option_3', value: 'atk:0.2' },
+            { optionId: 'dohwaga_option_3', value: 'enlightenmentBuff:1' },
+            { optionId: 'dohwaga_option_3', value: 'enlightenmentBuff:1.1' },
+            { optionId: 'dohwaga_option_3', value: 'enlightenmentBuff:1.15' },
+            { optionId: 'dohwaga_option_3', value: 'enlightenmentBuff:1.2' },
             // 홀나 : 빠른 구원
-            { optionId: 'holyknight_option_1', value: 'atk:0' },
-            { optionId: 'holyknight_option_1', value: 'atk:0' },
-            { optionId: 'holyknight_option_1', value: 'atk:1' },
-            { optionId: 'holyknight_option_1', value: 'atk:2' },
-            { optionId: 'holyknight_option_1', value: 'atk:3' },
-            { optionId: 'holyknight_option_1', value: 'atk:4' },
+            { optionId: 'holyknight_option_1', value: 'stigmaPer:0' },
+            { optionId: 'holyknight_option_1', value: 'stigmaPer:0' },
+            { optionId: 'holyknight_option_1', value: 'stigmaPer:1' },
+            { optionId: 'holyknight_option_1', value: 'stigmaPer:2' },
+            { optionId: 'holyknight_option_1', value: 'stigmaPer:3' },
+            { optionId: 'holyknight_option_1', value: 'stigmaPer:4' },
             // 홀나 : 빛의 흔적
-            { optionId: 'holyknight_option_2', value: 'atk:0' },
-            { optionId: 'holyknight_option_2', value: 'atk:0' },
-            { optionId: 'holyknight_option_2', value: 'atk:1' },
-            { optionId: 'holyknight_option_2', value: 'atk:2' },
-            { optionId: 'holyknight_option_2', value: 'atk:3' },
-            { optionId: 'holyknight_option_2', value: 'atk:4' },
+            { optionId: 'holyknight_option_2', value: 'stigmaPer:0' },
+            { optionId: 'holyknight_option_2', value: 'stigmaPer:0' },
+            { optionId: 'holyknight_option_2', value: 'stigmaPer:1' },
+            { optionId: 'holyknight_option_2', value: 'stigmaPer:2' },
+            { optionId: 'holyknight_option_2', value: 'stigmaPer:3' },
+            { optionId: 'holyknight_option_2', value: 'stigmaPer:4' },
             // 홀나 : 신성 해방
-            { optionId: 'holyknight_option_3', value: 'atk:0' },
-            { optionId: 'holyknight_option_3', value: 'atk:0.1' },
-            { optionId: 'holyknight_option_3', value: 'atk:0.15' },
-            { optionId: 'holyknight_option_3', value: 'atk:0.2' },
+            { optionId: 'holyknight_option_3', value: 'enlightenmentBuff:1' },
+            { optionId: 'holyknight_option_3', value: 'enlightenmentBuff:1.1' },
+            { optionId: 'holyknight_option_3', value: 'enlightenmentBuff:1.15' },
+            { optionId: 'holyknight_option_3', value: 'enlightenmentBuff:1.2' },
             // 바드 : 포용의 세레나데
-            { optionId: 'bard_option_1', value: 'atk:0' },
-            { optionId: 'bard_option_1', value: 'atk:0' },
-            { optionId: 'bard_option_1', value: 'atk:1' },
-            { optionId: 'bard_option_1', value: 'atk:2' },
-            { optionId: 'bard_option_1', value: 'atk:3' },
-            { optionId: 'bard_option_1', value: 'atk:40' },
+            { optionId: 'bard_option_1', value: 'stigmaPer:0' },
+            { optionId: 'bard_option_1', value: 'stigmaPer:0' },
+            { optionId: 'bard_option_1', value: 'stigmaPer:1' },
+            { optionId: 'bard_option_1', value: 'stigmaPer:2' },
+            { optionId: 'bard_option_1', value: 'stigmaPer:3' },
+            { optionId: 'bard_option_1', value: 'stigmaPer:4' },
             // 바드 : 낙인의 세레나데
-            { optionId: 'bard_option_2', value: 'atk:0' },
-            { optionId: 'bard_option_2', value: 'atk:0' },
-            { optionId: 'bard_option_2', value: 'atk:1' },
-            { optionId: 'bard_option_2', value: 'atk:2' },
-            { optionId: 'bard_option_2', value: 'atk:3' },
-            { optionId: 'bard_option_2', value: 'atk:4' },
+            { optionId: 'bard_option_2', value: 'stigmaPer:0' },
+            { optionId: 'bard_option_2', value: 'stigmaPer:0' },
+            { optionId: 'bard_option_2', value: 'stigmaPer:1' },
+            { optionId: 'bard_option_2', value: 'stigmaPer:2' },
+            { optionId: 'bard_option_2', value: 'stigmaPer:3' },
+            { optionId: 'bard_option_2', value: 'stigmaPer:4' },
             // 바드 : 세레나데 코드
-            { optionId: 'bard_option_3', value: 'atk:0' },
-            { optionId: 'bard_option_3', value: 'atk:0.1' },
-            { optionId: 'bard_option_3', value: 'atk:0.15' },
-            { optionId: 'bard_option_3', value: 'atk:0.2' },
+            { optionId: 'bard_option_3', value: 'enlightenmentBuff:1' },
+            { optionId: 'bard_option_3', value: 'enlightenmentBuff:1.1' },
+            { optionId: 'bard_option_3', value: 'enlightenmentBuff:1.15' },
+            { optionId: 'bard_option_3', value: 'enlightenmentBuff:1.2' },
             // 발키리 : 해방자의 흔적
-            { optionId: 'valkyrie_option_1', value: 'atk:0' },
-            { optionId: 'valkyrie_option_1', value: 'atk:0' },
-            { optionId: 'valkyrie_option_1', value: 'atk:1' },
-            { optionId: 'valkyrie_option_1', value: 'atk:2' },
-            { optionId: 'valkyrie_option_1', value: 'atk:3' },
-            { optionId: 'valkyrie_option_1', value: 'atk:4' },
+            { optionId: 'valkyrie_option_1', value: 'stigmaPer:0' },
+            { optionId: 'valkyrie_option_1', value: 'stigmaPer:0' },
+            { optionId: 'valkyrie_option_1', value: 'stigmaPer:1' },
+            { optionId: 'valkyrie_option_1', value: 'stigmaPer:2' },
+            { optionId: 'valkyrie_option_1', value: 'stigmaPer:3' },
+            { optionId: 'valkyrie_option_1', value: 'stigmaPer:4' },
             // 발키리 : 빛의 검기
-            { optionId: 'valkyrie_option_2', value: 'atk:0' },
-            { optionId: 'valkyrie_option_2', value: 'atk:0' },
-            { optionId: 'valkyrie_option_2', value: 'atk:1' },
-            { optionId: 'valkyrie_option_2', value: 'atk:2' },
-            { optionId: 'valkyrie_option_2', value: 'atk:3' },
-            { optionId: 'valkyrie_option_2', value: 'atk:4' },
+            { optionId: 'valkyrie_option_2', value: 'stigmaPer:0' },
+            { optionId: 'valkyrie_option_2', value: 'stigmaPer:0' },
+            { optionId: 'valkyrie_option_2', value: 'stigmaPer:1' },
+            { optionId: 'valkyrie_option_2', value: 'stigmaPer:2' },
+            { optionId: 'valkyrie_option_2', value: 'stigmaPer:3' },
+            { optionId: 'valkyrie_option_2', value: 'stigmaPer:4' },
             // 발키리 : 해방의 날개
-            { optionId: 'valkyrie_option_3', value: 'atk:0' },
-            { optionId: 'valkyrie_option_3', value: 'atk:0.1' },
-            { optionId: 'valkyrie_option_3', value: 'atk:0.15' },
-            { optionId: 'valkyrie_option_3', value: 'atk:0.2' },
+            { optionId: 'valkyrie_option_3', value: 'enlightenmentBuff:1' },
+            { optionId: 'valkyrie_option_3', value: 'enlightenmentBuff:1.1' },
+            { optionId: 'valkyrie_option_3', value: 'enlightenmentBuff:1.15' },
+            { optionId: 'valkyrie_option_3', value: 'enlightenmentBuff:1.2' },
         ];
 
         function generateSelectsForClass(classId) {
@@ -3862,12 +3881,12 @@ async function selectCreate(data, Modules) {
                     const displayLevel = index; // 0레벨부터 시작
                     // const displayLevel = index + 1; // 1레벨부터 시작
 
-                    const optionText = `${option.name} LV ${displayLevel}`;
-                    optionsHtml += `<option value="${level.value};">${optionText}</option>`;
+                    const optionText = `${option.name} Lv.${displayLevel}`;
+                    optionsHtml += `<option value="${level.value}">${optionText}</option>`;
                 });
 
                 const selectString =
-                    `<select name="${option.id}">
+                    `<select name="${option.id}" data-node="${option.name}">
                         ${optionsHtml}
                     </select>`;
                 selectHtmlStrings.push(selectString);
@@ -3877,21 +3896,41 @@ async function selectCreate(data, Modules) {
         }
         classes.forEach(characterClass => {
             if (characterClass.name === `${firstClass} ${secondClass}`) {
-                console.log(generateSelectsForClass(characterClass.id))
                 arkListElement.insertAdjacentHTML("beforeend", generateSelectsForClass(characterClass.id).join(""));
             }
         })
-        // let teafeaefaefaesjfiale = "";
-
-        // let leapNodeHTML =
-        //     `<select>
-        //         <option value="atk:4;">엥? 하나 더! LV 1</option>
-        //         <option value="atk:5;">엥? 하나 더! LV 2</option>
-        //     </select>`
-        // arkListElement.insertAdjacentHTML("beforeend", leapNodeHTML);
 
     };
     enlightKarmaNodeList();
+    /* **********************************************************************************************************************
+    * function name		:	autoAelectEnlightNode
+    * description	    : 	깨달음 스킬 노드를 자동으로 선택
+    *********************************************************************************************************************** */
+    function autoAelectEnlightNode() {
+        let enlightNode = data.ArkPassive.Effects.filter(enlight => enlight.Name === "깨달음");
+        let enlightElements = document.querySelectorAll(".ark-area .ark-list.enlightenment .ark-item.node select");
+        let firstOption = enlightElements[0];
+        let secondOption = enlightElements[1];
+        let thirdOption = enlightElements[2];
+        enlightNode.forEach(node => {
+            let nodeName = node.Description.match(/<\/FONT>.*?<FONT color='#83E9FF'>(.*?)<\/FONT>/)[1];
+            if (nodeName.includes(firstOption.getAttribute("data-node"))) {
+                optionElementAutoCheck(firstOption, nodeName, "textContent")
+            }
+            if (nodeName.includes(secondOption.getAttribute("data-node"))) {
+                optionElementAutoCheck(secondOption, nodeName, "textContent")
+            }
+            if (nodeName.includes(thirdOption.getAttribute("data-node"))) {
+                optionElementAutoCheck(thirdOption, nodeName, "textContent")
+            }
+        })
+    };
+    autoAelectEnlightNode();
+
+    // optionElementAutoCheck(firstOption, selectValue, tag)
+    // optionElementAutoCheck(secondOption, selectValue, tag)
+    // optionElementAutoCheck(thirdOption, selectValue, tag)
+
     /* **********************************************************************************************************************
     * function name		:	weaponQualitySelect
     * description	    : 	무기의 품질을 자동으로 선택함
