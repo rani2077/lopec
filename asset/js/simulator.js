@@ -3787,19 +3787,19 @@ async function selectCreate(data, Modules) {
         // 3. 레벨 목록 (각 레벨이 어떤 옵션에 속하는지 optionId로 참조)
         const levels = [
             // 도화가 : 엥? 하나 더!
-            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:0' },
-            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:0' },
-            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:1' },
-            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:2' },
-            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:3' },
-            { optionId: 'dohwaga_option_1', value: 'stigmaPEr:4' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPer:0' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPer:0' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPer:1' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPer:2' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPer:3' },
+            { optionId: 'dohwaga_option_1', value: 'stigmaPer:4' },
             // 도화가 : 낙인 강화
-            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:0' },
-            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:0' },
-            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:1' },
-            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:2' },
-            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:3' },
-            { optionId: 'dohwaga_option_2', value: 'stigmaPEr:4' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPer:0' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPer:0' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPer:1' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPer:2' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPer:3' },
+            { optionId: 'dohwaga_option_2', value: 'stigmaPer:4' },
             // 도화가 : 묵법 : 접무
             { optionId: 'dohwaga_option_3', value: 'enlightenmentBuff:1' },
             { optionId: 'dohwaga_option_3', value: 'enlightenmentBuff:1.1' },

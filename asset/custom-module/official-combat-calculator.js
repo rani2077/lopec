@@ -5,8 +5,8 @@
 
 let cacheCollectStat = null;
 export async function officialCombatCalculator(combatObj, extractObj) {
-    console.log("공식전투력", combatObj);
-    console.log("오리진obj", extractObj);
+    //console.log("공식전투력", combatObj);
+    //console.log("오리진obj", extractObj);
 
     let originCombat = extractObj.defaultObj.combatPower; // 인게임 전투력
     let baseAttackBonus = (extractObj.etcObj.gemAttackBonus + extractObj.etcObj.abilityAttackBonus) / 100 + 1;
@@ -31,7 +31,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.bangle /
         combatObj.ark /
         combatObj.accessory;
-    console.log("원래 베이스 포인트", originBasePoint);
+    //console.log("원래 베이스 포인트", originBasePoint);
     let originAtk = Math.floor(originBasePoint * 1000000 / 288);
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStat = ((extractObj.etcObj.armorStatus +
@@ -48,9 +48,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     if (!cacheCollectStat) {
         cacheCollectStat = originTotalStat - calcBaseStat
     }
-    console.log("실제 스탯", originTotalStat);
-    console.log("계산 스탯1", calcBaseStat)
-    console.log("계산 스탯2", calcBaseStat + cacheCollectStat);
+    //console.log("실제 스탯", originTotalStat);
+    //console.log("계산 스탯1", calcBaseStat)
+    //console.log("계산 스탯2", calcBaseStat + cacheCollectStat);
 
     let calcTotalStat = calcBaseStat + cacheCollectStat
     let calcBasePoint = (((calcTotalStat * weaponAtk / 6) ** 0.5) * baseAttackBonus) * 288 / 1000000
@@ -70,8 +70,8 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.weaponQuality *
         1.0077;
 
-    console.log("인게임 전투력", originCombat)
-    console.log("계산 전투력", calcCombat)
+    //console.log("인게임 전투력", originCombat)
+    //console.log("계산 전투력", calcCombat)
     let result = Math.ceil(calcCombat * 100) / 100;
     return result;
 };
