@@ -329,7 +329,7 @@ export async function getCharacterProfile(data, dataBase) {
                 let foundVitality = false; // 찾았는지 여부 플래그
 
                 // Element_006.value.Element_001 확인
-                let vitalityStringFrom006 = tooltipJson?.Element_006?.value?.Element_001;
+                let vitalityStringFrom006 = tooltipJson?.Element_008?.value?.Element_001;
                 if (vitalityStringFrom006 && vitalityStringFrom006.startsWith("생명 활성력")) {
                     const match = vitalityStringFrom006.match(/\d+/);
                     if (match) {

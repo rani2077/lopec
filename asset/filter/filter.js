@@ -2893,9 +2893,6 @@ export let classGemFilter = [
         class: "유산",
         skill: [
             { name: "싱크 스킬", per: 0.6853 },
-            { name: "명령 : 베이비 드론", per: 0.008 },
-            { name: "명령 : 레이드 미사일", per: 0.008 },
-            { name: "에너지 버스터", per: 0.009 },
         ],
     },
     {
@@ -3026,9 +3023,6 @@ export let classGemFilter = [
         class: "충동",
         skill: [
             { name: "악마 스킬", per: 0.704 },
-            { name: "데몬 비전", per: 0.009 },
-            { name: "데몬 그랩", per: 0.009 },
-            { name: "하울링", per: 0.009 },
         ],
     },
     {

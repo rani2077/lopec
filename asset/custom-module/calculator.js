@@ -262,7 +262,7 @@ export async function specPointCalc(inputObj) {
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint = ((calcSupportCombinedPower ** 4.268) * 70.127)
+    let supportSpecPoint = ((calcSupportCombinedPower ** 4.268) * 69.127)
 
 
     /* **********************************************************************************************************************
