@@ -127,11 +127,13 @@ export async function apiCalcValue(inputName) {
     // else if (dataBase.evoKarma >= 5) extractValue.karmaObj.evolutionKarmaRank = 2;
     // else if (dataBase.evoKarma >= 1) extractValue.karmaObj.evolutionKarmaRank = 1;
     // else if (dataBase.evoKarma === 0) extractValue.karmaObj.evolutionKarmaRank = 0;
+    console.log(window.location.href)
     // else extractValue.karmaObj.evolutionKarmaRank = '미등록';
     let calcValue = await Modules.calcValue.specPointCalc(extractValue);
     let devilDmgCheck = localStorage.getItem("devilDamage")
     if (
         window.location.href.includes("lopec.kr") &&                // url이 lopec.kr일 경우
+        window.location.href.includes("search") &&                  // 검색결과 페이지의 경우
         calcValue.completeSpecPoint > dataBase.totalSum &&          // 계산된 스펙포인트가 DB값보다 큰 경우
         devilDmgCheck !== "true" &&                                 // 악추피 체크를 안한 경우
         !gemSetCheck                                                // 저장된 보석설정을 로드한 경우
