@@ -2632,7 +2632,19 @@ export let classGemFilter = [
             { name: "파쇄격", per: 0.032 },
             { name: "진 용출권", per: 0.032 },
             { name: "보정치", per: -0.064 },
-
+        ],
+    },
+    {
+        class: "심판 체술",
+        skill: [
+            { name: "철포난격", per: 0.142 },
+            { name: "난타연권", per: 0.137 },
+            { name: "폭렬권", per: 0.109 },
+            { name: "용의 강림", per: 0.058 },
+            { name: "죽음의 선고", per: 0.039 },
+            { name: "파쇄격", per: 0.039 },
+            { name: "진 용출권", per: 0.039 },
+            { name: "보정치", per: -0.078 },
         ],
     },
     {
@@ -2825,6 +2837,17 @@ export let classGemFilter = [
             { name: "블레이드 스톰", per: 0.032 },
             { name: "애로우 해일", per: 0.032 },
             { name: "보정치", per: -0.032 },
+        ],
+    },
+    {
+        class: "지뢰 죽습",
+        skill: [
+            { name: "실버호크 스킬", per: 0.22 },
+            { name: "스나이프", per: 0.188 },
+            { name: "호크 샷", per: 0.077 },
+            { name: "차징 샷", per: 0.07 },
+            { name: "샤프 슈터", per: 0.065 },
+            { name: "크레모아 지뢰", per: 0.082 },
         ],
     },
     {

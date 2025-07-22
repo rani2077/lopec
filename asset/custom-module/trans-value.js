@@ -1855,6 +1855,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "마운틴 포식";
         } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg)) {
             specialClass = "크블 포식";
+        } else if (classCheck("죽습") && skillCheck(gemSkillArry, "크레모아 지뢰", dmg)) {
+            specialClass = "지뢰 죽습";
         } else if (classCheck("피메") && !skillCheck(gemSkillArry, "대재앙", dmg)) {
             specialClass = "6M 피메";
         } else if (classCheck("잔재") && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
@@ -1867,6 +1869,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "슈차 잔재";
         } else if (classCheck("오의") && skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 폭쇄진", dmg)) {
             specialClass = "밸패 오의";
+        } else if (classCheck("체술") && !skillCheck(gemSkillArry, "일망 타진", dmg) && skillCheck(gemSkillArry, "심판", per)) {
+            specialClass = "심판 체술";
         } else if (classCheck("일격") && skillCheck(gemSkillArry, "오의 : 뇌호격", dmg) && skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
             specialClass = "4멸 일격";
         } else if (classCheck("일격") && !skillCheck(gemSkillArry, "오의 : 뇌호격", dmg) && skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
@@ -1955,15 +1959,21 @@ export async function getCharacterProfile(data, dataBase) {
             gemSkillArry.forEach(function (gemListArry) {
                 if ((gemListArry.name == "홍염" || gemListArry.name == "작열" || gemListArry.name == "쿨광휘") && gemListArry.level != null && gemListArry.level >= 1 && gemListArry.skill !== "직업보석이 아닙니다") {
                     // if ((gemListArry.name == "홍염" || gemListArry.name == "작열") && gemListArry.level != null && gemListArry.level >= 1) {
-                    // 해당 보석의 실제 쿨감 수치 가져오기
-                    let gemType = gemPerObj.find(g => g.name === gemListArry.name);
-                    let coolValue = gemType[`level${gemListArry.level}`];
-                    let weight = Math.pow(2, gemListArry.level - 1);
+                    const isImpulse = specialClass === "충동" && gemListArry.skill === "악마 스킬";
+                    const isLegacy = specialClass === "유산" && gemListArry.skill === "싱크 스킬";
+                    const isOtherClass = specialClass !== "충동" && specialClass !== "유산";
 
-                    // 가중치를 적용한 쿨감 수치 누적
-                    weightedCoolValueSum += coolValue * weight;
-                    coolGemTotalWeight += weight;
-                    coolGemCount++;
+                    if (isImpulse || isLegacy || isOtherClass) {
+                        // 해당 보석의 실제 쿨감 수치 가져오기
+                        let gemType = gemPerObj.find(g => g.name === gemListArry.name);
+                        let coolValue = gemType[`level${gemListArry.level}`];
+                        let weight = Math.pow(2, gemListArry.level - 1);
+
+                        // 가중치를 적용한 쿨감 수치 누적
+                        weightedCoolValueSum += coolValue * weight;
+                        coolGemTotalWeight += weight;
+                        coolGemCount++;
+                    }
                 }
             });
 
