@@ -2699,6 +2699,8 @@ export let classGemFilter = [
             { name: "권왕십이식", per: 0.327 },
             { name: "천기심권", per: 0.077 },
             { name: "유성 낙하", per: 0.059 },
+            { name: "징벌의 파도", per: 0.059 },
+            { name: "보정치", per: -0.059 },
         ],
     },
     {
@@ -3097,6 +3099,17 @@ export let classGemFilter = [
             { name: "소울 앱소버", per: 0.143 },
             { name: "데스 센텐스", per: 0.112 },
             { name: "보이드 스트라이크", per: 0.113 },
+            { name: "트윈 쉐도우", per: 0.095 },
+            { name: "어스 슬래쉬", per: 0.063 },
+        ],
+    },
+    {
+        class: "어슬 작열 블리츠 잔재",
+        skill: [
+            { name: "버스트 스킬", per: 0.205 },
+            { name: "소울 앱소버", per: 0.143 },
+            { name: "데스 센텐스", per: 0.112 },
+            { name: "블리츠 러시", per: 0.113 },
             { name: "트윈 쉐도우", per: 0.095 },
             { name: "어스 슬래쉬", per: 0.063 },
         ],
