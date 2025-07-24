@@ -1005,3 +1005,135 @@ async function leaderBoard() {
 
 };
 leaderBoard();
+
+
+// 유저 후원 배너 자동 감지
+async function dedetectBanner() {
+    let adsElement = document.querySelector(".sc-top-ads");
+    let todayDate = getFormattedDate();
+    let fullImage = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-c.png`);
+    let halfImageA = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-a.png`);
+    let halfImageB = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-b.png`);
+    function bannerElement(bannerSize) {
+        let standard = "";
+        let size = 0;
+        if (bannerSize === "full") {
+            standard = "f";
+            size = 100;
+        } else if (bannerSize === "half-a") {
+            standard = "a";
+            size = 50;
+        } else if (bannerSize === "half-b") {
+            standard = "b";
+            size = 50;
+        }
+        return `<img class="patreon-banner" src="https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-${standard}.png" alt="" style="width:100%;height:${size}%;">`
+    }
+
+    if (fullImage) {
+        adsElement.insertAdjacentHTML('beforeend', bannerElement("full"));
+    } else if (halfImageA) {
+        // console.log(bannerElement("a"))
+        adsElement.insertAdjacentHTML('beforeend', bannerElement("half-a"));
+        if (halfImageB) {
+            adsElement.insertAdjacentHTML('beforeend', bannerElement("half-b"));
+        }
+    }
+
+    // 이미지 유효성 검사
+    async function checkImageExistence(imageUrl) {
+        return new Promise((resolve) => {
+            const img = new Image();
+
+            // 이미지로드 성공
+            img.onload = () => {
+                // console.log(`✅ 이미지 로드 성공: ${imageUrl}`);
+                resolve(true);
+            };
+
+            // 이미지 로드에 실패
+            img.onerror = () => {
+                // console.error(`❌ 이미지 로드 실패: ${imageUrl}`);
+                resolve(false);
+            };
+            // 이미지 로드 시도
+            img.src = imageUrl;
+        });
+    };
+
+    function getFormattedDate() {
+        const today = new Date(); // 현재 날짜와 시간을 포함하는 Date 객체 생성
+
+        const year = today.getFullYear(); // 연도 (YYYY)
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (MM), 1을 더하고 두 자리로 포맷
+        const day = String(today.getDate()).padStart(2, '0'); // 일 (DD), 두 자리로 포맷
+
+        return `${year}${month}${day}`; // YYYYMMDD 형식으로 조합
+    }
+
+    let bannerElementLength = Array.from(document.querySelectorAll(".patreon-banner")).length;
+    if (!document.querySelector(".patreon-banner")) {
+        insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+        insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "3074981163", "1120px", "250px")
+    }
+    if (bannerElementLength === 1) {
+        let bannerHeight = document.querySelector(".patreon-banner").offsetHeight;
+        if (bannerHeight === 250)
+            insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+    }
+
+};
+dedetectBanner();
+
+
+/* **********************************************************************************************************************
+ * name		              :	  insertGoogleAdBanner
+ * version                :   20250724
+ * description            :   Google AdSense 배너를 동적으로 삽입하는 함수
+ * USE_TN                 :   사용
+ * @param {string}        :   containerSelector 광고 배너를 삽입할 HTML 요소의 CSS 선택자 (예: ".sc-top-ads", "#ad-container")
+ * @param {string}        :   adClient AdSense 게시자 ID (예: "ca-pub-5125145415518329")
+ * @param {string}        :   adSlot AdSense 광고 슬롯 ID (예: "5389359448")
+ * @param {string}        :   width 배너의 너비 (예: "1120px")
+ * @param {string}        :   height 배너의 높이 (예: "250px")
+ *********************************************************************************************************************** */
+function insertGoogleAdBanner(containerSelector, adClient, adSlot, width, height) {
+    const container = document.querySelector(containerSelector);
+
+    // 컨테이너 요소가 없으면 함수를 종료
+    if (!container) {
+        console.warn(`[AdSense] 경고: 지정된 컨테이너 요소 "${containerSelector}"를 찾을 수 없습니다.`);
+        return;
+    }
+
+    // 배너 검사 로직 삭제됨
+    // 이미 배너가 있는지 확인하는 로직 (기존 코드에서 .patreon-banner 확인 부분)
+    // 여기서는 AdSense 배너 삽입 자체에만 초점을 맞춥니다.
+    // 만약 특정 클래스(.patreon-banner)의 존재 여부에 따라 AdSense 삽입 여부를 결정한다면,
+    // 이 함수 호출 전에 해당 로직을 구현하거나, 함수 내부에 포함할 수 있습니다.
+    // let bannerElement = document.querySelector(".patreon-banner");
+    // if (bannerElement) {
+    //     console.log("[AdSense] 'patreon-banner' 요소가 존재하여 광고를 삽입하지 않습니다.");
+    //     alert("배너있음");
+    //     return; // 배너가 있으면 AdSense 삽입을 중단
+    // } else {
+    //     console.log("[AdSense] 'patreon-banner' 요소가 없으므로 광고를 삽입합니다.");
+    //     alert("배너없음");
+    // }
+
+    // 광고 ins 태그 생성
+    const insHtml = `<ins class="adsbygoogle"
+                         style="display:inline-block;width:${width};height:${height}"
+                         data-ad-client="${adClient}"
+                         data-ad-slot="${adSlot}"></ins>`;
+
+    // 컨테이너에 광고 삽입
+    container.insertAdjacentHTML('beforeend', insHtml);
+
+    // Google AdSense 스크립트에 광고 로드 요청
+    // window.adsbygoogle가 정의되지 않았을 경우를 대비하여 || [] 사용
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+
+    // console.log(`[AdSense] 광고 배너가 "${containerSelector}"에 성공적으로 삽입되었습니다.`);
+}
+

@@ -1,0 +1,161 @@
+.sc-percent {
+    margin-top: 130px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+
+.group-percent {
+    width: 300px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.group-percent .title-area {
+    width: 100%;
+}
+
+.group-percent .title-area .title {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    ;
+}
+
+.group-percent .input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.group-percent .input-area .input-item {}
+
+.group-percent .input-area .input-item input {
+    width: 80px;
+    height: 24px;
+    border: 1px solid #d1d1d1;
+    margin-right: 5px;
+}
+
+.group-percent .input-area .boss-item {}
+
+.group-percent .result-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px 0;
+    background: #eaf6ff;
+    border-radius: 5px;
+}
+
+.group-percent .result-area .percent {
+    text-align: center;
+}
+
+.group-percent .result-area .achieve {
+    text-align: center;
+}
+
+.group-percent .result-area em {
+    font-weight: 600;
+}
+
+
+.group-boss {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.group-boss .title-area {
+    width: 100%;
+}
+
+.group-boss .title-area .title {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.group-boss .filter-area {
+    width: 100%;
+}
+
+.group-boss .filter-area .filter-list {
+    display: flex;
+    border-bottom: 1px solid #e2e6e9;
+}
+
+.group-boss .filter-area .filter-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.group-boss .filter-area .filter-item.on {
+    border-bottom: 3px solid #017cff;
+    color: #017cff;
+}
+
+.group-boss .boss-area {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #dfe3e7;
+    overflow: hidden;
+}
+
+.group-boss .boss-area .boss-list {
+    width: 100%;
+}
+
+.group-boss .boss-area .boss-item {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #e7eaed;
+    background: #fff;
+    transition: background 300ms;
+    cursor: pointer;
+}
+
+.group-boss .boss-area .boss-item:hover {
+    background: #eeeeee;
+}
+
+.group-boss .boss-area .boss-item:last-child {
+    border-bottom: none;
+}
+
+.group-boss .boss-area .boss-item span {
+    padding: 10px;
+    border-right: 1px solid #e7eaed;
+}
+
+.group-boss .boss-area .boss-item span:last-child {
+    border-right: none;
+}
+
+.group-boss .boss-area .boss-item.head span {
+    font-weight: 600;
+    background: #f8f9fa;
+}
+
+.group-boss .boss-area .boss-item .tag {
+    width: 13%;
+}
+
+.group-boss .boss-area .boss-item .name {
+    width: 60%;
+}
+
+.group-boss .boss-area .boss-item .health {
+    width: 27%;
+}

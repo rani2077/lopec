@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        let baseUrl = "https://cdnlopec.xyz/asset";
+        let interValTime = 60 * 1000 * 10;
+        if (!window.location.href.includes("lopec.kr")) {
+            baseUrl = "/asset"
+        }
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/reset.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/layout.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/common.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/achieve.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+    </script>
+    <title>로펙 : 칭호계산</title>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <section class="sc-percent">
+            <div class="group-percent shadow">
+                <div class="title-area">
+                    <span class="title">기여도 계산</span>
+                </div>
+                <div class="input-area">
+                    <span class="input-item">총 데미지 : <input type="number">억</span>
+                    <span class="boss-item">현재 보스 : -</span>
+                </div>
+                <div class="result-area">
+                    <span class="percent">보스 기여도 : <em>0</em>%</span>
+                    <span class="achieve">예상 칭호 : <em>-</em></span>
+                </div>
+            </div>
+            <div class="group-boss shadow">
+                <div class="title-area">
+                    <span class="title">보스 목록</span>
+                </div>
+                <div class="filter-area">
+                    <ul class="filter-list">
+                        <li class="filter-item on" data-filter="모두">모두</li>
+                        <li class="filter-item" data-filter="가디언">가디언</li>
+                        <li class="filter-item" data-filter="1막">1막</li>
+                        <li class="filter-item" data-filter="2막">2막</li>
+                        <li class="filter-item" data-filter="3막">3막</li>
+                    </ul>
+                </div>
+                <div class="boss-area">
+                    <ul class="boss-list">
+                        <li class="boss-item head">
+                            <span class="tag">구분</span>
+                            <span class="name">이름</span>
+                            <span class="health">체력</span>
+                        </li>
+                        <li class="boss-item" data-tag="가디언">
+                            <span class="tag">가디언</span>
+                            <span class="name">아게오로스스</span>
+                            <span class="health">300억</span>
+                        </li>
+                        <li class="boss-item" data-tag="가디언">
+                            <span class="tag">가디언</span>
+                            <span class="name">스콜라키아</span>
+                            <span class="health">400억</span>
+                        </li>
+                        <li class="boss-item" data-tag="가디언">
+                            <span class="tag">가디언</span>
+                            <span class="name">드랙탈라스</span>
+                            <span class="health">500억</span>
+                        </li>
+                        <li class="boss-item" data-tag="1막">
+                            <span class="tag">1막</span>
+                            <span class="name">1관 - 나쁜놈</span>
+                            <span class="health">500억</span>
+                        </li>
+                        <li class="boss-item" data-tag="1막">
+                            <span class="tag">1막</span>
+                            <span class="name">2관 - 에기르</span>
+                            <span class="health">1000억</span>
+                        </li>
+                        <li class="boss-item" data-tag="2막">
+                            <span class="tag">2막</span>
+                            <span class="name">1관 - 심연</span>
+                            <span class="health">1200억</span>
+                        </li>
+                        <li class="boss-item" data-tag="2막">
+                            <span class="tag">2막</span>
+                            <span class="name">2관 - 아브렐슈드</span>
+                            <span class="health">1500억</span>
+                        </li>
+                        <li class="boss-item" data-tag="3막">
+                            <span class="tag">3막</span>
+                            <span class="name">1관 - 카멘</span>
+                            <span class="health">2000억</span>
+                        </li>
+                        <li class="boss-item" data-tag="3막">
+                            <span class="tag">3막</span>
+                            <span class="name">2관 - 가디언</span>
+                            <span class="health">1800억</span>
+                        </li>
+                        <li class="boss-item" data-tag="3막">
+                            <span class="tag">3막</span>
+                            <span class="name">3관 - 모르둠둠</span>
+                            <span class="health">2200억</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+    <script>
+        document.write('<script type="module" src="' + baseUrl + '/js/layout.js?' + Math.floor((new Date).getTime() / interValTime) + '"><\/script>');
+        document.write('<script type="module" src="' + baseUrl + '/js/achieve.js?' + Math.floor((new Date).getTime() / interValTime) + '"><\/script>');
+    </script>
+</body>
+
+</html>
