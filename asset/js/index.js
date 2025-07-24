@@ -910,7 +910,7 @@ let noticeArry = [
 
     },
     {
-        name: `<em style="font-weight:900;font-size:17px;"> 2025-07-20 업데이트 안내 </em>`,
+        name: `2025-07-20 업데이트 안내`,
         desc:
             `● 특정 직업군의 딜지분 데이터와 계산식을 수정 및 추가했습니다.
         &nbsp;&nbsp; - 체술 인파
@@ -921,6 +921,12 @@ let noticeArry = [
         
         &nbsp;&nbsp; - 유산 스카우터 & 충동 데모닉
         &nbsp;&nbsp; 보석 계산식에 "싱크 스킬" 및 "악마 스킬"만 포함되도록 수정`
+
+    },
+    {
+        name: `<em style="font-weight:900;font-size:17px;"> 2025-07-24 업데이트 안내 </em>`,
+        desc:
+            `● 서폿 직업군의 방어구 품질이 케어력에 반영되지 않는 버그를 수정했습니다.`
 
     },
 ]
