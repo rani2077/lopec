@@ -1001,7 +1001,7 @@ async function mainSearchFunction() {
             bestSpecPoint = apiData.dataBase.totalSum;
             archiveDate = formatDate(apiData.dataBase.achieveDate);
         }
-        bestSpecPoint = bestSpecPoint.toFixed(2);
+        bestSpecPoint = bestSpecPoint ? bestSpecPoint.toFixed(2) : "-";
 
         let specPointInfo = [
             { name: "달성 최고 점수", value: bestSpecPoint, icon: "medal-solid" },

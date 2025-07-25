@@ -7,7 +7,7 @@
 
 
 .group-percent {
-    width: 300px;
+    width: 350px;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -44,6 +44,20 @@
 
 .group-percent .input-area .boss-item {}
 
+.group-percent .class-area {
+    display: flex;
+    gap: 8px;
+}
+
+.group-percent .class-area .class-box {
+    display: flex;
+    gap: 3px;
+}
+
+.group-percent .class-area .class-box input {}
+
+.group-percent .class-area .class-box .class {}
+
 .group-percent .result-area {
     width: 100%;
     display: flex;
@@ -53,6 +67,26 @@
     background: #eaf6ff;
     border-radius: 5px;
 }
+
+.group-percent .esther-area {}
+
+.group-percent .esther-area .esther-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.group-percent .esther-area .esther-item {
+    display: flex;
+    gap: 7px;
+    align-items: flex-start;
+}
+
+.group-percent .esther-area .esther-item.title {
+    font-weight: 600;
+}
+
+.group-percent .esther-area .esther-item input {}
 
 .group-percent .result-area .percent {
     text-align: center;

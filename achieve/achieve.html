@@ -28,8 +28,26 @@
                     <span class="title">기여도 계산</span>
                 </div>
                 <div class="input-area">
-                    <span class="input-item">총 데미지 : <input type="number">억</span>
+                    <span class="input-item"><span class="damage">총 데미지</span> : <input type="number" min="0">억</span>
                     <span class="boss-item">현재 보스 : -</span>
+                </div>
+                <div class="class-area">
+                    <div class="class-box">
+                        <input type="radio" value="dealer" checked name="user-class" id="radio-dealer">
+                        <label for="radio-dealer" class="class">딜러</label>
+                    </div>
+                    <div class="class-box">
+                        <input type="radio" value="support" name="user-class" id="radio-support">
+                        <label for="radio-support" class="class">서폿</label>
+                    </div>
+                </div>
+                <div class="esther-area">
+                    <ul class="esther-list">
+                        <li class="esther-item title">에스더 택틱(※현재 못고름※)</li>
+                        <li class="esther-item"><input type="checkbox" value="1000000000" disabled checked>니나브 3 + 1</li>
+                        <li class="esther-item"><input type="checkbox" value="1000000000" disabled>아델 > 에아달린3+1 > 아델 > 히든에아</li>
+                        <li class="esther-item"><input type="checkbox" value="1000000000" disabled>니나브 3 + 3</li>
+                    </ul>
                 </div>
                 <div class="result-area">
                     <span class="percent">보스 기여도 : <em>0</em>%</span>
@@ -56,56 +74,96 @@
                             <span class="name">이름</span>
                             <span class="health">체력</span>
                         </li>
-                        <li class="boss-item" data-tag="가디언">
-                            <span class="tag">가디언</span>
-                            <span class="name">아게오로스스</span>
-                            <span class="health">300억</span>
-                        </li>
-                        <li class="boss-item" data-tag="가디언">
-                            <span class="tag">가디언</span>
-                            <span class="name">스콜라키아</span>
-                            <span class="health">400억</span>
-                        </li>
-                        <li class="boss-item" data-tag="가디언">
-                            <span class="tag">가디언</span>
-                            <span class="name">드랙탈라스</span>
-                            <span class="health">500억</span>
-                        </li>
-                        <li class="boss-item" data-tag="1막">
-                            <span class="tag">1막</span>
-                            <span class="name">1관 - 나쁜놈</span>
-                            <span class="health">500억</span>
-                        </li>
-                        <li class="boss-item" data-tag="1막">
-                            <span class="tag">1막</span>
-                            <span class="name">2관 - 에기르</span>
-                            <span class="health">1000억</span>
-                        </li>
-                        <li class="boss-item" data-tag="2막">
-                            <span class="tag">2막</span>
-                            <span class="name">1관 - 심연</span>
-                            <span class="health">1200억</span>
-                        </li>
-                        <li class="boss-item" data-tag="2막">
-                            <span class="tag">2막</span>
-                            <span class="name">2관 - 아브렐슈드</span>
-                            <span class="health">1500억</span>
-                        </li>
-                        <li class="boss-item" data-tag="3막">
-                            <span class="tag">3막</span>
-                            <span class="name">1관 - 카멘</span>
-                            <span class="health">2000억</span>
-                        </li>
-                        <li class="boss-item" data-tag="3막">
-                            <span class="tag">3막</span>
-                            <span class="name">2관 - 가디언</span>
-                            <span class="health">1800억</span>
-                        </li>
-                        <li class="boss-item" data-tag="3막">
-                            <span class="tag">3막</span>
-                            <span class="name">3관 - 모르둠둠</span>
-                            <span class="health">2200억</span>
-                        </li>
+                        <div class="boss-list-container">
+                            <li class="boss-item" data-tag="1막">
+                                <span class="tag">1막</span>
+                                <span class="name">노말 1관 - 일리아칸</span>
+                                <span class="health">161,517,294,610</span>
+                            </li>
+                            <li class="boss-item" data-tag="1막">
+                                <span class="tag">1막</span>
+                                <span class="name">노말 2관 - 에기르</span>
+                                <span class="health">213,231,745,024</span>
+                            </li>
+                            <li class="boss-item" data-tag="1막">
+                                <span class="tag">1막</span>
+                                <span class="name">하드 1관 - 일리아칸</span>
+                                <span class="health">269,870,428,126</span>
+                            </li>
+                            <li class="boss-item" data-tag="1막">
+                                <span class="tag">1막</span>
+                                <span class="name">하드 2관 - 에기르</span>
+                                <span class="health">398,607,625,792</span>
+                            </li>
+
+                            <li class="boss-item" data-tag="2막">
+                                <span class="tag">2막</span>
+                                <span class="name">노말 1관 - 나로크</span>
+                                <span class="health">275,449,621,248</span>
+                            </li>
+                            <li class="boss-item" data-tag="2막">
+                                <span class="tag">2막</span>
+                                <span class="name">노말 2관 - 아브렐슈드</span>
+                                <span class="health">399,401,950,809</span>
+                            </li>
+                            <li class="boss-item" data-tag="2막">
+                                <span class="tag">2막</span>
+                                <span class="name">하드 1관 - 나로크</span>
+                                <span class="health">516,125,060,783</span>
+                            </li>
+                            <li class="boss-item" data-tag="2막">
+                                <span class="tag">2막</span>
+                                <span class="name">하드 2관 - 아브렐슈드</span>
+                                <span class="health">911,160,408,772</span>
+                            </li>
+
+                            <li class="boss-item" data-tag="3막">
+                                <span class="tag">3막</span>
+                                <span class="name">노말 1관 - 카멘</span>
+                                <span class="health">368,773,967,531</span>
+                            </li>
+                            <li class="boss-item" data-tag="3막">
+                                <span class="tag">3막</span>
+                                <span class="name">노말 2관 - 나이트레아</span>
+                                <span class="health">334,691,604,286</span>
+                            </li>
+                            <li class="boss-item" data-tag="3막">
+                                <span class="tag">3막</span>
+                                <span class="name">노말 3관 - 모르둠</span>
+                                <span class="health">731,975,350,664</span>
+                            </li>
+                            <li class="boss-item" data-tag="3막">
+                                <span class="tag">3막</span>
+                                <span class="name">하드 1관 - 카멘</span>
+                                <span class="health">652,499,653,375</span>
+                            </li>
+                            <li class="boss-item" data-tag="3막">
+                                <span class="tag">3막</span>
+                                <span class="name">하드 2관 - 나이트레아</span>
+                                <span class="health">663,116,555,628</span>
+                            </li>
+                            <li class="boss-item" data-tag="3막">
+                                <span class="tag">3막</span>
+                                <span class="name">하드 3관 - 모르둠</span>
+                                <span class="health">1,473,779,836,172</span>
+                            </li>
+
+                            <li class="boss-item" data-tag="가디언">
+                                <span class="tag">가디언</span>
+                                <span class="name">아게오로스</span>
+                                <span class="health">26,000,000,000</span>
+                            </li>
+                            <li class="boss-item" data-tag="가디언">
+                                <span class="tag">가디언</span>
+                                <span class="name">스콜라키아</span>
+                                <span class="health">110,000,000,000</span>
+                            </li>
+                            <li class="boss-item" data-tag="가디언">
+                                <span class="tag">가디언</span>
+                                <span class="name">드렉탈라스</span>
+                                <span class="health">150,000,000,000</span>
+                            </li>
+                        </div>
                     </ul>
                 </div>
 
