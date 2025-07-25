@@ -1017,7 +1017,7 @@ leaderBoard();
 async function dedetectBanner() {
     let adsElement = document.querySelector(".sc-top-ads");
     let todayDate = getFormattedDate();
-    let fullImage = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-c.png`);
+    let fullImage = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-f.png`);
     let halfImageA = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-a.png`);
     let halfImageB = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-b.png`);
     function bannerElement(bannerSize) {
