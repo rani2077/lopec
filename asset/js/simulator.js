@@ -1543,7 +1543,11 @@ async function simulatorInputCalc() {
             let gemAttackBonus = [0, 0.05, 0.1, 0.2, 0.3, 0.45, 0.6, 0.8, 1.00, 1.2];
             gemCalcResultAllInfo.gemSkillArry.forEach((gemTag, idx) => {
                 if (/겁화|작열|광휘/.test(gemTag.name)) {
+                    console.log("보석디버깅")
+                    console.log(gemTag)
+                    console.log(gemAttackBonus[gemTag.level - 1])
                     result += gemAttackBonus[gemTag.level - 1];
+                    console.log(result)
                 }
             })
         }

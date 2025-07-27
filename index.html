@@ -48,38 +48,44 @@
         <div class="sc-top-ads"
             style="width: 1120px;height: 500px;margin: 0 auto 30px;margin-top: 90px;display: flex;flex-direction:column;position:relative;">
             <!-- 에드센스 -->
-            <script async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5125145415518329"
-                crossorigin="anonymous"></script>
-            <!-- main1 -->
-            <!-- <script>
-                let scTopAds = document.querySelector(".sc-top-ads");
-                let bannerElement = document.querySelector(".patreon-banner");
-                if(bannerElement){
-                    alert("배너잇음")
-                }else{
-                    alert("배너없음")
-                }
-                let insHtml1 = `<ins class="adsbygoogle" style="display:inline-block;width:1120px;height:250px"
-                data-ad-client="ca-pub-5125145415518329" data-ad-slot="5389359448"></ins>`
-                if (false) {
-                    scTopAds.insertAdjacentHTML('beforeend', insHtml1);
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            </script> -->
-            <script async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5125145415518329"
-                crossorigin="anonymous"></script>
-            <!-- main2 -->
-            <!-- <ins class="adsbygoogle" style="display:inline-block;width:1120px;height:250px"
-                data-ad-client="ca-pub-5125145415518329" data-ad-slot="3074981163"></ins> -->
-            <script>
-                // (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
 
             <a href="https://cool-kiss-ec2.notion.site/1e9758f0e8da803abad5ffb1b1de506c" target="_blank"
                 style="position:absolute;top:100%;right:0; width:80px;height:30px;display:flex;justify-content: center;align-items:center;background: #bbbbbb;border-radius:0 0 5px 5px;color:#404040;font-size:12px;">배너문의</a>
         </div>
+
+        <div class="sc-recruit"
+            style="position: fixed;left: 50px;top: 100px;width: 300px;height: 400px;background: #f00;display: block;border:1px solid #999999;">
+            <a href="https://cool-kiss-ec2.notion.site/TEAM-LOPEC-Designer-1d8758f0e8da8066b0cace283b8febcf"
+                target="_blank"> <img src="/asset/image/I WANT YOU.png" alt="" style="width: 100%;height: 100%;">
+            </a>
+            <div class="btn-box"
+                style="position: absolute;left: 0;bottom: 0;color:#ffffff; background: #757575;padding: 3px;">
+                <span class="close">닫기 | </span>
+                <span class="dont-again">하루동안 보지 않기</span>
+            </div>
+        </div>
+        <script>
+            const recruitBanner = document.querySelector(".sc-recruit");
+            const closeBtn = recruitBanner.querySelector(".close");
+            const dontAgainBtn = recruitBanner.querySelector(".dont-again");
+
+            // 페이지 로드 시 체크
+            const hideUntil = localStorage.getItem('hideRecruitUntil');
+            if (hideUntil && new Date().getTime() < parseInt(hideUntil, 10)) {
+                recruitBanner.style.display = "none";
+            }
+
+            closeBtn.addEventListener("click", () => {
+                recruitBanner.style.display = "none";
+            });
+
+            dontAgainBtn.addEventListener("click", () => {
+                const oneDay = 24 * 60 * 60 * 1000;
+                const hideUntilTimestamp = new Date().getTime() + oneDay;
+                localStorage.setItem('hideRecruitUntil', hideUntilTimestamp);
+                recruitBanner.style.display = "none";
+            });
+        </script>
 
 
         <section class="sc-main-search">
