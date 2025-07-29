@@ -1077,16 +1077,16 @@ async function dedetectBanner() {
         return `${year}${month}${day}`; // YYYYMMDD 형식으로 조합
     }
 
-    let bannerElementLength = Array.from(document.querySelectorAll(".patreon-banner")).length;
-    if (!document.querySelector(".patreon-banner")) {
-        // insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
-        // insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "3074981163", "1120px", "250px")
-    }
-    if (bannerElementLength === 1) {
-        let bannerHeight = document.querySelector(".patreon-banner").offsetHeight;
-        if (bannerHeight === 250)
-            // insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
-    }
+    // let bannerElementLength = Array.from(document.querySelectorAll(".patreon-banner")).length;
+    // if (!document.querySelector(".patreon-banner")) {
+    //     insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+    //     insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "3074981163", "1120px", "250px")
+    // }
+    // if (bannerElementLength === 1) {
+    //     let bannerHeight = document.querySelector(".patreon-banner").offsetHeight;
+    //     if (bannerHeight === 250)
+    //         insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+    // }
 
 };
 dedetectBanner();
