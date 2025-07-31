@@ -1017,7 +1017,7 @@ leaderBoard();
 async function dedetectBanner() {
     let adsElement = document.querySelector(".sc-top-ads");
     let todayDate = getFormattedDate();
-    let fullImage = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-f.gif`);
+    let fullImage = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-f.png`);
     let halfImageA = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-a.png`);
     let halfImageB = await checkImageExistence(`https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-b.png`);
     function bannerElement(bannerSize) {
@@ -1077,16 +1077,16 @@ async function dedetectBanner() {
         return `${year}${month}${day}`; // YYYYMMDD 형식으로 조합
     }
 
-    // let bannerElementLength = Array.from(document.querySelectorAll(".patreon-banner")).length;
-    // if (!document.querySelector(".patreon-banner")) {
-    //     insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
-    //     insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "3074981163", "1120px", "250px")
-    // }
-    // if (bannerElementLength === 1) {
-    //     let bannerHeight = document.querySelector(".patreon-banner").offsetHeight;
-    //     if (bannerHeight === 250)
-    //         insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
-    // }
+    let bannerElementLength = Array.from(document.querySelectorAll(".patreon-banner")).length;
+    if (!document.querySelector(".patreon-banner")) {
+        insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+        insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "3074981163", "1120px", "250px")
+    }
+    if (bannerElementLength === 1) {
+        let bannerHeight = document.querySelector(".patreon-banner").offsetHeight;
+        if (bannerHeight === 250)
+            insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+    }
 
 };
 dedetectBanner();
@@ -1142,4 +1142,3 @@ function insertGoogleAdBanner(containerSelector, adClient, adSlot, width, height
 
     // console.log(`[AdSense] 광고 배너가 "${containerSelector}"에 성공적으로 삽입되었습니다.`);
 }
-
