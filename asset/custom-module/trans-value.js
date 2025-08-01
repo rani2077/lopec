@@ -2218,93 +2218,122 @@ export async function getCharacterProfile(data, dataBase) {
 
 
     if (!(data.ArmoryGem.Gems == null) && supportCheck() == "서폿") {
-        data.ArmoryGem.Gems.forEach(function (gem) {
-            let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약']
-            let damageBuff = ['신앙 스킬', '세레나데 스킬', '음양 스킬']
-            let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기', '숭고한 맹세']
-            let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물', '숭고한 도약']
+        let supportSkill = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약', '신앙 스킬', '세레나데 스킬', '음양 스킬'];
+        let atkBuff = ['천상의 축복', '신의 분노', '천상의 연주', '음파 진동', '묵법 : 해그리기', '묵법 : 해우물', '숭고한 맹세', '숭고한 도약'];
+        let damageBuff = ['신앙 스킬', '세레나데 스킬', '음양 스킬'];
+        let atkBuffACdr = ['천상의 연주', '신의 분노', '묵법 : 해그리기', '숭고한 맹세'];
+        let atkBuffBCdr = ['음파 진동', '천상의 축복', '묵법 : 해우물', '숭고한 도약'];
 
-            let gemInfo = JSON.parse(gem.Tooltip)
-            let type = gemInfo.Element_000.value
-
-            if (type.includes("광휘")) {
-                const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
-                if (tooltipText.includes('피해') || tooltipText.includes('지원')) {
-                    type = type.replace('광휘', '딜광휘');
-                } else if (tooltipText.includes('재사용')) {
-                    type = type.replace('광휘', '쿨광휘');
+        let toolTipOrigin = data.ArmoryGem.Gems.map(gem => gem.Tooltip);
+        let toolTipProcess = toolTipOrigin.map(toolTip => {
+            if (toolTip.includes("광휘")) {
+                // let shineTooltip = "";
+                if (toolTip.includes('피해') || toolTip.includes('지원')) {
+                    return toolTip.replace('광휘', '딜광휘');
+                } else if (toolTip.includes('재사용')) {
+                    return toolTip.replace('광휘', '쿨광휘');
                 }
-            }
-
-            let level
-            if (!(gemInfo.Element_004.value == null)) {
-                level = gemInfo.Element_004.value.replace(/\D/g, "")
             } else {
+                return toolTip;
             }
+        })
 
-            let skill
-            if (!(gemInfo.Element_007.value.Element_001 == undefined)) {
-                skill = gemInfo.Element_007.value.Element_001.match(/>([^<]+)</)[1]
-            } else {
-            }
+        function processData(dataArray) {
 
-            // 기존 코드 유지
-            atkBuff.forEach(function (buffSkill) {
-                if (skill == buffSkill && (type.includes("겁화") || type.includes("딜광휘"))) {
-                    gemObj.atkBuff += Number(level)
-                }
-            })
+            return dataArray.map(dataString => {
+                // 딜광휘, 쿨광휘, 작열, 겁화, 홍염, 멸화 추출
+                const sortMatch = dataString.match(/딜광휘|쿨광휘|작열|겁화|홍염|멸화/);
+                const sort = sortMatch ? sortMatch[0] : null;
 
-            damageBuff.forEach(function (buffSkill) {
-                if (skill == buffSkill && (type.includes("겁화") || type.includes("딜광휘"))) {
-                    gemObj.damageBuff += Number(level)
-                }
-            })
+                // 레벨 추출
+                const levelMatch = dataString.match(/(\d+)레벨/);
+                const level = levelMatch ? parseInt(levelMatch[1], 10) : null;
 
-            // 작열/홍염 보석에 대한 실제 값 계산
-            atkBuffACdr.forEach(function (buffSkill) {
-                if (skill == buffSkill) {
-                    if (type.includes("작열") || type.includes("홍염") || type.includes("쿨광휘")) {
-                        // gemPerObj에서 해당 보석 타입 찾기
-                        let gemType = "";
-                        if (type.includes("작열")) gemType = "작열";
-                        else if (type.includes("홍염")) gemType = "홍염";
-                        else if (type.includes("쿨광휘")) gemType = "쿨광휘";
-                        const gemData = gemPerObj.find(g => g.name === gemType);
-
-                        if (gemData && level) {
-                            // 레벨에 맞는 실제 값 가져오기
-                            const coolValue = gemData[`level${level}`];
-                            gemObj.atkBuffACdr += coolValue; // 레벨 대신 실제 값 사용
-                        } else {
-                        }
+                // 스킬 추출
+                let skill = null;
+                for (const s of supportSkill) {
+                    if (dataString.includes(s)) {
+                        skill = s;
+                        break;
                     }
                 }
-            })
+                return {
+                    sort: sort,
+                    level: level,
+                    skill: skill
+                };
+            });
+        }
 
-            atkBuffBCdr.forEach(function (buffSkill) {
-                if (skill == buffSkill) {
+        // 우선순위 맵 정의
+        const priorityMap = {
+            '작열': 3, '쿨광휘': 2, '홍염': 1,
+            '겁화': 3, '딜광휘': 2, '멸화': 1
+        };
 
-                    if (type.includes("작열") || type.includes("홍염") || type.includes("쿨광휘")) {
-                        // gemPerObj에서 해당 보석 타입 찾기
-                        let gemType = "";
-                        if (type.includes("작열")) gemType = "작열";
-                        else if (type.includes("홍염")) gemType = "홍염";
-                        else if (type.includes("쿨광휘")) gemType = "쿨광휘";
+        // sort가 속한 그룹을 반환하는 함수
+        const getGroup = (sort) => {
+            if (['홍염', '작열', '쿨광휘'].includes(sort)) {
+                return 'group1';
+            }
+            if (['멸화', '겁화', '딜광휘'].includes(sort)) {
+                return 'group2';
+            }
+            return 'other';
+        };
 
-                        const gemData = gemPerObj.find(g => g.name === gemType);
+        let aloneTooltip = Object.values(processData(toolTipProcess).reduce((acc, current) => {
+            // skill이 null인 경우, 고유한 항목으로 처리
+            if (current.skill === null) {
+                // key를 고유하게 만들어 각 항목이 분리되도록 함
+                const key = `${current.sort}-${current.level}-${Math.random()}`;
+                acc[key] = current;
+                return acc;
+            }
 
+            // 그룹 및 key 생성 (skill과 그룹으로 병합)
+            const group = getGroup(current.sort);
+            const key = `${current.skill}-${group}`;
 
-                        if (gemData && level) {
-                            // 레벨에 맞는 실제 값 가져오기
-                            const coolValue = gemData[`level${level}`];
+            // 이미 `acc`에 해당 key가 존재하는 경우
+            if (acc[key]) {
+                const existing = acc[key];
 
-                            gemObj.atkBuffBCdr += coolValue; // 레벨 대신 실제 값 사용
-                        } else {
-                        }
+                // 우선순위가 높은 sort를 선택
+                if (priorityMap[current.sort] > priorityMap[existing.sort]) {
+                    acc[key] = current;
+                } else if (priorityMap[current.sort] === priorityMap[existing.sort]) {
+                    // 우선순위가 같으면 level이 높은 것을 선택
+                    if (current.level > existing.level) {
+                        acc[key] = current;
                     }
                 }
-            })
+            } else {
+                // `acc`에 key가 존재하지 않으면 현재 객체를 추가
+                acc[key] = current;
+            }
+
+            return acc;
+        }, {}));
+
+        aloneTooltip.forEach(toolTip => {
+            if (toolTip.skill === null) return;
+            if (atkBuff.includes(toolTip.skill) && (toolTip.sort.includes("겁화") || toolTip.sort.includes("딜광휘"))) {
+                gemObj.atkBuff += toolTip.level;
+            }
+            if (damageBuff.includes(toolTip.skill) && (toolTip.sort.includes("겁화") || toolTip.sort.includes("딜광휘"))) {
+                gemObj.atkBuff += toolTip.level;
+            }
+            if (atkBuffACdr.includes(toolTip.skill) && (toolTip.sort.includes("작열") || toolTip.sort.includes("홍염") || toolTip.sort.includes("쿨광휘"))) {
+                let coolValue = gemPerObj.find(obj => obj.name === toolTip.sort);
+                gemObj.atkBuffACdr += coolValue[`level${toolTip.level}`];
+
+            }
+            if (atkBuffBCdr.includes(toolTip.skill) && (toolTip.sort.includes("작열") || toolTip.sort.includes("홍염") || toolTip.sort.includes("쿨광휘"))) {
+                let coolValue = gemPerObj.find(obj => obj.name === toolTip.sort);
+                gemObj.atkBuffBCdr += coolValue[`level${toolTip.level}`];
+
+            }
         })
     }
 
