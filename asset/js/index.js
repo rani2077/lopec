@@ -944,6 +944,16 @@ let noticeArry = [
             &nbsp;&nbsp; 불편을 드려 죄송합니다. ㅠㅠ `
 
     },
+    {
+        name: `<em style="font-weight:900;font-size:17px;"> 2025-08-01 핫픽스 안내 </em>`,
+        desc:
+            `● 서폿 점수 일시적 계산 오류 현상 수정
+            &nbsp;&nbsp; - 금일 패치로 인해 서폿 보석 계산이 잘못 이루어져, 점수가 일시적으로 펌핑 된
+            &nbsp;&nbsp; 현상을 수정했습니다.
+            &nbsp;&nbsp; 달성 최고 점수 초기화는 차주 월요일에 일괄 진행될 예정입니다.
+            &nbsp;&nbsp; 불편드려 정말 죄송합니다.. ㅠㅠ`
+
+    },
 ]
 
 // notice 공지 생성

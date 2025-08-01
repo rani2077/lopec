@@ -2322,7 +2322,7 @@ export async function getCharacterProfile(data, dataBase) {
                 gemObj.atkBuff += toolTip.level;
             }
             if (damageBuff.includes(toolTip.skill) && (toolTip.sort.includes("겁화") || toolTip.sort.includes("딜광휘"))) {
-                gemObj.atkBuff += toolTip.level;
+                gemObj.damageBuff += toolTip.level;
             }
             if (atkBuffACdr.includes(toolTip.skill) && (toolTip.sort.includes("작열") || toolTip.sort.includes("홍염") || toolTip.sort.includes("쿨광휘"))) {
                 let coolValue = gemPerObj.find(obj => obj.name === toolTip.sort);
@@ -2336,6 +2336,7 @@ export async function getCharacterProfile(data, dataBase) {
             }
         })
     }
+    console.log(gemObj)
 
 
     /* **********************************************************************************************************************
