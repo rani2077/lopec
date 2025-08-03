@@ -5,6 +5,8 @@
 
 let cacheCollectStat = null;
 let cacheCollectStatSupport = null;
+let cacheCollectHealthSupport = null;
+
 export async function officialCombatCalculator(combatObj, extractObj) {
     //console.log("공식전투력", combatObj);
     //console.log("오리진obj", extractObj);
@@ -81,8 +83,16 @@ export async function officialCombatCalculator(combatObj, extractObj) {
  * description			: 	시뮬레이터 전투력 obj와 오리진 obj를 사용하여 인겜 전투력을 계산해냄
  *********************************************************************************************************************** */
 
-    let baseHealth = extractObj.defaultObj.maxHp * 12
-    let calcCareCombat = baseHealth / 10000 *
+    let originHealth = extractObj.defaultObj.maxHp
+    let calcHealth = Number(((extractObj.etcObj.RealHealthStauts + extractObj.hyperObj.statHp + extractObj.elixirObj.statHp + extractObj.bangleObj.statHp + extractObj.accObj.statHp + extractObj.arkObj.statHp) * extractObj.defaultObj.hpActive * 1.07).toFixed(0));
+
+    if (!cacheCollectHealthSupport) {
+        cacheCollectHealthSupport = originHealth - calcHealth
+    }
+
+    let calcTotalHealth = calcHealth + cacheCollectHealthSupport
+
+    let calcCareCombat = calcTotalHealth  * 12 / 10000 *
     combatObj.sup_defense.accessory *
     combatObj.sup_defense.bangle *
     combatObj.sup_defense.elixir *
@@ -140,6 +150,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.sup_attack.stats
 
     let calcCombatSupport = calcAttackCombat + calcCareCombat
+    
+    console.log("실제 전투력", originCombat)
+    console.log("계산 전투력", calcCombatSupport)
 
     let result = {
         dealer: Math.ceil(calcCombat * 100) / 100,

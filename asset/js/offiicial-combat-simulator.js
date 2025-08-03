@@ -263,7 +263,7 @@ export async function simulatorToOffcialCombatObj() {
             resultArkValue_defense: resultArkValue_defense
         }
     };
-    console.log("각인", engravingToOffcialCombatSupport());
+    //console.log("각인", engravingToOffcialCombatSupport());
     // 투견상하장에 엘릭서 선택 박스가 있잖아?
     // 1. 장갑/투구에 똑같은 특옵을 들고 있어야해 (회심/달인 등등)
     // 2. 그리고 엘릭서 총합 레벨이 35/40 이상이어야 됨. 
@@ -961,9 +961,9 @@ export async function simulatorToOffcialCombatObj() {
         stats: statsOffcialCombatSupport(),
         card: cardOffcialCombatSupport()
     };
-    console.log("delaer", officialCombatObj);
-    console.log("sup_attack", officialCombatObjSupport_attack);
-    console.log("sup_defense", officialCombatObjSupport_defense);
+    //console.log("delaer", officialCombatObj);
+    //console.log("sup_attack", officialCombatObjSupport_attack);
+    //console.log("sup_defense", officialCombatObjSupport_defense);
     return {
         "dealer": officialCombatObj,
         "sup_attack": officialCombatObjSupport_attack,

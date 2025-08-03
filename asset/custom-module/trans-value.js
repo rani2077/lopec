@@ -244,6 +244,7 @@ export async function getCharacterProfile(data, dataBase) {
         abilityAttackBonus: 0,
         armorStatus: 0,
         healthStatus: 0,
+        RealHealthStauts : 0,
         avatarStats: 1,
         supportCheck: supportCheck(),
         characterClass: data.ArmoryProfile.CharacterClassName,
@@ -2336,7 +2337,7 @@ export async function getCharacterProfile(data, dataBase) {
             }
         })
     }
-    console.log(gemObj)
+    //console.log(gemObj)
 
 
     /* **********************************************************************************************************************
@@ -2458,7 +2459,21 @@ export async function getCharacterProfile(data, dataBase) {
         });
         return result;
     }
+
+
+    let healthPer = 0;
+    if (etcObj.characterClass === "바드") {
+        healthPer = 2;
+    } else if (etcObj.characterClass === "홀리나이트") {
+        healthPer = 2.1;
+    } else if (etcObj.characterClass === "발키리") {
+        healthPer = 2.1;
+    } else if (etcObj.characterClass === "도화가") {
+        healthPer = 2;
+    }
+
     etcObj.healthStatus = Number(healthStatus() * jobObj.healthPer);
+    etcObj.RealHealthStauts = Number(healthStatus()) * healthPer;
 
     /* **********************************************************************************************************************
      * name		              :	  karmaPoint{}
