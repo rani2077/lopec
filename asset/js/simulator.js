@@ -1676,7 +1676,12 @@ async function simulatorInputCalc() {
     if (!officialCombatCachedFlag) {
         let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
         let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
-        cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue;
+
+        if (extractValue.etcObj.supportCheck === "서폿") {
+            cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.support;
+        } else {
+            cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.dealer;
+        }
         officialCombatCachedFlag = "flag";
     }
     // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
