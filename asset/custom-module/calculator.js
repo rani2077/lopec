@@ -33,7 +33,7 @@ export async function specPointCalc(inputObj) {
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
     //let totalStatus = 0
-    let totalHealth = Number(((inputObj.etcObj.RealHealthStauts + inputObj.hyperObj.statHp + inputObj.elixirObj.statHp + inputObj.bangleObj.statHp + inputObj.accObj.statHp + inputObj.arkObj.statHp) * inputObj.defaultObj.hpActive * 1.07).toFixed(0));
+    let totalHealth = Number(((inputObj.etcObj.healthStatus + inputObj.hyperObj.statHp + inputObj.elixirObj.statHp + inputObj.bangleObj.statHp + inputObj.accObj.statHp + inputObj.arkObj.statHp) * inputObj.defaultObj.hpActive * 1.07).toFixed(0));
 
     let attackBonus = ((inputObj.etcObj.gemAttackBonus + inputObj.etcObj.abilityAttackBonus) / 100) + 1 // 기본 공격력 증가(보석, 어빌리티 스톤)
     let evolutionDamageResult = (inputObj.arkObj.evolutionDamage) //진화형 피해
