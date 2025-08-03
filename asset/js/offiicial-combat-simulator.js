@@ -60,7 +60,11 @@ export async function simulatorToOffcialCombatObj() {
     function characterLevelToOffcialCombat() {
         return Modules.officialCombatDealer.officialCombatDealer.attack.level[apiData.data.ArmoryProfile.CharacterLevel] / 10000 + 1;
     };
+    function characterLevelToOffcialCombatSupport() {
+        return Modules.officialCombatDealer.officialCombatDealer.defense.level[apiData.data.ArmoryProfile.CharacterLevel] / 10000 + 1;
+    };
     // console.log("레벨", characterLevelToOffcialCombat());
+
 
     /* **********************************************************************************************************************
      * name		              :	  weaponQualityToOffcialCombat
@@ -93,7 +97,20 @@ export async function simulatorToOffcialCombatObj() {
 
         return (evolutionValue * enlightValue * leapValue).toFixed(4);
     };
+    function characterArkToOffcialCombatSupport() {
+        let result = {};
+        let evolutionElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.evolution .title").textContent);
+        let enlightElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.enlightenment .title").textContent);
+        let leapElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.leap .title").textContent);
+
+        let evolutionValue = (Math.max(evolutionElementValue - 40, 0) * 90) / 10000 + 1;
+        let enlightValue = Math.min((Math.max(enlightElementValue, 0) * 72), (100 * 72)) / 10000 + 1;
+        let leapValue = (Math.max(leapElementValue, 0) * 20) / 10000 + 1;
+
+        return (evolutionValue * enlightValue * leapValue);
+    };
     // console.log("아크패시브", characterArkToOffcialCombat());
+    //console.log("아크패시브", characterArkToOffcialCombatSupport());
 
     /* **********************************************************************************************************************
      * name		              :	  characterKarmaToOffcialCombat
@@ -108,7 +125,14 @@ export async function simulatorToOffcialCombatObj() {
         let leapKarmaValue = (leapKarmaLevel * 0.02) / 100 + 1;
         return evolutionKarmaValue * leapKarmaValue;
     }
+    function characterKarmaToOffcialCombatSupport() {
+        let evolutionKarmaRank = Number(Array.from(document.querySelectorAll(".sc-info .ark-list.evolution .radio input")).findIndex(input => input.checked));
+        let leapKarmaLevel = Number(document.querySelectorAll(".sc-info .ark-list.leap .ark-item")[3].querySelector("input.input-number").value);
+        let evolutionKarmaValue = (evolutionKarmaRank * 0.6) / 100 + 1;
+        return evolutionKarmaValue
+    }
     // console.log("카르마", characterKarmaToOffcialCombat());
+
 
     /* **********************************************************************************************************************
      * name		              :	  engravingToOffcialCombat
@@ -156,9 +180,10 @@ export async function simulatorToOffcialCombatObj() {
             let activeValue = stone * 20 + level + (grade === "유물" ? 9 : 5);
 
             let engravingFilter = Modules.officialCombatDealer.officialCombatDealer.attack.ability_attack[name];
+
             let engravingValue = 0;
             if (engravingFilter) {
-                engravingValue = engravingFilter[activeValue] / 10000 + 1;
+                engravingValue = Math.max(engravingFilter[activeValue] / 10000 + 1, 1);
             }
 
             let result = {
@@ -170,9 +195,75 @@ export async function simulatorToOffcialCombatObj() {
         let resultArkValue = arkpassiveValue.reduce((a, b) => { return a * b.value }, 1);
         return resultArkValue
     };
-    // console.log("각인", engravingToOffcialCombat());
 
 
+    function engravingToOffcialCombatSupport() {
+
+        let stoneElements = Array.from(document.querySelectorAll(".sc-info .accessory-area .accessory-item")[5].querySelectorAll(".option-box .buff"));
+        let stoneObject = stoneElements.map(element => {
+            let name = element.getAttribute("data-stone").split(":")[0];
+            let level = Number(element.getAttribute("data-stone").split(":")[1]);
+            let result = {
+                name: name,
+                level: level
+            };
+            return result;
+        })
+
+        let engravingElements = Array.from(document.querySelectorAll(".sc-info .engraving-area .engraving-box"));
+        let engravingArray = engravingElements.map(element => {
+            let engravingName = element.querySelector(".engraving-name").value.replace("- 무효", "").trim();
+            let engravingLevel = Number(element.querySelector(".grade").value);
+            let engravingGrade = element.querySelector(".engraving-ico").value;
+
+            let result = {
+                name: engravingName,
+                level: engravingLevel,
+                grade: engravingGrade
+            };
+            let engravingStone = stoneObject.filter(stone => stone.name === engravingName);
+            if (engravingStone.length > 0) {
+                result.stone = engravingStone[0].level;
+            }
+            return result;
+        })
+
+        let arkpassiveValue = engravingArray.map(engraving => {
+            let name = engraving.name;
+            let grade = engraving.grade;
+            let level = engraving.level;
+            let stone = engraving.stone ? engraving.stone : 0;
+
+            let activeValue = stone * 20 + level + (grade === "유물" ? 9 : 5);
+
+            let engravingFilter_attack = Modules.officialCombatDealer.officialCombatDealer.defense.ability_attack[name];
+            let engravingFilter_defense = Modules.officialCombatDealer.officialCombatDealer.defense.ability_defense[name];
+
+            let engraving_defenseValue = 1;
+            let engraving_attackValue = 1;
+
+            if (engravingFilter_attack) {
+                engraving_attackValue = Math.max(engravingFilter_attack[activeValue] / 10000 + 1, 1);
+            }
+            if (engravingFilter_defense) {
+                engraving_defenseValue = Math.max(engravingFilter_defense[activeValue] / 10000 + 1, 1);
+            }
+
+            let result = {
+                name: name,
+                value_attack: engraving_attackValue,
+                value_defense: engraving_defenseValue
+            };
+            return result;
+        });
+        let resultArkValue_attack = arkpassiveValue.reduce((a, b) => { return a * b.value_attack }, 1);
+        let resultArkValue_defense = arkpassiveValue.reduce((a, b) => { return a * b.value_defense }, 1);
+        return {
+            resultArkValue_attack: resultArkValue_attack,
+            resultArkValue_defense: resultArkValue_defense
+        }
+    };
+    console.log("각인", engravingToOffcialCombatSupport());
     // 투견상하장에 엘릭서 선택 박스가 있잖아?
     // 1. 장갑/투구에 똑같은 특옵을 들고 있어야해 (회심/달인 등등)
     // 2. 그리고 엘릭서 총합 레벨이 35/40 이상이어야 됨. 
@@ -215,8 +306,11 @@ export async function simulatorToOffcialCombatObj() {
             { name: '선각자', level: 1, value: 1 },
             { name: '선각자', level: 2, value: 1.05 },
             { name: '진군', level: 1, value: 1.02 },
-            { name: '진군', level: 2, value: 1.02 }
-        ];
+            { name: '진군', level: 2, value: 1.02 },
+            { name: '신념', level: 1, value: 1 },
+            { name: '신념', level: 2, value: 1 }
+        ]
+    
 
         function totalElixirLevel() {
             if (helmetElixirName !== gloveElixirName) {
@@ -239,6 +333,7 @@ export async function simulatorToOffcialCombatObj() {
         // console.log();
 
         let elixirFilter = Modules.officialCombatDealer.officialCombatDealer.attack.elixir_grade_attack;
+
         let eachElixirValue = armoryElixirElements.map(element => {
             let elixirName = element.options[element.selectedIndex].textContent;
             let elixirValue = elixirFilter[elixirName] ? elixirFilter[elixirName] / 10000 + 1 : 1;
@@ -255,7 +350,97 @@ export async function simulatorToOffcialCombatObj() {
         // }
         return eachElixirSum * totalElixirLevel().value;
     };
-    // console.log("엘릭서", elixirToOffcialCombat());
+
+    function elixirToOffcialCombatSupport() {
+        let armoryElixirElements = Array.from(document.querySelectorAll(".sc-info .armor-area .armor-item .elixir-wrap .elixir"));
+        let armoryElixirLevels = armoryElixirElements.map(element => {
+            return element.value.split("|").filter(elixir => elixir.includes("level"));
+        });
+        armoryElixirLevels = armoryElixirLevels.flat().map(levelString => {
+            const match = levelString.match(/level:(\d+)/);
+            return match ? parseInt(match[1], 10) : 0;
+        });
+        let helmetElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[0].querySelector(".elixir-wrap .elixir");
+        let helmetElixirName = helmetElement.options[helmetElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
+        // let helmetElixirLevel = Number(helmetElement.value.split("|").filter(elixir => elixir.includes("level"))[0].split(":")[1]);
+
+        let gloveElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[4].querySelector(".elixir-wrap .elixir");
+        let gloveElixirName = gloveElement.options[gloveElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
+
+        let elixirList = [
+            { name: '행운', level: 1, value: 1.05 },
+            { name: '행운', level: 2, value: 1.10 },
+            { name: '선각자', level: 1, value: 1.06 },
+            { name: '선각자', level: 2, value: 1.14 },
+            { name: '신념', level: 1, value: 1.06 },
+            { name: '신념', level: 2, value: 1.14 },
+            { name: '진군', level: 1, value: 1.06 },
+            { name: '진군', level: 2, value: 1.14 },
+            { name: '회심', level: 1, value: 1 },
+            { name: '회심', level: 2, value: 1 },
+            { name: '달인', level: 1, value: 1 },
+            { name: '달인', level: 2, value: 1 },
+            { name: '강맹', level: 1, value: 1 },
+            { name: '강맹', level: 2, value: 1 },
+            { name: '칼날 방패', level: 1, value: 1 },
+            { name: '칼날 방패', level: 2, value: 1 },
+            { name: '선봉대', level: 1, value: 1 },
+            { name: '선봉대', level: 2, value: 1 },
+        ]
+
+        function totalElixirLevel() {
+            if (helmetElixirName !== gloveElixirName) {
+                return { name: '없음', value: 1 };
+            }
+
+            let totalSum = armoryElixirLevels.reduce((a, b) => {
+                return a + b;
+            }, 0);
+            let elixirGrade = 0;
+            if (totalSum >= 40) {
+                elixirGrade = 2;
+            } else if (totalSum >= 35) {
+                elixirGrade = 1;
+            }
+
+            let doubleElixirValue = elixirList.find(item => item.name === gloveElixirName && item.level === elixirGrade);
+            return doubleElixirValue;
+        };
+
+        let elixirFilter_attack = Modules.officialCombatDealer.officialCombatDealer.defense.elixir_grade_attack;
+        let elixirFilter_defense = Modules.officialCombatDealer.officialCombatDealer.defense.elixir_grade_defense;
+
+        let helmetProcessed = false;
+
+        let eachElixirValue = armoryElixirElements.map(element => {
+            let elixirName = element.options[element.selectedIndex].textContent;
+
+            if (elixirName.includes("선각자") || elixirName.includes("신념") || elixirName.includes("진군") || elixirName.includes("행운")) {
+                if (helmetProcessed) {
+                    return null;
+                }
+                helmetProcessed = true;
+            }
+            let elixirValue_attack = elixirFilter_attack[elixirName] ? elixirFilter_attack[elixirName] / 10000 + 1 : 1;
+            let elixirValue_defense = elixirFilter_defense[elixirName] ? elixirFilter_defense[elixirName] / 10000 + 1 : 1;
+            let result = {
+                name: elixirName,
+                value_attack: elixirValue_attack,
+                value_defense: elixirValue_defense
+            }
+            return result;
+        }).filter(item => item !== null);
+        let eachElixirSum_attack = eachElixirValue.reduce((a, b) => { return a * b.value_attack }, 1);
+        let eachElixirSum_defense = eachElixirValue.reduce((a, b) => { return a * b.value_defense }, 1);
+        return {
+            eachElixirSum_attack: eachElixirSum_attack * totalElixirLevel().value,
+            eachElixirSum_defense: eachElixirSum_defense
+        }
+    };
+
+    
+
+    //console.log("엘릭서", elixirToOffcialCombatSupport());
 
     /* **********************************************************************************************************************
      * name		              :	  accessoryToOffcialCombat
@@ -317,7 +502,76 @@ export async function simulatorToOffcialCombatObj() {
         let accessorySum = extractedStats.reduce((a, b) => { return a * b.value }, 1);
         return accessorySum;
     };
-    // console.log("악세서리", accessoryToOffcialCombat());
+
+
+    function accessoryToOffcialCombatSupport() {
+        let accessoryOptionElements = Array.from(document.querySelectorAll(".accessory-area .accessory-item.accessory .grinding-wrap select.option"));
+
+        const targetStatsConversion_attack = [
+            { name: '아군 공격력 강화 효과', regex: /^아군 공격력 강화 효과 \+(\d+\.?\d+)%$/, value: 0.0075 }, // 아공강
+            { name: '아군 피해량 강화 효과', regex: /^아군 피해량 강화 효과 \+(\d+\.?\d+)%$/, value: 0.005 }, // 아피강 %
+            { name: '낙인력', regex: /^낙인력 \+(\d+\.?\d+)%$/, value: 0.006 }, //낙인력
+            { name: '세레나데, 신앙, 조화 게이지 획득량', regex: /^세레나데, 신앙, 조화 게이지 획득량 \+(\d+\.?\d+)%$/, value: 0.005 }, //아덴
+        ];
+
+        const targetStatsConversion_defense = [
+            { name: '파티원 보호막 효과', regex: /^파티원 보호막 효과 \+(\d+\.?\d+)%$/, value: 0.007 },
+            { name: '파티원 회복 효과', regex: /^파티원 회복 효과 \+(\d+\.?\d+)%$/, value: 0.007 },
+        ];
+
+        // 4. 최종 결과를 담을 빈 배열을 생성합니다.
+        const extractedStats_attack = [];
+        const extractedStats_defense = [];
+
+        // 5. 각 장신구를 순회하며 스탯을 추출합니다.
+        accessoryOptionElements.forEach(accessory => {
+            let tooltipString = accessory.options[accessory.selectedIndex].textContent;
+            if (typeof tooltipString !== 'string' || tooltipString.length === 0) {
+                return; // 처리할 문자열이 없으면 다음으로 넘어갑니다.
+            }
+
+            targetStatsConversion_attack.forEach(statConvert => {
+                const matches = tooltipString.match(statConvert.regex);
+                if (matches) {
+                    let statValue = 0;
+                    if (matches.length > 1) {
+                        statValue = parseFloat(matches[1]);
+                    } else {
+                    }
+                    const calculatedValue = statValue * statConvert.value + 1;
+
+                    extractedStats_attack.push({
+                        name: `${statConvert.name} ${matches.length > 1 ? matches[1] + (statConvert.regex.source.includes('%') ? '%' : '') : ''}`.trim(),
+                        value: calculatedValue
+                    });
+                }
+            });
+
+            targetStatsConversion_defense.forEach(statConvert => {
+                const matches = tooltipString.match(statConvert.regex);
+                if (matches) {
+                    let statValue = 0;
+                    if (matches.length > 1) {
+                        statValue = parseFloat(matches[1]);
+                    } else {
+                    }
+                    const calculatedValue = statValue * statConvert.value + 1;
+
+                    extractedStats_defense.push({
+                        name: `${statConvert.name} ${matches.length > 1 ? matches[1] + (statConvert.regex.source.includes('%') ? '%' : '') : ''}`.trim(),
+                        value: calculatedValue
+                    });
+                }
+            });
+        });
+        let accessorySum_attack = extractedStats_attack.reduce((a, b) => { return a * b.value }, 1);
+        let accessorySum_defense = extractedStats_defense.reduce((a, b) => { return a * b.value }, 1);
+        return {
+            accessorySum_attack: accessorySum_attack,
+            accessorySum_defense: accessorySum_defense
+        }
+    };
+    //console.log("악세서리", accessoryToOffcialCombatSupport());
 
     /* **********************************************************************************************************************
     * name		             :	 bangleOffcialCombat
@@ -342,7 +596,37 @@ export async function simulatorToOffcialCombatObj() {
         let bangleSum = bangleValue.reduce((a, b) => { return a * b.value }, 1);
         return bangleSum;
     };
-    // console.log("팔찌", bangleOffcialCombat());
+
+
+
+    function bangleOffcialCombatSupport() {
+        let bangleElement = Array.from(document.querySelectorAll(".accessory-area .accessory-item.bangle select.option"));
+        let bangleOptions = bangleElement.map(element => {
+            let oiptionName = element.options[element.selectedIndex].textContent;
+            return oiptionName;
+        });
+
+        let bangleFilter_attack = Modules.officialCombatDealer.officialCombatDealer.defense.bracelet_addontype_attack;
+        let bangleFilter_defense = Modules.officialCombatDealer.officialCombatDealer.defense.bracelet_addontype_defense;
+
+        let bangleValue_attack = bangleOptions.map(option => {
+            let optionValue = bangleFilter_attack[option] ? bangleFilter_attack[option] / 10000 + 1 : 1;
+            return { name: option, value: optionValue }
+        });
+
+        let bangleValue_defense = bangleOptions.map(option => {
+            let optionValue = bangleFilter_defense[option] ? bangleFilter_defense[option] / 10000 + 1 : 1;
+            return { name: option, value: optionValue }
+        });
+
+        let bangleSum_attack = bangleValue_attack.reduce((a, b) => { return a * b.value }, 1);
+        let bangleSum_defense = bangleValue_defense.reduce((a, b) => { return a * b.value }, 1);
+        return {
+            bangleSum_attack: bangleSum_attack,
+            bangleSum_defense: bangleSum_defense
+        }
+    };
+    //console.log("팔찌", bangleOffcialCombatSupport());
 
     /* **********************************************************************************************************************
     * name		             :	 gemOffcialCombat
@@ -369,7 +653,26 @@ export async function simulatorToOffcialCombatObj() {
         let gemSum = gemList.reduce((a, b) => { return a * b.value }, 1);
         return gemSum;
     };
-    // console.log("보석", gemOffcialCombat());
+
+    function gemOffcialCombatSupport() {
+        let gemFilter = Modules.officialCombatDealer.officialCombatDealer.defense.gem;
+        let gemElements = Array.from(document.querySelectorAll(".gem-area .gem-box:not(.free-set)"));
+        let gemList = gemElements.map(element => {
+            let name = element.querySelector("select.gems").value.replace(/쿨|딜/, "");
+            let level = Number(element.querySelector("select.level").value);
+
+            let sort = /광휘|겁화|작열/.test(name) ? 4 : 3;
+            let value = gemFilter[sort][level] / 10000 + 1
+            let result = {
+                name: name,
+                level: level,
+                value: value
+            }
+            return result;
+        });
+        let gemSum = gemList.reduce((a, b) => { return a * b.value }, 1);
+        return gemSum;
+    };
 
     /* **********************************************************************************************************************
     * name		             :	 estherOffcialCombat
@@ -384,6 +687,20 @@ export async function simulatorToOffcialCombatObj() {
 
         let isEsther = estherTier <= 2 ? true : false;
         let estherFilter = Modules.officialCombatDealer.officialCombatDealer.attack.esther_weapon;
+        if (isEsther) {
+            return estherFilter[estherNormal][estherTier] / 10000 + 1;
+        } else {
+            return 1;
+        };
+    };
+
+    function estherOffcialCombatSupport() {
+        let estherElement = document.querySelectorAll(".armor-area .armor-item")[5];
+        let estherTier = Number(estherElement.querySelector("select.plus").value);
+        let estherNormal = Number(estherElement.querySelector("select.armor-name").value);
+
+        let isEsther = estherTier <= 2 ? true : false;
+        let estherFilter = Modules.officialCombatDealer.officialCombatDealer.defense.esther_weapon;
         if (isEsther) {
             return estherFilter[estherNormal][estherTier] / 10000 + 1;
         } else {
@@ -413,17 +730,6 @@ export async function simulatorToOffcialCombatObj() {
         let pantsElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[3].querySelector(".hyper-wrap select.hyper");
         let pantsHyper = Number(pantsElement.value);
 
-        // "하의": {
-        //     "10": 10,
-        //     "15": 20,
-        //     "20": 170
-        // },
-        // "무기": {
-        //     "5": 56,
-        //     "10": 56,
-        //     "15": 56,
-        //     "20": 79
-        // }
 
         let weaponValue;
         if (weaponHyper >= 20) {
@@ -449,15 +755,90 @@ export async function simulatorToOffcialCombatObj() {
             pantsValue = 0;
         }
 
+        return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1);
+    };
+
+    function hyperOffcialCombatSupport() {
+        let hyperElements = Array.from(document.querySelectorAll(".armor-area .armor-item"));
+        let armoryElements = hyperElements.filter((element, index) => !(index >= 6));
+        let armoryHyperList = armoryElements.map(element => {
+            let hyper = Number(element.querySelector(".hyper-wrap select.hyper").value);
+            return hyper;
+        })
+        let armoryTotalHyper = armoryHyperList.reduce((a, b) => a + b) * 0.0003 + 1;
+
+        let weaponElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[5].querySelector(".hyper-wrap select.hyper");
+        let weaponHyper = Number(weaponElement.value);
+
+        let shoulderElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[1].querySelector(".hyper-wrap select.hyper");
+        let shoulderHyper = Number(shoulderElement.value);
+
+        let pantsElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[3].querySelector(".hyper-wrap select.hyper");
+        let pantsHyper = Number(pantsElement.value);
+
+        let glovesElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[4].querySelector(".hyper-wrap select.hyper");
+        let glovesHyper = Number(glovesElement.value);
+
+
+        let weaponValue;
+        if (weaponHyper >= 20) {
+            weaponValue = 630;
+        } else if (weaponHyper >= 15) {
+            weaponValue = 390;
+        } else if (weaponHyper >= 10) {
+            weaponValue = 270;
+        } else if (weaponHyper >= 5) {
+            weaponValue = 120;
+        } else {
+            weaponValue = 0;
+        }
+
+        let shoulderValue;
+        if (shoulderHyper >= 20) {
+            shoulderValue = 225;
+        } else if (shoulderHyper >= 15) {
+            shoulderValue = 150;
+        } else if (shoulderHyper >= 10) {
+            shoulderValue = 75;
+        } else if (shoulderHyper >= 5) {
+            shoulderValue = 0;
+        } else {
+            shoulderValue = 0;
+        }
+
+        let glovesValue;
+        if (glovesHyper >= 20) {
+            glovesValue = 225;
+        } else if (glovesHyper >= 15) {
+            glovesValue = 150;
+        } else if (glovesHyper >= 10) {
+            glovesValue = 75;
+        } else if (glovesHyper >= 5) {
+            glovesValue = 0;
+        } else {
+            glovesValue = 0;
+        }
+
+
+        let pantsValue;
+        if (pantsHyper >= 20) {
+            pantsValue = 450;
+        } else if (pantsHyper >= 15) {
+            pantsValue = 225;
+        } else if (pantsHyper >= 10) {
+            pantsValue = 113;
+        } else {
+            pantsValue = 0;
+        }
+
 
         // let result = {
         //     total: armoryTotalHyper,
         //     weapon: weaponValue / 10000 + 1,
         //     pants: pantsValue / 10000 + 1
         // }
-        return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1);
+        return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1) * (glovesValue / 10000 + 1) * (shoulderValue / 10000 + 1);
     };
-    // console.log("초월", hyperOffcialCombat());
 
     /* **********************************************************************************************************************
     * name		             :	 statsOffcialCombat
@@ -481,7 +862,24 @@ export async function simulatorToOffcialCombatObj() {
         let totalStats = (Number(statsList.reduce((a, b) => a + b)) + baseStats) * 3 / 10000 + 1;
         return totalStats;
     };
-    // console.log("특성", statsOffcialCombat());
+
+    function statsOffcialCombatSupport() {
+        let baseStats = apiData.dataBase.totalStatus;
+
+        let statsElement = Array.from(document.querySelector(".accessory-area .accessory-item.bangle").querySelectorAll(".option-wrap .option-item"));
+        let statsList = statsElement.map(element => {
+            let statsName = element.querySelector("select.stats").value;
+            let statsValue = Number(element.querySelector("input.option").value);
+            if (!/special|haste/.test(statsName)) {
+                statsValue = 0;
+            };
+            return statsValue;
+        })
+
+        let totalStats = (Number(statsList.reduce((a, b) => a + b)) + baseStats) * 4 / 10000 + 1;
+        return totalStats;
+    };
+
 
     /* **********************************************************************************************************************
     * name		             :	 cardOffcialCombat
@@ -504,7 +902,27 @@ export async function simulatorToOffcialCombatObj() {
         let cardSum = cardValue.reduce((a, b) => { return a * b.value }, 1);
         return cardSum;
     };
-    // console.log("카드", cardOffcialCombat());
+
+    function cardOffcialCombatSupport() {
+        let cardData = apiData.data.ArmoryCard ? apiData.data.ArmoryCard.Effects : [];
+        let cardArray = cardData.map(card => card.Items.at(-1).Name);
+        let cardFilter = Modules.officialCombatDealer.officialCombatDealer.defense.card_set;
+
+        let cardValue = cardArray.map(card => {
+            let result = {
+                name: card,
+                value: cardFilter[card] / 10000 + 1
+            }
+            return result;
+        })
+        let cardSum = cardValue.reduce((a, b) => { return a * b.value }, 1);
+        return cardSum;
+    };
+
+
+
+
+
 
     let officialCombatObj = {
         level: characterLevelToOffcialCombat(),
@@ -521,6 +939,34 @@ export async function simulatorToOffcialCombatObj() {
         stats: statsOffcialCombat(),
         card: cardOffcialCombat()
     };
-    // console.log("전투력OBJ", officialCombatObj)
-    return officialCombatObj;
+
+    let officialCombatObjSupport_defense = {
+        engraving: engravingToOffcialCombatSupport().resultArkValue_defense,
+        elixir: elixirToOffcialCombatSupport().eachElixirSum_defense,
+        accessory: accessoryToOffcialCombatSupport().accessorySum_defense,
+        bangle: bangleOffcialCombatSupport().bangleSum_defense,
+    };
+
+    let officialCombatObjSupport_attack = {
+        level: characterLevelToOffcialCombatSupport(),
+        ark: characterArkToOffcialCombatSupport(),
+        karma: characterKarmaToOffcialCombatSupport(),
+        engraving: engravingToOffcialCombatSupport().resultArkValue_attack,
+        elixir: elixirToOffcialCombatSupport().eachElixirSum_attack,
+        accessory: accessoryToOffcialCombatSupport().accessorySum_attack,
+        bangle: bangleOffcialCombatSupport().bangleSum_attack,
+        gem: gemOffcialCombatSupport(),
+        esther: estherOffcialCombatSupport(),
+        hyper: hyperOffcialCombatSupport(),
+        stats: statsOffcialCombatSupport(),
+        card: cardOffcialCombatSupport()
+    };
+    console.log("delaer", officialCombatObj);
+    console.log("sup_attack", officialCombatObjSupport_attack);
+    console.log("sup_defense", officialCombatObjSupport_defense);
+    return {
+        "dealer": officialCombatObj,
+        "sup_attack": officialCombatObjSupport_attack,
+        "sup_defense": officialCombatObjSupport_defense
+    }
 };
