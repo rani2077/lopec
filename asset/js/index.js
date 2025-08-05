@@ -1131,8 +1131,9 @@ async function dedetectBanner() {
     }
     if (bannerElementLength === 1) {
         let bannerHeight = document.querySelector(".patreon-banner").offsetHeight;
-        if (bannerHeight === 250)
+        if (bannerHeight === 250){
             // insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
+        }
     }
     insertGoogleAdBanner(".sc-top-ads", "ca-pub-5125145415518329", "5389359448", "1120px", "250px")
 
