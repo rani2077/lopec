@@ -193,9 +193,12 @@ export async function apiCalcValue(inputName) {
         ];
         if (checkUserList.includes(inputName)) {
             let debugData = {
-                calcValue: calcValue,
+                extractValue: extractValue,
                 data: data
             };
+
+            // console.log("특별관리대상", inputName)
+            // console.log(debugData)
 
             await fetch("https://api.lopec.kr/api/temp", {
                 method: 'POST',
@@ -204,7 +207,7 @@ export async function apiCalcValue(inputName) {
                 },
                 body: JSON.stringify({
                     "nickname": inputName,
-                    "content": debugData
+                    "content": JSON.stringify(debugData)
                 })
             });
         };
