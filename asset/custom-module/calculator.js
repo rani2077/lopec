@@ -204,10 +204,6 @@ export async function specPointCalc(inputObj) {
     let calcHaste = (inputObj.defaultObj.statusHaste + inputObj.bangleObj.haste + finalSpecial) * 0.75
     let calcSpecial = (inputObj.defaultObj.statusHaste + inputObj.bangleObj.haste + finalSpecial) * 0.25
 
-    //console.log(calcHaste)
-    //console.log(calcSpecial)
-
-
     let calcStatDamageBuff = (calcSpecial / 20.791) / 100 + 1 // 특화 딜증
 
     let calcduration_A = inputObj.supportSkillObj.atkBuffADuration // A스킬 지속시간 (천상, 신분, 해그)

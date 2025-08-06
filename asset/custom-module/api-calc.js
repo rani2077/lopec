@@ -127,7 +127,7 @@ export async function apiCalcValue(inputName) {
     // else if (dataBase.evoKarma >= 5) extractValue.karmaObj.evolutionKarmaRank = 2;
     // else if (dataBase.evoKarma >= 1) extractValue.karmaObj.evolutionKarmaRank = 1;
     // else if (dataBase.evoKarma === 0) extractValue.karmaObj.evolutionKarmaRank = 0;
-    console.log(window.location.href)
+    //console.log(window.location.href)
     // else extractValue.karmaObj.evolutionKarmaRank = '미등록';
     let calcValue = await Modules.calcValue.specPointCalc(extractValue);
     let devilDmgCheck = localStorage.getItem("devilDamage")
