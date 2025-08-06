@@ -4633,6 +4633,8 @@ async function calculateGemData(data) {
         specialClass = "에필 5겁 포강";
     } else if (classCheck("포강") && skillCheck(gemSkillArry, "에너지 필드", per)) {
         specialClass = "에필 포강";
+    } else if (classCheck("두동") && skillCheck(gemSkillArry, "블레이드 스톰", dmg)) {
+        specialClass = "블스 두동";
     } else if (classCheck("질풍") && !skillCheck(gemSkillArry, "여우비 스킬", dmg)) {
         specialClass = "5멸 질풍";
     } else if (classCheck("그믐") && !skillCheck(gemSkillArry, "소울 시너스", dmg)) {
@@ -4645,7 +4647,7 @@ async function calculateGemData(data) {
         specialClass = "7겁 파브 광기";
     } else if (classCheck("광기") && !skillCheck(gemSkillArry, "소드 스톰", dmg)) {
         specialClass = "7겁 광기";
-    } else if (classCheck("포식") && skillCheck(gemSkillArry, "파이널 블로", dmg) && skillCheck(gemSkillArry, "마운틴 클리브", dmg)) {
+    } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg) && skillCheck(gemSkillArry, "마운틴 클리브", dmg)) {
         specialClass = "마운틴 포식";
     } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg)) {
         specialClass = "크블 포식";
@@ -4653,6 +4655,10 @@ async function calculateGemData(data) {
         specialClass = "지뢰 죽습";
     } else if (classCheck("피메") && !skillCheck(gemSkillArry, "대재앙", dmg)) {
         specialClass = "6M 피메";
+    } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
+        specialClass = "어슬 작열 블리츠 잔재";
+    } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "보이드 스트라이크", dmg)) {
+        specialClass = "블리츠 잔재";
     } else if (classCheck("잔재") && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
         specialClass = "어슬 작열 잔재";
     } else if (classCheck("잔재") && skillCheck(gemSkillArry, "데스 센텐스", dmg) && skillCheck(gemSkillArry, "블리츠 러시", dmg) && skillCheck(gemSkillArry, "터닝 슬래쉬", dmg)) {
@@ -4688,6 +4694,7 @@ async function calculateGemData(data) {
     } else {
         specialClass = supportCheck;
     }
+
 
     // console.log("보석전용 직업 : ", specialClass)
     gemSkillArry.forEach(function (gemSkill, idx) {

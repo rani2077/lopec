@@ -3082,7 +3082,7 @@ export let classGemFilter = [
     {
         class: "잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.191 },
+            { name: "블레이드 버스트", per: 0.191 },
             { name: "소울 앱소버", per: 0.13 },
             { name: "데스 센텐스", per: 0.108 },
             { name: "보이드 스트라이크", per: 0.098 },
@@ -3093,9 +3093,22 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "블리츠 잔재",
+        skill: [
+            { name: "블레이드 버스트", per: 0.191 },
+            { name: "소울 앱소버", per: 0.13 },
+            { name: "데스 센텐스", per: 0.108 },
+            { name: "블리츠 러시", per: 0.098 },
+            { name: "트윈 쉐도우", per: 0.08 },
+            { name: "어스 슬래쉬", per: 0.065 },
+            { name: "터닝 슬래쉬", per: 0.059 },
+
+        ],
+    },
+    {
         class: "어슬 작열 잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.205 },
+            { name: "블레이드 버스트", per: 0.205 },
             { name: "소울 앱소버", per: 0.143 },
             { name: "데스 센텐스", per: 0.112 },
             { name: "보이드 스트라이크", per: 0.113 },
@@ -3106,7 +3119,7 @@ export let classGemFilter = [
     {
         class: "어슬 작열 블리츠 잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.205 },
+            { name: "블레이드 버스트", per: 0.205 },
             { name: "소울 앱소버", per: 0.143 },
             { name: "데스 센텐스", per: 0.112 },
             { name: "블리츠 러시", per: 0.113 },
@@ -3117,7 +3130,7 @@ export let classGemFilter = [
     {
         class: "슈차 잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.165 },
+            { name: "블레이드 버스트", per: 0.165 },
             { name: "소울 앱소버", per: 0.159 },
             { name: "데스 센텐스", per: 0.107 },
             { name: "보이드 스트라이크", per: 0.129 },
@@ -3129,7 +3142,7 @@ export let classGemFilter = [
     {
         class: "슈차 터닝 잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.17 },
+            { name: "블레이드 버스트", per: 0.17 },
             { name: "소울 앱소버", per: 0.164 },
             { name: "터닝 슬래쉬", per: 0.087 },
             { name: "보이드 스트라이크", per: 0.129 },
@@ -3141,7 +3154,7 @@ export let classGemFilter = [
     {
         class: "슈차 문라 잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.1672 },
+            { name: "블레이드 버스트", per: 0.1672 },
             { name: "소울 앱소버", per: 0.1612 },
             { name: "문라이트 소닉", per: 0.0963 },
             { name: "보이드 스트라이크", per: 0.1312 },
@@ -3153,7 +3166,7 @@ export let classGemFilter = [
     {
         class: "슈차 7멸 잔재",
         skill: [
-            { name: "버스트 스킬", per: 0.1552 },
+            { name: "블레이드 버스트", per: 0.1552 },
             { name: "소울 앱소버", per: 0.1492 },
             { name: "데스 센텐스", per: 0.0972 },
             { name: "보이드 스트라이크", per: 0.1192 },
@@ -3166,7 +3179,7 @@ export let classGemFilter = [
     {
         class: "버스트",
         skill: [
-            { name: "버스트 스킬", per: 0.576 },
+            { name: "블레이드 버스트", per: 0.576 },
             { name: "블리츠 러시", per: 0.072 },
             { name: "블레이드 댄스", per: 0.058 },
             { name: "보이드 스트라이크", per: 0.058 },

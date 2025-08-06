@@ -1862,6 +1862,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "6M 피메";
         } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
             specialClass = "어슬 작열 블리츠 잔재";
+        } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "보이드 스트라이크", dmg)) {
+            specialClass = "블리츠 잔재";
         } else if (classCheck("잔재") && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
             specialClass = "어슬 작열 잔재";
         } else if (classCheck("잔재") && skillCheck(gemSkillArry, "데스 센텐스", dmg) && skillCheck(gemSkillArry, "블리츠 러시", dmg) && skillCheck(gemSkillArry, "터닝 슬래쉬", dmg)) {
