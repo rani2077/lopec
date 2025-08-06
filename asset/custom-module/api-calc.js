@@ -140,75 +140,76 @@ export async function apiCalcValue(inputName) {
     ) {
         // DB 저장 함수
         Modules.dataBase.specPointUpdate(inputName, data, extractValue, calcValue);
-    }
-    let checkUserList = [
-        "쥬쥬",
-        "히후히후",
-        "sunea",
-        "지니지니치치",
-        "잇괴",
-        "1파티4번도화가",
-        "컨저링투에나오는귀신이름",
-        "별을사랑하는엠제이",
-        "왼쪽뺨도갈겨라",
-        "처음키우는도화가",
-        "연주자",
-        "메이시에",
-        "구원왕김구원",
-        "챙뱌",
-        "닼됴니",
-        "애니붓",
-        "작은바드님",
-        "임희은",
-        "소리징징",
-        "돌돌말은김밥",
-        "bbuy0",
-        "하앙폿",
-        "프레이mayer",
-        "힐중독",
-        "햬나",
-        "말랑모찡",
-        "김만수르",
-        "근돼남",
-        "밍쓴",
-        "멍나니",
-        "세츨링",
-        "리니링",
-        "홀리은가비",
-        "Sana",
-        "꿀꿀됴화",
-        "satzzi",
-        "진국화",
-        "짱수정",
-        "진아공쥬님",
-        "댕아강",
-        "백매린",
-        "초숭달",
-        "도아가호떡",
-        "힐러푸우",
-        "수원맘카페일진녀",
-        "알로o",
-        "천승호",
-        "Muffy",
-        "청염각"
-    ];
-    if (checkUserList.includes(inputName)) {
-        let debugData = {
-            calcValue: calcValue,
-            data: data
+        let checkUserList = [
+            "쥬쥬",
+            "히후히후",
+            "sunea",
+            "지니지니치치",
+            "잇괴",
+            "1파티4번도화가",
+            "컨저링투에나오는귀신이름",
+            "별을사랑하는엠제이",
+            "왼쪽뺨도갈겨라",
+            "처음키우는도화가",
+            "연주자",
+            "메이시에",
+            "구원왕김구원",
+            "챙뱌",
+            "닼됴니",
+            "애니붓",
+            "작은바드님",
+            "임희은",
+            "소리징징",
+            "돌돌말은김밥",
+            "bbuy0",
+            "하앙폿",
+            "프레이mayer",
+            "힐중독",
+            "햬나",
+            "말랑모찡",
+            "김만수르",
+            "근돼남",
+            "밍쓴",
+            "멍나니",
+            "세츨링",
+            "리니링",
+            "홀리은가비",
+            "Sana",
+            "꿀꿀됴화",
+            "satzzi",
+            "진국화",
+            "짱수정",
+            "진아공쥬님",
+            "댕아강",
+            "백매린",
+            "초숭달",
+            "도아가호떡",
+            "힐러푸우",
+            "수원맘카페일진녀",
+            "알로o",
+            "천승호",
+            "Muffy",
+            "청염각"
+        ];
+        if (checkUserList.includes(inputName)) {
+            let debugData = {
+                calcValue: calcValue,
+                data: data
+            };
+
+            await fetch("https://api.lopec.kr/api/temp", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "nickname": inputName,
+                    "content": debugData
+                })
+            });
         };
 
-        await fetch("https://api.lopec.kr/api/temp", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "nickname": inputName,
-                "content": debugData
-            })
-        });
-    };
+    }
     let result = {};
     result.dataBase = dataBase;
     result.extractValue = extractValue;
