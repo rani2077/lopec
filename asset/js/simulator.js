@@ -4618,6 +4618,7 @@ async function calculateGemData(data) {
         return supportCheck == className;
     }
 
+    const dmgGemCount = gemSkillArry.filter(item => new RegExp(dmg).test(item.name)).length;
 
     if (classCheck("전태") && skillCheck(gemSkillArry, "버스트 캐넌", dmg)) {
         specialClass = "버캐 채용 전태";
@@ -4677,8 +4678,8 @@ async function calculateGemData(data) {
         specialClass = "풍신 일격";
     } else if (classCheck("일격") && !skillCheck(gemSkillArry, "오의 : 뇌호격", dmg) && !skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg) && skillCheck(gemSkillArry, "오의 : 폭쇄진", dmg)) {
         specialClass = "호왕 폭쇄 일격";
-    } else if (classCheck("권왕") && !skillCheck(gemSkillArry, "천기심권", dmg) && skillCheck(gemSkillArry, "징벌의 파도", dmg)) {
-        specialClass = "징벌 권왕";
+    } else if (classCheck("권왕") && dmgGemCount === 3) {
+        specialClass = "3겁 권왕";
     } else if (classCheck("수라") && !skillCheck(gemSkillArry, "청월난무", dmg) && !skillCheck(gemSkillArry, "유성 낙하", dmg)) {
         specialClass = "4겁 수라";
     } else if (classCheck("수라") && skillCheck(gemSkillArry, "수라결 기본 공격", dmg) && skillCheck(gemSkillArry, "파천섬광", dmg) && skillCheck(gemSkillArry, "진 파공권", dmg) && skillCheck(gemSkillArry, "유성 낙하", dmg) && skillCheck(gemSkillArry, "청월난무", dmg) && skillCheck(gemSkillArry, "비상격", dmg)) {
