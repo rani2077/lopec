@@ -1080,7 +1080,7 @@ async function dedetectBanner() {
             standard = "b";
             size = 50;
         }
-        return `<img class="patreon-banner" src="https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-${standard}.png" alt="" style="width:100%;height:${size}%;">`
+        return `<a target="_blank" href="https://lopec.kr/search/search.html?headerCharacterName=뱀부엉" style="width:100%;height:100%;"><img class="patreon-banner" src="https://rani2077.github.io/lopec-banner-hosting/images/${todayDate}-${standard}.png" alt="" style="width:100%;height:${size}%;"></a>`
     }
 
     if (fullImage) {
