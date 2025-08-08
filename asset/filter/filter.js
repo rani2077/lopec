@@ -2432,13 +2432,13 @@ export let classGemFilter = [
     {
         class: "심판자",
         skill: [
-            { name: "신성검", per: 0.16 },
-            { name: "집행자의 검", per: 0.134 },
-            { name: "정의 집행", per: 0.075 },
-            { name: "섬광 베기", per: 0.101 },
+            { name: "신성검", per: 0.105 },
+            { name: "집행자의 검", per: 0.10 },
+            { name: "질주 베기", per: 0.087 },
+            { name: "섬광 베기", per: 0.068 },
+            { name: "정의 집행", per: 0.054 },
             { name: "처단", per: 0.077 },
-            { name: "회전 베기", per: 0.096 },
-            { name: "질주 베기", per: 0.053 },
+            { name: "섬광 찌르기", per: 0.058 },
 
 
         ],
