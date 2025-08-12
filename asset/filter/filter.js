@@ -2401,8 +2401,10 @@ export let classGemFilter = [
             { name: "차지 스팅거", per: 0.264 },
             { name: "스피어 샷", per: 0.108 },
             { name: "대쉬 어퍼 파이어", per: 0.066 },
-            { name: "파이어 불릿", per: 0.025 },
             { name: "카운터 스피어", per: 0.046 },
+            { name: "파이어 불릿", per: 0.025 },
+            { name: "라이징 스피어", per: 0.025 },
+            { name: "보정치", per: -0.025 },
 
         ],
     },
@@ -2414,18 +2416,8 @@ export let classGemFilter = [
             { name: "스피어 샷", per: 0.113 },
             { name: "대쉬 어퍼 파이어", per: 0.071 },
             { name: "카운터 스피어", per: 0.051 },
-
-        ],
-    },
-    {
-        class: "5겁 고기",
-        skill: [
-            { name: "버스트 캐넌", per: 0.257 },
-            { name: "차지 스팅거", per: 0.264 },
-            { name: "스피어 샷", per: 0.108 },
-            { name: "대쉬 어퍼 파이어", per: 0.066 },
-            { name: "파이어 불릿", per: 0.025 },
-            { name: "카운터 스피어", per: 0.046 },
+            { name: "파이어 불릿", per: 0.051 },
+            { name: "보정치", per: -0.051 },
 
         ],
     },
@@ -3279,13 +3271,13 @@ export let classGemFilter = [
     {
         class: "야성",
         skill: [
+            { name: "둔갑 금술 스킬", per: 0.301 },
+            { name: "여우 꼬리물기", per: 0.095 },
             { name: "여우 불꽃", per: 0.122 },
             { name: "여우 구슬", per: 0.074 },
             { name: "바위 곰", per: 0.114 },
             { name: "슈웅 곰", per: 0.136 },
             { name: "여우 폴짝", per: 0.136 },
-            { name: "둔갑 금술 스킬", per: 0.301 },
-            { name: "여우 꼬리물기", per: 0.095 },
             { name: "보정치", per: -0.136 },
         ],
     },

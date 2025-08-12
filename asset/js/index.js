@@ -955,7 +955,7 @@ let noticeArry = [
 
     },
     {
-        name: `<em style="font-weight:900;font-size:17px;"> 2025-08-03 업데이트 안내 </em>`,
+        name: `2025-08-03 업데이트 안내`,
         desc:
             `● 서폿 전투력 시뮬레이팅 기능 업데이트
             &nbsp;&nbsp; - 이제 서폿도 시뮬레이터에서 예상 전투력을 확인하실 수 있습니다.
@@ -967,7 +967,7 @@ let noticeArry = [
 
     },
     {
-        name: `<em style="font-weight:900;font-size:17px;"> 2025-08-04 핫픽스 안내 </em>`,
+        name: `2025-08-04 핫픽스 안내`,
         desc:
             `● 서폿 전투력 시뮬레이팅 오류 수정
             &nbsp;&nbsp; - 상의 최생 엘릭서 밸류를 제대로 계산하지 못하는 오류를 수정했습니다.
@@ -975,6 +975,13 @@ let noticeArry = [
             &nbsp;&nbsp; 펫 최생 5%, 방범대 최생 2%를 기준으로 계산합니다.
             &nbsp;&nbsp; 실제 세팅이 위와 다를 시, 시뮬레이터 전투력 계산 결과에 오차가 발생할 수 있습니
             &nbsp;&nbsp; 다.`
+    },
+    {
+        name: `<em style="font-weight:900;font-size:17px;"> 25년 8월 2주차 중앙값 통계 </em>`,
+        desc:
+            `8월 2주차 중앙값 통계입니다.
+        
+        <img src="/asset/image/median-20250812.png">`
     },
 ]
 
