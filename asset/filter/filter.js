@@ -2859,6 +2859,18 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "지뢰 두동",
+        skill: [
+            { name: "실버호크 스킬", per: 0.216 },
+            { name: "스나이프", per: 0.158 },
+            { name: "호크 샷", per: 0.094 },
+            { name: "차징 샷", per: 0.093 },
+            { name: "샤프 슈터", per: 0.079 },
+            { name: "크레모아 지뢰", per: 0.056 },
+
+        ],
+    },
+    {
         class: "블스 두동",
         skill: [
             { name: "실버호크 스킬", per: 0.216 },

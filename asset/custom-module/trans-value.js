@@ -1842,6 +1842,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "에필 포강";
         } else if (classCheck("두동") && skillCheck(gemSkillArry, "블레이드 스톰", dmg)) {
             specialClass = "블스 두동";
+        } else if (classCheck("두동") && !skillCheck(gemSkillArry, "애로우 해일", dmg) && skillCheck(gemSkillArry, "크레모아 지뢰", dmg)) {
+            specialClass = "지뢰 두동";
         } else if (classCheck("질풍") && !skillCheck(gemSkillArry, "여우비 스킬", dmg)) {
             specialClass = "5멸 질풍";
         } else if (classCheck("그믐") && !skillCheck(gemSkillArry, "소울 시너스", dmg)) {

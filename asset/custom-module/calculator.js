@@ -35,7 +35,7 @@ export async function specPointCalc(inputObj) {
     //let totalStatus = 0
     let totalHealth = Number(((inputObj.etcObj.healthStatus + inputObj.hyperObj.statHp + inputObj.elixirObj.statHp + inputObj.bangleObj.statHp + inputObj.accObj.statHp + inputObj.arkObj.statHp) * inputObj.defaultObj.hpActive * 1.07).toFixed(0));
 
-    let attackBonus = ((inputObj.etcObj.abilityAttackBonus) / 100) + 1 // 기본 공격력 증가(보석, 어빌리티 스톤)
+    let attackBonus = ((inputObj.etcObj.gemAttackBonus + inputObj.etcObj.abilityAttackBonus) / 100) + 1 // 기본 공격력 증가(보석, 어빌리티 스톤)
     let evolutionDamageResult = (inputObj.arkObj.evolutionDamage) //진화형 피해
     let enlightResult = inputObj.arkObj.enlightenmentDamage // 깨달음 딜증
     let enlightBuffResult = inputObj.arkObj.enlightenmentBuff // 깨달음 버프
@@ -47,7 +47,7 @@ export async function specPointCalc(inputObj) {
     //console.log(attackBonus)
 
     let gemsCoolValue = (1 / (1 - (inputObj.etcObj.gemCheckFnc.gemAvg) / 100) - 1) + 1
-    console.log(gemsCoolValue)
+    //console.log(gemsCoolValue)
 
     let bangleAddDamageResult = ((inputObj.defaultObj.addDamagePer + inputObj.accObj.addDamagePer + inputObj.bangleObj.addDamagePer) / 100) + 1 // 추가 피해
     let bangleFinalDamageResult = (inputObj.engObj.finalDamagePer * inputObj.accObj.finalDamagePer * inputObj.hyperObj.finalDamagePer * bangleAddDamageResult * inputObj.bangleObj.finalDamagePer * inputObj.elixirObj.finalDamagePer) // 적에게 주는 피해=
