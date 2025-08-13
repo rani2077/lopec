@@ -2637,6 +2637,16 @@ export let classGemFilter = [
             { name: "파쇄격", per: 0.039 },
             { name: "진 용출권", per: 0.039 },
             { name: "보정치", per: -0.078 },
+            // 총합: 0.485
+        ],
+    },
+    {
+        class: "4겁 체술",
+        skill: [
+            { name: "철포난격", per: 0.1515 },
+            { name: "난타연권", per: 0.147 },
+            { name: "폭렬권", per: 0.119 },
+            { name: "용의 강림", per: 0.068 },
         ],
     },
     {
@@ -2960,7 +2970,15 @@ export let classGemFilter = [
             { name: "셀레스티얼 레인", per: 0.101 },
             { name: "언리미티드 셔플", per: 0.089 },
             { name: "황제", per: 0.163 },
-
+        ],
+    },
+    {
+        class: "또황",
+        skill: [
+            { name: "다크 리저렉션", per: 0.167 },
+            { name: "이보크", per: 0.160 },
+            { name: "언리미티드 셔플", per: 0.045 },
+            { name: "황제", per: 0.300 },
         ],
     },
     {
