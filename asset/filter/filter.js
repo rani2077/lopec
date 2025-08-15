@@ -2542,7 +2542,8 @@ export let classGemFilter = [
             { name: "여래신장", per: 0.132 },
             { name: "기공장", per: 0.10 },
             { name: "풍뢰일광포", per: 0.10 },
-            { name: "보정치", per: -0.10 },
+            { name: "환영격", per: 0.10 },
+            { name: "보정치", per: -0.20 },
 
         ],
     },

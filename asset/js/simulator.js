@@ -4624,7 +4624,7 @@ async function calculateGemData(data) {
         specialClass = "버캐 채용 전태";
     } else if (classCheck("고기") && !skillCheck(gemSkillArry, "파이어 불릿", dmg)) {
         specialClass = "5겁 고기";
-    } else if (classCheck("세맥") && !skillCheck(gemSkillArry, "환영격", dmg)) {
+    } else if (classCheck("세맥") && dmgGemCount === 5) {
         specialClass = "5멸 세맥";
     } else if (classCheck("역천") && !skillCheck(gemSkillArry, "벽력장", dmg)) {
         specialClass = "5겁 역천";
