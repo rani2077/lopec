@@ -91,8 +91,9 @@ body {
 }
 
 .page-space {
-  height: 100px;
+  height: 40px;
 }
+
 
 
 /* ==========================================================================
@@ -135,7 +136,7 @@ h1 {
 .phase-btn.active {
   background: #eef2ff;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(42,85,255,.12) inset;
+  box-shadow: 0 0 0 2px rgba(42, 85, 255, .12) inset;
 }
 
 .actions {
@@ -173,7 +174,8 @@ h1 {
    - 관문, 공격대 목록 등 현황판의 핵심 영역입니다.
    ========================================================================== */
 
-.board-body, .row {
+.board-body,
+.row {
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 16px;
@@ -236,7 +238,8 @@ h1 {
 
 .team-lopec {
   margin-left: 6px;
-  color: #667085; /* Muted 색상 직접 사용 (디자인 일관성) */
+  color: #667085;
+  /* Muted 색상 직접 사용 (디자인 일관성) */
   font-size: 12px;
   font-weight: 700;
 }
@@ -281,6 +284,7 @@ h1 {
   transform: translateX(-1px);
   z-index: 2;
 }
+
 html.dark-mode .gate-divider {
   background: #667085;
 }
@@ -363,14 +367,14 @@ html.dark-mode .gate-divider {
   display: contents;
 }
 
-.member-header > div {
+.member-header>div {
   color: #667085;
   font-size: 12px;
   font-weight: 800;
   padding-bottom: 10px;
 }
 
-.member-header > div:nth-child(2),
+.member-header>div:nth-child(2),
 .member-lopec {
   text-align: left;
 }
@@ -504,8 +508,9 @@ html.dark-mode .gate-divider {
 .tab-btn.active {
   background: #eef2ff;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(42,85,255,.12) inset;
+  box-shadow: 0 0 0 2px rgba(42, 85, 255, .12) inset;
 }
+
 html.dark-mode .phase-btn.active,
 html.dark-mode .tab-btn.active {
   background: #293963;
@@ -554,15 +559,16 @@ html.dark-mode .tab-btn.active {
 .select {
   background-color: var(--btn-bg);
 }
+
 html.dark-mode .select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2398a2b3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
-    padding-right: 2.5rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2398a2b3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .row-2 {
@@ -584,6 +590,7 @@ html.dark-mode .select {
   font-weight: 700;
   cursor: pointer;
 }
+
 html.dark-mode .btn-primary {
   background: var(--accent);
   border-color: var(--accent);
@@ -606,7 +613,8 @@ html.dark-mode .btn-primary {
 }
 
 .subtle {
-  color: #98a2b3; /* Muted 색상 직접 사용 */
+  color: #98a2b3;
+  /* Muted 색상 직접 사용 */
   font-size: 12px;
 }
 
@@ -617,6 +625,7 @@ html.dark-mode .btn-primary {
   padding: 12px 14px;
   color: #101828;
 }
+
 html.dark-mode .notice {
   background: #101828;
   color: var(--text);
@@ -636,6 +645,7 @@ html.dark-mode .notice {
   margin-top: 0;
   line-height: 1.6;
 }
+
 .correction-notice ul {
   margin-bottom: 24px;
   line-height: 1.7;
@@ -649,6 +659,10 @@ html.dark-mode .notice {
    ========================================================================== */
 
 @media (max-width: 900px) {
+  .page-space {
+    height: 100px;
+  }
+
   .board-body,
   .row {
     grid-template-columns: 180px 1fr;
@@ -657,19 +671,25 @@ html.dark-mode .notice {
   .row-group.open .row-members {
     grid-template-columns: 100px 1fr;
   }
-  
+
   .member-list {
     max-width: 100%;
     grid-template-columns: 180px 64px auto;
   }
+
 }
 
 @media (max-width: 600px) {
+  .page-space {
+    height: 100px;
+  }
+
   .app {
     padding: 16px;
   }
 
-  .board-body, .row {
+  .board-body,
+  .row {
     grid-template-columns: 1fr;
     gap: 8px;
   }
@@ -677,7 +697,7 @@ html.dark-mode .notice {
   .row {
     padding: 16px 0;
   }
-  
+
   .team-name {
     font-size: 15px;
     margin-bottom: 23px;
@@ -687,35 +707,45 @@ html.dark-mode .notice {
     grid-template-columns: 1fr auto;
     gap: 4px 12px;
   }
+
   .member-header {
-    display: none; /* 모바일에서는 헤더 숨김 */
+    display: none;
+    /* 모바일에서는 헤더 숨김 */
   }
+
   .member-name {
     font-size: 14px;
   }
+
   .member-lopec {
     font-size: 12px;
-    grid-column: 1; /* 이름 아래에 위치하도록 강제 */
+    grid-column: 1;
+    /* 이름 아래에 위치하도록 강제 */
   }
+
   .member-actions {
     grid-column: 2;
-    grid-row: span 2; /* 각 항목이 자신의 행에서 2칸 차지 */
+    grid-row: span 2;
+    /* 각 항목이 자신의 행에서 2칸 차지 */
     align-self: center;
   }
+
   .member-divider {
     margin: 8px 0;
-    grid-column: 1 / -1; /* 전체 너비 차지 */
+    grid-column: 1 / -1;
+    /* 전체 너비 차지 */
   }
 
   /* 모달 내부 그리드 */
   .members-grid {
     grid-template-columns: 1fr;
   }
+
   .row-3 {
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  
+
 }
 
 @media (max-width: 380px) {
@@ -727,14 +757,16 @@ html.dark-mode .notice {
       "actions";
     gap: 6px;
   }
-  
+
   .member-lopec {
     grid-column: auto;
   }
 
   .member-actions {
     grid-column: auto;
-    grid-row: auto; /* span 리셋 */
-    align-self: start; /* 세로 정렬 리셋 */
+    grid-row: auto;
+    /* span 리셋 */
+    align-self: start;
+    /* 세로 정렬 리셋 */
   }
 }
