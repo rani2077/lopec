@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로펙 : 카제로스 The First 현황판</title>
+    <link rel="icon" type="image/png" href="https://cdnlopec.xyz/asset/image/lopec-ico.png">
+
+    <script>
+        let baseUrl = "https://cdnlopec.xyz/asset";
+        let interValTime = 60 * 1000 * 10;
+        if (!window.location.href.includes("lopec.kr")) {
+            baseUrl = "/asset"
+        }
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/reset.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/m-layout.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+        document.write('<link rel="stylesheet" href="' + baseUrl + '/css/m-common.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
+    </script>
+    <style>
+        iframe {
+            width: 99vw;
+            height: 1000px;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 134px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <iframe src="/first/first.html" width="100%" height="100%" frameborder="0"></iframe>
+    <script>
+        document.write('<script type="module" src="' + baseUrl + '/js/layout.js?' + Math.floor((new Date).getTime() / interValTime) + '"><\/script>');
+        document.write('<script type="module" src="' + baseUrl + '/js/index.js?' + Math.floor((new Date).getTime() / interValTime) + '"><\/script>');
+    </script>
+</body>
+
+</html>
