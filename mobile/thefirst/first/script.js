@@ -33,6 +33,7 @@ async function fetchDashboardData() {
     }
     const data = await response.json();
     console.log('[API 응답] 현황판 데이터:', data);
+
     return data;
   } catch (error) {
     console.error("현황판 데이터 로딩 실패:", error);
@@ -126,12 +127,12 @@ async function transformApiData(phase, apiData) {
 
     return {
       name: partyData.partyName,
-      averageLopack: partyData.averageScore,
+      averageLopec: partyData.averageScore,
       isAllCleared: isAllCleared,
       clearedAt: clearedAt,
       members: partyData.members.map(memberData => ({
         name: memberData.name,
-        lopack: memberData.score,
+        lopec: memberData.score,
         characterUrl: "#", // 캐릭터 URL은 현재 데이터에 없으므로 임시 처리
         streamUrl: memberData.url,
       })),
@@ -231,9 +232,21 @@ async function renderPhase(phase, forceRefetch = false) {
   const rows = document.createElement('div');
   rows.className = 'rows';
   teams.sort((a, b) => compareTeamsByProgress(a, b, gates));
-  for (const team of teams) {
-    rows.appendChild(buildRowGroup(team, gates));
-  }
+
+  // 클리어 순위 계산
+  const clearedTeams = teams
+    .filter(team => team.isAllCleared && team.clearedAt)
+    .sort((a, b) => new Date(a.clearedAt).getTime() - new Date(b.clearedAt).getTime());
+  
+  const clearRankMap = new Map();
+  clearedTeams.forEach((team, index) => {
+    clearRankMap.set(team.name, index + 1);
+  });
+
+  teams.forEach((team, index) => {
+    const clearRank = clearRankMap.get(team.name);
+    rows.appendChild(buildRowGroup(team, gates, index + 1, clearRank));
+  });
   contentEl.appendChild(rows);
 }
 
@@ -260,7 +273,7 @@ function buildAxis(gates) {
   return axis;
 }
 
-function buildRowGroup(team, gates) {
+function buildRowGroup(team, gates, rank, clearRank) {
   const group = document.createElement('div');
   group.className = 'row-group';
 
@@ -269,11 +282,11 @@ function buildRowGroup(team, gates) {
   
   const name = document.createElement('div');
   name.className = 'team-name';
-  name.textContent = team.name;
-  const lopackSpan = document.createElement('span');
-  lopackSpan.className = 'team-lopack';
-  lopackSpan.textContent = 'L' + (team.averageLopack ? team.averageLopack.toFixed(2) : '????.??');
-  name.appendChild(lopackSpan);
+  name.textContent = `${rank}. ${team.name}`;
+  const lopecSpan = document.createElement('span');
+  lopecSpan.className = 'team-lopec';
+  lopecSpan.textContent = 'L' + (team.averageLopec ? team.averageLopec.toFixed(2) : '????.??');
+  name.appendChild(lopecSpan);
   row.appendChild(name);
 
   const track = document.createElement('div');
@@ -341,12 +354,18 @@ function buildRowGroup(team, gates) {
   if (team.isAllCleared && team.clearedAt) {
     dot.style.left = '100%';
     dot.classList.add('cleared');
+
     const clearTime = new Date(team.clearedAt);
     const mm = String(clearTime.getMonth() + 1).padStart(2, '0');
     const dd = String(clearTime.getDate()).padStart(2, '0');
     const hh = String(clearTime.getHours()).padStart(2, '0');
     const mi = String(clearTime.getMinutes()).padStart(2, '0');
-    tag.textContent = `${mm}.${dd}. ${hh}:${mi} 클리어`;
+
+    if (clearRank) {
+      tag.textContent = `${mm}.${dd}. ${hh}:${mi}. ${clearRank}${getOrdinalSuffix(clearRank)} 클리어`;
+    } else {
+      tag.textContent = `${mm}.${dd}. ${hh}:${mi} 클리어`;
+    }
   } else {
     const dotLeft = (labelGateIndex / totalSegments) * 100 + (labelPercentInGate / 100) * (100 / totalSegments);
     dot.style.left = dotLeft + '%';
@@ -379,9 +398,9 @@ function buildRowGroup(team, gates) {
       nameEl.className = 'member-name';
       nameEl.textContent = member.name;
 
-      const lopackEl = document.createElement('div');
-      lopackEl.className = 'member-lopack';
-      lopackEl.textContent = member.lopack.toFixed(2);
+      const lopecEl = document.createElement('div');
+      lopecEl.className = 'member-lopec';
+      lopecEl.textContent = member.lopec.toFixed(2);
 
       const actionsEl = document.createElement('div');
       actionsEl.className = 'member-actions';
@@ -402,7 +421,7 @@ function buildRowGroup(team, gates) {
       
       const rowContents = document.createDocumentFragment();
       rowContents.appendChild(nameEl);
-      rowContents.appendChild(lopackEl);
+      rowContents.appendChild(lopecEl);
       rowContents.appendChild(actionsEl);
       const divider = document.createElement('div');
       divider.className = 'member-divider';
@@ -428,15 +447,33 @@ function buildRowGroup(team, gates) {
    # 유틸리티 (Utilities)
    ========================================================================== */
 
+function getOrdinalSuffix(i) {
+  const j = i % 10;
+  const k = i % 100;
+  if (j === 1 && k !== 11) {
+    return "st";
+  }
+  if (j === 2 && k !== 12) {
+    return "nd";
+  }
+  if (j === 3 && k !== 13) {
+    return "rd";
+  }
+  return "th";
+}
+
 function compareTeamsByProgress(teamA, teamB, gates) {
   const calcScore = (team) => {
     if (team.isAllCleared) {
       if (team.clearedAt) {
+        // 1순위: 클리어 시간이 있는 팀 (시간이 이를수록 점수가 높음)
         return 1e15 - new Date(team.clearedAt).getTime();
       } else {
+        // 2순위: 클리어는 했지만 시간 정보가 없는 팀 (다음 페이즈 진행 등)
         return 1e14;
       }
     }
+    // 3순위: 클리어하지 못한 팀
     let score = 0;
     let prevGateCleared = true;
     for (let i = 0; i < gates.length; i++) {
@@ -449,7 +486,14 @@ function compareTeamsByProgress(teamA, teamB, gates) {
     }
     return score;
   };
-  return calcScore(teamB) - calcScore(teamA);
+
+  const progressDiff = calcScore(teamB) - calcScore(teamA);
+  if (progressDiff !== 0) {
+    return progressDiff;
+  }
+
+  // 동일 진도일 경우, 평균 점수가 높은 순으로 정렬
+  return teamB.averageLopec - teamA.averageLopec;
 }
 
 function getGateProgress(team, gateIndex, gates) {

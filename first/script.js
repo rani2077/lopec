@@ -33,6 +33,7 @@ async function fetchDashboardData() {
     }
     const data = await response.json();
     console.log('[API 응답] 현황판 데이터:', data);
+
     return data;
   } catch (error) {
     console.error("현황판 데이터 로딩 실패:", error);
@@ -231,8 +232,20 @@ async function renderPhase(phase, forceRefetch = false) {
   const rows = document.createElement('div');
   rows.className = 'rows';
   teams.sort((a, b) => compareTeamsByProgress(a, b, gates));
+
+  // 클리어 순위 계산
+  const clearedTeams = teams
+    .filter(team => team.isAllCleared && team.clearedAt)
+    .sort((a, b) => new Date(a.clearedAt).getTime() - new Date(b.clearedAt).getTime());
+  
+  const clearRankMap = new Map();
+  clearedTeams.forEach((team, index) => {
+    clearRankMap.set(team.name, index + 1);
+  });
+
   teams.forEach((team, index) => {
-    rows.appendChild(buildRowGroup(team, gates, index + 1));
+    const clearRank = clearRankMap.get(team.name);
+    rows.appendChild(buildRowGroup(team, gates, index + 1, clearRank));
   });
   contentEl.appendChild(rows);
 }
@@ -260,7 +273,7 @@ function buildAxis(gates) {
   return axis;
 }
 
-function buildRowGroup(team, gates, rank) {
+function buildRowGroup(team, gates, rank, clearRank) {
   const group = document.createElement('div');
   group.className = 'row-group';
 
@@ -341,12 +354,18 @@ function buildRowGroup(team, gates, rank) {
   if (team.isAllCleared && team.clearedAt) {
     dot.style.left = '100%';
     dot.classList.add('cleared');
+
     const clearTime = new Date(team.clearedAt);
     const mm = String(clearTime.getMonth() + 1).padStart(2, '0');
     const dd = String(clearTime.getDate()).padStart(2, '0');
     const hh = String(clearTime.getHours()).padStart(2, '0');
     const mi = String(clearTime.getMinutes()).padStart(2, '0');
-    tag.textContent = `${mm}.${dd}. ${hh}:${mi} 클리어`;
+
+    if (clearRank) {
+      tag.textContent = `${mm}.${dd}. ${hh}:${mi}. ${clearRank}${getOrdinalSuffix(clearRank)} 클리어`;
+    } else {
+      tag.textContent = `${mm}.${dd}. ${hh}:${mi} 클리어`;
+    }
   } else {
     const dotLeft = (labelGateIndex / totalSegments) * 100 + (labelPercentInGate / 100) * (100 / totalSegments);
     dot.style.left = dotLeft + '%';
@@ -427,6 +446,21 @@ function buildRowGroup(team, gates, rank) {
 /* ==========================================================================
    # 유틸리티 (Utilities)
    ========================================================================== */
+
+function getOrdinalSuffix(i) {
+  const j = i % 10;
+  const k = i % 100;
+  if (j === 1 && k !== 11) {
+    return "st";
+  }
+  if (j === 2 && k !== 12) {
+    return "nd";
+  }
+  if (j === 3 && k !== 13) {
+    return "rd";
+  }
+  return "th";
+}
 
 function compareTeamsByProgress(teamA, teamB, gates) {
   const calcScore = (team) => {
