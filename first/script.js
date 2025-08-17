@@ -231,9 +231,9 @@ async function renderPhase(phase, forceRefetch = false) {
   const rows = document.createElement('div');
   rows.className = 'rows';
   teams.sort((a, b) => compareTeamsByProgress(a, b, gates));
-  for (const team of teams) {
-    rows.appendChild(buildRowGroup(team, gates));
-  }
+  teams.forEach((team, index) => {
+    rows.appendChild(buildRowGroup(team, gates, index + 1));
+  });
   contentEl.appendChild(rows);
 }
 
@@ -260,7 +260,7 @@ function buildAxis(gates) {
   return axis;
 }
 
-function buildRowGroup(team, gates) {
+function buildRowGroup(team, gates, rank) {
   const group = document.createElement('div');
   group.className = 'row-group';
 
@@ -269,7 +269,7 @@ function buildRowGroup(team, gates) {
   
   const name = document.createElement('div');
   name.className = 'team-name';
-  name.textContent = team.name;
+  name.textContent = `${rank}. ${team.name}`;
   const lopecSpan = document.createElement('span');
   lopecSpan.className = 'team-lopec';
   lopecSpan.textContent = 'L' + (team.averageLopec ? team.averageLopec.toFixed(2) : '????.??');
@@ -432,11 +432,14 @@ function compareTeamsByProgress(teamA, teamB, gates) {
   const calcScore = (team) => {
     if (team.isAllCleared) {
       if (team.clearedAt) {
+        // 1순위: 클리어 시간이 있는 팀 (시간이 이를수록 점수가 높음)
         return 1e15 - new Date(team.clearedAt).getTime();
       } else {
+        // 2순위: 클리어는 했지만 시간 정보가 없는 팀 (다음 페이즈 진행 등)
         return 1e14;
       }
     }
+    // 3순위: 클리어하지 못한 팀
     let score = 0;
     let prevGateCleared = true;
     for (let i = 0; i < gates.length; i++) {
@@ -449,7 +452,14 @@ function compareTeamsByProgress(teamA, teamB, gates) {
     }
     return score;
   };
-  return calcScore(teamB) - calcScore(teamA);
+
+  const progressDiff = calcScore(teamB) - calcScore(teamA);
+  if (progressDiff !== 0) {
+    return progressDiff;
+  }
+
+  // 동일 진도일 경우, 평균 점수가 높은 순으로 정렬
+  return teamB.averageLopec - teamA.averageLopec;
 }
 
 function getGateProgress(team, gateIndex, gates) {
