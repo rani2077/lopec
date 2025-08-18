@@ -977,11 +977,21 @@ let noticeArry = [
             &nbsp;&nbsp; 다.`
     },
     {
-        name: `<em style="font-weight:900;font-size:17px;"> 25년 8월 2주차 중앙값 통계 </em>`,
+        name: `25년 8월 2주차 중앙값 통계`,
         desc:
             `8월 2주차 중앙값 통계입니다.
         
         <img src="/asset/image/median-20250812.png">`
+    },
+    {
+        name: `<em style="font-weight:900;font-size:17px;"> 25년 8월 3주차 중앙값&인구수 통계 </em>`,
+        desc:
+            `8월 3주차 중앙값 통계입니다.
+            4막/종막 출시로 인하여 조금 일찍 업데이트하게 되었습니다.
+        
+        <img src="/asset/image/median-20250818.png">
+        <img src="/asset/image/userinfo-20250818.png">
+        <img src="/asset/image/kazeraid-20250818.png">`
     },
 ]
 
