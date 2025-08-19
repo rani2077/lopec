@@ -991,6 +991,14 @@ let noticeArry = [
         
         <img src="/asset/image/median-20250818.png">`
     },
+    {
+        name: `<em style="font-weight:900;font-size:17px;"> 25년 8월 19일 핫픽스 안내</em>`,
+        desc:
+            `소수의 잔재 블레이드 세팅에서
+            보석 점수가 소폭 뻥튀기 되는 이슈를 수정했습니다.
+            최고 점수 초기화는 1:1문의를 통해 도와드리고 있습니다. 
+            감사합니다.`
+    },
 ]
 
 // notice 공지 생성
