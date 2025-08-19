@@ -989,9 +989,7 @@ let noticeArry = [
             `8월 3주차 중앙값 통계입니다.
             4막/종막 출시로 인하여 조금 일찍 업데이트하게 되었습니다.
         
-        <img src="/asset/image/median-20250818.png">
-        <img src="/asset/image/userinfo-20250818.png">
-        <img src="/asset/image/kazeraid-20250818.png">`
+        <img src="/asset/image/median-20250818.png">`
     },
 ]
 
