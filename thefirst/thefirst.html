@@ -18,13 +18,10 @@
         document.write('<link rel="stylesheet" href="' + baseUrl + '/css/common.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
     </script>
     <style>
-        body {
-            height: calc(100% - 194px);
-        }
-
         iframe {
             width: 100%;
-            height: calc(100vh - 60px - 220px) !important; /* 헤더 60 + 푸터 220 기준 */
+            height: calc(100vh - 60px - 220px) !important;
+            /* 헤더 60 + 푸터 220 기준 */
             margin: 0 auto;
             display: block;
             margin-top: 60px !important;
@@ -44,11 +41,64 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
     </div> -->
-
-    <iframe src="/first/first.html" width="100%" height="100%" frameborder="0"></iframe>
+    <iframe src="/first/first.html" width="100%" frameborder="0"></iframe>
 
     <script>
         document.write('<script type="module" src="' + baseUrl + '/js/layout.js?' + Math.floor((new Date).getTime() / interValTime) + '"><\/script>');
+    </script>
+    <script>
+        (function () {
+            function getIframe() {
+                return document.querySelector('iframe[src*="/first/first.html"]');
+            }
+            function getFooterHeight() {
+                const footer = document.querySelector('footer') || document.getElementById('footer') || document.querySelector('.footer');
+                return footer ? footer.offsetHeight : 0;
+            }
+            function resizeIframe() {
+                const iframe = getIframe();
+                if (!iframe) return;
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    const body = doc.body;
+                    const html = doc.documentElement;
+                    const contentHeight = Math.max(
+                        body ? body.scrollHeight : 0,
+                        html ? html.scrollHeight : 0
+                    );
+                    const extra = getFooterHeight();
+                    iframe.style.setProperty('height', (contentHeight + extra) + 'px', 'important');
+                } catch (_) { /* cross-origin 등 예외 무시 */ }
+            }
+            const iframe = getIframe();
+            if (iframe) {
+                iframe.addEventListener('load', function () {
+                    resizeIframe();
+                    try {
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        const RO = iframe.contentWindow && iframe.contentWindow.ResizeObserver ? iframe.contentWindow.ResizeObserver : window.ResizeObserver;
+                        if (RO) {
+                            const ro = new RO(resizeIframe);
+                            if (doc.documentElement) ro.observe(doc.documentElement);
+                            if (doc.body) ro.observe(doc.body);
+                        } else {
+                            let attempts = 0;
+                            const t = setInterval(function () {
+                                resizeIframe();
+                                if (++attempts > 20) clearInterval(t);
+                            }, 500);
+                        }
+                    } catch (_) {
+                        let attempts = 0;
+                        const t = setInterval(function () {
+                            resizeIframe();
+                            if (++attempts > 20) clearInterval(t);
+                        }, 500);
+                    }
+                });
+            }
+            window.addEventListener('resize', resizeIframe);
+        })();
     </script>
 </body>
 
