@@ -135,7 +135,7 @@ export async function apiCalcValue(inputName) {
         window.location.href.includes("lopec.kr") &&                // url이 lopec.kr일 경우
         window.location.href.includes("search") &&                  // 검색결과 페이지의 경우
         calcValue.completeSpecPoint > dataBase.totalSum &&          // 계산된 스펙포인트가 DB값보다 큰 경우
-        devilDmgCheck === "true" && devilDmgCheck !== "true" &&     // 악추피 체크를 안한 경우
+        devilDmgCheck === "true" &&                                 // 악추피 체크를 한 경우
         !gemSetCheck                                                // 저장된 보석설정을 로드한 경우
     ) {
         // DB 저장 함수

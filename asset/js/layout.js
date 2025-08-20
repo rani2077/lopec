@@ -1725,7 +1725,8 @@ function devilDamageCheck() {
 
         // 2. 페이지 로드 시 로컬 스토리지 값 확인 및 체크박스 상태 설정
         const savedState = localStorage.getItem(storageKey);
-        if (savedState === 'true') {
+        console.log(savedState)
+        if (savedState === 'true' || savedState === null) {
             checkBox.checked = true; // 저장된 값이 'true' 문자열이면 체크 상태로 설정
         } else {
             checkBox.checked = false; // 그 외의 경우 (null, 'false' 등) 체크 해제 상태로 설정
