@@ -1728,7 +1728,7 @@ function devilDamageCheck() {
         if (savedState === 'true') {
             checkBox.checked = true; // 저장된 값이 'true' 문자열이면 체크 상태로 설정
         } else {
-            checkBox.checked = false; // 그 외의 경우 (null, 'false' 등) 체크 해제 상태로 설정
+            checkBox.checked = true; // 그 외의 경우 (null, 'false' 등) 체크 해제 상태로 설정
         }
 
         // 3. 체크박스 상태 변경 시 로컬 스토리지에 저장하는 이벤트 리스너 추가
