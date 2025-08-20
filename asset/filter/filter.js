@@ -3212,6 +3212,7 @@ export let classGemFilter = [
             { name: "블리츠 러시", per: 0.2272 },
             { name: "어스 슬래쉬", per: 0.056 },
             { name: "터닝 슬래쉬", per: 0.049 },
+            { name: "보정치", per: -0.015 },
         ],
     },
     {
