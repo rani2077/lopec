@@ -412,10 +412,10 @@ export async function scNav(userName) {
     }
     async function scNavEvent() {
         document.querySelector(".sc-nav").insertAdjacentHTML('afterend', await scExpeditionSkeleton());
-        document.querySelector(".sc-nav").insertAdjacentHTML('afterend', await scHistorySkeleton());
+        document.querySelector(".sc-nav").insertAdjacentHTML('afterend', await scArkgrid(name));
         let elements = document.querySelectorAll(`.sc-nav .link.${nowPage}, .sc-nav .link[href=""]`);
         let expeditionFlag = null;
-        let historyFlag = null;
+        let arkgridFlag = null;
         elements.forEach((element, idx) => {
             element.addEventListener("click", async (e) => {
                 e.preventDefault();
@@ -425,11 +425,11 @@ export async function scNav(userName) {
                 element.classList.add("on");
                 let scInfo = document.querySelector(".sc-info");
                 let scExpeditionElement = document.querySelector(".sc-expedition");
-                let scHistoryElement = document.querySelector(".sc-history");
+                let scArkgridElement = document.querySelector(".sc-arkgrid");
 
                 scInfo.style.display = "none";
                 scExpeditionElement.style.display = "none";
-                scHistoryElement.style.display = "none";
+                scArkgridElement.style.display = "none";
                 let page = element.getAttribute("data-page");
                 document.querySelector(`.${page}`).style.display = "flex";
                 if (element.classList.contains("expedition") && !expeditionFlag) {
@@ -437,12 +437,11 @@ export async function scNav(userName) {
                     let expeditionElement = document.querySelector(".sc-expedition");
                     expeditionElement.outerHTML = await scExpedition(name);
                     document.querySelector(`.${page}`).style.display = "flex";
-                } if (element.classList.contains("history") && !historyFlag) {
-                    historyFlag = true;
-                    let historyElement = document.querySelector(".sc-history");
-                    await scHistory()
-                    // historyElement.outerHTML = await 
-                    // document.querySelector(`.${page}`).style.display = "flex";
+                } if (element.classList.contains("arkgrid") && !arkgridFlag) {
+                    arkgridFlag = true;
+                    let arkgridElement = document.querySelector(".sc-arkgrid");
+                    // historyElement.outerHTML = scArkgrid(name)
+                    document.querySelector(`.${page}`).style.display = "flex";
                 }
             })
         })
@@ -457,14 +456,85 @@ export async function scNav(userName) {
         <a href="${mobilePath}/search/search.html?headerCharacterName=${name}" class="link search ${searchClassName}" data-page="sc-info" >메인</a>
         <a href="" class="link expedition" data-page="sc-expedition">원정대</a>
         <a href="${mobilePath}/simulator/simulator.html?headerCharacterName=${name}" class="link simulator ${simulatorClassName}" data-page="sc-info">시뮬레이터</a>
+        <a href="" class="link arkgrid" data-page="sc-arkgrid">아크그리드</a>
         <a href="https://cool-kiss-ec2.notion.site/1da758f0e8da8058a37bd1b7c6f49cd3?pvs=4" target="_blink" class="link" data-page="">중앙값</a>
-        </nav>`
+    </nav>`
 }
 // <a href="" class="link history" data-page="sc-history">히스토리</a>
 
 /* **********************************************************************************************************************
-* function name		:	scExpedition
-* description       : 	원정대 컴포넌트
+* function name		:	scArkgrid
+* description       : 	아크그리드 컴포넌트
+*********************************************************************************************************************** */
+async function scArkgrid(inputName) {
+    let Module = await import("./fetchApi.js");
+    let data = await Module.lostarkApiCall(inputName);
+    console.log(data)
+
+    function arkgridItem() {
+
+    }
+
+    return `
+        <section class="sc-arkgrid">
+            <div class="group-arkgrid shadow">
+                <ul class="arkgrid-list">
+                    <li class="arkgrid-item core">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" /></span>
+                    </li>
+                    <li class="arkgrid-item">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
+                    </li>
+                    <li class="arkgrid-item">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
+                    </li>
+                    <li class="arkgrid-item">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
+                    </li>
+                </ul>
+                <ul class="arkgrid-list">
+                    <li class="arkgrid-item core">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" /></span>
+                    </li>
+                    <li class="arkgrid-item">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
+                    </li>
+                    <li class="arkgrid-item">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
+                    </li>
+                    <li class="arkgrid-item">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="group-effect shadow">
+                <div class="core-area">
+                    <div class="core-item">
+                        <div class="image">
+                            <img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" />
+                        </div>
+                        <span class="name">질서의 달 코어 : 더블 코어</span>
+                    </div>
+                    <div class="core-item">
+                        <div class="image">
+                            <img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" />
+                        </div>
+                        <span class="name">질서의 달 코어 : 더블 코어</span>
+                    </div>
+                </div>
+                <div class="effect-area">
+                    <span class="effect">공격력 Lv. 7 - 0.25%</span>
+                    <span class="effect">보스 피해 Lv. 3 - 0.25%</span>
+                    <span class="effect">추가 피해 Lv. 2 - 0.16%</span>
+                </div>
+            </div>
+        </section>
+    `
+};
+
+/* **********************************************************************************************************************
+* function name		:	scExpeditionSkeleton
+* description       : 	원정대 컴포넌트 스켈레톤
 *********************************************************************************************************************** */
 async function scExpeditionSkeleton() {
     return `
@@ -557,31 +627,7 @@ async function scExpedition(inputName) {
             ${groupServer.join('')}
         </section>`;
 }
-/* **********************************************************************************************************************
-* function name		:	scHistorySkeleton
-* description       : 	히스토리 컴포넌트 스켈레톤
-*********************************************************************************************************************** */
-async function scHistorySkeleton() {
-    return `
-        <section class="sc-history" style="margin-top:20px;">
-            <i style="color:#121212;">준비중</i>
-            <i style="color:#fff;">준비중</i>
-        </section>`;
-}
 
-/* **********************************************************************************************************************
-* function name		:	scHistory
-* description       : 	히스토리 컴포넌트
-*********************************************************************************************************************** */
-async function scHistory() {
-    let response = await fetch("https://api.lopec.kr/api/score-history?nickname=로스트다람쥐&characterClass=황후 아르카나")
-    let historyData = await response.json()
-    console.log(historyData)
-    return `
-        <section class="sc-history">
-            <i>로딩중...</i>
-        </section>`;
-}
 /* **********************************************************************************************************************
 * function name		:	manageExpeditionData
 * description       : 	원정대 데이터 로컬스토리지 저장

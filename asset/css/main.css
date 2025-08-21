@@ -326,7 +326,8 @@
     text-overflow: ellipsis;
     width: 125px;
 }
-.sc-rank .group-rank .rank-area .rank-box .score{
+
+.sc-rank .group-rank .rank-area .rank-box .score {
     width: 57px;
 }
 
@@ -1262,6 +1263,83 @@
 
 .sc-expedition .expedition-area .expedition-list .info-box .spec {}
 
-.sc-history {
-    display: none;
+
+
+/* 아크그리드 탭 */
+.sc-arkgrid {
+    display: flex;
+    justify-content: space-between;
+}
+
+.group-arkgrid {
+    width: 700px;
+    padding: 15px;
+}
+
+.group-effect {
+    width: 580px;
+    padding: 15px;
+}
+
+.group-arkgrid .arkgrid-list {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.group-arkgrid .arkgrid-list:first-child {
+    margin-top: 0;
+}
+
+.group-arkgrid .arkgrid-list .arkgrid-item.core {
+    width: 60px;
+    height: 60px;
+}
+
+.group-arkgrid .arkgrid-list .arkgrid-item {
+    width: 45px;
+    height: 45px;
+}
+
+.group-arkgrid .arkgrid-list .arkgrid-item img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.group-effect .core-area {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.group-effect .core-area .core-item {
+    display: flex;
+    align-items: center;
+    gap:4px;
+}
+
+.group-effect .core-area .core-item .image {
+    width: 40px;
+    height: 40px;
+}
+
+.group-effect .core-area .core-item .image img {
+    width: 100%;
+    height: 100%;
+}
+
+.group-effect .core-area .core-item .name {}
+
+.group-effect {}
+
+.group-effect .effect-area {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.group-effect .effect-area .effect {
+    padding: 4px 0;
 }
