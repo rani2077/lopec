@@ -471,61 +471,225 @@ async function scArkgrid(inputName) {
     let data = await Module.lostarkApiCall(inputName);
     console.log(data)
 
-    function arkgridItem() {
+    function arkgridList() {
+        let arkgridListHtml = data.ArkGrid.Slots.map((obj, index) => {
+            return `
+                <ul class="arkgrid-list">
+                    <li class="arkgrid-item core">
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="${obj.Icon}" /></span>
+                        ${arkgridItem(index)}
+                    </li>
+                </ul>`
+        })
 
+        function arkgridItem(index) {
+            let result = data.ArkGrid.Slots[index].Gems.map((obj) => {
+                return `
+                <li class="arkgrid-item">
+                    <span class="arkgrid-box"><img alt="코어 이미지" src="${obj.Icon}" /></span>
+                </li>`
+            })
+            return result.join('');
+        }
+
+        return arkgridListHtml.join('');
     }
+
+    function coreItem() {
+        let coreItemHtml = data.ArkGrid.Slots.map((obj, index) => {
+            return `
+                <div class="core-item">
+                    <div class="image-box">
+                        <img alt="코어 이미지" src="${obj.Icon}" />
+                    </div>
+                    ${createLostArkItemHtml(obj.Tooltip)}
+                    <span class="name">${obj.Name}(${obj.Point}P)</span>
+                </div>`
+        })
+        return coreItemHtml.join('');
+    }
+    function effect() {
+        let effectHtml = data.ArkGrid.Effects.map((obj) => {
+            return `<span class="effect">${obj.Name} Lv. ${obj.Level} - ${obj.Tooltip.match(/\+?(\d+\.\d+)%/)[0]}</span>`
+        })
+        return effectHtml.join("");
+    }
+
+    /**
+     * 주어진 JSON 데이터를 HTML 문자열로 변환합니다.
+     *
+     * @param {string} jsonData - 변환할 JSON 데이터 문자열.
+     * @returns {string} - 생성된 HTML 문자열.
+     */
+    function createLostArkItemHtml(jsonData) {
+        const data = JSON.parse(jsonData);
+        let html = '';
+
+        const style = `
+            <style>
+            .item-container {
+                display:none;
+                font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+                font-size: 14px;
+                color: #ddd;
+                background-color: #1a1a1a;
+                border: 1px solid #333;
+                padding: 15px;
+                line-height: 1.6;
+                max-width: 400px;
+                min-width:400px;
+                margin: 0px auto;
+                position:absolute;
+                left:20px;
+                top:40px;
+                z-index:3;
+            }
+            .group-effect .core-area .core-item:hover .item-container{
+                display:block;
+            }
+            .name-tag-box {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .item-title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            .item-icon {
+                width: 60px;
+                height: 60px;
+                border: 1px solid #444;
+            }
+            .item-info {
+                flex-grow: 1;
+            }
+            .item-info .title {
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .single-text-box, .multi-text-box {
+                margin-bottom: 5px;
+            }
+            .item-part-box {
+                border-top: 1px solid #333;
+                padding-top: 10px;
+                margin-top: 10px;
+            }
+            .item-part-box div:first-child {
+                margin-bottom: 5px;
+            }
+            .divider {
+                border-top: 1px solid #444;
+                margin: 15px 0;
+            }
+            .red-text {
+                color: #C24B46;
+            }
+            .yellow-text {
+                color: #FFD200;
+            }
+            .green-text {
+                color: #99ff99;
+            }
+            .purple-text {
+                color: #bf9ef6;
+            }
+            .blue-text {
+                color: #A9D0F5;
+            }
+            .light-blue-text {
+                color: #5FD3F1;
+            }
+            .gold-text {
+                color: #F99200;
+            }
+            .item-description {
+                margin-top: 15px;
+                font-size: 13px;
+                color: #aaa;
+            }
+            </style>
+        `;
+
+        html += `<div class="item-container">${style}`;
+
+        for (const key in data) {
+            const element = data[key];
+            if (!element) continue;
+
+            const type = element.type;
+            const value = element.value;
+
+            switch (type) {
+                case 'NameTagBox':
+                    html += `<div class="name-tag-box">${value.replace(/<P ALIGN='CENTER'>|<\/P>/g, '')}</div>`;
+                    break;
+                case 'ItemTitle':
+                    html += `
+          <div class="item-title">
+            <img src="${value.slotData.iconPath}" class="item-icon" alt="아이템 아이콘">
+            <div class="item-info">
+              <div class="title">${value.leftStr0}</div>
+              ${value.leftStr1 ? `<div>${value.leftStr1}</div>` : ''}
+              ${value.leftStr2 ? `<div>${value.leftStr2}</div>` : ''}
+            </div>
+          </div>
+        `;
+                    break;
+                case 'SingleTextBox':
+                    html += `<div class="single-text-box">${value}</div>`;
+                    break;
+                case 'MultiTextBox':
+                    html += `<div class="multi-text-box">${value.replace(/\|/g, '')}</div>`;
+                    break;
+                case 'ItemPartBox':
+                    html += `
+          <div class="item-part-box">
+            <div>${value.Element_000}</div>
+            <div>${value.Element_001.replace(/<br>/g, '<br>')}</div>
+          </div>
+        `;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        html += `</div>`;
+
+        // 폰트 태그를 CSS 클래스로 대체하는 함수
+        const replaceFontTagsWithClasses = (htmlString) => {
+            return htmlString
+                .replace(/<FONT COLOR='#F99200'>/g, '<span class="gold-text">')
+                .replace(/<FONT COLOR='#C24B46'>/g, '<span class="red-text">')
+                .replace(/<FONT COLOR='#A9D0F5'>/g, '<span class="blue-text">')
+                .replace(/<FONT COLOR='#B7FB00'>/g, '<span style="color: #b7fb00;">')
+                .replace(/<FONT COLOR='#FFD200'>/g, '<span class="yellow-text">')
+                .replace(/<FONT COLOR='#99ff99'>/g, '<span class="green-text">')
+                .replace(/<FONT COLOR='#ffff99'>/g, '<span style="color: #ffff99;">')
+                .replace(/<FONT COLOR='#bf9ef6'>/g, '<span class="purple-text">')
+                .replace(/<Font color='#5FD3F1'>/g, '<span class="light-blue-text">')
+                .replace(/<FONT SIZE='12'>/g, '<span style="font-size: 12px;">')
+                .replace(/<\/FONT>/g, '</span>');
+        };
+
+        return replaceFontTagsWithClasses(html);
+    }
+
 
     return `
         <section class="sc-arkgrid">
             <div class="group-arkgrid shadow">
-                <ul class="arkgrid-list">
-                    <li class="arkgrid-item core">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" /></span>
-                    </li>
-                    <li class="arkgrid-item">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
-                    </li>
-                    <li class="arkgrid-item">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
-                    </li>
-                    <li class="arkgrid-item">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
-                    </li>
-                </ul>
-                <ul class="arkgrid-list">
-                    <li class="arkgrid-item core">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" /></span>
-                    </li>
-                    <li class="arkgrid-item">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
-                    </li>
-                    <li class="arkgrid-item">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
-                    </li>
-                    <li class="arkgrid-item">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_203.png" /></span>
-                    </li>
-                </ul>
+                ${arkgridList()}
             </div>
             <div class="group-effect shadow">
                 <div class="core-area">
-                    <div class="core-item">
-                        <div class="image">
-                            <img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" />
-                        </div>
-                        <span class="name">질서의 달 코어 : 더블 코어</span>
-                    </div>
-                    <div class="core-item">
-                        <div class="image">
-                            <img alt="코어 이미지" src="https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_97.png" />
-                        </div>
-                        <span class="name">질서의 달 코어 : 더블 코어</span>
-                    </div>
+                    ${coreItem()}
                 </div>
                 <div class="effect-area">
-                    <span class="effect">공격력 Lv. 7 - 0.25%</span>
-                    <span class="effect">보스 피해 Lv. 3 - 0.25%</span>
-                    <span class="effect">추가 피해 Lv. 2 - 0.16%</span>
+                    ${effect()}
                 </div>
             </div>
         </section>
