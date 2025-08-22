@@ -48,6 +48,79 @@
 
 <body>
 
+    <!-- 팝업창 컨테이너 -->
+    <div class="sc-popup-container" id="popupContainer">
+        <!-- 닫기 버튼 -->
+        <button class="sc-close-btn" id="closeBtn">&times;</button>
+
+        <!-- 팝업 내용 -->
+        <div class="sc-popup-content" id="popupContent">
+            <h3>✨ 특별 공지!</h3>
+            <p>
+                아크그리드 전분 데이터<br>
+                제보를 기다립니다.<br>
+                * 해+달 착용으로 운명이 활성화된 캐릭터
+            </p>
+            <p>
+                제보는 <a href="#" style="color: #3498db;font-size:16px;font-weight:600;">여기</a>를 클릭해주세요.
+            </p>
+        </div>
+
+        <!-- '오늘 하루 안보기' 체크박스 -->
+        <div class="sc-popup-footer">
+            <input type="checkbox" id="noMoreTodayCheckbox">
+            <label for="noMoreTodayCheckbox">오늘 하루 안보기</label>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const popupContainer = document.getElementById('popupContainer');
+            // const overlay = document.getElementById('overlay'); // overlay 요소 제거
+            const closeBtn = document.getElementById('closeBtn');
+            const noMoreTodayCheckbox = document.getElementById('noMoreTodayCheckbox');
+            const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+            // Function to show the popup
+            function showPopup() {
+                popupContainer.style.display = 'block';
+                // overlay.style.display = 'block'; // overlay 관련 코드 제거
+            }
+
+            // Function to hide the popup
+            function hidePopup() {
+                popupContainer.style.display = 'none';
+                // overlay.style.display = 'none'; // overlay 관련 코드 제거
+            }
+
+            // Check local storage for popup status on page load
+            const popupDisabledUntil = localStorage.getItem('popupDisabledUntil');
+            const currentTime = new Date().getTime();
+
+            if (popupDisabledUntil && currentTime < parseInt(popupDisabledUntil, 10)) {
+                // If popup is disabled and the expiry time has not passed, hide it
+                hidePopup();
+            } else {
+                // Otherwise, show the popup
+                showPopup();
+            }
+
+            // Close button click event listener
+            closeBtn.addEventListener('click', () => {
+                if (noMoreTodayCheckbox.checked) {
+                    const expiryTime = currentTime + oneDayInMilliseconds;
+                    localStorage.setItem('popupDisabledUntil', expiryTime.toString());
+                }
+                hidePopup();
+            });
+
+            // If the overlay is clicked, close the popup (optional, but good UX)
+            // overlay.addEventListener('click', () => { // overlay 관련 코드 제거
+            //      hidePopup();
+            // });
+        });
+    </script>
+
     <div class="wrapper">
 
         <div class="sc-top-ads"
@@ -67,8 +140,9 @@
                 </div>
             </form>
             <a href="/thefirst/thefirst.html"
-                style="text-align: center;display:block;padding: 13px;border:1px solid #7F8C8D;border-radius:9999px;background: #2C3E50; width:800px;margin:0 auto;margin-top: 30px;color: #F1C40F;">카제로스
-                더 퍼스트 현황 보러가기</a>
+                style="text-align: center;display:block;padding: 13px;border:1px solid #7F8C8D;border-radius:9999px;background: #2C3E50; width:800px;margin:0 auto;margin-top: 30px;color: #F1C40F;">
+                카제로스 더 퍼스트 현황 보러가기
+            </a>
         </section>
 
         <div class="notice-wrapper">
