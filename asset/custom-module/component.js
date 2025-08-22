@@ -454,9 +454,9 @@ export async function scNav(userName) {
     return `
     <nav class="sc-nav">
         <a href="${mobilePath}/search/search.html?headerCharacterName=${name}" class="link search ${searchClassName}" data-page="sc-info" >메인</a>
+        <a href="" class="link arkgrid" data-page="sc-arkgrid">아크그리드</a>
         <a href="" class="link expedition" data-page="sc-expedition">원정대</a>
         <a href="${mobilePath}/simulator/simulator.html?headerCharacterName=${name}" class="link simulator ${simulatorClassName}" data-page="sc-info">시뮬레이터</a>
-        <a href="" class="link arkgrid" data-page="sc-arkgrid">아크그리드</a>
         <a href="https://cool-kiss-ec2.notion.site/1da758f0e8da8058a37bd1b7c6f49cd3?pvs=4" target="_blink" class="link" data-page="">중앙값</a>
     </nav>`
 }
@@ -469,8 +469,13 @@ export async function scNav(userName) {
 async function scArkgrid(inputName) {
     let Module = await import("./fetchApi.js");
     let data = await Module.lostarkApiCall(inputName);
-    console.log(data)
 
+    if (!data.ArkGrid.Slots) {
+        return `
+        <section class="sc-arkgrid shadow" style="padding:15px">
+            <span>아크그리드 없음</span>
+        </section>`
+    }
     function arkgridList() {
         let arkgridListHtml = data.ArkGrid.Slots.map((obj, index) => {
             return `
@@ -501,183 +506,74 @@ async function scArkgrid(inputName) {
                 <div class="core-item">
                     <div class="image-box">
                         <img alt="코어 이미지" src="${obj.Icon}" />
+                        ${coreTooltip(index)}
                     </div>
-                    ${createLostArkItemHtml(obj.Tooltip)}
                     <span class="name">${obj.Name}(${obj.Point}P)</span>
                 </div>`
         })
         return coreItemHtml.join('');
     }
+
+    function coreTooltip(index) {
+        if (!data.ArkGrid) {
+            return;
+        }
+        const jsonData = JSON.parse(data.ArkGrid.Slots[index].Tooltip);
+
+        let htmlString = '';
+        let title = '';
+        let image = '';
+        let coreOption = '';
+        let coreOptionFound = false; // 코어 옵션을 찾았는지 확인하는 플래그
+
+        for (const key in jsonData) {
+            const element = jsonData[key];
+            if (element) {
+                if (element.type === 'NameTagBox') {
+                    title = element.value;
+                } else if (element.type === 'ItemTitle') {
+                    const itemInfo = element.value;
+                    const iconPath = itemInfo.slotData.iconPath;
+                    const itemName = itemInfo.leftStr0;
+                    image = `<div style="display: flex; align-items: center; margin-bottom: 10px;">
+                   <img src="${iconPath}" alt="Core Image" style="width: 50px; height: 50px; margin-right: 10px;">
+                   ${itemName}
+                 </div>`;
+                } else if (element.type === 'ItemPartBox' && element.value && element.value.Element_000 === "<FONT COLOR='#A9D0F5'>코어 옵션</FONT>") {
+                    coreOption = `<div style="margin-top: 10px; letter-spacing:0.8px;line-height:1.4em">
+                        ${element.value.Element_001}
+                      </div>`;
+                    coreOptionFound = true; // 코어 옵션을 찾았음을 표시
+                }
+            }
+        }
+
+        // 코어 옵션이 존재할 때만 HTML을 생성하도록 조건 추가
+        if (coreOptionFound) {
+            htmlString = `
+      <div style="border: 1px solid #333; padding: 15px; border-radius: 5px; background-color: #1a1a1a; color: #fff; font-family: Arial, sans-serif;">
+        <h2 style="text-align: center; color: #F99200;">${title}</h2>
+        <div style="margin-top: 15px;">
+          ${image}
+        </div>
+        <div style="margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
+          <h3 style="color: #A9D0F5;">코어 옵션</h3>
+          ${coreOption}
+        </div>
+      </div>
+    `;
+        }
+
+        return htmlString;
+    }
+
+
     function effect() {
         let effectHtml = data.ArkGrid.Effects.map((obj) => {
             return `<span class="effect">${obj.Name} Lv. ${obj.Level} - ${obj.Tooltip.match(/\+?(\d+\.\d+)%/)[0]}</span>`
         })
         return effectHtml.join("");
     }
-
-    /**
-     * 주어진 JSON 데이터를 HTML 문자열로 변환합니다.
-     *
-     * @param {string} jsonData - 변환할 JSON 데이터 문자열.
-     * @returns {string} - 생성된 HTML 문자열.
-     */
-    function createLostArkItemHtml(jsonData) {
-        const data = JSON.parse(jsonData);
-        let html = '';
-
-        const style = `
-            <style>
-            .item-container {
-                display:none;
-                font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-                font-size: 14px;
-                color: #ddd;
-                background-color: #1a1a1a;
-                border: 1px solid #333;
-                padding: 15px;
-                line-height: 1.6;
-                max-width: 400px;
-                min-width:400px;
-                margin: 0px auto;
-                position:absolute;
-                left:20px;
-                top:40px;
-                z-index:3;
-            }
-            .group-effect .core-area .core-item:hover .item-container{
-                display:block;
-            }
-            .name-tag-box {
-                text-align: center;
-                margin-bottom: 10px;
-            }
-            .item-title {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-            .item-icon {
-                width: 60px;
-                height: 60px;
-                border: 1px solid #444;
-            }
-            .item-info {
-                flex-grow: 1;
-            }
-            .item-info .title {
-                font-size: 18px;
-                font-weight: bold;
-            }
-            .single-text-box, .multi-text-box {
-                margin-bottom: 5px;
-            }
-            .item-part-box {
-                border-top: 1px solid #333;
-                padding-top: 10px;
-                margin-top: 10px;
-            }
-            .item-part-box div:first-child {
-                margin-bottom: 5px;
-            }
-            .divider {
-                border-top: 1px solid #444;
-                margin: 15px 0;
-            }
-            .red-text {
-                color: #C24B46;
-            }
-            .yellow-text {
-                color: #FFD200;
-            }
-            .green-text {
-                color: #99ff99;
-            }
-            .purple-text {
-                color: #bf9ef6;
-            }
-            .blue-text {
-                color: #A9D0F5;
-            }
-            .light-blue-text {
-                color: #5FD3F1;
-            }
-            .gold-text {
-                color: #F99200;
-            }
-            .item-description {
-                margin-top: 15px;
-                font-size: 13px;
-                color: #aaa;
-            }
-            </style>
-        `;
-
-        html += `<div class="item-container">${style}`;
-
-        for (const key in data) {
-            const element = data[key];
-            if (!element) continue;
-
-            const type = element.type;
-            const value = element.value;
-
-            switch (type) {
-                case 'NameTagBox':
-                    html += `<div class="name-tag-box">${value.replace(/<P ALIGN='CENTER'>|<\/P>/g, '')}</div>`;
-                    break;
-                case 'ItemTitle':
-                    html += `
-          <div class="item-title">
-            <img src="${value.slotData.iconPath}" class="item-icon" alt="아이템 아이콘">
-            <div class="item-info">
-              <div class="title">${value.leftStr0}</div>
-              ${value.leftStr1 ? `<div>${value.leftStr1}</div>` : ''}
-              ${value.leftStr2 ? `<div>${value.leftStr2}</div>` : ''}
-            </div>
-          </div>
-        `;
-                    break;
-                case 'SingleTextBox':
-                    html += `<div class="single-text-box">${value}</div>`;
-                    break;
-                case 'MultiTextBox':
-                    html += `<div class="multi-text-box">${value.replace(/\|/g, '')}</div>`;
-                    break;
-                case 'ItemPartBox':
-                    html += `
-          <div class="item-part-box">
-            <div>${value.Element_000}</div>
-            <div>${value.Element_001.replace(/<br>/g, '<br>')}</div>
-          </div>
-        `;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        html += `</div>`;
-
-        // 폰트 태그를 CSS 클래스로 대체하는 함수
-        const replaceFontTagsWithClasses = (htmlString) => {
-            return htmlString
-                .replace(/<FONT COLOR='#F99200'>/g, '<span class="gold-text">')
-                .replace(/<FONT COLOR='#C24B46'>/g, '<span class="red-text">')
-                .replace(/<FONT COLOR='#A9D0F5'>/g, '<span class="blue-text">')
-                .replace(/<FONT COLOR='#B7FB00'>/g, '<span style="color: #b7fb00;">')
-                .replace(/<FONT COLOR='#FFD200'>/g, '<span class="yellow-text">')
-                .replace(/<FONT COLOR='#99ff99'>/g, '<span class="green-text">')
-                .replace(/<FONT COLOR='#ffff99'>/g, '<span style="color: #ffff99;">')
-                .replace(/<FONT COLOR='#bf9ef6'>/g, '<span class="purple-text">')
-                .replace(/<Font color='#5FD3F1'>/g, '<span class="light-blue-text">')
-                .replace(/<FONT SIZE='12'>/g, '<span style="font-size: 12px;">')
-                .replace(/<\/FONT>/g, '</span>');
-        };
-
-        return replaceFontTagsWithClasses(html);
-    }
-
 
     return `
         <section class="sc-arkgrid">
@@ -692,8 +588,7 @@ async function scArkgrid(inputName) {
                     ${effect()}
                 </div>
             </div>
-        </section>
-    `
+        </section>`
 };
 
 /* **********************************************************************************************************************

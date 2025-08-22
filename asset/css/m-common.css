@@ -317,7 +317,10 @@ html.dark-mode .sc-info .tag-list,
 .dark-mode .sc-footer,
 .dark-mode .sc-info .group-system .engraving-area,
 .dark-mode .sc-expedition .group-server,
-.dark-mode .sc-info .karma-area {
+.dark-mode .sc-info .karma-area,
+.dark-mode .sc-arkgrid .group-arkgrid,
+.dark-mode .sc-arkgrid .group-effect {
+
     background: #2f2f2f;
     color: #fff;
 }

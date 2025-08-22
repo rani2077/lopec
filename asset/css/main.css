@@ -1331,6 +1331,21 @@
 .group-effect .core-area .core-item .image-box {
     width: 40px;
     height: 40px;
+    position: relative;
+}
+
+.group-effect .core-area .core-item .image-box>div {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    width: 400px;
+    z-index: 1;
+
+}
+
+.group-effect .core-area .core-item .image-box:hover>div {
+    display: block;
 }
 
 .group-effect .core-area .core-item .image-box img {
@@ -1357,100 +1372,3 @@
 .group-effect .effect-area .effect {
     padding: 4px 0;
 }
-
-
-
-/* 이펙트 호버 툴팁 */
-
-/* .group-effect .item-container {
-    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-    font-size: 14px;
-    color: #ddd;
-    background-color: #1a1a1a;
-    border: 1px solid #333;
-    padding: 15px;
-    line-height: 1.6;
-    max-width: 400px;
-    margin: 20px auto;
-}
-
-.group-effect .name-tag-box {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.group-effect .item-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.group-effect .item-icon {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #444;
-}
-
-.group-effect .item-info {
-    flex-grow: 1;
-}
-
-.group-effect .item-info .title {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.group-effect .single-text-box,
-.group-effect .multi-text-box {
-    margin-bottom: 5px;
-}
-
-.group-effect .item-part-box {
-    border-top: 1px solid #333;
-    padding-top: 10px;
-    margin-top: 10px;
-}
-
-.group-effect .item-part-box div:first-child {
-    margin-bottom: 5px;
-}
-
-.group-effect .divider {
-    border-top: 1px solid #444;
-    margin: 15px 0;
-}
-
-.group-effect .red-text {
-    color: #C24B46;
-}
-
-.group-effect .yellow-text {
-    color: #FFD200;
-}
-
-.group-effect .green-text {
-    color: #99ff99;
-}
-
-.group-effect .purple-text {
-    color: #bf9ef6;
-}
-
-.group-effect .blue-text {
-    color: #A9D0F5;
-}
-
-.group-effect .light-blue-text {
-    color: #5FD3F1;
-}
-
-.group-effect .gold-text {
-    color: #F99200;
-}
-
-.group-effect .item-description {
-    margin-top: 15px;
-    font-size: 13px;
-    color: #aaa;
-} */

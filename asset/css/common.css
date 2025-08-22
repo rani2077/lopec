@@ -360,7 +360,9 @@ html.dark-mode .sc-info .tag-list,
 .dark-mode .group-user-data .gem-item,
 .dark-mode .group-user-data .engraving-item,
 .dark-mode .sc-info .karma-area,
-.dark-mode .sc-main-search .group-search {
+.dark-mode .sc-main-search .group-search,
+.dark-mode .sc-arkgrid .group-arkgrid,
+.dark-mode .sc-arkgrid .group-effect {
     background: #2f2f2f;
     color: #fff;
 }

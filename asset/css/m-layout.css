@@ -2,13 +2,15 @@
 /* @import url(./m-common.css); */
 
 /* 기본 레이아웃 스타일 */
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
-html{
+
+html {
     /* background: #eaeef3; */
     background: #fdfdfe;
 }
@@ -20,7 +22,7 @@ body {
     height: auto;
     min-height: 100%;
     /* padding-bottom: 40px !important; */
-  
+
 }
 
 /* 콘텐츠 래퍼 스타일 */
@@ -39,24 +41,25 @@ body {
 }
 
 /* 헤더 스타일 */
-header{
+header {
     position: fixed;
     top: 0;
-    z-index:4;
+    z-index: 4;
     width: 100%;
     /* height: 60px; */
     background: #fff;
     padding: 12px 20px 12px;
-    border-radius:0 !important;
-    border-bottom:1px solid #f0f3f5;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #f0f3f5;
 }
+
 .sc-header {
     margin: 0 auto;
     position: relative;
     display: flex;
     width: 100%;
     justify-content: center;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -87,27 +90,32 @@ header{
     width: 100%;
     margin-top: 12px;
 }
-.sc-header .group-search .recent-close{
+
+.sc-header .group-search .recent-close {
     width: 0;
     height: 18px;
     display: flex;
     align-items: center;
     margin-right: 0;
-    transition:width 300ms, margin-right 300ms;
+    transition: width 300ms, margin-right 300ms;
 }
-.sc-header .group-search.on .recent-close{
+
+.sc-header .group-search.on .recent-close {
     width: 18px;
     margin-right: 15px;
 }
+
 .sc-header .search-area {
     display: flex;
     width: 100%;
 }
+
 .sc-header .search-area.on .header-input {
     display: block;
-    background:#f0f3f5;
+    background: #f0f3f5;
 }
-.sc-header .search-area.on .search-btn{
+
+.sc-header .search-area.on .search-btn {
     display: block;
     height: 36px;
 }
@@ -122,11 +130,12 @@ header{
     outline: none;
     display: none;
 }
-.sc-header .search-btn{
-    border-radius:0 5px 5px 0;
+
+.sc-header .search-btn {
+    border-radius: 0 5px 5px 0;
     display: none;
     width: 40px;
-    background:#f0f3f5;
+    background: #f0f3f5;
 }
 
 
@@ -138,65 +147,73 @@ header{
     height: 40px;
     width: 40px;
     object-fit: cover;
-    border-radius:50px;
+    border-radius: 50px;
 }
 
 
 
-header .side-btn{
+header .side-btn {
     display: block;
-    cursor:pointer;
+    cursor: pointer;
     position: absolute;
     top: calc(12px + 30px / 2);
-    transform:translateY(-50%);
+    transform: translateY(-50%);
     right: 20px;
     width: 17px;
     height: 12px;
-    z-index:3;
+    z-index: 3;
 }
+
 header .side-btn .line1,
 header .side-btn .line2,
-header .side-btn .line3{
+header .side-btn .line3 {
     display: block;
     width: 100%;
     height: 2px;
     background: #232a31;
     position: absolute;
     left: 0;
-    opacity:1;
-    transform:rotate(0);
-    transition:top 300ms, bottom 300ms, transform 300ms, opacity 300ms;
+    opacity: 1;
+    transform: rotate(0);
+    transition: top 300ms, bottom 300ms, transform 300ms, opacity 300ms;
 }
 
-header .side-btn .line1{
+header .side-btn .line1 {
     top: 0;
-    transition-delay:300ms, 300ms, 0ms, 0ms;
+    transition-delay: 300ms, 300ms, 0ms, 0ms;
 }
-header .side-btn .line2{
+
+header .side-btn .line2 {
     top: calc(50% - 1px);
     transition-delay: 0ms, 0ms, 300ms, 300ms;
 }
-header .side-btn .line3{
+
+header .side-btn .line3 {
     bottom: 0;
-    transition-delay:300ms, 300ms, 0ms, 0ms;
+    transition-delay: 300ms, 300ms, 0ms, 0ms;
 }
 
 
 
 header .side-btn.on .line1 {
-    top: calc(50% - 1px); /* 중간으로 이동 */
-    transform: rotate(45deg); /* 45도 회전 */
+    top: calc(50% - 1px);
+    /* 중간으로 이동 */
+    transform: rotate(45deg);
+    /* 45도 회전 */
     transition-delay: 0ms, 0ms, 300ms, 300ms;
 }
 
 header .side-btn.on .line2 {
-    opacity: 0; /* 숨김 처리 */
-    transition-delay:300ms, 300ms, 0ms, 0ms;
+    opacity: 0;
+    /* 숨김 처리 */
+    transition-delay: 300ms, 300ms, 0ms, 0ms;
 }
 
 header .side-btn.on .line3 {
-    bottom: calc(50% - 1px); /* 중간으로 이동 */
-    transform: rotate(-45deg); /* -45도 회전 */
+    bottom: calc(50% - 1px);
+    /* 중간으로 이동 */
+    transform: rotate(-45deg);
+    /* -45도 회전 */
     transition-delay: 0ms, 0ms, 300ms, 300ms;
 }
 
@@ -205,7 +222,7 @@ header .side-btn.on .line3 {
 
 /* 사이드메뉴 */
 
-.sc-sidemenu{
+.sc-sidemenu {
     position: fixed;
     top: 0;
     right: 0;
@@ -214,125 +231,136 @@ header .side-btn.on .line3 {
     padding-left: 30px;
     width: 300px;
     right: -300px;
-    transition:right 300ms;
-    z-index:2;
+    transition: right 300ms;
+    z-index: 2;
 }
-.sc-sidemenu.on{
+
+.sc-sidemenu.on {
     right: 0;
 }
 
-.sc-sidemenu .group-link{
+.sc-sidemenu .group-link {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     margin-top: 100px;
 }
-.sc-sidemenu .group-link .link-item{
+
+.sc-sidemenu .group-link .link-item {
     height: 60px;
     line-height: 60px;
 }
 
-.sc-sidemenu .group-darkmode{
+.sc-sidemenu .group-darkmode {
     position: absolute;
     right: 20px;
-    bottom:20px;
+    bottom: 20px;
 }
 
 
-.side-blur{
+.side-blur {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     backdrop-filter: blur(0px);
-    transition:backdrop-filter 300ms, background 300ms;
-    z-index:1;
-    visibility:hidden;
-    background:rgba(0,0,0,0);
+    transition: backdrop-filter 300ms, background 300ms;
+    z-index: 1;
+    visibility: hidden;
+    background: rgba(0, 0, 0, 0);
 }
-.side-blur.on{
-    visibility:visible;
+
+.side-blur.on {
+    visibility: visible;
     backdrop-filter: blur(3px);
-    background:rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 
 /* 프로필 */
-.sc-profile{
+.sc-profile {
     display: flex;
     justify-content: flex-start;
     gap: 4px;
     margin-top: 20px;
 }
-.sc-profile .group-img{
+
+.sc-profile .group-img {
     width: 72px;
     height: 72px;
     flex-shrink: 0;
-    border-radius:50px;
+    border-radius: 50px;
     overflow: hidden;
     position: relative;
     transform: scale(0.8);
 }
+
 .sc-profile .group-img img {
     display: block;
     position: absolute;
     /* left: -206px;
     top: -87px; */
-    width:500px;
+    width: 500px;
 }
 
-.sc-profile .group-profile{
+.sc-profile .group-profile {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
 }
-.sc-profile .name-area{
+
+.sc-profile .name-area {
     display: flex;
     align-items: flex-start;
-    gap:8px;
+    gap: 8px;
 }
-.sc-profile .name-area .name{
+
+.sc-profile .name-area .name {
     font-weight: 600;
     font-size: 20px;
     display: flex;
     flex-direction: column;
     gap: 2px 0;
 }
-.sc-profile .name-area .job{
+
+.sc-profile .name-area .job {
     color: #464646;
-    font-weight:inherit;
+    font-weight: inherit;
     font-size: 18px;
 }
 
-.sc-profile .info-area{
+.sc-profile .info-area {
     display: flex;
     gap: 4px 0;
-    flex-direction:column;
+    flex-direction: column;
     margin-top: 7px;
 }
-.sc-profile .info-area .info-box{
+
+.sc-profile .info-area .info-box {
     display: flex;
-    gap:10px;
+    gap: 10px;
 }
-.sc-profile .info-area .info-box .name{
+
+.sc-profile .info-area .info-box .name {
     position: relative;
     padding-left: 8px;
     width: 50%;
     max-width: 140px;
     font-size: 13px;
-    letter-spacing:-0.8px;
+    letter-spacing: -0.8px;
 }
-.sc-profile .info-area .info-box .name:after{
-    content:"";
+
+.sc-profile .info-area .info-box .name:after {
+    content: "";
     display: block;
-    position:absolute;
+    position: absolute;
     left: 0;
     top: 0;
     width: 5px;
     height: 100%;
     background: #464646;
-    border-radius:5px;
+    border-radius: 5px;
 }
 
 /* 네비게이션 */
@@ -342,27 +370,32 @@ header .side-btn.on .line3 {
     justify-content: flex-start;
     height: 41px;
     gap: 10px;
-    border-bottom:1px solid #e9e9ea;
+    border-bottom: 1px solid #e9e9ea;
     margin-top: 25px;
+    overflow-x:scroll;
 }
 
 .sc-nav .link {
     padding: 0 12px;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
-    opacity:0.7;
+    opacity: 0.7;
     position: relative;
     width: auto;
-    transition:opacity 300ms;
+    transition: opacity 300ms;
 }
-.sc-nav .link:hover{
+
+.sc-nav .link:hover {
     opacity: 0.9;
 }
-.sc-nav .link.on{
+
+.sc-nav .link.on {
     opacity: 1;
 }
-.sc-nav .link.on:after{
-    content:'';
+
+.sc-nav .link.on:after {
+    content: '';
     width: 100%;
     height: 3px;
     display: block;
@@ -370,7 +403,7 @@ header .side-btn.on .line3 {
     position: absolute;
     bottom: 0;
     left: 0;
-    border-radius:3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
     overflow: hidden;
 }
 
@@ -383,11 +416,11 @@ header .side-btn.on .line3 {
     background: rgb(233, 233, 233);
     padding: 9px 0;
     /* height: 40px; */
-    position : absolute;
+    position: absolute;
     display: none;
     /* top:calc(1236px - 40px); */
-    z-index:3;
-  
+    z-index: 3;
+
 }
 
 .sc-footer span {
@@ -410,58 +443,65 @@ body.home .page-content {
 
 
 /* 최근검색 */
-.group-recent{
+.group-recent {
     position: fixed;
     top: 102px;
     left: 0;
-    border-top:1px solid #f1f4f6;
+    border-top: 1px solid #f1f4f6;
     background: #f0f0f3;
     width: 100%;
     height: 100%;
-    z-index:4;
-    overflow:hidden;
+    z-index: 4;
+    overflow: hidden;
 }
-.group-recent .name-area{
+
+.group-recent .name-area {
     height: 43px;
     display: flex;
     width: 100%;
 }
-.group-recent .name-area .sort{
+
+.group-recent .name-area .sort {
     font-size: 16px;
     width: 50%;
     height: 100%;
-    line-height:43px;
+    line-height: 43px;
     text-align: center;
     display: block;
-    cursor:pointer;
+    cursor: pointer;
     background: #efefef;
 }
-.group-recent .name-area .sort.on{
+
+.group-recent .name-area .sort.on {
     background: #fff;
 }
 
 
-.group-recent .memo{
+.group-recent .memo {
     display: none;
 }
-.group-recent .memo.on{
+
+.group-recent .memo.on {
     display: block;
 }
-.group-recent .memo .name-box{
+
+.group-recent .memo .name-box {
     display: flex;
     height: 40px;
     font-size: 18px;
     align-items: center;
     position: relative;
-    transition:background 300ms;
-    background:initial;
+    transition: background 300ms;
+    background: initial;
     background: #fff;
 }
-.group-recent .memo .name-box:hover{
+
+.group-recent .memo .name-box:hover {
     background: rgb(245, 245, 245);
 }
-.group-recent .memo .name-box:after{
-    content:'';
+
+.group-recent .memo .name-box:after {
+    content: '';
     display: block;
     width: 100%;
     height: 1px;
@@ -470,10 +510,12 @@ body.home .page-content {
     left: 0;
     background: rgb(165, 165, 165);
 }
-.group-recent .memo .name-box:last-child:after{
+
+.group-recent .memo .name-box:last-child:after {
     display: none;
 }
-.group-recent .memo .name-box .name{
+
+.group-recent .memo .name-box .name {
     font-size: 15px;
     display: inline-block;
     width: 100%;
@@ -485,67 +527,73 @@ body.home .page-content {
 
 
 
-.group-recent .memo .name-box .remove{
-    cursor:pointer;
+.group-recent .memo .name-box .remove {
+    cursor: pointer;
 }
-.group-recent .memo .name-box .star{
+
+.group-recent .memo .name-box .star {
     color: #ddd;
     font-size: 20px;
     position: absolute;
     right: 20px;
     top: 50%;
-    transform:translateY(-50%);
+    transform: translateY(-50%);
 }
-.group-recent .memo .name-box .star:before{
-    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+
+.group-recent .memo .name-box .star:before {
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
     color: #FDE16D;
-    content: '\2605'; /* Full star in UTF-8 */
+    content: '\2605';
+    /* Full star in UTF-8 */
     position: absolute;
     left: 0;
 
 }
-.group-recent .memo .name-box .del{
+
+.group-recent .memo .name-box .del {
     display: block;
     width: 20px;
     height: 20px;
     position: absolute;
     top: 50%;
     right: 20px;
-    transform:translateY(-50%);
+    transform: translateY(-50%);
 }
+
 .group-recent .memo .name-box .del:before,
-.group-recent .memo .name-box .del:after{
-    content:'';
+.group-recent .memo .name-box .del:after {
+    content: '';
     display: block;
     position: absolute;
     width: 100%;
     height: 3px;
     background: rgba(48, 48, 48, 0.7);
-    transform-origin:top center;
-    transition:background 300ms;
-    cursor:pointer;
+    transform-origin: top center;
+    transition: background 300ms;
+    cursor: pointer;
 }
-.group-recent .memo .name-box .del:before{
+
+.group-recent .memo .name-box .del:before {
     top: 50%;
     left: 0;
-    transform:translateY(-50%);
-    rotate:45deg
+    transform: translateY(-50%);
+    rotate: 45deg
 }
-.group-recent .memo .name-box .del:after{
+
+.group-recent .memo .name-box .del:after {
     top: 50%;
     left: 0;
-    transform:translateY(-50%);
-    rotate:-45deg
+    transform: translateY(-50%);
+    rotate: -45deg
 }
+
 .group-recent .memo .name-box .del:hover:before,
-.group-recent .memo .name-box .del:hover:after{
+.group-recent .memo .name-box .del:hover:after {
     background: rgba(28, 28, 28, 1);
 
 }
 
 
-.group-recent .bookmark-area{
+.group-recent .bookmark-area {}
 
-}
-.group-recent .recent-area{
-}
+.group-recent .recent-area {}
