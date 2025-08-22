@@ -35,9 +35,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.bangle /
         combatObj.dealer.ark /
         combatObj.dealer.accessory;
-    //console.log("원래 베이스 포인트", originBasePoint);
+    console.log("원래 베이스 포인트", originBasePoint);
     let originAtk = Math.floor(originBasePoint * 1000000 / 288);
-    //console.log("originAtk", originAtk)
+    console.log("originAtk", originAtk)
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStat = ((extractObj.etcObj.armorStatus +
         extractObj.etcObj.expeditionStats +
@@ -99,7 +99,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     combatObj.sup_defense.engraving
 
     let originAttackCombat = extractObj.defaultObj.combatPower - calcCareCombat
-    console.log("originAttackCombat", originAttackCombat)
+    //console.log("originAttackCombat", originAttackCombat)
 
     let originBaseAttack = originAttackCombat /
     combatObj.sup_attack.accessory /
@@ -151,8 +151,8 @@ export async function officialCombatCalculator(combatObj, extractObj) {
 
     let calcCombatSupport = calcAttackCombat + calcCareCombat
     
-    console.log("실제 전투력", originCombat)
-    console.log("계산 전투력", calcCombatSupport)
+    //console.log("실제 전투력", originCombat)
+    //console.log("계산 전투력", calcCombatSupport)
 
     let result = {
         dealer: Math.ceil(calcCombat * 100) / 100,

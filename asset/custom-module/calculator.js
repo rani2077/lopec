@@ -43,14 +43,14 @@ export async function specPointCalc(inputObj) {
     let totalStat = (inputObj.etcObj.armorStatus + inputObj.etcObj.expeditionStats + inputObj.hyperObj.str + inputObj.elixirObj.str + inputObj.elixirObj.dex + inputObj.elixirObj.int + inputObj.bangleObj.str + inputObj.bangleObj.dex + inputObj.bangleObj.int) * inputObj.etcObj.avatarStats // 최종 힘민지 계산값
     let totalWeaponAtk = ((inputObj.defaultObj.weaponAtk + inputObj.hyperObj.weaponAtkPlus + inputObj.elixirObj.weaponAtkPlus + inputObj.accObj.weaponAtkPlus + inputObj.bangleObj.weaponAtkPlus + inputObj.bangleObj.weaponAtkBonus) * (inputObj.arkObj.weaponAtkPer + (inputObj.accObj.weaponAtkPer / 100))) // 최종 무공 계산값 //1.021 대신 카르마에서 반환받은 무공 채우기
     //let totalAtk = ((Math.sqrt((totalStat * totalWeaponAtk) / 6)) + (inputObj.elixirObj.atkPlus + inputObj.hyperObj.atkPlus + inputObj.accObj.atkPlus + inputObj.elixirObj.atkBonus)) * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer)) / 100 + 1) * attackBonus
-    let totalAtk = (((totalStat * totalWeaponAtk / 6) ** 0.5) * attackBonus + (inputObj.elixirObj.atkPlus + inputObj.hyperObj.atkPlus + inputObj.accObj.atkPlus + inputObj.elixirObj.atkBonus)) * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer)) / 100 + 1)    
+    let totalAtk = (((totalStat * totalWeaponAtk / 6) ** 0.5) * attackBonus + (inputObj.elixirObj.atkPlus + inputObj.hyperObj.atkPlus + inputObj.accObj.atkPlus + inputObj.elixirObj.atkBonus)) * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridGemObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridGemObj.atkPer)) / 100 + 1)    
     //console.log(attackBonus)
 
     let gemsCoolValue = (1 / (1 - (inputObj.etcObj.gemCheckFnc.gemAvg) / 100) - 1) + 1
     //console.log(gemsCoolValue)
 
-    let bangleAddDamageResult = ((inputObj.defaultObj.addDamagePer + inputObj.accObj.addDamagePer + inputObj.bangleObj.addDamagePer) / 100) + 1 // 추가 피해
-    let bangleFinalDamageResult = (inputObj.engObj.finalDamagePer * inputObj.accObj.finalDamagePer * inputObj.hyperObj.finalDamagePer * bangleAddDamageResult * inputObj.bangleObj.finalDamagePer * inputObj.elixirObj.finalDamagePer) // 적에게 주는 피해=
+    let bangleAddDamageResult = ((inputObj.defaultObj.addDamagePer + inputObj.accObj.addDamagePer + inputObj.bangleObj.addDamagePer + inputObj.arkgridGemObj.addDamagePer) / 100) + 1 // 추가 피해
+    let bangleFinalDamageResult = (inputObj.engObj.finalDamagePer * inputObj.accObj.finalDamagePer * inputObj.hyperObj.finalDamagePer * bangleAddDamageResult * inputObj.bangleObj.finalDamagePer * inputObj.elixirObj.finalDamagePer * inputObj.arkgridGemObj.finalDamagePer) // 적에게 주는 피해=
 
 
     let minusAccStat = (inputObj.etcObj.armorStatus + inputObj.etcObj.expeditionStats + inputObj.hyperObj.str + inputObj.elixirObj.str + inputObj.elixirObj.dex + inputObj.elixirObj.int + inputObj.bangleObj.str + inputObj.bangleObj.dex + inputObj.bangleObj.int - inputObj.etcObj.sumStats) * inputObj.etcObj.avatarStats
@@ -128,11 +128,11 @@ export async function specPointCalc(inputObj) {
     let fakeHaste = inputObj.defaultObj.statusHaste + inputObj.bangleObj.haste
     let fakeSpecial = inputObj.defaultObj.statusSpecial + inputObj.bangleObj.special
 
-    let finalStigmaPer = ((10 * ((inputObj.accObj.stigmaPer + inputObj.arkObj.stigmaPer + inputObj.hyperObj.stigmaPer) / 100 + 1)).toFixed(1)) // 낙인력 
-    let atkBuff = (1 + ((inputObj.accObj.atkBuff + inputObj.elixirObj.atkBuff + inputObj.hyperObj.atkBuff + inputObj.bangleObj.atkBuff + inputObj.gemObj.atkBuff) / 100)) // 아공강 
+    let finalStigmaPer = ((10 * ((inputObj.accObj.stigmaPer + inputObj.arkObj.stigmaPer + inputObj.hyperObj.stigmaPer + inputObj.arkgridGemObj.stigmaPer) / 100 + 1)).toFixed(1)) // 낙인력 
+    let atkBuff = (1 + ((inputObj.accObj.atkBuff + inputObj.elixirObj.atkBuff + inputObj.hyperObj.atkBuff + inputObj.bangleObj.atkBuff + inputObj.gemObj.atkBuff + inputObj.arkgridGemObj.atkBuff) / 100)) // 아공강 
     let finalAtkBuff = (totalAtk2 * 0.22 * atkBuff) // 최종 공증
-    let damageBuff = (inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff + inputObj.gemObj.damageBuff) / 100 + 1 // 아피강
-    let hyperBuff = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각성
+    let damageBuff = (inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff + inputObj.gemObj.damageBuff + inputObj.arkgridGemObj.damageBuff) / 100 + 1 // 아피강
+    let hyperBuff = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff + inputObj.arkgridGemObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각성
     let statDamageBuff = (fakeSpecial / 20.791) / 100 + 1 // 특화 딜증
     let evolutionBuff = (inputObj.arkObj.evolutionBuff / 100) // 진화형 피해 버프
     let carePower = (1 + (inputObj.engObj.carePower + inputObj.accObj.carePower + inputObj.elixirObj.carePower + inputObj.bangleObj.carePower)) // 케어력
@@ -167,7 +167,7 @@ export async function specPointCalc(inputObj) {
     let allTimeBuffv2 = defaultAtkBuff * (finalStigmaPer / 100 + 1) * ((1.45 + evolutionBuff) / 1.45) * inputObj.bangleObj.atkBuffPlus //상시 버프력
     let identityBuffv2 = ((13 * enlightBuffResult) * damageBuff * statDamageBuff) / 100 + 1 // 아덴 피증
 
-    let hyperBuffv2 = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각 피증
+    let hyperBuffv2 = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff + inputObj.arkgridGemObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각 피증
     let fullBuffv2 = ((allTimeBuffv2 * identityBuffv2 * hyperBuffv2) - 1) * 100 // 풀버프력
 
     let avgIdentityBuff = (((allTimeBuffv2 * identityBuffv2) - allTimeBuffv2) * 100) * identityUptime // 가동률 기반 평균 아덴 딜증
@@ -234,7 +234,7 @@ export async function specPointCalc(inputObj) {
 
     let calcAllTimeBuffv2 = calcDefaultAtkBuff * (finalStigmaPer / 100 + 1) * ((1.45 + evolutionBuff) / 1.45) * inputObj.bangleObj.atkBuffPlus //상시 버프력
     let calcIdentityBuffv2 = ((13 * enlightBuffResult) * damageBuff * calcStatDamageBuff) / 100 + 1 // 아덴 피증
-    let calcHyperBuffv2 = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각 피증
+    let calcHyperBuffv2 = (10 * ((inputObj.accObj.damageBuff + inputObj.bangleObj.damageBuff + inputObj.arkgridGemObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각 피증
     let calcFullBuffv2 = ((calcAllTimeBuffv2 * calcIdentityBuffv2 * calcHyperBuffv2) - 1) * 100 // 풀버프력
     
     let calcAvgIdentityBuff = (((calcAllTimeBuffv2 * calcIdentityBuffv2) - calcAllTimeBuffv2) * 100) * calcIdentityUptime // 가동률 기반 평균 아덴 딜증
@@ -275,15 +275,15 @@ export async function specPointCalc(inputObj) {
     let calcSpecial_MinusBangle = (inputObj.defaultObj.statusHaste + finalSpecial_MinusBangle) * 0.25
 
     let totalAtk3 = ((minusBangleStat * minusBangleWeaponAtk / 6) ** 0.5) * attackBonus //팔찌 제외 기본 공격력
-    let atkBuff_MinusBangle = (1 + ((inputObj.accObj.atkBuff + inputObj.elixirObj.atkBuff + inputObj.hyperObj.atkBuff + inputObj.gemObj.atkBuff) / 100)) // 팔찌 제외 아공강 
+    let atkBuff_MinusBangle = (1 + ((inputObj.accObj.atkBuff + inputObj.elixirObj.atkBuff + inputObj.hyperObj.atkBuff + inputObj.gemObj.atkBuff + inputObj.arkgridGemObj.atkBuff) / 100)) // 팔찌 제외 아공강 
     let finalAtkBuff_MinusBangle = (totalAtk3 * 0.15 * atkBuff_MinusBangle) // 최종 공증
-    let damageBuff_MinusBangle = (inputObj.accObj.damageBuff + inputObj.gemObj.damageBuff) / 100 + 1 // 팔찌 제외 아피강
+    let damageBuff_MinusBangle = (inputObj.accObj.damageBuff + inputObj.gemObj.damageBuff + inputObj.arkgridGemObj.damageBuff) / 100 + 1 // 팔찌 제외 아피강
     let hyperBuff_MinusBangle = (10 * ((inputObj.accObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각성
     let statDamageBuff_MinusBangle = ((calcSpecial_MinusBangle) / 20.791) / 100 + 1 // 팔찌 제외 특화 딜증
     let finalDamageBuff_MinusBangle = ((13 * enlightBuffResult) * damageBuff_MinusBangle * statDamageBuff_MinusBangle) / 100 + 1 // 팔찌 제외 최종 피증
     let carePower_MinusBangle = (1 + (inputObj.engObj.carePower + inputObj.accObj.carePower + inputObj.elixirObj.carePower)) // 케어력
     let finalCarePower_MinusBangle = (((totalHealth_MinusBangle * 0.3) * carePower_MinusBangle) / 330000) * 100 //최종 케어력
-    let allTimeBuff_MinusBangle = (finalStigmaPer / 100 + 1) * 1.0965 // 팔찌 제외 상시 피증증
+    let allTimeBuff_MinusBangle = (finalStigmaPer / 100 + 1) * 1.0965 // 팔찌 제외 상시 피증
 
 
     let duration_A_MinusBangle = inputObj.supportSkillObj.atkBuffADuration // 팔찌 제외 스킬A 지속시간 (천상, 신분, 해그)

@@ -113,7 +113,7 @@ export async function apiCalcValue(inputName) {
 
     // 스펙포인트 계산
     let extractValue = await Modules.transValue.getCharacterProfile(data);
-    await Modules.dataBase.evoKarmaDataBase(inputName, extractValue); // 카르마 계산에 필요한 값을 서버로 전송하는 함수
+    //await Modules.dataBase.evoKarmaDataBase(inputName, extractValue); // 카르마 계산에 필요한 값을 서버로 전송하는 함수
     let dataBase = await Modules.dataBase.dataBaseResponse(inputName, extractValue, data);
     extractValue.defaultObj.totalStatus = dataBase.totalStatus ? dataBase.totalStatus : 0;
     extractValue.defaultObj.statusHaste = dataBase.statusHaste ? dataBase.statusHaste : 0;

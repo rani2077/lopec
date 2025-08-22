@@ -179,22 +179,22 @@ async function fetchLostArkRankingData(name, job) {
  *********************************************************************************************************************** */
 //POST http://localhost:8080/api/karma/enlight
 //Content-Type: application/json
-export async function evoKarmaDataBase(inputName, extractValue) {
-	let postObj = {
-		EVO_KARMA: {
-			nickname: inputName,
-			cardHP: extractValue.etcObj.evoKarmaMaterial.cardHP,
-			maxHealth: extractValue.etcObj.evoKarmaMaterial.maxHealth,
-			baseHealth: extractValue.etcObj.evoKarmaMaterial.baseHealth,
-			vitalityRate: extractValue.etcObj.evoKarmaMaterial.vitalityRate
-		}
-	}
-	fetch("https://api.lopec.kr/api/karma/evo", {
-		method: "POST",
-		headers: { "Content-Type": 'application/json' },
-		body: JSON.stringify(postObj)
-	})
-}
+//export async function evoKarmaDataBase(inputName, extractValue) {
+//	let postObj = {
+//		EVO_KARMA: {
+//			nickname: inputName,
+//			cardHP: extractValue.etcObj.evoKarmaMaterial.cardHP,
+//			maxHealth: extractValue.etcObj.evoKarmaMaterial.maxHealth,
+//			baseHealth: extractValue.etcObj.evoKarmaMaterial.baseHealth,
+//			vitalityRate: extractValue.etcObj.evoKarmaMaterial.vitalityRate
+//		}
+//	}
+//	fetch("https://api.lopec.kr/api/karma/evo", {
+//		method: "POST",
+//		headers: { "Content-Type": 'application/json' },
+//		body: JSON.stringify(postObj)
+//	})
+//}
 
 /* **********************************************************************************************************************
  * name		              :	  dataBaseResponse
