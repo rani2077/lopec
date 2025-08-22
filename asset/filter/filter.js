@@ -4255,7 +4255,7 @@ export const chaosCoreValues = {
     },
     "혼돈의 해 코어 : 신념의 강화" : {
         10: { identityUptime: 0.006},
-        14: { identityUptime: 0.06, damageBuff: 0.7},
+        14: { identityUptime: 0.006, damageBuff: 0.7},
         17: {
             "유물" : { identityUptime: 0.02, damageBuff: 1.9},
             "고대" : { identityUptime: 0.024, damageBuff: 3.5}
@@ -4282,15 +4282,15 @@ export const chaosCoreValues = {
         },
         18: {
             "유물" : { utilityPower: 0.09, cdrPercent: 0.0133},
-            "고대" : { utilityPower: 240, cdrPercent: 0.0213}
+            "고대" : { utilityPower: 0.48, cdrPercent: 0.0213}
         },
         19: {
             "유물" : { utilityPower: 0.09, cdrPercent: 0.0146},
-            "고대" : { utilityPower: 240, cdrPercent: 0.0226}
+            "고대" : { utilityPower: 0.48, cdrPercent: 0.0226}
         },
         20: {
             "유물" : { utilityPower: 0.09, cdrPercent: 0.0159},
-            "고대" : { utilityPower: 240, cdrPercent: 0.0239}
+            "고대" : { utilityPower: 0.48, cdrPercent: 0.0239}
         }
     },
     "혼돈의 해 코어 : 불굴의 강화" : {
@@ -4393,26 +4393,6 @@ export const chaosCoreValues = {
             "고대" : { finalDamageBuff: 1.005, stigmaPer: 6.0}
         }
     },
-    "혼돈의 달 코어 : 낙인의 흔적" : {
-        10: { finalDamageBuff: 1.001},
-        14: { finalDamageBuff: 1.001, stigmaPer: 1.2},
-        17: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 3.6},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 4.8}
-        },
-        18: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 4.0},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 5.2}
-        },
-        19: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 4.4},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 5.6}
-        },
-        20: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 4.8},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 6.0}
-        }
-    },
     "혼돈의 달 코어 : 강철의 흔적" : {
         10: { atkBuffPlus: 1.001, finalDamagePer: 1.001},
         14: { atkBuffPlus: 1.001, finalDamagePer: 1.001},
@@ -4491,6 +4471,86 @@ export const chaosCoreValues = {
         20: {
             "유물" : { weaponAtkPlus: 3900, weaponAtkPer: 2.94},
             "고대" : { weaponAtkPlus: 5200, weaponAtkPer: 3.69}
+        }
+    },
+    "혼돈의 별 코어 : 구원" : {
+        10: { carePower: 0.012 },
+        14: { carePower: 0.024},
+        17: {
+            "유물" : { carePower: 0.048},
+            "고대" : { carePower: 0.072}
+        },
+        18: {
+            "유물" : { carePower: 0.052},
+            "고대" : { carePower: 0.076}
+        },
+        19: {
+            "유물" : { carePower: 0.056},
+            "고대" : { carePower: 0.08}
+        },
+        20: {
+            "유물" : { carePower: 0.06},
+            "고대" : { carePower: 0.084}
+        }
+    },
+    "혼돈의 별 코어 : 생명" : {
+        10: { health: 420},
+        14: { health: 420, statHP: 900},
+        17: {
+            "유물" : { health: 1260, statHP: 2700},
+            "고대" : { health: 1680, statHP: 3600}
+        },
+        18: {
+            "유물" : { health: 1400, statHP: 2700},
+            "고대" : { health: 1820, statHP: 3600}
+        },
+        19: {
+            "유물" : { health: 1540, statHP: 2700},
+            "고대" : { health: 1960, statHP: 3600}
+        },
+        20: {
+            "유물" : { health: 1680, statHP: 2700},
+            "고대" : { health: 2100, statHP: 3600}
+        }
+    },
+    "혼돈의 별 코어 : 속도" : {
+        10: { finalDamagePer: 1},
+        14: { finalDamagePer: 1},
+        17: {
+            "유물" : { finalDamagePer: 1},
+            "고대" : { finalDamagePer: 1.0108}
+        },
+        18: {
+            "유물" : { finalDamagePer: 1.0099},
+            "고대" : { finalDamagePer: 1.0117}
+        },
+        19: {
+            "유물" : { finalDamagePer: 1.0108},
+            "고대" : { finalDamagePer: 1.0126}
+        },
+        20: {
+            "유물" : { finalDamagePer: 1.0117},
+            "고대" : { finalDamagePer: 1.0135}
+        }
+    },
+    "혼돈의 별 코어 : 방어" : {
+        10: { finalDamagePer: 1},
+        14: { finalDamagePer: 1},
+        17: {
+            "유물" : { finalDamagePer: 1},
+            "고대" : { finalDamagePer: 1}
+        },
+        18: {
+            "유물" : { finalDamagePer: 1},
+            "고대" : { finalDamagePer: 1}
+        },
+        19: {
+            "유물" : { finalDamagePer: 1},
+            "고대" : { finalDamagePer: 1}
+        },
+        20: {
+            "유물" : { finalDamagePer: 1},
+            "고대" : { finalDamagePer: 1}
         }
     },
     

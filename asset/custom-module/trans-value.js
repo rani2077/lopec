@@ -2484,9 +2484,6 @@ export async function getCharacterProfile(data, dataBase) {
         healthPer = 2;
     }
 
-    etcObj.healthStatus = Number(healthStatus() * jobObj.healthPer);
-    etcObj.RealHealthStauts = Number(healthStatus()) * healthPer;
-
     /* **********************************************************************************************************************
      * name		              :	  karmaPoint{}
      * version                :   2.0
@@ -2577,11 +2574,11 @@ export async function getCharacterProfile(data, dataBase) {
         },
         "보스 피해" : {
             key: "finalDamagePer",
-            value : level => (Math.floor(25 * level / 3)) / 100
+            value : level => (Math.floor(25 * level / 3)) / 10000 + 1
         },
         "낙인력" : {
             key: "stigmaPer",
-            value : level => (Math.floor(50 * level / 3))
+            value : level => (Math.floor(50 * level / 3)) / 100
         },
         "아군 공격 강화" : {
             key: "atkBuff",
@@ -2607,90 +2604,110 @@ export async function getCharacterProfile(data, dataBase) {
 
 
     /* **********************************************************************************************************************
-     * name		              :	  arkgridCorObj{}
+     * name		              :	  arkgridCoreObj{}
      * version                :   2.0
      * description            :   아크그리드 코어 정보 파싱 및 수치 부여
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
 
-    let arkgridCoreObj = {
+    let arkgridObj = {
         coreValue : 1,
-        commonCoreValue : 1
+        finalDamagePer : 1,
+        addDamagePer : 0,
+        atkPlus : 0,
+        atkPer : 0,
+        weaponAtkPlus : 0,
+        weaponAtkPer : 0,
+        identityUptime : 0,
+        utilityPower : 0,
+        cdrPercent : 0,
+        carePower : 0,
+        atkBuff : 0,
+        damageBuff : 0,
+        stigmaPer : 0,
+        health : 0,
+        statHP : 0,
+        finalDamageBuff : 1,
+        atkBuffPlus : 1,
+
+
     }
     const arkPassive = supportCheck();
     const characterRole = arkPassive === "서폿" ? 'support' : 'dealer';
-
-    // 현재 직업의 전용 코어 목록 호출
     const classCores = Modules.originFilter.arkgridCoreFilter[arkPassive];
 
     if (classCores && data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
+        // 해당 직업의 모든 유효 '질서' 코어 목록을 미리 만들어 둡니다.
+        const validOrderCores = [...(classCores.mainCore || []), ...(classCores.starCore || [])];
+        const equippedValidOrderCores = data.ArkGrid.Slots
+        .map(slot => slot.Name)
+        .filter(Name => validOrderCores.includes(Name));
+        const hasSunCore = equippedValidOrderCores.some(Name => Name.startsWith("질서의 해"));
+        const hasMoonCore = equippedValidOrderCores.some(Name => Name.startsWith("질서의 달"));
+        const canApplySpecialCondition = hasSunCore && hasMoonCore;
+
     
         data.ArkGrid.Slots.forEach(slot => {
             const { Name, Grade, Point } = slot;
-            let coreGroup = null;
 
-            // 1. 착용한 코어가 '질서' 코어인지, 그리고 현재 직업의 전용 코어인지 판별
-            if (Name.startsWith("질서의 해") || Name.startsWith("질서의 달")) {
-                coreGroup = "group1";
-            } else if (Name.startsWith("질서의 별")) {
-                coreGroup = "group2";
-            }
+            // --- 질서 코어 계산 ---
+            if (validOrderCores.includes(Name)) {
+                let coreGroup = null;
 
-            // 2. 전용 코어일 경우에만 계산
-            if (coreGroup) {
-                // "영웅", "전설", "유물" 등급은 모두 "유물" 값으로 통일
-                const valueGrade = (Grade === "영웅" || Grade === "전설" || Grade === "유물") ? "유물" : Grade;
-                const value = Modules.originFilter.arkgridCoreValues[characterRole]?.[coreGroup]?.[valueGrade]?.[Point];
+                if (Name.startsWith("질서의 해") || Name.startsWith("질서의 달")) {
+                    coreGroup = "group1";
+                    // ★ 최종 규칙 적용: 14P 이상일 때만 특별 조건을 확인합니다.
+                    if (Point >= 14 && !canApplySpecialCondition) {
+                        coreGroup = null; // 조건 미달 시, 계산에서 제외
+                    }
+                } else if (Name.startsWith("질서의 별")) {
+                    coreGroup = "group2";
+                }
 
-                if (value !== undefined) {
-                    arkgridCoreObj.coreValue *= value;
-                    console.log(`[${coreGroup}] ${Name} (${Grade}, ${Point}pt) -> +${value}`);
+                if (coreGroup) {
+                    const valueGrade = (Grade === "영웅" || Grade === "전설" || Grade === "유물") ? "유물" : Grade;
+                    const value = Modules.originFilter.arkgridCoreValues[characterRole]?.[coreGroup]?.[valueGrade]?.[Point];
+                    if (value !== undefined) {
+                        arkgridObj.coreValue *= value;
+                    }
                 }
             }
-        });
+
+            // --- 혼돈 코어 계산 ---
+            if (Name.startsWith("혼돈")) {
+                const coreData = Modules.originFilter.chaosCoreValues[Name];
+                if (coreData && coreData[Point]) {
+                    let bonus = coreData[Point];
+
+                    if (bonus[Grade]) {
+                        bonus = bonus[Grade];
+                    }
+
+                    for (const statName in bonus) {
+                        if (arkgridObj.hasOwnProperty(statName)) {
+                            const value = bonus[statName];
+
+                            if (arkgridObj[statName] === 1 && typeof value === 'number') {
+                                arkgridObj[statName] *= value;
+                            } else if (typeof arkgridObj[statName] === 'number') {
+                                arkgridObj[statName] += value;
+                            }
+                        }
+                    }
+                }
+            }
+        }); // forEach 루프는 여기서 올바르게 끝납니다.
     }
 
-    console.log(arkgridCoreObj.coreValue)
+    arkgridObj.addDamagePer = arkgridObj.addDamagePer + arkgridGemObj.addDamagePer;
+    arkgridObj.finalDamagePer = arkgridObj.finalDamagePer * arkgridGemObj.finalDamagePer;
+    arkgridObj.atkPer = arkgridObj.atkPer + arkgridGemObj.atkPer;
+    arkgridObj.atkBuff = arkgridObj.atkBuff + arkgridGemObj.atkBuff;
+    arkgridObj.damageBuff = arkgridObj.damageBuff + arkgridGemObj.damageBuff;
+    arkgridObj.stigmaPer = arkgridObj.stigmaPer + arkgridGemObj.stigmaPer;
 
-    
-// 아래 데이터를 파싱했는데데 totalCoreValue가 0이 나오는 상황.
-//[
-//   {
-//       "Index": 0,
-//       "Icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_96.png",
-//       "Name": "질서의 해 코어 : 오버 파워",
-//       "Point": 14,
-//       "Tooltip": "{\r\n  \"Element_000\": {\r\n    \"type\": \"NameTagBox\",\r\n    \"value\": \"<P ALIGN='CENTER'><FONT COLOR='#F99200'>질서의 해 코어 : 오버 파워</FONT></P>\"\r\n  },\r\n  \"Element_001\": {\r\n    \"type\": \"ItemTitle\",\r\n    \"value\": {\r\n      \"bEquip\": 0,\r\n      \"itemIrochiCount\": 0,\r\n      \"leftStr0\": \"<FONT SIZE='12'><FONT COLOR='#F99200'>전설 아크 그리드 코어</FONT></FONT>\",\r\n      \"leftStr1\": \"\",\r\n      \"leftStr2\": \"\",\r\n      \"qualityValue\": -1,\r\n      \"rightStr0\": \"\",\r\n      \"slotData\": {\r\n        \"advBookIcon\": 0,\r\n        \"battleItemTypeIcon\": 0,\r\n        \"blackListIcon\": 0,\r\n        \"cardIcon\": false,\r\n        \"friendship\": 0,\r\n        \"iconGrade\": 4,\r\n        \"iconPath\": \"https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_96.png\",\r\n        \"imagePath\": \"\",\r\n        \"islandIcon\": 0,\r\n        \"petBorder\": 0,\r\n        \"rtString\": \"\",\r\n        \"seal\": false,\r\n        \"temporary\": 0,\r\n        \"town\": 0,\r\n        \"trash\": 0\r\n      }\r\n    }\r\n  },\r\n  \"Element_002\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"<FONT SIZE='12'>버서커 전용</FONT>\"\r\n  },\r\n  \"Element_003\": {\r\n    \"type\": \"MultiTextBox\",\r\n    \"value\": \"|<font color='#C24B46'>거래 불가</font>\"\r\n  },\r\n  \"Element_004\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>코어 타입</FONT>\",\r\n      \"Element_001\": \"질서 - 해\"\r\n    }\r\n  },\r\n  \"Element_005\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>코어 공급 의지력</FONT>\",\r\n      \"Element_001\": \"<FONT COLOR = '#B7FB00'>11</FONT> 포인트\"\r\n    }\r\n  },\r\n  \"Element_006\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>코어 옵션</FONT>\",\r\n      \"Element_001\": \"<FONT color='#FFD200'>[10P]</FONT> 폭주 상태에서 적에게 주는 피해가 <FONT COLOR='#99ff99'>1.6%</FONT> 증가한다.<br><FONT color='#FFD200'>[14P]</FONT> <FONT COLOR='#bf9ef6'>'운명'</FONT> 발동 시 <FONT COLOR='#bf9ef6'>'운명: 파워 웨이브'</FONT> 효과를 획득한다.<BR><FONT COLOR='#bf9ef6'>'운명: 파워 웨이브'</FONT> : 오버드라이브의 피해량이 <FONT COLOR='#99ff99'>35.0%</FONT> 증가한다. 이 효과는 한 번 사용하면 사라진다.\"\r\n    }\r\n  },\r\n  \"Element_007\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>코어 옵션 발동 조건</FONT>\",\r\n      \"Element_001\": \"<img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>아크 패시브 광전사의 비기 활성화 필요\"\r\n    }\r\n  },\r\n  \"Element_008\": null,\r\n  \"Element_009\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"<FONT SIZE='12'><FONT COLOR='#C24B46'>분해불가</FONT></FONT>\"\r\n  },\r\n  \"Element_010\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_011\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_012\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"<Font color='#5FD3F1'>[카제로스 레이드] 4막 : 파멸의 성채</font><BR><Font color='#5FD3F1'>[카제로스 레이드] 종막 : 최후의 날</font>\"\r\n  }\r\n}",
-//       "Grade": "전설",
-//       "Gems": [
-//           {
-//               "Index": 0,
-//               "Icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_202.png",
-//               "IsActive": true,
-//               "Grade": "유물",
-//               "Tooltip": "{\r\n  \"Element_000\": {\r\n    \"type\": \"NameTagBox\",\r\n    \"value\": \"<P ALIGN='CENTER'><FONT COLOR='#FA5D00'>질서의 젬 : 안정</FONT></P>\"\r\n  },\r\n  \"Element_001\": {\r\n    \"type\": \"ItemTitle\",\r\n    \"value\": {\r\n      \"bEquip\": 0,\r\n      \"itemIrochiCount\": 0,\r\n      \"leftStr0\": \"<FONT SIZE='12'><FONT COLOR='#FA5D00'>유물 아크 그리드 젬</FONT></FONT>\",\r\n      \"leftStr2\": \"\",\r\n      \"qualityValue\": -1,\r\n      \"rightStr0\": \"\",\r\n      \"slotData\": {\r\n        \"advBookIcon\": 0,\r\n        \"battleItemTypeIcon\": 0,\r\n        \"blackListIcon\": 0,\r\n        \"cardIcon\": false,\r\n        \"friendship\": 0,\r\n        \"iconGrade\": 5,\r\n        \"iconPath\": \"https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_202.png\",\r\n        \"imagePath\": \"\",\r\n        \"islandIcon\": 0,\r\n        \"petBorder\": 0,\r\n        \"rtString\": \"\",\r\n        \"seal\": false,\r\n        \"temporary\": 0,\r\n        \"town\": 0,\r\n        \"trash\": 0\r\n      }\r\n    }\r\n  },\r\n  \"Element_002\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"가공 완료\"\r\n  },\r\n  \"Element_003\": {\r\n    \"type\": \"MultiTextBox\",\r\n    \"value\": \"|<font color='#C24B46'>거래 불가</font>\"\r\n  },\r\n  \"Element_004\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>젬 기본 정보</FONT>\",\r\n      \"Element_001\": \"젬 타입 : 질서<br>필요 의지력 : <FONT color='#FFD200'>5</FONT> (기본 값 8 – 의지력 효율 <FONT COLOR = '#FBB29C'>3</FONT>)\"\r\n    }\r\n  },\r\n  \"Element_005\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>젬 효과</FONT>\",\r\n      \"Element_001\": \"젬 포인트 : <FONT COLOR = '#B7FB00'>16</FONT>\"\r\n    }\r\n  },\r\n  \"Element_006\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#FFE65A'>[젬 옵션]</FONT>\",\r\n      \"Element_001\": \"의지력 효율 : <FONT COLOR = '#FBB29C'>3</FONT><br>질서 포인트 : <FONT COLOR = '#B7FB00'>5</FONT><br>[공격력] <FONT color='#FFD200'>Lv.5</FONT><br><img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>공격력 +0.18%<br>[추가 피해] <FONT color='#FFD200'>Lv.3</FONT><br><img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>추가 피해 +0.24%\"\r\n    }\r\n  },\r\n  \"Element_007\": null,\r\n  \"Element_008\": {\r\n    \"type\": \"IndentStringGroup\",\r\n    \"value\": null\r\n  },\r\n  \"Element_009\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_010\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_011\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"<Font color='#5FD3F1'>[젬 가공] 아크 그리드 젬</font><BR><Font color='#5FD3F1'>[젬 융합] 가공 완료 젬</font>\"\r\n  }\r\n}"
-//           },
-//           {
-//               "Index": 1,
-//               "Icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_202.png",
-//               "IsActive": true,
-//               "Grade": "유물",
-//               "Tooltip": "{\r\n  \"Element_000\": {\r\n    \"type\": \"NameTagBox\",\r\n    \"value\": \"<P ALIGN='CENTER'><FONT COLOR='#FA5D00'>질서의 젬 : 안정</FONT></P>\"\r\n  },\r\n  \"Element_001\": {\r\n    \"type\": \"ItemTitle\",\r\n    \"value\": {\r\n      \"bEquip\": 0,\r\n      \"itemIrochiCount\": 0,\r\n      \"leftStr0\": \"<FONT SIZE='12'><FONT COLOR='#FA5D00'>유물 아크 그리드 젬</FONT></FONT>\",\r\n      \"leftStr2\": \"\",\r\n      \"qualityValue\": -1,\r\n      \"rightStr0\": \"\",\r\n      \"slotData\": {\r\n        \"advBookIcon\": 0,\r\n        \"battleItemTypeIcon\": 0,\r\n        \"blackListIcon\": 0,\r\n        \"cardIcon\": false,\r\n        \"friendship\": 0,\r\n        \"iconGrade\": 5,\r\n        \"iconPath\": \"https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_202.png\",\r\n        \"imagePath\": \"\",\r\n        \"islandIcon\": 0,\r\n        \"petBorder\": 0,\r\n        \"rtString\": \"\",\r\n        \"seal\": false,\r\n        \"temporary\": 0,\r\n        \"town\": 0,\r\n        \"trash\": 0\r\n      }\r\n    }\r\n  },\r\n  \"Element_002\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"가공 완료\"\r\n  },\r\n  \"Element_003\": {\r\n    \"type\": \"MultiTextBox\",\r\n    \"value\": \"|<font color='#C24B46'>거래 불가</font>\"\r\n  },\r\n  \"Element_004\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>젬 기본 정보</FONT>\",\r\n      \"Element_001\": \"젬 타입 : 질서<br>필요 의지력 : <FONT color='#FFD200'>3</FONT> (기본 값 8 – 의지력 효율 <FONT COLOR = '#FBB29C'>5</FONT>)\"\r\n    }\r\n  },\r\n  \"Element_005\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>젬 효과</FONT>\",\r\n      \"Element_001\": \"젬 포인트 : <FONT COLOR = '#B7FB00'>17</FONT>\"\r\n    }\r\n  },\r\n  \"Element_006\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#FFE65A'>[젬 옵션]</FONT>\",\r\n      \"Element_001\": \"의지력 효율 : <FONT COLOR = '#FBB29C'>5</FONT><br>질서 포인트 : <FONT COLOR = '#B7FB00'>5</FONT><br>[낙인력] <FONT color='#FFD200'>Lv.2</FONT><br><img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>낙인력 +0.33%<br>[추가 피해] <FONT color='#FFD200'>Lv.5</FONT><br><img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>추가 피해 +0.40%\"\r\n    }\r\n  },\r\n  \"Element_007\": null,\r\n  \"Element_008\": {\r\n    \"type\": \"IndentStringGroup\",\r\n    \"value\": null\r\n  },\r\n  \"Element_009\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_010\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_011\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"<Font color='#5FD3F1'>[젬 가공] 아크 그리드 젬</font><BR><Font color='#5FD3F1'>[젬 융합] 가공 완료 젬</font>\"\r\n  }\r\n}"
-//           },
-//           {
-//               "Index": 2,
-//               "Icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_202.png",
-//               "IsActive": true,
-//               "Grade": "전설",
-//               "Tooltip": "{\r\n  \"Element_000\": {\r\n    \"type\": \"NameTagBox\",\r\n    \"value\": \"<P ALIGN='CENTER'><FONT COLOR='#F99200'>질서의 젬 : 안정</FONT></P>\"\r\n  },\r\n  \"Element_001\": {\r\n    \"type\": \"ItemTitle\",\r\n    \"value\": {\r\n      \"bEquip\": 0,\r\n      \"itemIrochiCount\": 0,\r\n      \"leftStr0\": \"<FONT SIZE='12'><FONT COLOR='#F99200'>전설 아크 그리드 젬</FONT></FONT>\",\r\n      \"leftStr2\": \"\",\r\n      \"qualityValue\": -1,\r\n      \"rightStr0\": \"\",\r\n      \"slotData\": {\r\n        \"advBookIcon\": 0,\r\n        \"battleItemTypeIcon\": 0,\r\n        \"blackListIcon\": 0,\r\n        \"cardIcon\": false,\r\n        \"friendship\": 0,\r\n        \"iconGrade\": 4,\r\n        \"iconPath\": \"https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_202.png\",\r\n        \"imagePath\": \"\",\r\n        \"islandIcon\": 0,\r\n        \"petBorder\": 0,\r\n        \"rtString\": \"\",\r\n        \"seal\": false,\r\n        \"temporary\": 0,\r\n        \"town\": 0,\r\n        \"trash\": 0\r\n      }\r\n    }\r\n  },\r\n  \"Element_002\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"가공 완료\"\r\n  },\r\n  \"Element_003\": {\r\n    \"type\": \"MultiTextBox\",\r\n    \"value\": \"|<font color='#C24B46'>거래 불가</font>\"\r\n  },\r\n  \"Element_004\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>젬 기본 정보</FONT>\",\r\n      \"Element_001\": \"젬 타입 : 질서<br>필요 의지력 : <FONT color='#FFD200'>3</FONT> (기본 값 8 – 의지력 효율 <FONT COLOR = '#FBB29C'>5</FONT>)\"\r\n    }\r\n  },\r\n  \"Element_005\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#A9D0F5'>젬 효과</FONT>\",\r\n      \"Element_001\": \"젬 포인트 : <FONT COLOR = '#B7FB00'>15</FONT>\"\r\n    }\r\n  },\r\n  \"Element_006\": {\r\n    \"type\": \"ItemPartBox\",\r\n    \"value\": {\r\n      \"Element_000\": \"<FONT COLOR='#FFE65A'>[젬 옵션]</FONT>\",\r\n      \"Element_001\": \"의지력 효율 : <FONT COLOR = '#FBB29C'>5</FONT><br>질서 포인트 : <FONT COLOR = '#B7FB00'>5</FONT><br>[낙인력] <FONT color='#FFD200'>Lv.3</FONT><br><img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>낙인력 +0.50%<br>[추가 피해] <FONT color='#FFD200'>Lv.2</FONT><br><img src='emoticon_sign_greenDot' width='0' height='0' vspace='-3'></img>추가 피해 +0.16%\"\r\n    }\r\n  },\r\n  \"Element_007\": null,\r\n  \"Element_008\": {\r\n    \"type\": \"IndentStringGroup\",\r\n    \"value\": null\r\n  },\r\n  \"Element_009\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_010\": {\r\n    \"type\": \"Progress\",\r\n    \"value\": null\r\n  },\r\n  \"Element_011\": {\r\n    \"type\": \"SingleTextBox\",\r\n    \"value\": \"<Font color='#5FD3F1'>[젬 가공] 아크 그리드 젬</font><BR><Font color='#5FD3F1'>[젬 융합] 가공 완료 젬</font>\"\r\n  }\r\n}"
-//           }
-//       ]
-//   }
-//
-
-    
-
-
+    etcObj.healthStatus = Number((healthStatus()+arkgridObj.health) * jobObj.healthPer);
+    etcObj.RealHealthStauts = Number(healthStatus()+arkgridObj.health) * healthPer;
 
 
 
@@ -3180,7 +3197,7 @@ export async function getCharacterProfile(data, dataBase) {
         supportSkillObj,
         etcObj,
         karmaObj,
-        arkgridGemObj,
+        arkgridObj,
         htmlObj,
     }
     return extractValue

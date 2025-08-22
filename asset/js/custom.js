@@ -1052,7 +1052,7 @@ async function mainSearchFunction() {
             { name: "유틸력", value: Number(specPoint.supportUtilityPower).toFixed(2) /* 추가됨 */ + "%", icon: "gear-solid" },
         ]
         let supportBuffInfo = [
-            { name: "낙인력", value: Number(specPoint.supportStigmaResult).toFixed(1) + "%", icon: "bullseye-solid" },
+            { name: "낙인력", value: Number(specPoint.supportStigmaResult).toFixed(2) + "%", icon: "bullseye-solid" },
             { name: "상시버프", value: Number(specPoint.supportAllTimeBuff).toFixed(2) + "%", icon: "wand-magic-solid" },
             { name: "풀버프", value: Number(specPoint.supportFullBuff).toFixed(2) + "%", icon: "wand-magic-sparkles-solid" },
             //{ name: "종합버프", value: Number(specPoint.supportTotalAvgBuff).toFixed(2) /* 추가됨 */ + "%", icon: "wand-magic-sparkles-solid" },
