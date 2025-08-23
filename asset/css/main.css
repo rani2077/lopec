@@ -369,16 +369,9 @@
     gap: 5px;
 }
 
-.sc-info .group-info .spec-area .devil-box .icon {
-    width: 25px;
-    height: 25px;
-    display: block;
-    /*background: url("/asset/image/devil-icon.svg") center center / cover no-repeat;*/
-    position: relative;
-}
 
-.sc-info .group-info .spec-area .devil-box .icon:hover:after {
-    content: "악추피 팔찌 포함\A 체크 및 해제시 새로고침 됩니다.";
+.sc-info .group-info .spec-area .devil-box:hover:after {
+    content: "카제로스 The First 전용!\A 체크 해제시 아크그리드 점수가 제외됩니다.";
     white-space: pre-wrap;
     width: 180px;
     text-align: left;
