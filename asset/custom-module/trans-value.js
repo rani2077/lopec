@@ -632,13 +632,13 @@ export async function getCharacterProfile(data, dataBase) {
             })
         }
     })
-    let devilCheck = localStorage.getItem("devilDamage");
+    //let devilCheck = localStorage.getItem("devilDamage");
     // if (devilCheck !== "true") {
     // console.log(bangleObj)
-    if (devilCheck === "true") {
+    //if (devilCheck === "true") {
         // bangleObj.devilDamagerPer = 1;
-        bangleObj.finalDamagePer = bangleObj.finalDamagePer * bangleObj.devilDamagePer;
-    }
+    bangleObj.finalDamagePer = bangleObj.finalDamagePer * bangleObj.devilDamagePer;
+    //}
 
 
     function leapPoint() {
@@ -2553,15 +2553,16 @@ export async function getCharacterProfile(data, dataBase) {
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
 
-    let arkgridGemObj = {
+    const getOriginarkgridGemObj = () => ({
         finalDamagePer : 1,
         addDamagePer : 0,
         atkPer : 0,
         stigmaPer : 0,
         atkBuff : 0,
         damageBuff : 0,
-    }
+    })
 
+    let arkgridGemObj = getOriginarkgridGemObj();
 
     const arkgridGemMapping = {
         "공격력" : {
@@ -2609,8 +2610,8 @@ export async function getCharacterProfile(data, dataBase) {
      * description            :   아크그리드 코어 정보 파싱 및 수치 부여
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
-
-    let arkgridObj = {
+    
+    const getOriginarkgridObj = () => ({
         coreValue : 1,
         finalDamagePer : 1,
         addDamagePer : 0,
@@ -2631,7 +2632,10 @@ export async function getCharacterProfile(data, dataBase) {
         atkBuffPlus : 1,
 
 
-    }
+    });
+
+    let arkgridObj = getOriginarkgridObj();
+
     const arkPassive = supportCheck();
     const characterRole = arkPassive === "서폿" ? 'support' : 'dealer';
     const classCores = Modules.originFilter.arkgridCoreFilter[arkPassive];
@@ -2709,7 +2713,10 @@ export async function getCharacterProfile(data, dataBase) {
     etcObj.healthStatus = Number((healthStatus()+arkgridObj.health) * jobObj.healthPer);
     etcObj.RealHealthStauts = Number(healthStatus()+arkgridObj.health) * healthPer;
 
-
+    if (localStorage.getItem("devilDamage") === "false") {
+        arkgridObj = getOriginarkgridObj();
+        arkgridGemObj = getOriginarkgridGemObj();
+    }
 
 
     /* **********************************************************************************************************************

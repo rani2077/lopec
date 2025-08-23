@@ -988,10 +988,10 @@ async function mainSearchFunction() {
         let archiveDate;
 
         let gemSetCheck = localStorage.getItem('gemSet');
-        let devilDmgCheck = localStorage.getItem("devilDamage")
+        //let devilDmgCheck = localStorage.getItem("devilDamage")
         if (
             apiData.calcValue.completeSpecPoint > apiData.dataBase.totalSum &&          // 계산된 스펙포인트가 DB값보다 큰 경우
-            devilDmgCheck === "true" &&                                                 // 악추피 체크를 한 경우
+            //devilDmgCheck === "true" &&                                                 // 악추피 체크를 한 경우
             !gemSetCheck                                                                // 저장된 보석설정을 로드한 경우
 
         ) {

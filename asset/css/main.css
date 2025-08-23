@@ -373,7 +373,7 @@
     width: 25px;
     height: 25px;
     display: block;
-    background: url("/asset/image/devil-icon.svg") center center / cover no-repeat;
+    /*background: url("/asset/image/devil-icon.svg") center center / cover no-repeat;*/
     position: relative;
 }
 
