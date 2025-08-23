@@ -469,6 +469,7 @@ export async function scNav(userName) {
 async function scArkgrid(inputName) {
     let Module = await import("./fetchApi.js");
     let data = await Module.lostarkApiCall(inputName);
+    console.log(data)
 
     if (!data.ArkGrid.Slots) {
         return `
@@ -488,6 +489,9 @@ async function scArkgrid(inputName) {
         })
 
         function arkgridItem(index) {
+            if (!data.ArkGrid.Slots[index].Gems) {
+                return ``;
+            }
             let result = data.ArkGrid.Slots[index].Gems.map((obj) => {
                 return `
                 <li class="arkgrid-item">
@@ -569,6 +573,9 @@ async function scArkgrid(inputName) {
 
 
     function effect() {
+        if (!data.ArkGrid.Effects) {
+            return "";
+        }
         let effectHtml = data.ArkGrid.Effects.map((obj) => {
             return `<span class="effect">${obj.Name} Lv. ${obj.Level} - ${obj.Tooltip.match(/\+?(\d+\.\d+)%/)[0]}</span>`
         })
