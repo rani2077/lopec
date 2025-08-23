@@ -725,7 +725,7 @@ async function manageExpeditionData(inputName) {
     // API에서 새 데이터 가져오기
     try {
         // alert("첫검색 api 호출")
-        let newData = Modules.fetchApi.expeditionApiCall(inputName);
+        let newData = await Modules.fetchApi.expeditionApiCall(inputName);
 
         if (newData && Array.isArray(newData)) {
             // newData의 각 객체에 타임스탬프 추가
