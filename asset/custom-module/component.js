@@ -469,7 +469,6 @@ export async function scNav(userName) {
 async function scArkgrid(inputName) {
     let Module = await import("./fetchApi.js");
     let data = await Module.lostarkApiCall(inputName);
-    console.log(data)
 
     if (!data.ArkGrid.Slots) {
         return `
