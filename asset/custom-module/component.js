@@ -467,8 +467,7 @@ export async function scNav(userName) {
 * description       : 	아크그리드 컴포넌트
 *********************************************************************************************************************** */
 async function scArkgrid(inputName) {
-    let Module = await import("./fetchApi.js");
-    let data = await Module.lostarkApiCall(inputName);
+    let data = await Modules.fetchApi.lostarkApiCall(inputName);
 
     if (!data.ArkGrid.Slots) {
         return `
@@ -726,8 +725,7 @@ async function manageExpeditionData(inputName) {
     // API에서 새 데이터 가져오기
     try {
         // alert("첫검색 api 호출")
-        let Module = await import("./fetchApi.js");
-        let newData = await Module.expeditionApiCall(inputName);
+        let newData = Modules.fetchApi.expeditionApiCall(inputName);
 
         if (newData && Array.isArray(newData)) {
             // newData의 각 객체에 타임스탬프 추가
