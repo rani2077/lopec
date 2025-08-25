@@ -460,11 +460,7 @@ async function simulatorInputCalc() {
                     combinedObj[key] = grouped[key].reduce((acc, val) => acc + val, 0);
                 }
             }
-            let devilCheck = localStorage.getItem("devilDamage");
-            //console.log(combinedObj)
-            if (devilCheck === "true") {
-                combinedObj.finalDamagePer = combinedObj.finalDamagePer * combinedObj.devilDamagePer;
-            }
+            combinedObj.finalDamagePer = combinedObj.finalDamagePer * combinedObj.devilDamagePer;
             return combinedObj;
         }
         return arr;

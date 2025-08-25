@@ -2657,12 +2657,12 @@ export async function getCharacterProfile(data, dataBase) {
             // --- 질서 코어 계산 ---
             if (validOrderCores.includes(Name)) {
                 let coreGroup = null;
+                let pointToUse = Point;
 
                 if (Name.startsWith("질서의 해") || Name.startsWith("질서의 달")) {
                     coreGroup = "group1";
-                    // ★ 최종 규칙 적용: 14P 이상일 때만 특별 조건을 확인합니다.
                     if (Point >= 14 && !canApplySpecialCondition) {
-                        coreGroup = null; // 조건 미달 시, 계산에서 제외
+                        pointToUse = 10;
                     }
                 } else if (Name.startsWith("질서의 별")) {
                     coreGroup = "group2";
@@ -2670,7 +2670,7 @@ export async function getCharacterProfile(data, dataBase) {
 
                 if (coreGroup) {
                     const valueGrade = (Grade === "영웅" || Grade === "전설" || Grade === "유물") ? "유물" : Grade;
-                    const value = Modules.originFilter.arkgridCoreValues[characterRole]?.[coreGroup]?.[valueGrade]?.[Point];
+                    const value = Modules.originFilter.arkgridCoreValues[characterRole]?.[coreGroup]?.[valueGrade]?.[pointToUse];
                     if (value !== undefined) {
                         arkgridObj.coreValue *= value;
                     }
