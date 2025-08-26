@@ -2652,6 +2652,12 @@ export async function getCharacterProfile(data, dataBase) {
 
     
         data.ArkGrid.Slots.forEach(slot => {
+            
+            // 슬롯이 null이거나 Name이 없는 경우, 이 슬롯은 건너뜁니다.
+            if (!slot || !slot.Name) {
+                return; 
+            }
+
             const { Name, Grade, Point } = slot;
 
             // --- 질서 코어 계산 ---
