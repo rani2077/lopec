@@ -4234,7 +4234,7 @@ export const chaosCoreValues = {
         }
     },
     "혼돈의 해 코어 : 재빠른 공격" : {
-        10: {finalDamagePer : 0},
+        10: {finalDamagePer : 1},
         14: {finalDamagePer : 1.005},
         17: {
             "유물" : {finalDamagePer : 1.015},

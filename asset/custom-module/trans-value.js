@@ -2697,9 +2697,9 @@ export async function getCharacterProfile(data, dataBase) {
                         if (arkgridObj.hasOwnProperty(statName)) {
                             const value = bonus[statName];
 
-                            if (arkgridObj[statName] === 1 && typeof value === 'number') {
+                            if (getOriginarkgridObj()[statName] === 1) {
                                 arkgridObj[statName] *= value;
-                            } else if (typeof arkgridObj[statName] === 'number') {
+                            } else {
                                 arkgridObj[statName] += value;
                             }
                         }
@@ -2708,7 +2708,7 @@ export async function getCharacterProfile(data, dataBase) {
             }
         }); // forEach 루프는 여기서 올바르게 끝납니다.
     }
-
+    
     arkgridObj.addDamagePer = arkgridObj.addDamagePer + arkgridGemObj.addDamagePer;
     arkgridObj.finalDamagePer = arkgridObj.finalDamagePer * arkgridGemObj.finalDamagePer;
     arkgridObj.atkPer = arkgridObj.atkPer + arkgridGemObj.atkPer;
