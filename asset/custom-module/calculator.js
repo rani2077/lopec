@@ -389,15 +389,15 @@ export async function specPointCalc(inputObj) {
     // 종합 쿨감
     let cdrPercent = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemsCoolAvg / 100) 
-        * (1 - inputObj.engObj.cdrPercent))) 
-        * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
 
     // 아덴이 차지 않는 스킬 제외 쿨감
     let cdrPercentNoneCare = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
-        * (1 - inputObj.engObj.cdrPercent))) 
-        * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
 
     // Only 케어 스킬 쿨감
@@ -564,30 +564,31 @@ export async function specPointCalc(inputObj) {
     // 종합 쿨감
     let calcCdrPercent = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemsCoolAvg / 100) 
-        * (1 - inputObj.engObj.cdrPercent))) 
-        * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
     
     
     // 아덴이 차지 않는 스킬 제외 쿨감감
     let calcCdrPercentNoneCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
-        * (1 - inputObj.engObj.cdrPercent))) 
-        * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
+        console.log(calcCdrPercentNoneCare)
 
     // Only 케어 스킬 쿨감
     let calcCdrPercentOnlyCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent))) 
-        * (1 - inputObj.arkgridObj.cdrPercent)
+        //* (1 - inputObj.arkgridObj.cdrPercent)
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
 
     // 각성기 가치
     let calcAwakenIdentity = ((1 / ((1 - inputObj.engObj.awakencdrPercent) 
         * (1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent)))
-        * (1 - inputObj.arkgridObj.cdrPercent) - 1) 
+        * coolDownValue - 1) 
         * 0.15 + 1; //각성기 가치
 
     // 특화 수급 계수
@@ -681,7 +682,7 @@ export async function specPointCalc(inputObj) {
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint = ((calcSupportCombinedPower ** 4.268) * 69.127)
+    let supportSpecPoint = ((calcSupportCombinedPower ** 4.268) * 69.127) * inputObj.arkgridObj.coreValue
 
 
     /* **********************************************************************************************************************
@@ -757,14 +758,14 @@ export async function specPointCalc(inputObj) {
     // 팔찌 제외 쿨감
     let cdrPercentNoneCare_MinusBangle = ((1 - ((1 - calcHaste_MinusBangle * 0.0214739 / 100) 
     * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
-    * (1 - inputObj.engObj.cdrPercent))) 
-    * (1 - inputObj.arkgridObj.cdrPercent)).toFixed(3)
+    * (1 - inputObj.engObj.cdrPercent)
+    * (1 - inputObj.arkgridObj.cdrPercent)))).toFixed(3)
     
     // 노아덴 스킬 제외 쿨감
     let cdrPercentOnlyCare_MinusBangle = ((1 - ((1 - calcHaste_MinusBangle * 0.0214739 / 100) 
     * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100) 
-    * (1 - inputObj.engObj.cdrPercent))) 
-    * (1 - inputObj.arkgridObj.cdrPercent)).toFixed(3)
+    * (1 - inputObj.engObj.cdrPercent)
+    * (1 - inputObj.arkgridObj.cdrPercent)))).toFixed(3)
     
     // 팔찌 제외 아덴 가동률
     let awakenIdentity_MinusBangle = ((1 / ((1 - inputObj.engObj.awakencdrPercent) 
@@ -843,8 +844,8 @@ export async function specPointCalc(inputObj) {
     let supportCarePower_MinusBangle = (((finalCarePower_MinusBangle / ((1 - cdrPercentOnlyCare_MinusBangle)))) / 100 + 1)
 
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle ** 4.268) * 70.127
-    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.38
+    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle ** 4.268) * 70.127 * inputObj.arkgridObj.coreValue
+    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.38 
 
 
 

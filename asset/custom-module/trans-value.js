@@ -2660,6 +2660,14 @@ export async function getCharacterProfile(data, dataBase) {
 
             const { Name, Grade, Point } = slot;
 
+            if (Name.startsWith("질서")) {
+                console.log("--- 최종 디버깅 (질서 코어) ---");
+                console.log("1. 비교 대상 코어 이름 (Name):", `"${Name}"`);
+                console.log("2. 유효 코어 목록 (validOrderCores)의 첫 번째 요소:", validOrderCores[0]);
+                console.log("3. includes() 결과:", validOrderCores.includes(Name));
+                console.log("---");
+            }
+
             // --- 질서 코어 계산 ---
             if (validOrderCores.includes(Name)) {
                 let coreGroup = null;
