@@ -1087,7 +1087,7 @@ let noticeArry = [
             &nbsp;&nbsp; 동시 다발적 점수 펌핑 현상으로 인해, 1700레벨 이상 딜러 캐릭터들의 달성 최고 점수 기록을 초기화하였습니다.`
     },
     {
-        name: `<em style="font-weight:900;font-size:17px;">25년 8월 28일 버그 수정 안내내 </em>`,
+        name: `<em style="font-weight:900;font-size:17px;">25년 8월 28일 버그 수정 안내 </em>`,
         desc:
             `● 아크그리드 버그 수정
             &nbsp;&nbsp; 쿨감 옵션의 밸류가 잘못 계산되는 버그를 수정하였습니다.

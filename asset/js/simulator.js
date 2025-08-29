@@ -1843,12 +1843,12 @@ async function simulatorInputCalc() {
         }
         // extractValue.etcObj.supportCheck !== "서폿"
         if (!/서폿|회귀|심판자|진실된 용맹/.test(extractValue.etcObj.supportCheck) || (extractValue.engObj.dealpport === "true")) {
-            result += infoWrap("전투력", combatInfo);
+            //result += infoWrap("전투력", combatInfo);
             result += infoWrap("장비 효과", armorInfo);
             result += infoWrap("아크패시브", arkPassiveInfo);
             result += infoWrap("보석 효과", gemInfo);
         } else {
-            result += infoWrap("전투력", supportCombatInfo);
+            //result += infoWrap("전투력", supportCombatInfo);
             result += infoWrap("주요 버프", supportImportantBuffInfo);
             result += infoWrap("버프 정보", supportBuffInfo);
             result += infoWrap("가동률", supportUtilizationRate);
