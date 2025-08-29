@@ -98,7 +98,7 @@ export async function scProfile(userData, extractValue, response) {
     let characterLevel = userData.ArmoryProfile.CharacterLevel;
     let userName = userData.ArmoryProfile.CharacterName;
     let totalLevel = userData.ArmoryProfile.ItemAvgLevel;
-    let title = userData.ArmoryProfile.Title.replace(/<.*?>/g, "");
+    let title = userData.ArmoryProfile.Title? userData.ArmoryProfile.Title.replace(/<.*?>/g, "") : "없음";
     let guild = userData.ArmoryProfile.GuildName;
 
     let jobRankVariable = response.classRank.rank;
