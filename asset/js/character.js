@@ -212,6 +212,9 @@ export async function dataBaseResponse(inputName, extractValue, data) {
 		totalStatus: extractValue.defaultObj.totalStatus,
 		statusSpecial: extractValue.defaultObj.statusSpecial,
 		statusHaste: extractValue.defaultObj.statusHaste,
+		characterImage: data.ArmoryProfile.CharacterImage,
+		honor: Number(data.ArmoryProfile.HonorPoint),
+		server: data.ArmoryProfile.ServerName,
 		combatPower: Number(data.ArmoryProfile.CombatPower.replace(/,/g, '')),
 	}
 	let response = await fetch("https://api.lopec.kr/api/character/stats", {
