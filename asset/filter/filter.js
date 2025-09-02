@@ -2451,6 +2451,19 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "허리케인 포식",
+        skill: [
+            { name: "브루탈 임팩트", per: 0.16 },
+            { name: "허리케인 소드", per: 0.15 },
+            { name: "길로틴", per: 0.116 },
+            { name: "볼케이노 이럽션", per: 0.10 },
+            { name: "페이탈 소드", per: 0.088 },
+            { name: "퍼니싱 드로", per: 0.056 },
+            { name: "마운틴 클리브", per: 0.056 },
+            { name: "보정치", per: -0.056 },
+        ],
+    },
+    {
         class: "마운틴 포식",
         skill: [
             { name: "브루탈 임팩트", per: 0.171 },
@@ -2570,6 +2583,19 @@ export let classGemFilter = [
             { name: "풍뢰일광포", per: 0.1134 },
             { name: "환영격", per: 0.0864 },
             { name: "보정치", per: -0.1094 },
+        ],
+    },
+    {
+        class: "번천 역천",
+        skill: [
+            { name: "난화격", per: 0.143 },
+            { name: "여래신장", per: 0.103 },
+            { name: "번천장", per: 0.096 },
+            { name: "섬열파", per: 0.096 },
+            { name: "벽력장", per: 0.067 },
+            { name: "풍뢰일광포", per: 0.1 },
+            { name: "환영격", per: 0.073 },
+            { name: "보정치", per: -0.096 },
         ],
     },
     {
@@ -3068,10 +3094,11 @@ export let classGemFilter = [
             { name: "크루얼 커터", per: 0.135 },
             { name: "데몰리션", per: 0.114 },
             { name: "그라인드 체인", per: 0.109 },
+            { name: "피어스 쏜", per: 0.109 },
             { name: "스피닝 웨폰", per: 0.109 },
             { name: "쓰러스트 임팩트", per: 0.058 },
             { name: "데시메이트", per: 0.053 },
-            { name: "보정치", per: -0.109 },
+            { name: "보정치", per: -0.218 },
         ],
     },
     {
@@ -3380,7 +3407,7 @@ export let arkgridCoreFilter = {
             "질서의 별 코어 : 돌진형 포격",
         ],
     },
-    "전투 태세": {
+    "전태": {
         mainCore: [
             "질서의 해 코어 : 방패 연계",
             "질서의 해 코어 : 전투 의지",

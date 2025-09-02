@@ -1911,6 +1911,29 @@ export async function getCharacterProfile(data, dataBase) {
         }
 
     }
+
+    const specialClassMap = {
+        "질서의 별 코어 : 번천귀류": "번천 역천",
+        "질서의 달 코어 : 소용돌이": "허리케인 포식",
+    };
+
+    if (data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
+        for (const slot of data.ArkGrid.Slots) {
+            if (!slot || !slot.Name) {
+                continue; 
+            }
+            const mappedClass = specialClassMap[slot.Name];
+
+            if (mappedClass) {
+                specialClass = mappedClass;
+                break;
+            }
+        }
+    }
+
+
+
+
     console.log("보석전용 직업 : ", specialClass)
 
 
@@ -2659,14 +2682,6 @@ export async function getCharacterProfile(data, dataBase) {
             }
 
             const { Name, Grade, Point } = slot;
-
-            if (Name.startsWith("질서")) {
-                console.log("--- 최종 디버깅 (질서 코어) ---");
-                console.log("1. 비교 대상 코어 이름 (Name):", `"${Name}"`);
-                console.log("2. 유효 코어 목록 (validOrderCores)의 첫 번째 요소:", validOrderCores[0]);
-                console.log("3. includes() 결과:", validOrderCores.includes(Name));
-                console.log("---");
-            }
 
             // --- 질서 코어 계산 ---
             if (validOrderCores.includes(Name)) {
