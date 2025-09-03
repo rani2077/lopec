@@ -4701,9 +4701,9 @@ async function calculateGemData(data) {
     }
 
     const specialClassMap = {
-        "질서의 별 코어 : 번천귀류": {"class": "번천 역천", "point": 10},
-        "질서의 달 코어 : 소용돌이": {"class": "허리케인 포식", "point": 10},
-        "질서의 별 코어 : 풀 매거진": {"class": "레오불 사시", "point": 14}
+        "질서의 별 코어 : 번천귀류": {"class": "번천 역천", "point": 10, "supportCheck": "역천"},
+        "질서의 달 코어 : 소용돌이": {"class": "허리케인 포식", "point": 10, "supportCheck": "포식"},
+        "질서의 별 코어 : 풀 매거진": {"class": "레오불 사시", "point": 14, "supportCheck": "사시"}
     };
 
     if (data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
@@ -4712,14 +4712,14 @@ async function calculateGemData(data) {
                 continue; 
             }
             const coreValue = specialClassMap[slot.Name];
+            const classCheck = supportCheck;
 
-            if (coreValue && slot.Point >= coreValue.point) {
+            if (coreValue && slot.Point >= coreValue.point && classCheck === coreValue.supportCheck) {
                 specialClass = coreValue.class;
                 break;
             }
         }
     }
-
 
 
     // console.log("보석전용 직업 : ", specialClass)

@@ -2457,10 +2457,13 @@ export let classGemFilter = [
             { name: "허리케인 소드", per: 0.15 },
             { name: "길로틴", per: 0.116 },
             { name: "볼케이노 이럽션", per: 0.10 },
-            { name: "페이탈 소드", per: 0.088 },
+
+            { name: "파이널 블로", per: 0.056 },
+            { name: "퓨리어스 클로", per: 0.056 },
+            { name: "페이탈 소드", per: 0.056 },
             { name: "퍼니싱 드로", per: 0.056 },
             { name: "마운틴 클리브", per: 0.056 },
-            { name: "보정치", per: -0.056 },
+            { name: "보정치", per: -0.168 },
         ],
     },
     {
