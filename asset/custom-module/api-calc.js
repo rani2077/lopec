@@ -130,9 +130,9 @@ export async function apiCalcValue(inputName) {
     //console.log(window.location.href)
     // else extractValue.karmaObj.evolutionKarmaRank = '미등록';
     let calcValue = await Modules.calcValue.specPointCalc(extractValue);
-    console.log("계산값", calcValue.completeSpecPoint)
-    console.log("DB값", dataBase.totalSum)
-    console.log("비교값", (calcValue.completeSpecPoint > dataBase.totalSum))
+    //console.log("계산값", calcValue.completeSpecPoint)
+    //console.log("DB값", dataBase.totalSum)
+    //console.log("비교값", (calcValue.completeSpecPoint > dataBase.totalSum))
     //let devilDmgCheck = localStorage.getItem("devilDamage")
 
     function crawlingBot() {

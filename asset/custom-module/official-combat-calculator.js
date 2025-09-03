@@ -14,14 +14,20 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     let originCombat = extractObj.defaultObj.combatPower; // 인게임 전투력
 
     let baseAttackBonus = (extractObj.etcObj.gemAttackBonus + extractObj.etcObj.abilityAttackBonus) / 100 + 1;
+
     let weaponAtk = ((extractObj.defaultObj.weaponAtk +
         extractObj.hyperObj.weaponAtkPlus +
         extractObj.elixirObj.weaponAtkPlus +
         extractObj.accObj.weaponAtkPlus +
+        extractObj.arkgridObj.weaponAtkPlus +
         extractObj.bangleObj.weaponAtkPlus) *
-        (extractObj.arkObj.weaponAtkPer + (extractObj.accObj.weaponAtkPer / 100)))
+        (extractObj.arkObj.weaponAtkPer + (extractObj.accObj.weaponAtkPer / 100) + (extractObj.arkgridObj.weaponAtkPer / 100)))
+
+        
     let originBasePoint = originCombat /
         1.0077 /
+        combatObj.dealer.arkgridGem /
+        combatObj.dealer.arkgridCore /
         combatObj.dealer.weaponQuality /
         combatObj.dealer.stats /
         combatObj.dealer.level /
@@ -35,9 +41,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.bangle /
         combatObj.dealer.ark /
         combatObj.dealer.accessory;
-    console.log("원래 베이스 포인트", originBasePoint);
+
     let originAtk = Math.floor(originBasePoint * 1000000 / 288);
-    console.log("originAtk", originAtk)
+
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStat = ((extractObj.etcObj.armorStatus +
         extractObj.etcObj.expeditionStats +
@@ -73,10 +79,12 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.level *
         combatObj.dealer.stats *
         combatObj.dealer.weaponQuality *
+        combatObj.dealer.arkgridGem *
+        combatObj.dealer.arkgridCore *
         1.0077;
 
     //console.log("인게임 전투력", originCombat)
-    //console.log("계산 전투력", calcCombat)
+    //console.log("계산 전투력", Math.ceil(calcCombat * 100) / 100)
 
 /* **********************************************************************************************************************
  * function name		:	서폿 계산식
@@ -84,7 +92,14 @@ export async function officialCombatCalculator(combatObj, extractObj) {
  *********************************************************************************************************************** */
 
     let originHealth = extractObj.defaultObj.maxHp
-    let calcHealth = Number(((extractObj.etcObj.RealHealthStauts + extractObj.hyperObj.statHp + extractObj.elixirObj.statHp + extractObj.bangleObj.statHp + extractObj.accObj.statHp + extractObj.arkObj.statHp) * extractObj.defaultObj.hpActive * 1.07).toFixed(0));
+    let calcHealth = Number(((extractObj.etcObj.RealHealthStauts + 
+        extractObj.hyperObj.statHp + 
+        extractObj.elixirObj.statHp +
+         extractObj.bangleObj.statHp + 
+         extractObj.accObj.statHp + 
+         extractObj.arkObj.statHp +
+         extractObj.arkgridObj.statHP) * 
+         extractObj.defaultObj.hpActive * 1.07).toFixed(0));
 
     if (!cacheCollectHealthSupport) {
         cacheCollectHealthSupport = originHealth - calcHealth
@@ -96,7 +111,8 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     combatObj.sup_defense.accessory *
     combatObj.sup_defense.bangle *
     combatObj.sup_defense.elixir *
-    combatObj.sup_defense.engraving
+    combatObj.sup_defense.engraving *
+    combatObj.sup_defense.arkgridCore
 
     let originAttackCombat = extractObj.defaultObj.combatPower - calcCareCombat
     //console.log("originAttackCombat", originAttackCombat)
@@ -113,7 +129,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     combatObj.sup_attack.hyper /
     combatObj.sup_attack.karma /
     combatObj.sup_attack.level /
-    combatObj.sup_attack.stats
+    combatObj.sup_attack.stats /
+    combatObj.sup_attack.arkgridCore /
+    combatObj.sup_attack.arkgridGem
 
     let originAtkSupport = Math.floor(originBaseAttack * 1000000 / 124);
     let originTotalStatSupport = (((originAtkSupport / baseAttackBonus) ** 2) * 6) / weaponAtk;
@@ -147,12 +165,14 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.sup_attack.hyper *
         combatObj.sup_attack.karma *
         combatObj.sup_attack.level *
-        combatObj.sup_attack.stats
+        combatObj.sup_attack.stats *
+        combatObj.sup_attack.arkgridCore *
+        combatObj.sup_attack.arkgridGem
 
     let calcCombatSupport = calcAttackCombat + calcCareCombat
     
-    //console.log("실제 전투력", originCombat)
-    //console.log("계산 전투력", calcCombatSupport)
+    console.log("실제 전투력", originCombat)
+    console.log("계산 전투력", Math.ceil(calcCombatSupport * 100) / 100)
 
     let result = {
         dealer: Math.ceil(calcCombat * 100) / 100,

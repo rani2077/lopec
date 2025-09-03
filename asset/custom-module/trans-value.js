@@ -1913,19 +1913,20 @@ export async function getCharacterProfile(data, dataBase) {
     }
 
     const specialClassMap = {
-        "질서의 별 코어 : 번천귀류": "번천 역천",
-        "질서의 달 코어 : 소용돌이": "허리케인 포식",
+        "질서의 별 코어 : 번천귀류": {"class": "번천 역천", "point": 10},
+        "질서의 달 코어 : 소용돌이": {"class": "허리케인 포식", "point": 10},
+        "질서의 별 코어 : 풀 매거진": {"class": "레오불 사시", "point": 14}
     };
 
     if (data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
         for (const slot of data.ArkGrid.Slots) {
-            if (!slot || !slot.Name) {
+            if (!slot || !slot.Name || !slot.Point) {
                 continue; 
             }
-            const mappedClass = specialClassMap[slot.Name];
+            const coreValue = specialClassMap[slot.Name];
 
-            if (mappedClass) {
-                specialClass = mappedClass;
+            if (coreValue && slot.Point >= coreValue.point) {
+                specialClass = coreValue.class;
                 break;
             }
         }

@@ -575,7 +575,6 @@ export async function specPointCalc(inputObj) {
         * (1 - inputObj.engObj.cdrPercent)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
-        console.log(calcCdrPercentNoneCare)
 
     // Only 케어 스킬 쿨감
     let calcCdrPercentOnlyCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 

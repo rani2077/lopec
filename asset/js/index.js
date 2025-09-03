@@ -1105,6 +1105,13 @@ let noticeArry = [
         <img src="/asset/image/median-20250902.png">
         <img src="/asset/image/kazeraid-20250902.png">`
     },
+    {
+        name: `<em style="font-weight:900;font-size:17px;"> 25년 9월 3일 업데이트 안내 </em>`,
+        desc:
+            `● 시뮬레이터 인게임 전투력 재개
+            &nbsp;&nbsp; 아크그리드 밸류 적용 작업을 완료하여, 다시 예상 인게임 전투력을 확인하실 수 있습니다. 혹시 모를 오류를 대비해 100% 맹신하지는 말아주세요.
+            &nbsp;&nbsp; 더하여, 시뮬레이터에 아크그리드를 조율할 수 있는 기능은 시간이 다소 걸릴 예정입니다. 늦어도 2~3주 이내를 목표로 하고 있으니 조금만 기다려주시면 감사하겠습니다.`
+    },
 ]
 
 // notice 공지 생성

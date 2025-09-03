@@ -193,8 +193,10 @@ export async function simulatorToOffcialCombatObj() {
             return result;
         });
         let resultArkValue = arkpassiveValue.reduce((a, b) => { return a * b.value }, 1);
-        return resultArkValue
+        return resultArkValue || 1;
     };
+
+
 
 
     function engravingToOffcialCombatSupport() {
@@ -919,7 +921,185 @@ export async function simulatorToOffcialCombatObj() {
         return cardSum;
     };
 
+    /* **********************************************************************************************************************
+    * name		             :	 arkgridOffcialCombat
+    * version                :   2.0
+    * description            :   
+    * USE_TN                 :   사용
+    *********************************************************************************************************************** */
 
+    function arkgridGemOffcialCombat() {
+        const arkgridGemMapping = {
+            "공격력" : {
+                value : level => (Math.floor(10 * level / 3)) / 10000 + 1
+            },
+            "추가 피해" : {
+                value : level => (Math.floor(35 * level / 6)) / 10000 + 1
+            },
+            "보스 피해" : {
+                value : level => (Math.floor(25 * level / 3)) / 10000 + 1
+            },
+        }
+
+        let totalMultiplier = 1;
+        if (apiData.data.ArkGrid && Array.isArray(apiData.data.ArkGrid.Effects)) {
+            apiData.data.ArkGrid.Effects.forEach(effect =>{
+                const mapping = arkgridGemMapping[effect.Name];
+                if (mapping) {
+                    let effectValue = mapping.value(effect.Level);
+                    totalMultiplier *= effectValue;
+                }
+            });
+            console.log("딜러 젬 곱연산 값:", totalMultiplier);
+        }
+        return totalMultiplier;
+    }
+
+    function arkgridGemOffcialCombatSupport() {
+        const arkgridGemMapping = {
+            "낙인력" : {
+                value : level => (Math.floor(35 * level / 4)) / 10000 + 1
+            },
+            "아군 공격 강화" : {
+                value : level => (Math.floor(12.5 * level)) / 10000 + 1
+            },
+            "아군 피해 강화" : {
+                value : level => (5 * level) / 10000 + 1
+            },
+        }
+
+        let totalMultiplier = 1;
+        if (apiData.data.ArkGrid && Array.isArray(apiData.data.ArkGrid.Effects)) {
+            apiData.data.ArkGrid.Effects.forEach(effect =>{
+                const mapping = arkgridGemMapping[effect.Name];
+                if (mapping) {
+                    let effectValue = mapping.value(effect.Level);
+                    totalMultiplier *= effectValue;
+                }
+            });
+            //console.log("서폿 젬 총 곱연산 값:", totalMultiplier);
+        }
+        return totalMultiplier;
+    }
+
+
+
+    /* **********************************************************************************************************************
+    * name		             :	 arkgridCoreOffcialCombat
+    * version                :   2.0
+    * description            :   
+    * USE_TN                 :   사용
+    *********************************************************************************************************************** */
+
+    function arkgridCoreOffcialCombat() {
+        const arkgridCoreData = apiData.data.ArkGrid.Slots;
+        const arkgridCoreFilter = Modules.officialCombatDealer.officialCombatDealer.attack.arkgrid_core;
+
+        if (!arkgridCoreData || !Array.isArray(arkgridCoreData)) {
+            return 1;
+        }
+
+        const totalMultiplier = arkgridCoreData.reduce((multiplier, slot) => {
+            const { Grade, Name, Point } = slot;
+ 
+            let effectiveGrade = Grade;
+            if (Grade === "영웅" || Grade === "전설") {
+                effectiveGrade = "유물";
+            }
+ 
+            const gradeFilter = arkgridCoreFilter[effectiveGrade];
+ 
+            if (gradeFilter) {
+                const coreNameKey = Object.keys(gradeFilter).find(key => Name.includes(key));
+ 
+                if (coreNameKey) {
+                    const value = gradeFilter[coreNameKey]?.[Point];
+ 
+                    if (typeof value === 'number') {
+                        return multiplier * value;
+                    }
+                }
+            }
+ 
+            return multiplier;
+        }, 1);
+
+        //console.log("코어 총 곱연산 값:", totalMultiplier);
+        return totalMultiplier;
+    }
+
+    function arkgridCoreOffcialCombatSupport() {
+        const arkgridCoreData = apiData.data.ArkGrid.Slots;
+        const arkgridCoreFilter = Modules.officialCombatDealer.officialCombatDealer.defense.arkgrid_core;
+
+        if (!arkgridCoreData || !Array.isArray(arkgridCoreData)) {
+            return 1;
+        }
+
+        const totalMultiplier = arkgridCoreData.reduce((multiplier, slot) => {
+            const { Grade, Name, Point } = slot;
+ 
+            let effectiveGrade = Grade;
+            if (Grade === "영웅" || Grade === "전설") {
+                effectiveGrade = "유물";
+            }
+ 
+            const gradeFilter = arkgridCoreFilter[effectiveGrade];
+ 
+            if (gradeFilter) {
+                const coreNameKey = Object.keys(gradeFilter).find(key => Name.includes(key));
+ 
+                if (coreNameKey) {
+                    const value = gradeFilter[coreNameKey]?.[Point];
+ 
+                    if (typeof value === 'number') {
+                        return multiplier * value;
+                    }
+                }
+            }
+ 
+            return multiplier;
+        }, 1);
+
+        //console.log("코어 총 곱연산 값:", totalMultiplier);
+        return totalMultiplier;
+    }
+    function arkgridCoreOffcialCombatSupportDefense() {
+        const arkgridCoreData = apiData.data.ArkGrid.Slots;
+        const arkgridCoreFilter = Modules.officialCombatDealer.officialCombatDealer.defense.arkgrid_core_defense;
+
+        if (!arkgridCoreData || !Array.isArray(arkgridCoreData)) {
+            return 1;
+        }
+
+        const totalMultiplier = arkgridCoreData.reduce((multiplier, slot) => {
+            const { Grade, Name, Point } = slot;
+ 
+            let effectiveGrade = Grade;
+            if (Grade === "영웅" || Grade === "전설") {
+                effectiveGrade = "유물";
+            }
+ 
+            const gradeFilter = arkgridCoreFilter[effectiveGrade];
+ 
+            if (gradeFilter) {
+                const coreNameKey = Object.keys(gradeFilter).find(key => Name.includes(key));
+ 
+                if (coreNameKey) {
+                    const value = gradeFilter[coreNameKey]?.[Point];
+ 
+                    if (typeof value === 'number') {
+                        return multiplier * value;
+                    }
+                }
+            }
+ 
+            return multiplier;
+        }, 1);
+
+        //console.log("코어 총 곱연산 값:", totalMultiplier);
+        return totalMultiplier;
+    }
 
 
 
@@ -937,7 +1117,9 @@ export async function simulatorToOffcialCombatObj() {
         esther: estherOffcialCombat(),
         hyper: hyperOffcialCombat(),
         stats: statsOffcialCombat(),
-        card: cardOffcialCombat()
+        card: cardOffcialCombat(),
+        arkgridGem: arkgridGemOffcialCombat(),
+        arkgridCore: arkgridCoreOffcialCombat()
     };
 
     let officialCombatObjSupport_defense = {
@@ -945,6 +1127,7 @@ export async function simulatorToOffcialCombatObj() {
         elixir: elixirToOffcialCombatSupport().eachElixirSum_defense,
         accessory: accessoryToOffcialCombatSupport().accessorySum_defense,
         bangle: bangleOffcialCombatSupport().bangleSum_defense,
+        arkgridCore: arkgridCoreOffcialCombatSupportDefense()
     };
 
     let officialCombatObjSupport_attack = {
@@ -959,11 +1142,13 @@ export async function simulatorToOffcialCombatObj() {
         esther: estherOffcialCombatSupport(),
         hyper: hyperOffcialCombatSupport(),
         stats: statsOffcialCombatSupport(),
-        card: cardOffcialCombatSupport()
+        card: cardOffcialCombatSupport(),
+        arkgridCore: arkgridCoreOffcialCombatSupport(),
+        arkgridGem: arkgridGemOffcialCombatSupport()
     };
     //console.log("delaer", officialCombatObj);
-    //console.log("sup_attack", officialCombatObjSupport_attack);
-    //console.log("sup_defense", officialCombatObjSupport_defense);
+    console.log("sup_attack", officialCombatObjSupport_attack);
+    console.log("sup_defense", officialCombatObjSupport_defense);
     return {
         "dealer": officialCombatObj,
         "sup_attack": officialCombatObjSupport_attack,

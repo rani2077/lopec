@@ -2980,6 +2980,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "레오불 사시",
+        skill: [
+            { name: "로즈 블로섬", per: 0.395 },
+            { name: "포커스 샷", per: 0.133 },
+            { name: "레인 오브 불릿", per: 0.11 },
+            { name: "타겟 다운", per: 0.09 },
+            { name: "대재앙", per: 0.07 },
+            { name: "스파이럴 플레임", per: 0.038 },
+        ],
+    },
+    {
         class: "황후",
         skill: [
             { name: "시크릿 가든", per: 0.206 },
