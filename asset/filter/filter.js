@@ -3108,8 +3108,9 @@ export let classGemFilter = [
             { name: "피어스 쏜", per: 0.109 },
             { name: "스피닝 웨폰", per: 0.109 },
             { name: "쓰러스트 임팩트", per: 0.058 },
+            { name: "샤펀 컷", per: 0.058 },
             { name: "데시메이트", per: 0.053 },
-            { name: "보정치", per: -0.218 },
+            { name: "보정치", per: -0.276 },
         ],
     },
     {

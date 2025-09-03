@@ -134,7 +134,7 @@ function scHeaderCreate() {
                 <aside class="sc-sidemenu">
         
                     <div class="group-link">
-                        <a href="https://open.kakao.com/o/smvJ4DQg" class="link-item" target="_blink">1:1문의</a>
+                        <a href="https://cool-kiss-ec2.notion.site/FAQ-1da758f0e8da80618220fe697190f345?source=copy_link" class="link-item" target="_blink">1:1문의</a>
                         <a href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blink" class="link-item">후원안내</a>
                         <a href="https://discord.gg/5B8SjX4ug4" class="link-item" target="_blink">디스코드</a>
                         <a href="https://cool-kiss-ec2.notion.site/LOPEC-CREDIT-1cc758f0e8da80a18f49f93dafb886f3" target="_blink" class="link-item">credit</a>
@@ -533,7 +533,7 @@ function scFooterCreate() {
         <footer>
             <section class=".sc-footer">
                 <div class="group-link">
-                    <a href="https://open.kakao.com/o/smvJ4DQg" class="link" target="_blink">1:1문의</a>
+                    <a href="https://cool-kiss-ec2.notion.site/FAQ-1da758f0e8da80618220fe697190f345?source=copy_link" class="link" target="_blink">1:1문의</a>
                     <a href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blink" class="link">후원안내</a>
                     <a href="https://discord.gg/5B8SjX4ug4" class="link" target="_blink">디스코드</a>
                     <a href="https://cool-kiss-ec2.notion.site/LOPEC-CREDIT-1cc758f0e8da80a18f49f93dafb886f3" target="_blink" class="link">credit</a>
