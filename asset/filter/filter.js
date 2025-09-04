@@ -2589,6 +2589,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "무공탄 역천",
+        skill: [
+            { name: "섬열파", per: 0.1564 },
+            { name: "무공탄", per: 0.1164 },
+            { name: "풍뢰일광포", per: 0.1134 },
+            { name: "여래신장", per: 0.1094 },
+            { name: "기공장", per: 0.0864 },
+        ],
+    },
+    {
         class: "번천 역천",
         skill: [
             { name: "난화격", per: 0.143 },
@@ -2726,6 +2736,17 @@ export let classGemFilter = [
     },
     {
         class: "권왕",
+        skill: [
+            { name: "파천섬광", per: 0.23 },
+            { name: "권왕십이식", per: 0.327 },
+            { name: "천기심권", per: 0.077 },
+            { name: "유성 낙하", per: 0.059 },
+            { name: "징벌의 파도", per: 0.059 },
+            { name: "보정치", per: -0.059 },
+        ],
+    },
+    {
+        class: "진파천 권왕",
         skill: [
             { name: "파천섬광", per: 0.23 },
             { name: "권왕십이식", per: 0.327 },

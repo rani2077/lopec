@@ -1914,6 +1914,7 @@ export async function getCharacterProfile(data, dataBase) {
 
     const specialClassMap = {
         "질서의 별 코어 : 번천귀류": {"class": "번천 역천", "point": 10, "supportCheck": "역천"},
+        "질서의 달 코어 : 열파전조": {"class": "무공탄 역천", "point": 17, "supportCheck": "역천"},
         "질서의 달 코어 : 소용돌이": {"class": "허리케인 포식", "point": 10, "supportCheck": "포식"},
         "질서의 별 코어 : 풀 매거진": {"class": "레오불 사시", "point": 14, "supportCheck": "사시"}
     };
