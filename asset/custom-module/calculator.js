@@ -77,7 +77,8 @@ export async function specPointCalc(inputObj) {
         + inputObj.bangleObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkBonus 
         + inputObj.arkgridObj.weaponAtkPlus) 
-        * (inputObj.arkObj.weaponAtkPer + (inputObj.accObj.weaponAtkPer / 100) + (inputObj.arkgridObj.weaponAtkPer / 100)))
+        * (inputObj.arkObj.weaponAtkPer 
+        + (inputObj.accObj.weaponAtkPer / 100) + (inputObj.arkgridObj.weaponAtkPer / 100)))
 
     // 공격력
     let totalAtk = (((totalStat * totalWeaponAtk / 6) ** 0.5) * attackBonus 
@@ -129,15 +130,18 @@ export async function specPointCalc(inputObj) {
     let minusAccWeaponAtk = ((inputObj.defaultObj.weaponAtk 
         + inputObj.hyperObj.weaponAtkPlus 
         + inputObj.elixirObj.weaponAtkPlus 
-        + inputObj.bangleObj.weaponAtkPlus 
+        + inputObj.bangleObj.weaponAtkPlus
+        + inputObj.bangleObj.weaponAtkBonus 
         + inputObj.arkgridObj.weaponAtkPlus) 
         * (inputObj.arkObj.weaponAtkPer + (inputObj.arkgridObj.weaponAtkPer / 100)))
 
     // 악세 제외 공격력
-    let minusAccAtk = ((Math.sqrt((minusAccStat * minusAccWeaponAtk) / 6)) 
-    + (inputObj.elixirObj.atkPlus + inputObj.hyperObj.atkPlus + inputObj.arkgridObj.atkPlus)) 
-    * (((inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1) 
-    * attackBonus 
+    let minusAccAtk = (((minusAccStat * minusAccWeaponAtk / 6) ** 0.5) * attackBonus 
+    + (inputObj.elixirObj.atkPlus 
+        + inputObj.hyperObj.atkPlus 
+        + inputObj.elixirObj.atkBonus
+        + inputObj.arkgridObj.atkPlus)) 
+        * (((inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1) 
 
     // 악세 제외 적에게 주는 피해
     let minusAccFinal = (inputObj.engObj.finalDamagePer 
@@ -159,28 +163,35 @@ export async function specPointCalc(inputObj) {
         + inputObj.bangleObj.int) 
         * inputObj.etcObj.avatarStats
 
+
+        
     // 초월 제외 무기 공격력
     let minusHyperWeaponAtk = ((inputObj.defaultObj.weaponAtk 
         + inputObj.elixirObj.weaponAtkPlus 
         + inputObj.accObj.weaponAtkPlus 
-        + inputObj.bangleObj.weaponAtkPlus 
+        + inputObj.bangleObj.weaponAtkPlus
+        + inputObj.bangleObj.weaponAtkBonus 
         + inputObj.arkgridObj.weaponAtkPlus) 
         * (inputObj.arkObj.weaponAtkPer 
         + ((inputObj.accObj.weaponAtkPer + inputObj.arkgridObj.weaponAtkPer) / 100)))
 
     // 초월 공격력
-    let minusHyperAtk = ((Math.sqrt((minusHyperStat * minusHyperWeaponAtk) / 6)) 
-        + (inputObj.elixirObj.atkPlus + inputObj.arkgridObj.atkPlus)) 
-        * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1)
-        * attackBonus
+    let minusHyperAtk = (((minusHyperStat * minusHyperWeaponAtk / 6) ** 0.5) * attackBonus
+        + (inputObj.elixirObj.atkPlus 
+            + inputObj.accObj.atkPlus
+            + inputObj.elixirObj.atkBonus
+            + inputObj.arkgridObj.atkPlus))
+            * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1)
+
 
     // 초월 제외 적에게 주는 피해
-    let minusHyperFinal = (inputObj.engObj.finalDamagePer 
+    let minusHyperFinal = (bangleAddDamageResult 
         * inputObj.accObj.finalDamagePer 
-        * bangleAddDamageResult 
+        * inputObj.engObj.finalDamagePer 
         * inputObj.bangleObj.finalDamagePer 
         * inputObj.elixirObj.finalDamagePer 
-        * inputObj.arkgridObj.finalDamagePer)
+        * inputObj.arkgridObj.finalDamagePer
+        * inputObj.arkgridObj.coreValue)
 
     /**************************************************** 엘릭서 *****************************************************************/
 
@@ -198,23 +209,26 @@ export async function specPointCalc(inputObj) {
         + inputObj.hyperObj.weaponAtkPlus 
         + inputObj.accObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkPlus 
+        + inputObj.bangleObj.weaponAtkBonus 
         + inputObj.arkgridObj.weaponAtkPlus) 
         * (inputObj.arkObj.weaponAtkPer 
         + ((inputObj.accObj.weaponAtkPer + inputObj.arkgridObj.weaponAtkPer) / 100)))
 
     // 엘릭서 제외 공격력
-    let minusElixirAtk = ((Math.sqrt((minusElixirStat * minusElixirWeaponAtk) / 6)) 
-        + (inputObj.hyperObj.atkPlus + inputObj.arkgridObj.atkPlus))
-        * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1) 
-        * attackBonus
+    let minusElixirAtk = (((minusElixirStat * minusElixirWeaponAtk / 6) ** 0.5) * attackBonus 
+        + (inputObj.hyperObj.atkPlus 
+            + inputObj.accObj.atkPlus
+            + inputObj.arkgridObj.atkPlus))
+            * (((inputObj.accObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1) 
 
     // 엘릭서 제외 적에게 주는 피해.
-    let minusElixirFinal = (inputObj.engObj.finalDamagePer 
+    let minusElixirFinal = (bangleAddDamageResult
         * inputObj.accObj.finalDamagePer 
         * inputObj.hyperObj.finalDamagePer 
-        * bangleAddDamageResult
+        * inputObj.engObj.finalDamagePer 
         * inputObj.bangleObj.finalDamagePer
-        * inputObj.arkgridObj.finalDamagePer);
+        * inputObj.arkgridObj.finalDamagePer
+        * inputObj.arkgridObj.coreValue);
 
     /**************************************************** 팔찌 *****************************************************************/
 
@@ -268,14 +282,36 @@ export async function specPointCalc(inputObj) {
     //악세 효율 
     let accAddDamageValue = (bangleAddDamageResult - (bangleAddDamageResult - inputObj.accObj.addDamagePer / 100)) / bangleAddDamageResult
     let minusAccValue = ((minusAccAtk) * evolutionDamageResult * minusAccFinal * enlightResult * inputObj.arkObj.leapDamage * inputObj.etcObj.gemCheckFnc.gemValue * inputObj.etcObj.gemCheckFnc.etcAverageValue * gemsCoolValue * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))
-    let accValue = (((totalAtk-minusAccAtk)/minusAccAtk)*100) * inputObj.accObj.finalDamagePer * (inputObj.accObj.addDamagePer/100+1) * 1.65
+    let accValue = (((totalAtk-minusAccAtk)/minusAccAtk)*100) * inputObj.accObj.finalDamagePer * (inputObj.accObj.addDamagePer/100+1)
 
     //초월 효율
-    let minusHyperValue = ((minusHyperAtk) * evolutionDamageResult * minusHyperFinal * enlightResult * inputObj.arkObj.leapDamage * inputObj.etcObj.gemCheckFnc.gemValue * inputObj.etcObj.gemCheckFnc.etcAverageValue * gemsCoolValue * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))
+    let minusHyperValue = (((minusHyperAtk) 
+    * evolutionDamageResult 
+    * minusHyperFinal
+    * enlightResult
+    * inputObj.arkObj.leapDamage
+    * inputObj.etcObj.gemCheckFnc.gemValue 
+    * inputObj.etcObj.gemCheckFnc.etcAverageValue 
+    * 1.01
+    * gemsCoolValue 
+    * coolDownValue
+    * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))
+    * inputObj.defaultObj.estherDeal)
     let hyperValue = ((lastFinalValue - minusHyperValue) / minusHyperValue * 100).toFixed(2)
 
     //엘릭서 효율
-    let minusElixirValue = ((minusElixirAtk) * evolutionDamageResult * minusElixirFinal * enlightResult * inputObj.arkObj.leapDamage * inputObj.etcObj.gemCheckFnc.gemValue * inputObj.etcObj.gemCheckFnc.etcAverageValue * gemsCoolValue * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))
+    let minusElixirValue = (((minusElixirAtk) 
+        * evolutionDamageResult 
+        * minusElixirFinal
+        * enlightResult 
+        * inputObj.arkObj.leapDamage 
+        * inputObj.etcObj.gemCheckFnc.gemValue 
+        * inputObj.etcObj.gemCheckFnc.etcAverageValue 
+        * 1.01
+        * gemsCoolValue 
+        * coolDownValue
+        * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))
+        * inputObj.defaultObj.estherDeal)
     let elixirValue = ((lastFinalValue - minusElixirValue) / minusElixirValue * 100).toFixed(2)
 
     //팔찌 효율

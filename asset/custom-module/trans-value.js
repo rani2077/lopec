@@ -1858,10 +1858,12 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "7겁 광기";
         } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg) && skillCheck(gemSkillArry, "마운틴 클리브", dmg)) {
             specialClass = "마운틴 포식";
-        } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg)) {
+        } else if (classCheck("포식") && skillCheck(gemSkillArry, "크림슨 블레이드", dmg)) {
             specialClass = "크블 포식";
         } else if (classCheck("죽습") && skillCheck(gemSkillArry, "크레모아 지뢰", dmg)) {
             specialClass = "지뢰 죽습";
+        } else if (classCheck("기술") && dmgGemCount === 5) {
+            specialClass = "5겁 기술";
         } else if (classCheck("피메") && !skillCheck(gemSkillArry, "대재앙", dmg)) {
             specialClass = "6M 피메";
         } else if (classCheck("잔재") && dmgGemCount === 8) {
@@ -1912,34 +1914,80 @@ export async function getCharacterProfile(data, dataBase) {
 
     }
 
-    const specialClassMap = {
-        "질서의 별 코어 : 번천귀류": {"class": "번천 역천", "point": 10, "supportCheck": "역천"},
-        "질서의 달 코어 : 열파전조": {"class": "무공탄 역천", "point": 17, "supportCheck": "역천"},
-        "질서의 달 코어 : 소용돌이": {"class": "허리케인 포식", "point": 10, "supportCheck": "포식"},
-        "질서의 별 코어 : 풀 매거진": {"class": "레오불 사시", "point": 14, "supportCheck": "사시"}
-    };
 
+    const specialClassRules = [
+        {
+            class: "무공탄 역천", 
+            conditions: [
+                { core: "열파전조", point: 17, support: "역천" },
+                { core: "기류탄화", point: 14 }
+            ]
+        },
+        //
+        {
+            class: "번천 역천",
+            conditions: [
+                { core: "번천귀류", point: 14, support: "역천" }
+            ]
+        },
+        {
+            class: "허리케인 포식",
+            conditions: [
+                { core: "소용돌이", point: 10, support: "포식" }
+            ]
+        },
+        {
+            class: "레오불 사시",
+            conditions: [
+                { core: "풀 매거진", point: 14, support: "사시" }
+            ]
+        }
+    ];
+
+
+
+
+    const equippedCores = {};
     if (data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
         for (const slot of data.ArkGrid.Slots) {
-            if (!slot || !slot.Name || !slot.Point) {
-                continue; 
-            }
-            const coreValue = specialClassMap[slot.Name];
-            const classCheck = supportCheck();
-
-            if (coreValue && slot.Point >= coreValue.point && classCheck === coreValue.supportCheck) {
-                specialClass = coreValue.class;
-                break;
+            if (slot && slot.Name && slot.Point) {
+                equippedCores[slot.Name] = slot.Point;
             }
         }
     }
 
 
+    const getPoint = (partialName) => {
+        const fullName = Object.keys(equippedCores).find(name => name.includes(partialName));
+        return fullName ? equippedCores[fullName] : 0;
+    };
 
 
+    const currentSupport = supportCheck();
+
+
+    for (const rule of specialClassRules) {
+        const isMatch = rule.conditions.every(condition => {
+            const pointConditionMet = getPoint(condition.core) >= condition.point;
+            // support 조건이 규칙에 정의되어 있을 때만 검사
+            const supportConditionMet = !condition.support || currentSupport === condition.support;
+            
+            return pointConditionMet && supportConditionMet;
+        });
+
+        // 모든 조건이 맞으면, specialClass를 변경
+        if (isMatch) {
+            specialClass = rule.class;
+            break; 
+        }
+    }
     console.log("보석전용 직업 : ", specialClass)
 
 
+
+
+
+    
     gemSkillArry.forEach(function (gemSkill, idx) {
 
         let realClass = Modules.originFilter.classGemFilter.filter(item => item.class == specialClass);

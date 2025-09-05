@@ -2959,6 +2959,20 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "5겁 기술",
+        skill: [
+            { name: "에너지 버스터", per: 0.21225 },
+            { name: "명령 : 베이비 드론", per: 0.13025 },
+            { name: "명령 : 레이드 미사일", per: 0.010925 },
+            { name: "어나힐레이션 모드", per: 0.08525 },
+            { name: "명령 : 카펫", per: 0.074 },
+            { name: "명령 : 플레어 빔", per: 0.074 },
+            { name: "전술 사격", per: 0.074 },
+            { name: "보정치", per: -0.148 },
+
+        ],
+    },
+    {
         class: "유산",
         skill: [
             { name: "싱크 스킬", per: 0.6853 },
