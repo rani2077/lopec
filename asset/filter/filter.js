@@ -3018,6 +3018,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "6겁 사시",
+        skill: [
+            { name: "로즈 블로섬", per: 0.40 },
+            { name: "포커스 샷", per: 0.141 },
+            { name: "대재앙", per: 0.075 },
+            { name: "퍼펙트 샷", per: 0.058 },
+            { name: "타겟 다운", per: 0.095 },
+            { name: "레인 오브 불릿", per: 0.07 },
+        ],
+    },
+    {
         class: "레오불 사시",
         skill: [
             { name: "로즈 블로섬", per: 0.395 },

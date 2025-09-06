@@ -1866,6 +1866,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "5겁 기술";
         } else if (classCheck("피메") && !skillCheck(gemSkillArry, "대재앙", dmg)) {
             specialClass = "6M 피메";
+        } else if (classCheck("사시") && dmgGemCount === 6) {
+            specialClass = "6겁 사시";
         } else if (classCheck("잔재") && dmgGemCount === 8) {
             specialClass = "8딜 잔재";
         } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
@@ -2715,11 +2717,12 @@ export async function getCharacterProfile(data, dataBase) {
     const classCores = Modules.originFilter.arkgridCoreFilter[arkPassive];
 
     if (classCores && data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
-        // 해당 직업의 모든 유효 '질서' 코어 목록을 미리 만들어 둡니다.
+        // --- 1. 사전 확인 단계 (trim() 추가) ---
         const validOrderCores = [...(classCores.mainCore || []), ...(classCores.starCore || [])];
         const equippedValidOrderCores = data.ArkGrid.Slots
-        .map(slot => slot.Name)
-        .filter(Name => validOrderCores.includes(Name));
+            .filter(slot => slot && slot.Name && validOrderCores.includes(slot.Name.trim()))
+            .map(slot => slot.Name.trim());
+
         const hasSunCore = equippedValidOrderCores.some(Name => Name.startsWith("질서의 해"));
         const hasMoonCore = equippedValidOrderCores.some(Name => Name.startsWith("질서의 달"));
         const canApplySpecialCondition = hasSunCore && hasMoonCore;
@@ -2727,12 +2730,12 @@ export async function getCharacterProfile(data, dataBase) {
     
         data.ArkGrid.Slots.forEach(slot => {
             
-            // 슬롯이 null이거나 Name이 없는 경우, 이 슬롯은 건너뜁니다.
             if (!slot || !slot.Name) {
                 return; 
             }
 
-            const { Name, Grade, Point } = slot;
+            const { Grade, Point } = slot;
+            const Name = slot.Name.trim();
 
             // --- 질서 코어 계산 ---
             if (validOrderCores.includes(Name)) {
