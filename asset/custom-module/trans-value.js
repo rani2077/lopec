@@ -1925,6 +1925,13 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "기류탄화", point: 14 }
             ]
         },
+        {
+            class: "무한풍신 일격", 
+            conditions: [
+                { core: "풍신", point: 14, support: "일격" },
+                { core: "풍진천뢰", point: 14 }
+            ]
+        },
         //
         {
             class: "번천 역천",
@@ -1936,6 +1943,12 @@ export async function getCharacterProfile(data, dataBase) {
             class: "허리케인 포식",
             conditions: [
                 { core: "소용돌이", point: 10, support: "포식" }
+            ]
+        },
+        {
+            class: "허리케인 포식2",
+            conditions: [
+                { core: "파괴의 바람", point: 10, support: "포식" }
             ]
         },
         {
@@ -2717,7 +2730,6 @@ export async function getCharacterProfile(data, dataBase) {
     const classCores = Modules.originFilter.arkgridCoreFilter[arkPassive];
 
     if (classCores && data.ArkGrid && Array.isArray(data.ArkGrid.Slots)) {
-        // --- 1. 사전 확인 단계 (trim() 추가) ---
         const validOrderCores = [...(classCores.mainCore || []), ...(classCores.starCore || [])];
         const equippedValidOrderCores = data.ArkGrid.Slots
             .filter(slot => slot && slot.Name && validOrderCores.includes(slot.Name.trim()))
@@ -2734,8 +2746,17 @@ export async function getCharacterProfile(data, dataBase) {
                 return; 
             }
 
-            const { Grade, Point } = slot;
+            let { Grade, Point } = slot;
             const Name = slot.Name.trim();
+
+            // ================== ★ 임시 디버깅 코드 ★ ==================
+            // '달이 내린 예언' 코어를 만나면, 실제 포인트와 상관없이 10으로 강제 변경
+            if (Name === "질서의 달 코어 : 달이 내린 예언") {
+                console.log(`[디버깅] "${Name}" 코어 발견! 실제 Point(${Point})를 10으로 강제 변경합니다.`);
+                Point = 10;
+            }
+            // ==========================================================
+
 
             // --- 질서 코어 계산 ---
             if (validOrderCores.includes(Name)) {
