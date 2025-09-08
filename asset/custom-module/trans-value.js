@@ -2749,15 +2749,6 @@ export async function getCharacterProfile(data, dataBase) {
             let { Grade, Point } = slot;
             const Name = slot.Name.trim();
 
-            // ================== ★ 임시 디버깅 코드 ★ ==================
-            // '달이 내린 예언' 코어를 만나면, 실제 포인트와 상관없이 10으로 강제 변경
-            if (Name === "질서의 달 코어 : 달이 내린 예언") {
-                console.log(`[디버깅] "${Name}" 코어 발견! 실제 Point(${Point})를 10으로 강제 변경합니다.`);
-                Point = 10;
-            }
-            // ==========================================================
-
-
             // --- 질서 코어 계산 ---
             if (validOrderCores.includes(Name)) {
                 let coreGroup = null;
