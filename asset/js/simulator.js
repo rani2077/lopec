@@ -4706,18 +4706,12 @@ async function calculateGemData(data) {
 
 
     const specialClassRules = [
+
+        /*************************** 슈샤이어 ***************************/
         {
-            class: "무공탄 역천", 
+            class: "러쉬 광기",
             conditions: [
-                { core: "열파전조", point: 17, support: "역천" },
-                { core: "기류탄화", point: 14 }
-            ]
-        },
-        //
-        {
-            class: "번천 역천",
-            conditions: [
-                { core: "번천귀류", point: 14, support: "역천" }
+                { core: "다크 파워", point: 17, support: "광기" }
             ]
         },
         {
@@ -4727,12 +4721,46 @@ async function calculateGemData(data) {
             ]
         },
         {
+            class: "허리케인 포식2",
+            conditions: [
+                { core: "파괴의 바람", point: 10, support: "포식" }
+            ]
+        },
+
+        /*************************** 애니츠 ***************************/
+        {
+            class: "무공탄 역천",
+            conditions: [
+                { core: "열파전조", point: 17, support: "역천" },
+                { core: "기류탄화", point: 14 }
+            ]
+        },
+        {
+            class: "무한풍신 일격",
+            conditions: [
+                { core: "풍신", point: 14, support: "일격" },
+                { core: "풍진천뢰", point: 14 }
+            ]
+        },
+        //
+        {
+            class: "번천 역천",
+            conditions: [
+                { core: "번천귀류", point: 14, support: "역천" },
+                { core: "맹공", point: 14, support: "역천" },
+
+            ]
+        },
+        /*************************** 아르데 ***************************/
+        {
             class: "레오불 사시",
             conditions: [
                 { core: "풀 매거진", point: 14, support: "사시" }
             ]
         }
     ];
+
+
 
 
 
@@ -4761,7 +4789,6 @@ async function calculateGemData(data) {
             const pointConditionMet = getPoint(condition.core) >= condition.point;
             // support 조건이 규칙에 정의되어 있을 때만 검사
             const supportConditionMet = !condition.support || currentSupport === condition.support;
-            
             return pointConditionMet && supportConditionMet;
         });
 

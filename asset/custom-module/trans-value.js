@@ -136,7 +136,7 @@ export async function getCharacterProfile(data, dataBase) {
 
 
     //let allCardDescriptions = []; // 모든 Description을 저장할 배열 초기화
-//
+    //
     //if (data.ArmoryCard && data.ArmoryCard.Effects && Array.isArray(data.ArmoryCard.Effects)) {
     //    // effect를 순회
     //    data.ArmoryCard.Effects.forEach(effect => {
@@ -153,9 +153,9 @@ export async function getCharacterProfile(data, dataBase) {
     //        }
     //    });
     //}
-//
+    //
     //let totalMaxHpBonus = 0; // 추출된 최대 생명력 보너스 합계
-//
+    //
     //// allCardDescriptions 순회
     //allCardDescriptions.forEach(description => {
     //    // "최대 생명력"이 포함되어 있는지 확인
@@ -163,7 +163,7 @@ export async function getCharacterProfile(data, dataBase) {
     //        // 정규식
     //        const regex = /최대 생명력 \+(\d+(?:\.\d+)?)\%/;
     //        const match = description.match(regex);
-//
+    //
     //        // 정규식 매칭에 성공했고, 숫자를 포함한 그룹이 있는지 확인합니다.
     //        if (match && match[1]) {
     //            // 추출된 숫자 문자열을 부동소수점 숫자로 변환하여 합계에 더합니다.
@@ -171,7 +171,7 @@ export async function getCharacterProfile(data, dataBase) {
     //        }
     //    }
     //});
-//
+    //
     ////console.log("최대 생명력 보너스 총합:", totalMaxHpBonus);
     //totalMaxHpBonus = (totalMaxHpBonus / 100)
     //console.log(totalMaxHpBonus)
@@ -244,7 +244,7 @@ export async function getCharacterProfile(data, dataBase) {
         abilityAttackBonus: 0,
         armorStatus: 0,
         healthStatus: 0,
-        RealHealthStauts : 0,
+        RealHealthStauts: 0,
         avatarStats: 1,
         supportCheck: supportCheck(),
         characterClass: data.ArmoryProfile.CharacterClassName,
@@ -636,7 +636,7 @@ export async function getCharacterProfile(data, dataBase) {
     // if (devilCheck !== "true") {
     // console.log(bangleObj)
     //if (devilCheck === "true") {
-        // bangleObj.devilDamagerPer = 1;
+    // bangleObj.devilDamagerPer = 1;
     bangleObj.finalDamagePer = bangleObj.finalDamagePer * bangleObj.devilDamagePer;
     //}
 
@@ -1920,25 +1920,12 @@ export async function getCharacterProfile(data, dataBase) {
 
 
     const specialClassRules = [
+
+        /*************************** 슈샤이어 ***************************/
         {
-            class: "무공탄 역천", 
+            class: "러쉬 광기",
             conditions: [
-                { core: "열파전조", point: 17, support: "역천" },
-                { core: "기류탄화", point: 14 }
-            ]
-        },
-        {
-            class: "무한풍신 일격", 
-            conditions: [
-                { core: "풍신", point: 14, support: "일격" },
-                { core: "풍진천뢰", point: 14 }
-            ]
-        },
-        //
-        {
-            class: "번천 역천",
-            conditions: [
-                { core: "번천귀류", point: 14, support: "역천" }
+                { core: "다크 파워", point: 17, support: "광기" }
             ]
         },
         {
@@ -1953,6 +1940,32 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "파괴의 바람", point: 10, support: "포식" }
             ]
         },
+
+        /*************************** 애니츠 ***************************/
+        {
+            class: "무공탄 역천",
+            conditions: [
+                { core: "열파전조", point: 17, support: "역천" },
+                { core: "기류탄화", point: 14 }
+            ]
+        },
+        {
+            class: "무한풍신 일격",
+            conditions: [
+                { core: "풍신", point: 14, support: "일격" },
+                { core: "풍진천뢰", point: 14 }
+            ]
+        },
+        //
+        {
+            class: "번천 역천",
+            conditions: [
+                { core: "번천귀류", point: 14, support: "역천" },
+                { core: "맹공", point: 14, support: "역천" },
+
+            ]
+        },
+        /*************************** 아르데 ***************************/
         {
             class: "레오불 사시",
             conditions: [
@@ -1960,8 +1973,6 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         }
     ];
-
-
 
 
     const equippedCores = {};
@@ -1988,14 +1999,14 @@ export async function getCharacterProfile(data, dataBase) {
             const pointConditionMet = getPoint(condition.core) >= condition.point;
             // support 조건이 규칙에 정의되어 있을 때만 검사
             const supportConditionMet = !condition.support || currentSupport === condition.support;
-            
+
             return pointConditionMet && supportConditionMet;
         });
 
         // 모든 조건이 맞으면, specialClass를 변경
         if (isMatch) {
             specialClass = rule.class;
-            break; 
+            break;
         }
     }
     console.log("보석전용 직업 : ", specialClass)
@@ -2004,7 +2015,7 @@ export async function getCharacterProfile(data, dataBase) {
 
 
 
-    
+
     gemSkillArry.forEach(function (gemSkill, idx) {
 
         let realClass = Modules.originFilter.classGemFilter.filter(item => item.class == specialClass);
@@ -2635,7 +2646,7 @@ export async function getCharacterProfile(data, dataBase) {
     //};
     //karmaPointCalc();
 
-    
+
 
     /* **********************************************************************************************************************
      * name		              :	  arkgridGemObj{}
@@ -2645,49 +2656,49 @@ export async function getCharacterProfile(data, dataBase) {
      *********************************************************************************************************************** */
 
     const getOriginarkgridGemObj = () => ({
-        finalDamagePer : 1,
-        addDamagePer : 0,
-        atkPer : 0,
-        stigmaPer : 0,
-        atkBuff : 0,
-        damageBuff : 0,
+        finalDamagePer: 1,
+        addDamagePer: 0,
+        atkPer: 0,
+        stigmaPer: 0,
+        atkBuff: 0,
+        damageBuff: 0,
     })
 
     let arkgridGemObj = getOriginarkgridGemObj();
 
     const arkgridGemMapping = {
-        "공격력" : {
+        "공격력": {
             key: "atkPer",
-            value : level => (Math.floor(11 * level / 3)) / 100
+            value: level => (Math.floor(11 * level / 3)) / 100
         },
-        "추가 피해" : {
+        "추가 피해": {
             key: "addDamagePer",
-            value : level => (Math.floor(97 * level / 12)) / 100
+            value: level => (Math.floor(97 * level / 12)) / 100
         },
-        "보스 피해" : {
+        "보스 피해": {
             key: "finalDamagePer",
-            value : level => (Math.floor(25 * level / 3)) / 10000 + 1
+            value: level => (Math.floor(25 * level / 3)) / 10000 + 1
         },
-        "낙인력" : {
+        "낙인력": {
             key: "stigmaPer",
-            value : level => (Math.floor(50 * level / 3)) / 100
+            value: level => (Math.floor(50 * level / 3)) / 100
         },
-        "아군 공격 강화" : {
+        "아군 공격 강화": {
             key: "atkBuff",
-            value : level => (13 * level) / 100
+            value: level => (13 * level) / 100
         },
-        "아군 피해 강화" : {
+        "아군 피해 강화": {
             key: "damageBuff",
-            value : level => (5*level + Math.floor(level/4))/100
+            value: level => (5 * level + Math.floor(level / 4)) / 100
         },
     }
 
 
     if (data.ArkGrid && Array.isArray(data.ArkGrid.Effects)) {
 
-        data.ArkGrid.Effects.forEach(efffect =>{
+        data.ArkGrid.Effects.forEach(efffect => {
             const mapping = arkgridGemMapping[efffect.Name];
-            if (mapping){
+            if (mapping) {
                 arkgridGemObj[mapping.key] = mapping.value(efffect.Level);
             }
         });
@@ -2701,26 +2712,26 @@ export async function getCharacterProfile(data, dataBase) {
      * description            :   아크그리드 코어 정보 파싱 및 수치 부여
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
-    
+
     const getOriginarkgridObj = () => ({
-        coreValue : 1,
-        finalDamagePer : 1,
-        addDamagePer : 0,
-        atkPlus : 0,
-        atkPer : 0,
-        weaponAtkPlus : 0,
-        weaponAtkPer : 0,
-        identityUptime : 0,
-        utilityPower : 0,
-        cdrPercent : 0,
-        carePower : 0,
-        atkBuff : 0,
-        damageBuff : 0,
-        stigmaPer : 0,
-        health : 0,
-        statHP : 0,
-        finalDamageBuff : 1,
-        atkBuffPlus : 1,
+        coreValue: 1,
+        finalDamagePer: 1,
+        addDamagePer: 0,
+        atkPlus: 0,
+        atkPer: 0,
+        weaponAtkPlus: 0,
+        weaponAtkPer: 0,
+        identityUptime: 0,
+        utilityPower: 0,
+        cdrPercent: 0,
+        carePower: 0,
+        atkBuff: 0,
+        damageBuff: 0,
+        stigmaPer: 0,
+        health: 0,
+        statHP: 0,
+        finalDamageBuff: 1,
+        atkBuffPlus: 1,
 
 
     });
@@ -2741,11 +2752,11 @@ export async function getCharacterProfile(data, dataBase) {
         const hasMoonCore = equippedValidOrderCores.some(Name => Name.startsWith("질서의 달"));
         const canApplySpecialCondition = hasSunCore && hasMoonCore;
 
-    
+
         data.ArkGrid.Slots.forEach(slot => {
-            
+
             if (!slot || !slot.Name) {
-                return; 
+                return;
             }
 
             let { Grade, Point } = slot;
@@ -2799,7 +2810,7 @@ export async function getCharacterProfile(data, dataBase) {
             }
         }); // forEach 루프는 여기서 올바르게 끝납니다.
     }
-    
+
     arkgridObj.addDamagePer = arkgridObj.addDamagePer + arkgridGemObj.addDamagePer;
     arkgridObj.finalDamagePer = arkgridObj.finalDamagePer * arkgridGemObj.finalDamagePer;
     arkgridObj.atkPer = arkgridObj.atkPer + arkgridGemObj.atkPer;
@@ -2807,8 +2818,8 @@ export async function getCharacterProfile(data, dataBase) {
     arkgridObj.damageBuff = arkgridObj.damageBuff + arkgridGemObj.damageBuff;
     arkgridObj.stigmaPer = arkgridObj.stigmaPer + arkgridGemObj.stigmaPer;
 
-    etcObj.healthStatus = Number((healthStatus()+arkgridObj.health) * jobObj.healthPer);
-    etcObj.RealHealthStauts = Number(healthStatus()+arkgridObj.health) * healthPer;
+    etcObj.healthStatus = Number((healthStatus() + arkgridObj.health) * jobObj.healthPer);
+    etcObj.RealHealthStauts = Number(healthStatus() + arkgridObj.health) * healthPer;
 
     if (localStorage.getItem("devilDamage") === "false") {
         arkgridObj = getOriginarkgridObj();
