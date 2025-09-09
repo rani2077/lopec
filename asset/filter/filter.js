@@ -2542,6 +2542,15 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "3오의",
+        skill: [
+            { name: "오의 : 창룡패황권", per: 0.311 },
+            { name: "오의 : 화룡천상", per: 0.178 },
+            { name: "오의 : 폭쇄진", per: 0.164 },
+            { name: "내공연소", per: 0.071 },
+        ],
+    },
+    {
         class: "초심",
         skill: [
             { name: "방천격", per: 0.228 },

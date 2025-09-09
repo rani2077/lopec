@@ -1884,6 +1884,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "슈차 잔재";
         } else if (classCheck("오의") && skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 폭쇄진", dmg)) {
             specialClass = "밸패 오의";
+        } else if (classCheck("오의") && !skillCheck(gemSkillArry, "오의 : 풍신초래", dmg)) {
+            specialClass = "3오의";
         } else if (classCheck("체술") && dmgGemCount === 4) {
             specialClass = "4겁 체술";
         } else if (classCheck("체술") && !skillCheck(gemSkillArry, "일망 타진", dmg) && skillCheck(gemSkillArry, "심판", per)) {
