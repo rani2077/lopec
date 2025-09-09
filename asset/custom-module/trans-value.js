@@ -2821,10 +2821,10 @@ export async function getCharacterProfile(data, dataBase) {
     etcObj.healthStatus = Number((healthStatus() + arkgridObj.health) * jobObj.healthPer);
     etcObj.RealHealthStauts = Number(healthStatus() + arkgridObj.health) * healthPer;
 
-    if (localStorage.getItem("devilDamage") === "false") {
-        arkgridObj = getOriginarkgridObj();
-        arkgridGemObj = getOriginarkgridGemObj();
-    }
+    //if (localStorage.getItem("devilDamage") === "false") {
+    //    arkgridObj = getOriginarkgridObj();
+    //    arkgridGemObj = getOriginarkgridGemObj();
+    //}
 
 
     /* **********************************************************************************************************************

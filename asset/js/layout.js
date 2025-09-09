@@ -1702,56 +1702,20 @@ window.addEventListener("load", createTooltip);
 
 /* **********************************************************************************************************************
 * function name		:	devilDamageCheck()
-* description       : 	악추피 적용 여부 체크박스의 상태를 로컬 스토리지에 저장하고 불러옵니다.
+* description       : 	localStorage에서 'devilDamage'와 'devilDamageAlertShown' 키를 삭제합니다.
 * useDevice         : 	모두 사용 (현재 layout.js에 위치)
 *********************************************************************************************************************** */
 function devilDamageCheck() {
-    // 1. 모든 ".devil-box" 요소를 선택
-    const elements = document.querySelectorAll(".devil-box"); // 컨테이너 요소들
+    const devilDamageKey = 'devilDamage';
+    const alertShownKey = 'devilDamageAlertShown';
 
-    // 요소가 없으면 함수 종료 (오류 방지)
-    if (elements.length === 0) {
-        return;
+    if (localStorage.getItem(devilDamageKey)) {
+        localStorage.removeItem(devilDamageKey);
     }
 
-    elements.forEach(element => {
-        const checkBox = element.querySelector("input[type='checkbox']"); // 각 요소 내부의 체크박스 요소
-        // 체크박스가 없으면 해당 요소는 건너<0xEB><0x9B><0x84> (오류 방지)
-        if (!checkBox) {
-            return;
-        }
-
-        const storageKey = 'devilDamage'; // 로컬 스토리지 키
-
-        // 2. 페이지 로드 시 로컬 스토리지 값 확인 및 체크박스 상태 설정
-        const savedState = localStorage.getItem(storageKey);
-        if (savedState === 'true' || savedState === null) {
-            checkBox.checked = true; // 저장된 값이 'true' 문자열이면 체크 상태로 설정
-        } else {
-            checkBox.checked = false; // 그 외의 경우 (null, 'false' 등) 체크 해제 상태로 설정
-        }
-
-        // 3. 체크박스 상태 변경 시 로컬 스토리지에 저장하는 이벤트 리스너 추가
-        const alertShownKey = 'devilDamageAlertShown'; // 로컬 스토리지 키 (알림 표시 여부)
-        checkBox.addEventListener("change", () => {
-            // 3-1. 알림이 이미 표시되었는지 확인
-            const alertShown = localStorage.getItem(alertShownKey);
-
-            if (alertShown !== 'true') {
-                // 3-2. 알림이 표시되지 않았다면 알림 표시 및 플래그 저장
-                alert("악추피 체크/해제시 자동으로 새로고침이 진행됩니다.\n시뮬레이터에서도 정상작동하니 사전에 체크/해제 해주세요.\n※본 메시지는 최초 1회만 표시됩니다.");
-                localStorage.setItem(alertShownKey, 'true');
-            }
-
-            // 3-3. 체크박스의 현재 상태를 로컬 스토리지에 저장
-            localStorage.setItem(storageKey, checkBox.checked);
-            // console.log(`로컬 스토리지 '${storageKey}' 저장됨: ${checkBox.checked}`); // 확인용 로그
-
-            // 3-4. 페이지 새로고침
-            location.reload();
-        });
-    });
+    if (localStorage.getItem(alertShownKey)) {
+        localStorage.removeItem(alertShownKey);
+    }
 }
 
-// 함수 실행하여 기능 활성화
 devilDamageCheck();

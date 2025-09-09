@@ -1442,13 +1442,6 @@ i.lopec_badge_penguin:hover:after {
     justify-content: space-between;
 }
 
-.sc-lopec-click.on .group-category .devil-box {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    color: #8d8d8d;
-}
-
 /* **********************************************************************************************************************
 * description	    : 	로펙딸깍 유저의 정보 간단하게 보기
 *********************************************************************************************************************** */
