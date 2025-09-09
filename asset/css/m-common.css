@@ -928,6 +928,25 @@ i.badge:hover:after {
 }
 
 
+i.lopec_badge_4th {
+    background-image: url("/asset/image/lopec_badge_4th.png");
+}
+
+i.lopec_badge_4th:hover:after {
+    content: "카제로스 The 4th, 더잘해야돼!";
+}
+
+i.lopec_badge_5th {
+    background-image: url("/asset/image/lopec_badge_5th.png");
+}
+
+i.lopec_badge_5th:hover:after {
+    content: "카제로스 The 5th, 쥐구멍단!";
+}
+
+
+
+
 i.lopec_badge_connie {
     background-image: url("/asset/image/lopec_badge_01.png");
 }
@@ -975,3 +994,4 @@ i.lopec_badge_penguin {
 i.lopec_badge_penguin:hover:after {
     content: "감사의 마음이 듬뿍 담긴 펭바타뱃지!";
 }
+
