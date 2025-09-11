@@ -110,7 +110,19 @@ function scHeaderCreate() {
                         <div class="logo-group">
                             <h1 class="logo">
                                 <span class="blind">로스트아크 전투정보실 전투력계산 스펙포인트</span>
-                                <a href="/mobile/" class="link-site"></a>
+                                <a href="/mobile/" class="logo-link" aria-label="LOPEC 홈">
+                                    <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="143" height="30" fill="none" viewBox="0 0 143 30">
+                                        <g clip-path="url(#clip0_9574_130)">
+                                            <path d="M53.4388 0V23.8923H48.0779V0H53.4388ZM59.7747 22.7473C58.3819 21.9821 57.2904 20.9277 56.5059 19.5815C55.7185 18.2352 55.3234 16.7019 55.3234 14.9844C55.3234 13.2669 55.7185 11.7619 56.5059 10.4043C57.2932 9.04676 58.3819 7.99244 59.7747 7.23855C61.1675 6.48465 62.748 6.1077 64.5132 6.1077C66.2783 6.1077 67.8247 6.48465 69.2175 7.23855C70.6103 7.99244 71.7018 9.04676 72.4892 10.4043C73.2766 11.7619 73.6717 13.2896 73.6717 14.9844C73.6717 16.6793 73.2766 18.2352 72.4892 19.5815C71.7018 20.9277 70.6103 21.9821 69.2175 22.7473C67.8247 23.5097 66.2556 23.8923 64.5132 23.8923C62.7707 23.8923 61.1675 23.5097 59.7747 22.7473ZM67.2078 18.1332C67.8986 17.3708 68.2453 16.3193 68.2453 14.9844C68.2453 13.6495 67.8957 12.6264 67.1936 11.8498C66.4915 11.0761 65.599 10.6878 64.5132 10.6878C63.4273 10.6878 62.5348 11.0761 61.8327 11.8498C61.1306 12.6235 60.781 13.6693 60.781 14.9844C60.781 16.2995 61.1306 17.3708 61.8327 18.1332C62.5348 18.8984 63.4273 19.2782 64.5132 19.2782C65.599 19.2782 66.5171 18.8984 67.2078 18.1332ZM93.9017 15.0156C93.9017 13.2981 93.5066 11.7648 92.7192 10.4185C91.9318 9.07227 90.8403 8.01795 89.4475 7.25272C88.0547 6.49032 86.4856 6.1077 84.7432 6.1077C83.3475 6.1077 82.0741 6.35711 80.9143 6.83042V6.1077H75.5534V30H80.9143V23.1781C82.0769 23.6486 83.3504 23.8923 84.7432 23.8923C86.4856 23.8923 88.0547 23.5154 89.4475 22.7615C90.8403 22.0076 91.9318 20.9532 92.7192 19.5957C93.5066 18.2381 93.9017 16.7104 93.9017 15.0156ZM88.4782 15.0156C88.4782 16.3307 88.1286 17.3736 87.4265 18.1502C86.7244 18.924 85.8319 19.3122 84.746 19.3122C83.6602 19.3122 82.7676 18.924 82.0655 18.1502C81.3634 17.3765 81.0138 16.3307 81.0138 15.0156C81.0138 13.7005 81.3634 12.6292 82.0655 11.8668C82.7676 11.1016 83.6602 10.7218 84.746 10.7218C85.8319 10.7218 86.75 11.1016 87.4407 11.8668C88.1314 12.6292 88.4782 13.6807 88.4782 15.0156ZM137.113 22.906C136.442 22.2485 136.107 21.4209 136.107 20.4232C136.107 19.4256 136.437 18.5838 137.096 17.9575C137.756 17.3311 138.574 17.0194 139.552 17.0194C140.53 17.0194 141.349 17.3311 142.008 17.9575C142.667 18.5838 142.997 19.4058 142.997 20.4232C142.997 21.4407 142.662 22.2485 141.991 22.906C141.32 23.5635 140.507 23.8923 139.549 23.8923C138.591 23.8923 137.778 23.5635 137.108 22.906H137.113ZM128.702 16.6226C128.532 17.2036 128.279 17.7194 127.904 18.1332C127.213 18.8984 126.315 19.2782 125.209 19.2782C124.103 19.2782 123.231 18.8984 122.528 18.1332C121.826 17.3708 121.477 16.3193 121.477 14.9844C121.477 13.6495 121.826 12.6264 122.528 11.8498C123.231 11.0761 124.123 10.6878 125.209 10.6878C126.295 10.6878 127.187 11.0761 127.889 11.8498C128.273 12.2721 128.529 12.7936 128.702 13.3774H134.222C134.049 12.3118 133.714 11.317 133.185 10.4043C132.398 9.04676 131.306 7.99244 129.913 7.23855C128.52 6.48465 126.951 6.1077 125.209 6.1077C123.466 6.1077 121.863 6.48465 120.47 7.23855C119.078 7.99244 117.986 9.04676 117.202 10.4043C116.414 11.7619 116.019 13.2896 116.019 14.9844C116.019 16.6793 116.414 18.2352 117.202 19.5815C117.989 20.9277 119.078 21.9821 120.47 22.7473C121.863 23.5097 123.444 23.8923 125.209 23.8923C126.974 23.8923 128.52 23.5097 129.913 22.7473C131.306 21.9821 132.398 20.9277 133.185 19.5815C133.711 18.6802 134.046 17.6882 134.22 16.6226H128.702ZM107.728 18.0539C107.708 18.0794 107.693 18.1105 107.674 18.1332C106.983 18.8984 106.085 19.2782 104.979 19.2782C103.873 19.2782 103.001 18.8984 102.298 18.1332C101.918 17.7194 101.662 17.2036 101.485 16.6226H113.99C114.075 16.0954 114.135 15.5541 114.135 14.9844C114.135 13.2867 113.739 11.7619 112.952 10.4043C112.165 9.04676 111.073 7.99244 109.68 7.23855C108.288 6.48465 106.718 6.1077 104.976 6.1077C103.234 6.1077 101.63 6.48465 100.238 7.23855C98.8448 7.99244 97.7533 9.04676 96.9687 10.4043C96.1814 11.7619 95.7863 13.2896 95.7863 14.9844C95.7863 16.6793 96.1814 18.2352 96.9687 19.5815C97.7561 20.9277 98.8448 21.9821 100.238 22.7473C101.63 23.5097 103.211 23.8923 104.976 23.8923C106.741 23.8923 108.288 23.5097 109.68 22.7473C111.073 21.9821 112.165 20.9277 112.952 19.5815C113.233 19.0997 113.447 18.5838 113.629 18.0539H107.728ZM102.296 11.8498C102.998 11.0761 103.89 10.6878 104.976 10.6878C106.062 10.6878 106.954 11.0761 107.657 11.8498C108.04 12.2721 108.296 12.7936 108.469 13.3774H101.483C101.656 12.7936 101.912 12.2749 102.296 11.8498Z" fill="#333333" />
+                                            <path d="M30.1276 6.1077H24.0645C22.4926 6.1077 20.4802 7.37742 19.5734 8.94757L14.2153 18.2012H7.78274L13.1408 8.94757C14.0476 7.38025 13.5104 6.1077 11.9385 6.1077C10.3666 6.1077 8.35408 7.37742 7.44733 8.94757L0.440587 21.0411C-0.466167 22.6084 0.0710636 23.881 1.64296 23.881H10.9237L9.02207 27.163C8.11531 28.7303 8.65254 30.0028 10.2244 30.0028C11.7963 30.0028 13.8088 28.7331 14.7156 27.163L16.6172 23.881H19.8349C24.7496 23.881 31.0542 19.8961 33.891 14.9958C36.7278 10.0954 35.0394 6.11053 30.1247 6.11053L30.1276 6.1077ZM23.1237 18.2012H19.906L23.6211 11.7874H26.8388C28.6125 11.7874 29.2237 13.2272 28.1975 14.9958C27.1714 16.7643 24.8974 18.2041 23.1237 18.2041V18.2012Z" fill="#2563EB" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_9574_130">
+                                                <rect width="143" height="30" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </a>
                             </h1>
                         </div>
                         <div class="group-search">
@@ -159,35 +171,55 @@ function scHeaderCreate() {
                     <div class="logo-group">
                         <h1 class="logo">
                             <span class="blind">로스트아크 전투정보실 전투력계산 스펙포인트</span>
-                            <a href="/" class="link-site"></a>
+                            <a href="/" class="logo-link" aria-label="LOPEC 홈">
+                                <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="143" height="30" fill="none" viewBox="0 0 143 30">
+                                    <g clip-path="url(#clip0_9574_130)">
+                                        <path d="M53.4388 0V23.8923H48.0779V0H53.4388ZM59.7747 22.7473C58.3819 21.9821 57.2904 20.9277 56.5059 19.5815C55.7185 18.2352 55.3234 16.7019 55.3234 14.9844C55.3234 13.2669 55.7185 11.7619 56.5059 10.4043C57.2932 9.04676 58.3819 7.99244 59.7747 7.23855C61.1675 6.48465 62.748 6.1077 64.5132 6.1077C66.2783 6.1077 67.8247 6.48465 69.2175 7.23855C70.6103 7.99244 71.7018 9.04676 72.4892 10.4043C73.2766 11.7619 73.6717 13.2896 73.6717 14.9844C73.6717 16.6793 73.2766 18.2352 72.4892 19.5815C71.7018 20.9277 70.6103 21.9821 69.2175 22.7473C67.8247 23.5097 66.2556 23.8923 64.5132 23.8923C62.7707 23.8923 61.1675 23.5097 59.7747 22.7473ZM67.2078 18.1332C67.8986 17.3708 68.2453 16.3193 68.2453 14.9844C68.2453 13.6495 67.8957 12.6264 67.1936 11.8498C66.4915 11.0761 65.599 10.6878 64.5132 10.6878C63.4273 10.6878 62.5348 11.0761 61.8327 11.8498C61.1306 12.6235 60.781 13.6693 60.781 14.9844C60.781 16.2995 61.1306 17.3708 61.8327 18.1332C62.5348 18.8984 63.4273 19.2782 64.5132 19.2782C65.599 19.2782 66.5171 18.8984 67.2078 18.1332ZM93.9017 15.0156C93.9017 13.2981 93.5066 11.7648 92.7192 10.4185C91.9318 9.07227 90.8403 8.01795 89.4475 7.25272C88.0547 6.49032 86.4856 6.1077 84.7432 6.1077C83.3475 6.1077 82.0741 6.35711 80.9143 6.83042V6.1077H75.5534V30H80.9143V23.1781C82.0769 23.6486 83.3504 23.8923 84.7432 23.8923C86.4856 23.8923 88.0547 23.5154 89.4475 22.7615C90.8403 22.0076 91.9318 20.9532 92.7192 19.5957C93.5066 18.2381 93.9017 16.7104 93.9017 15.0156ZM88.4782 15.0156C88.4782 16.3307 88.1286 17.3736 87.4265 18.1502C86.7244 18.924 85.8319 19.3122 84.746 19.3122C83.6602 19.3122 82.7676 18.924 82.0655 18.1502C81.3634 17.3765 81.0138 16.3307 81.0138 15.0156C81.0138 13.7005 81.3634 12.6292 82.0655 11.8668C82.7676 11.1016 83.6602 10.7218 84.746 10.7218C85.8319 10.7218 86.75 11.1016 87.4407 11.8668C88.1314 12.6292 88.4782 13.6807 88.4782 15.0156ZM137.113 22.906C136.442 22.2485 136.107 21.4209 136.107 20.4232C136.107 19.4256 136.437 18.5838 137.096 17.9575C137.756 17.3311 138.574 17.0194 139.552 17.0194C140.53 17.0194 141.349 17.3311 142.008 17.9575C142.667 18.5838 142.997 19.4058 142.997 20.4232C142.997 21.4407 142.662 22.2485 141.991 22.906C141.32 23.5635 140.507 23.8923 139.549 23.8923C138.591 23.8923 137.778 23.5635 137.108 22.906H137.113ZM128.702 16.6226C128.532 17.2036 128.279 17.7194 127.904 18.1332C127.213 18.8984 126.315 19.2782 125.209 19.2782C124.103 19.2782 123.231 18.8984 122.528 18.1332C121.826 17.3708 121.477 16.3193 121.477 14.9844C121.477 13.6495 121.826 12.6264 122.528 11.8498C123.231 11.0761 124.123 10.6878 125.209 10.6878C126.295 10.6878 127.187 11.0761 127.889 11.8498C128.273 12.2721 128.529 12.7936 128.702 13.3774H134.222C134.049 12.3118 133.714 11.317 133.185 10.4043C132.398 9.04676 131.306 7.99244 129.913 7.23855C128.52 6.48465 126.951 6.1077 125.209 6.1077C123.466 6.1077 121.863 6.48465 120.47 7.23855C119.078 7.99244 117.986 9.04676 117.202 10.4043C116.414 11.7619 116.019 13.2896 116.019 14.9844C116.019 16.6793 116.414 18.2352 117.202 19.5815C117.989 20.9277 119.078 21.9821 120.47 22.7473C121.863 23.5097 123.444 23.8923 125.209 23.8923C126.974 23.8923 128.52 23.5097 129.913 22.7473C131.306 21.9821 132.398 20.9277 133.185 19.5815C133.711 18.6802 134.046 17.6882 134.22 16.6226H128.702ZM107.728 18.0539C107.708 18.0794 107.693 18.1105 107.674 18.1332C106.983 18.8984 106.085 19.2782 104.979 19.2782C103.873 19.2782 103.001 18.8984 102.298 18.1332C101.918 17.7194 101.662 17.2036 101.485 16.6226H113.99C114.075 16.0954 114.135 15.5541 114.135 14.9844C114.135 13.2867 113.739 11.7619 112.952 10.4043C112.165 9.04676 111.073 7.99244 109.68 7.23855C108.288 6.48465 106.718 6.1077 104.976 6.1077C103.234 6.1077 101.63 6.48465 100.238 7.23855C98.8448 7.99244 97.7533 9.04676 96.9687 10.4043C96.1814 11.7619 95.7863 13.2896 95.7863 14.9844C95.7863 16.6793 96.1814 18.2352 96.9687 19.5815C97.7561 20.9277 98.8448 21.9821 100.238 22.7473C101.63 23.5097 103.211 23.8923 104.976 23.8923C106.741 23.8923 108.288 23.5097 109.68 22.7473C111.073 21.9821 112.165 20.9277 112.952 19.5815C113.233 19.0997 113.447 18.5838 113.629 18.0539H107.728ZM102.296 11.8498C102.998 11.0761 103.89 10.6878 104.976 10.6878C106.062 10.6878 106.954 11.0761 107.657 11.8498C108.04 12.2721 108.296 12.7936 108.469 13.3774H101.483C101.656 12.7936 101.912 12.2749 102.296 11.8498Z" fill="#333333" />
+                                        <path d="M30.1276 6.1077H24.0645C22.4926 6.1077 20.4802 7.37742 19.5734 8.94757L14.2153 18.2012H7.78274L13.1408 8.94757C14.0476 7.38025 13.5104 6.1077 11.9385 6.1077C10.3666 6.1077 8.35408 7.37742 7.44733 8.94757L0.440587 21.0411C-0.466167 22.6084 0.0710636 23.881 1.64296 23.881H10.9237L9.02207 27.163C8.11531 28.7303 8.65254 30.0028 10.2244 30.0028C11.7963 30.0028 13.8088 28.7331 14.7156 27.163L16.6172 23.881H19.8349C24.7496 23.881 31.0542 19.8961 33.891 14.9958C36.7278 10.0954 35.0394 6.11053 30.1247 6.11053L30.1276 6.1077ZM23.1237 18.2012H19.906L23.6211 11.7874H26.8388C28.6125 11.7874 29.2237 13.2272 28.1975 14.9958C27.1714 16.7643 24.8974 18.2041 23.1237 18.2041V18.2012Z" fill="#2563EB" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_9574_130">
+                                            <rect width="143" height="30" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </a>
                         </h1>
                     </div>
+                    <div class="group-link">
+                        <a href="/rank/specPoint" class="link-box" data-page="rank">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                                <path stroke="#AAA" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M2.5 2.5v13.333A1.666 1.666 0 0 0 4.167 17.5H17.5M6.667 10.833H12.5c.46 0 .833.373.833.834v1.666c0 .46-.373.834-.833.834H6.667a.833.833 0 0 1-.834-.834v-1.666c0-.46.373-.834.834-.834m0-6.666H15c.46 0 .833.373.833.833v1.667c0 .46-.373.833-.833.833H6.667a.833.833 0 0 1-.834-.833V5c0-.46.373-.833.834-.833"/>
+                            </svg>
+                            <span class="text">랭킹</span>
+                        </a>
+                        <a href="/tool/mvp" class="link-box" data-page="tool">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                                <path d="M7.5 6.66667H13.3333M6.66667 10H11.6667M9.16667 13.3333H13.3333M4.16667 2.5H15.8333C16.7538 2.5 17.5 3.24619 17.5 4.16667V15.8333C17.5 16.7538 16.7538 17.5 15.8333 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5Z" stroke="#AAAAAA" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="text">도구</span>
+                        </a>
+                    </div>
                     <div class="group-search">
-                        <div class="handle-area" title="좌우로 드래그하여 위치 조절 가능 합니다.">
-                            <div class="handle">
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                            </div>
-                        </div>
                         <form action="/search/search.html" class="search-area search-page on">
-                            <input id="headerInput" autocomplete="off" name="headerCharacterName" class="header-input character-name-search" type="text" value="" placeholder="캐릭터 검색">
-                            <button class="search-btn"></button>
+                            <input id="headerInput" autocomplete="off" name="headerCharacterName" class="header-input character-name-search" type="text" value="" placeholder="닉네임을 입력해주세요">
+                            <button class="search-btn" type="submit">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path d="M21 21L16.66 16.66M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="blind">검색버튼</span>
+                            </button>
                         </form>
                         <div class="dark-area" style="display:flex;align-items:center;">
-                
-                            <div  class="button b2 dark-mode-button" id="button-17">
-                                <input type="checkbox" class="checkbox" />
-                                <div class="knobs">
-                                    <span></span>
-                                </div>
-                                <div class="layer"></div>
-                            </div>
+                            <button class="dark-button theme" type="button" aria-label="다크모드 전환">
+                                <svg class="theme-icon light" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M18 5H22M20 3V7M20.985 12.486C20.8913 14.2221 20.2967 15.894 19.2731 17.2994C18.2495 18.7048 16.8407 19.7837 15.217 20.4055C13.5934 21.0274 11.8244 21.1656 10.1238 20.8035C8.42325 20.4414 6.86398 19.5945 5.63449 18.3652C4.40499 17.1358 3.55791 15.5766 3.19564 13.8761C2.83337 12.1756 2.97142 10.4065 3.5931 8.78282C4.21478 7.15909 5.29348 5.75019 6.6988 4.72644C8.10412 3.70268 9.77589 3.1079 11.512 3.014C11.917 2.992 12.129 3.474 11.914 3.817C11.1949 4.96755 10.887 6.32787 11.0405 7.67595C11.194 9.02403 11.7999 10.2803 12.7593 11.2397C13.7187 12.1991 14.975 12.805 16.3231 12.9585C17.6712 13.112 19.0315 12.8041 20.182 12.085C20.526 11.87 21.007 12.081 20.985 12.486Z" stroke="#2563EB" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <svg class="theme-icon dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2V4M12 20V22M4.93 4.93L6.34 6.34M17.66 17.66L19.07 19.07M2 12H4M20 12H22M6.34 17.66L4.93 19.07M19.07 4.93L17.66 6.34M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="#AAAAAA" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="blind">다크모드 변환</span>
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -196,96 +228,16 @@ function scHeaderCreate() {
     }
     document.body.insertAdjacentHTML('afterbegin', headerElement());
 
-    function handleDragAndDrop() {
-        let handleElement = document.querySelector(".sc-header .group-search .handle");
-        let targetElement = document.querySelector(".sc-header .group-search"); // 실제로 움직일 요소
-
-        // 요소가 없을 경우 경고 및 함수 종료
-        if (!handleElement || !targetElement) {
-            console.warn("필요한 요소를 찾을 수 없습니다. '.sc-header .group-search .handle' 또는 '.sc-header .group-search' 셀렉터를 확인하세요.");
-            return;
-        }
-
-        let isDragging = false;       // 드래그 중인지 여부
-        let startMouseX;            // 마우스 클릭 시 X 좌표
-        let startTargetRight;       // 드래그 시작 시 targetElement의 현재 right 값
-
-        // 4. 세션 스토리지에서 저장된 right 값 불러오기
-        const savedRight = sessionStorage.getItem('targetRightPosition'); // 키 이름을 변경했습니다.
-        if (savedRight !== null) {
-            targetElement.style.right = `${savedRight}px`;
-        }
-
-        // mousedown 이벤트: 드래그 시작 (handleElement 위에서 감지)
-        handleElement.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            // 시각적 피드백을 위해 targetElement에 클래스 추가 (선택 사항)
-            targetElement.classList.add('dragging');
-
-            // 현재 마우스 X 좌표 저장
-            startMouseX = e.clientX;
-
-            // targetElement의 현재 right 값을 얻습니다.
-            startTargetRight = parseFloat(window.getComputedStyle(targetElement).right);
-
-            // 텍스트 선택 방지
-            e.preventDefault();
-
-            // --- 커서 일관성 유지 로직 시작 ---
-            // 드래그 시작 시 body에 e-resize 커서를 적용
-            document.body.style.cursor = 'e-resize';
-            // 요소 드래그 중 사용자 경험을 위해 기본 텍스트 선택 방지
-            document.body.style.userSelect = 'none';
-            // --- 커서 일관성 유지 로직 끝 ---
-
-            // document 전체에 mousemove와 mouseup 이벤트 리스너를 추가
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
-        });
-
-        // mousemove 이벤트: 드래그 중 이동 (좌우만)
-        function onMouseMove(e) {
-            if (!isDragging) return;
-
-            // 현재 마우스 위치와 시작 위치의 차이를 계산
-            const deltaX = e.clientX - startMouseX;
-
-            // 새로운 right 값 계산
-            // 마우스 이동 거리에 따라 targetElement의 right 값을 조절합니다.
-            let newRight = startTargetRight - deltaX;
-
-            // 음수 값이 되지 않도록 (화면 밖으로 나가지 않도록) 최소값 0 설정
-            // 필요에 따라 최대값을 설정하여 너무 왼쪽으로 이동하는 것을 제한할 수 있습니다.
-            // 예를 들어, newRight = Math.max(0, Math.min(MaxRightValue, newRight));
-            newRight = Math.max(0, Math.min(700, newRight));
-
-            targetElement.style.right = `${newRight}px`;
-
-            // 4. 세션 스토리지에 값 저장
-            sessionStorage.setItem('targetRightPosition', newRight); // 키 이름을 변경했습니다.
-        }
-
-        // mouseup 이벤트: 드래그 종료
-        function onMouseUp() {
-            isDragging = false;
-
-            // 시각적 피드백 클래스 제거
-            targetElement.classList.remove('dragging');
-
-            // --- 커서 일관성 유지 로직 시작 ---
-            // 드래그 종료 시 body의 커서를 기본값으로 되돌림
-            document.body.style.cursor = 'default'; // 또는 'auto'
-            // 텍스트 선택 허용
-            document.body.style.userSelect = ''; // 또는 'auto'
-            // --- 커서 일관성 유지 로직 끝 ---
-
-
-            // 이벤트 리스너 제거
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-        }
-    }
-    handleDragAndDrop();
+    // 네비 현재 경로 on 표시
+    (function setActiveNav(){
+        try{
+            const path = window.location.pathname || '';
+            const rankLink = document.querySelector('.sc-header .group-link [data-page="rank"]');
+            const toolLink = document.querySelector('.sc-header .group-link [data-page="tool"]');
+            if(path.startsWith('/rank') && rankLink){ rankLink.classList.add('on'); }
+            else if(path.startsWith('/tool') && toolLink){ toolLink.classList.add('on'); }
+        }catch(e){ /* noop */ }
+    })();
 
     if (mobileCheck) {
         // 사이드메뉴 토글
@@ -338,15 +290,20 @@ function darkModeSetting() {
     if (localStorage.getItem('darkMode') == 'enabled') {
         enableDarkMode();
     }
-    document.querySelector('.dark-mode-button').addEventListener('click', () => {
-        if (localStorage.getItem('darkMode') == 'enabled') {
-            disableDarkMode();
-        } else {
-            enableDarkMode();
-        }
-    });
-    if (localStorage.getItem('darkMode') == 'enabled') {
-        document.querySelector(".dark-mode-button .checkbox").checked = true
+    const darkToggle = document.querySelector('.dark-button') || document.querySelector('.dark-mode-button');
+    if(darkToggle){
+        darkToggle.addEventListener('click', () => {
+            if (localStorage.getItem('darkMode') == 'enabled') {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        });
+    }
+    // 구형 토글(.dark-mode-button) 유지 호환
+    const legacyCheckbox = document.querySelector('.dark-mode-button .checkbox');
+    if (localStorage.getItem('darkMode') == 'enabled' && legacyCheckbox) {
+        legacyCheckbox.checked = true
     }
 
 }
@@ -376,7 +333,11 @@ function recentBookmark() {
         recentNameBox += `
             <div class="name-box" data-sort="recent">
                 <a href="${mobilePath}/search/search.html?headerCharacterName=${recentNameArry}" class="name">${recentNameArry}</a>
-                <em class="del remove"></em>
+                <em class="del remove" aria-label="삭제">
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="#333333" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </em>
             </div>`;
     })
 
@@ -385,7 +346,11 @@ function recentBookmark() {
         bookmarkNameBox += `
         <div class="name-box" data-sort="bookmark">
             <a href="${mobilePath}/search/search.html?headerCharacterName=${bookmarkArry}" class="name">${bookmarkArry}</a>
-            <em class="star remove">☆</em>
+            <em class="del remove" aria-label="삭제">
+                <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="#333333" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </em>
         </div>`;
     })
 
@@ -413,9 +378,11 @@ function userInputMemoHtml(inputElement) {
 
         // 브라우저 외부에서 브라우저로 포커스시 좌표 버그 해결 코드
         if (recentFlag == 0) {
-            document.body.appendChild(
-                document.createRange().createContextualFragment(recentBookmark())
-            )
+            const frag = document.createRange().createContextualFragment(recentBookmark());
+            const container = document.querySelector('.sc-header .group-search .search-area')
+                || document.querySelector('.sc-header .group-search')
+                || document.body;
+            container.appendChild(frag);
         }
 
         let recentHtml = document.querySelector(".group-recent")
@@ -424,8 +391,7 @@ function userInputMemoHtml(inputElement) {
             document.querySelector(".group-search").classList.add("on");
             document.documentElement.style.overflow = 'hidden';
         } else {
-            recentHtml.style.top = topPos + 55 + "px";
-            recentHtml.style.left = leftPos + "px";
+            // 데스크탑: CSS가 입력영역 기준으로 위치를 제어함 (JS 위치 보정 불필요)
 
         }
 
@@ -527,19 +493,36 @@ document.querySelectorAll("input[type='text']").forEach(function (inputArry) {
 function scFooterCreate() {
     let footerElement = "";
     if (mobileCheck) {
-        footerElement = `<footer class="sc-footer"><span>Copyright 2024 lopec.kr All rights reserved.</span></footer>`
-    } else {
+        // 모바일도 리뉴얼과 동일한 카피/링크 구조 유지
         footerElement = `
         <footer>
-            <section class=".sc-footer">
-                <div class="group-link">
-                    <a href="https://cool-kiss-ec2.notion.site/FAQ-1da758f0e8da80618220fe697190f345?source=copy_link" class="link" target="_blink">1:1문의</a>
-                    <a href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blink" class="link">후원안내</a>
-                    <a href="https://discord.gg/5B8SjX4ug4" class="link" target="_blink">디스코드</a>
-                    <a href="https://cool-kiss-ec2.notion.site/LOPEC-CREDIT-1cc758f0e8da80a18f49f93dafb886f3" target="_blink" class="link">credit</a>
+            <div class="container">
+                <div class="group-copylight">
+                    <span class="text">© 2024 lopec.kr All Rights Reserved. This site is not associated with Smilegate RPG & Smilegate Stove. Data based on Lostark Open API.</span>
                 </div>
-                <span>Copyright 2024 lopec.kr All rights reserved.</span>
-            </section>
+                <div class="group-link">
+                    <a class="text link" href="https://cool-kiss-ec2.notion.site/FAQ-1da758f0e8da80618220fe697190f345" target="_blank">1:1문의</a>
+                    <a class="text link" href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blank">후원안내</a>
+                    <a class="text link" href="https://discord.com/invite/5B8SjX4ug4" target="_blank">디스코드</a>
+                    <a class="text link" href="https://cool-kiss-ec2.notion.site/LOPEC-CREDIT-1cc758f0e8da80a18f49f93dafb886f3" target="_blank">Credit</a>
+                </div>
+            </div>
+        </footer>`;
+    } else {
+        // 데스크탑: 리뉴얼 Footer와 동일한 마크업 구조
+        footerElement = `
+        <footer>
+            <div class="container">
+                <div class="group-copylight">
+                    <span class="text">© 2024 lopec.kr All Rights Reserved. This site is not associated with Smilegate RPG & Smilegate Stove. Data based on Lostark Open API.</span>
+                </div>
+                <div class="group-link">
+                    <a class="text link" href="https://cool-kiss-ec2.notion.site/FAQ-1da758f0e8da80618220fe697190f345" target="_blank">1:1문의</a>
+                    <a class="text link" href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blank">후원안내</a>
+                    <a class="text link" href="https://discord.com/invite/5B8SjX4ug4" target="_blank">디스코드</a>
+                    <a class="text link" href="https://cool-kiss-ec2.notion.site/LOPEC-CREDIT-1cc758f0e8da80a18f49f93dafb886f3" target="_blank">Credit</a>
+                </div>
+            </div>
         </footer>`;
     }
     document.body.insertAdjacentHTML('beforeend', footerElement);
