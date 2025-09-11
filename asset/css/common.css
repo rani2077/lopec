@@ -1074,6 +1074,13 @@ i.badge:hover:after {
     z-index: 3;
 }
 
+i.lopec_badge_1st {
+    background-image: url("/asset/image/lopec_badge_1st.png");
+}
+
+i.lopec_badge_1st:hover:after {
+    content: "카제로스 The 1st, 로아헌터스!";
+}
 
 
 i.lopec_badge_4th {

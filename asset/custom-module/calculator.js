@@ -336,7 +336,6 @@ export async function specPointCalc(inputObj) {
     // 특화
     let fakeSpecial = inputObj.defaultObj.statusSpecial + inputObj.bangleObj.special
 
-
     // 낙인력
     let finalStigmaPer = ((10 
         * ((inputObj.accObj.stigmaPer 
