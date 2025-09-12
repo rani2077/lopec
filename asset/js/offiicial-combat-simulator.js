@@ -950,7 +950,7 @@ export async function simulatorToOffcialCombatObj() {
                     totalMultiplier *= effectValue;
                 }
             });
-            console.log("딜러 젬 곱연산 값:", totalMultiplier);
+            //console.log("딜러 젬 곱연산 값:", totalMultiplier);
         }
         return totalMultiplier;
     }
@@ -1147,8 +1147,8 @@ export async function simulatorToOffcialCombatObj() {
         arkgridGem: arkgridGemOffcialCombatSupport()
     };
     //console.log("delaer", officialCombatObj);
-    console.log("sup_attack", officialCombatObjSupport_attack);
-    console.log("sup_defense", officialCombatObjSupport_defense);
+    //console.log("sup_attack", officialCombatObjSupport_attack);
+    //console.log("sup_defense", officialCombatObjSupport_defense);
     return {
         "dealer": officialCombatObj,
         "sup_attack": officialCombatObjSupport_attack,

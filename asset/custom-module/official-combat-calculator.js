@@ -171,8 +171,8 @@ export async function officialCombatCalculator(combatObj, extractObj) {
 
     let calcCombatSupport = calcAttackCombat + calcCareCombat
     
-    console.log("실제 전투력", originCombat)
-    console.log("계산 전투력", Math.ceil(calcCombatSupport * 100) / 100)
+    //console.log("실제 전투력", originCombat)
+    //console.log("계산 전투력", Math.ceil(calcCombatSupport * 100) / 100)
 
     let result = {
         dealer: Math.ceil(calcCombat * 100) / 100,

@@ -409,7 +409,7 @@ export async function specPointCalc(inputObj) {
     // B스킬 지속 시간 (음진, 천축, 해우물)
     let duration_B = inputObj.supportSkillObj.atkBuffBDuration
 
-    // B스킬 쿨감 (음진, 천축, 해우물물)
+    // B스킬 쿨감 (음진, 천축, 해우물)
     let cd_B = (inputObj.supportSkillObj.atkBuffBCool) 
         * (1 - inputObj.defaultObj.haste * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
@@ -427,20 +427,22 @@ export async function specPointCalc(inputObj) {
         * (1 - inputObj.engObj.cdrPercent)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
-
+    
     // 아덴이 차지 않는 스킬 제외 쿨감
     let cdrPercentNoneCare = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
+    console.log("아덴이 차지 않는 스킬 제외 쿨감", cdrPercentNoneCare)
 
     // Only 케어 스킬 쿨감
     let cdrPercentOnlyCare = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.engObj.cdrPercent))) / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
-
+    console.log("Only 케어 스킬 쿨감", cdrPercentOnlyCare)
+        
     // 각성기 가치
     let awakenIdentity = ((1 / ((1 - inputObj.engObj.awakencdrPercent) 
         * (1 - fakeHaste * 0.0214739 / 100) 

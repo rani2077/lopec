@@ -2098,7 +2098,7 @@ export async function getCharacterProfile(data, dataBase) {
             let averageValue = coolGemCount > 0 ? weightedCoolValueSum / coolGemTotalWeight : 0;
 
 
-            let excludeSkills = ['수호의 연주', '신성한 보호'];
+            let excludeSkills = ['수호의 연주', '신성한 보호', '빛의 광시곡'];
 
             //console.log("제외할 스킬 목록:", excludeSkills);
 

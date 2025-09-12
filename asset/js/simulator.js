@@ -1134,7 +1134,7 @@ async function simulatorInputCalc() {
                             if (gemData && level) {
                                 // 레벨에 맞는 실제 값 가져오기
                                 const coolValue = gemData[`level${level}`];
-                                console.log(`스킬: ${skill}, 보석 종류: ${gemType}, 레벨: ${level}, 쿨감 값: ${coolValue}`);
+                                //console.log(`스킬: ${skill}, 보석 종류: ${gemType}, 레벨: ${level}, 쿨감 값: ${coolValue}`);
                                 result.atkBuffACdr += coolValue; // 레벨 대신 실제 값 사용
                             } else {
                             }
@@ -4798,7 +4798,7 @@ async function calculateGemData(data) {
             break; 
         }
     }
-    console.log("보석전용 직업 : ", specialClass)
+    //console.log("보석전용 직업 : ", specialClass)
 
 
 
@@ -4868,7 +4868,7 @@ async function calculateGemData(data) {
             // 가중 평균 쿨감 수치 계산
             let averageValue = coolGemCount > 0 ? weightedCoolValueSum / coolGemTotalWeight : 0;
 
-            let excludeSkills = ['수호의 연주', '신성한 보호'];
+            let excludeSkills = ['수호의 연주', '신성한 보호', '빛의 광시곡'];
 
             //console.log("제외할 스킬 목록:", excludeSkills);
 
