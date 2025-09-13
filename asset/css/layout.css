@@ -287,6 +287,11 @@ html.dark-mode .dark-button .theme-icon.dark{ display:block; }
     transition: background 300ms;
 }
 
+/* 다크모드 기본 배경/텍스트 컬러 */
+html.dark-mode .sc-header .link-box{
+    background: #3c3f43;
+}
+
 .sc-header .link-box:hover,
 .sc-header .link-box.on{
     background: var(--dark-btn-bg, #D3E6FE);
@@ -295,6 +300,11 @@ html.dark-mode .dark-button .theme-icon.dark{ display:block; }
 .sc-header .link-box .icon path{
     stroke: var(--header-link-text-color, #777777);
     transition: stroke 300ms;
+}
+
+/* 다크모드 기본 아이콘 컬러 */
+html.dark-mode .sc-header .link-box .icon path{
+    stroke: #aaaaaa;
 }
 
 .sc-header .link-box.on .icon path,
@@ -307,6 +317,11 @@ html.dark-mode .dark-button .theme-icon.dark{ display:block; }
     transition: color 300ms;
     font-size: 16px; line-height: 20px; font-weight: 400; /* 리뉴얼 명시값 */
     position: relative; top: -1px; /* 미세 상향 보정 */
+}
+
+/* 다크모드 기본 텍스트 컬러 */
+html.dark-mode .sc-header .link-box .text{
+    color: #aaaaaa;
 }
 
 .sc-header .link-box.on .text,
