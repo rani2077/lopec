@@ -4715,6 +4715,12 @@ async function calculateGemData(data) {
             ]
         },
         {
+            class: "휠윈드 광기",
+            conditions: [
+                { core: "지옥 뒤집기", point: 14, support: "광기" }
+            ]
+        },
+        {
             class: "허리케인 포식",
             conditions: [
                 { core: "소용돌이", point: 10, support: "포식" }
@@ -4726,13 +4732,33 @@ async function calculateGemData(data) {
                 { core: "파괴의 바람", point: 10, support: "포식" }
             ]
         },
+        {
+            class: "노차징 고기",
+            conditions: [
+                { core: "스트라이크 포인트", point: 17, support: "고기" },
+                { core: "창술", point: 17, support: "고기" }
+            ]
+        },
+        {
+            class: "어스 분망",
+            conditions: [
+                { core: "어스 웨이브", point: 17, support: "분망" }
+            ]
+        },
 
         /*************************** 애니츠 ***************************/
         {
+            class: "섬열파 역천",
+            conditions: [
+                { core: "기류탄화", point: 17, support: "역천" },
+                { core: "진혼섬포", point: 17, support: "역천" },
+
+            ]
+        },
+        {
             class: "무공탄 역천",
             conditions: [
-                { core: "열파전조", point: 17, support: "역천" },
-                { core: "기류탄화", point: 14 }
+                { core: "기류탄화", point: 17, support: "역천" },
             ]
         },
         {
@@ -4759,8 +4785,6 @@ async function calculateGemData(data) {
             ]
         }
     ];
-
-
 
 
 
