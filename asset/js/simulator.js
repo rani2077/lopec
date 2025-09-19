@@ -4658,6 +4658,8 @@ async function calculateGemData(data) {
         specialClass = "6M 피메";
     } else if (classCheck("잔재") && dmgGemCount === 8) {
         specialClass = "8딜 잔재";
+    } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && skillCheck(gemSkillArry, "보이드 스트라이크", dmg) && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
+        specialClass = "어슬 작열 슈차 잔재";
     } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
         specialClass = "어슬 작열 블리츠 잔재";
     } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "보이드 스트라이크", dmg)) {
@@ -4708,6 +4710,13 @@ async function calculateGemData(data) {
     const specialClassRules = [
 
         /*************************** 슈샤이어 ***************************/
+        {
+            class: "러쉬 광기2",
+            conditions: [
+                { core: "다크 파워", point: 17, support: "광기" },
+                { core: "어둠의 격류", point: 17, support: "광기" },
+            ]
+        },
         {
             class: "러쉬 광기",
             conditions: [

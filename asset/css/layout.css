@@ -688,3 +688,39 @@ body.home .page-content {
 .group-recent .bookmark-area {}
 
 .group-recent .recent-area {}
+
+/* 다크 모드: 최근검색 드롭다운 배경/텍스트 컬러 보정 */
+html.dark-mode .sc-header .group-search .group-recent,
+html.dark-mode .group-recent {
+    background: #222222;
+    border-color: #444444;
+}
+
+html.dark-mode .sc-header .group-search .group-recent .memo,
+html.dark-mode .group-recent .memo {
+    background: #222222;
+}
+
+html.dark-mode .sc-header .group-search .group-recent .memo .name-box,
+html.dark-mode .group-recent .memo .name-box {
+    color: #ffffff;
+}
+
+html.dark-mode .sc-header .group-search .group-recent .memo .name-box .name,
+html.dark-mode .sc-header .group-search .group-recent .memo .name-box .name:visited,
+html.dark-mode .sc-header .group-search .group-recent .memo .name-box .name:hover,
+html.dark-mode .group-recent .memo .name-box .name,
+html.dark-mode .group-recent .memo .name-box .name:visited,
+html.dark-mode .group-recent .memo .name-box .name:hover {
+    color: #ffffff;
+}
+
+html.dark-mode .sc-header .group-search .group-recent .memo .name-box:after,
+html.dark-mode .group-recent .memo .name-box:after {
+    background: #333333;
+}
+
+html.dark-mode .sc-header .group-search .group-recent .memo .name-box .del .icon-close path,
+html.dark-mode .group-recent .memo .name-box .del .icon-close path {
+    stroke: #ffffff;
+}
