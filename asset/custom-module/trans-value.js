@@ -1923,6 +1923,13 @@ export async function getCharacterProfile(data, dataBase) {
 
         /*************************** 슈샤이어 ***************************/
         {
+            class: "러쉬 광기2",
+            conditions: [
+                { core: "다크 파워", point: 17, support: "광기" },
+                { core: "어둠의 격류", point: 17, support: "광기" },
+            ]
+        },
+        {
             class: "러쉬 광기",
             conditions: [
                 { core: "다크 파워", point: 17, support: "광기" }

@@ -2323,6 +2323,19 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "러쉬 광기2",
+        skill: [
+            { name: "다크 러쉬", per: 0.27 },
+            { name: "피니쉬 스트라이크", per: 0.11 },
+            { name: "오버드라이브", per: 0.11 },
+            { name: "헬 블레이드", per: 0.10 },
+            { name: "마운틴 크래쉬", per: 0.05 },
+            { name: "파워 브레이크", per: 0.05 },
+            { name: "보정치", per: -0.05 },
+
+        ],
+    },
+    {
         class: "7겁 광기",
         skill: [
             { name: "오버드라이브", per: 0.175 },
