@@ -4800,6 +4800,13 @@ async function calculateGemData(data) {
                 { core: "매시브 컨슘", point: 17, support: "억제" }
             ]
         },
+        /*************************** 실린 ***************************/
+        {
+            class: "고창 상소",
+            conditions: [
+                { core: "고대의 유산", point: 17, support: "상소" }
+            ]
+        },
     ];
 
 

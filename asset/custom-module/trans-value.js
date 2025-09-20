@@ -1927,14 +1927,14 @@ export async function getCharacterProfile(data, dataBase) {
         {
             class: "러쉬 광기2",
             conditions: [
-                { core: "다크 파워", point: 17, support: "광기" },
+                { core: "다크 파워", point: 14, support: "광기" },
                 { core: "어둠의 격류", point: 17, support: "광기" },
             ]
         },
         {
             class: "러쉬 광기",
             conditions: [
-                { core: "다크 파워", point: 17, support: "광기" }
+                { core: "다크 파워", point: 14, support: "광기" }
             ]
         },
         {
@@ -2007,11 +2007,18 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "풀 매거진", point: 14, support: "사시" }
             ]
         },
-        /*************************** 데런런 ***************************/
+        /*************************** 데런 ***************************/
         {
             class: "잠식 억모닉",
             conditions: [
                 { core: "매시브 컨슘", point: 17, support: "억제" }
+            ]
+        },
+        /*************************** 실린 ***************************/
+        {
+            class: "고창 상소",
+            conditions: [
+                { core: "고대의 유산", point: 17, support: "상소" }
             ]
         },
     ];

@@ -2331,6 +2331,7 @@ export let classGemFilter = [
             { name: "헬 블레이드", per: 0.10 },
             { name: "마운틴 크래쉬", per: 0.05 },
             { name: "파워 브레이크", per: 0.05 },
+            { name: "레드 더스트", per: 0.05 },
             { name: "보정치", per: -0.05 },
 
         ],
@@ -3195,6 +3196,13 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "고창 상소",
+        skill: [
+            { name: "고대의 창", per: 0.75 },
+
+        ],
+    },
+    {
         class: "점화",
         skill: [
             { name: "종말의 날", per: 0.282 },
@@ -3523,8 +3531,9 @@ export let classGemFilter = [
             { name: "몰아치기", per: 0.096 },
             { name: "싹쓸바람", per: 0.06 },
             { name: "소용돌이", per: 0.06 },
+            { name: "뙤약볕", per: 0.06 },
             { name: "회오리 걸음", per: 0.059 },
-            { name: "보정치", per: -0.06 },
+            { name: "보정치", per: -0.12 },
         ],
     },
     {
