@@ -713,7 +713,7 @@ scFooterCreate()
 function footerPositionFnc() {
     let footer = document.querySelector("footer")
     if (!footer) { return; }
-    if (footer.classList.contains('sc-footer')) {
+    if (footer.classList.contains('sc-footer--mobile')) {
         footer.style.removeProperty('top');
         footer.style.removeProperty('width');
         footer.style.removeProperty('display');
