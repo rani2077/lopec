@@ -3278,6 +3278,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "잠식 억모닉",
+        skill: [
+            { name: "데몬 비전", per: 0.25 },
+            { name: "데시메이트", per: 0.19 },
+            { name: "피어스 쏜", per: 0.19 },
+            { name: "제노사이드", per: 0.10 },
+            { name: "데몬 그랩", per: 0.03 },
+            { name: "라이징 클로", per: 0.03 },
+        ],
+    },
+    {
         class: "갈증",
         skill: [
             { name: "레이지 스피어", per: 0.171 },

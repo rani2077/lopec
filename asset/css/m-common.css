@@ -36,7 +36,7 @@ font {
     max-width: 600px;
     width: 100%;
     padding: 20px;
-    margin: 90px auto;
+    margin: 20px auto;
     position: relative;
     margin-bottom: 40px;
 }
@@ -309,7 +309,6 @@ html.dark-mode .sc-info .tag-list,
 .dark-mode .sc-notice,
 .dark-mode .sc-notice .group-notice .name-box,
 .dark-mode .sc-answer .group-answer,
-.dark-mode .sc-sidemenu,
 .dark-mode .sc-header .search-area.on .header-input,
 .dark-mode .sc-header .search-area.on .search-btn,
 .dark-mode .group-recent .name-area .sort.on,
@@ -323,6 +322,11 @@ html.dark-mode .sc-info .tag-list,
 
     background: #2f2f2f;
     color: #fff;
+}
+
+html.dark-mode .sc-sidemenu {
+    background: transparent;
+    color: inherit;
 }
 
 .dark-mode header {

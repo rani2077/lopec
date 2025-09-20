@@ -2006,7 +2006,14 @@ export async function getCharacterProfile(data, dataBase) {
             conditions: [
                 { core: "풀 매거진", point: 14, support: "사시" }
             ]
-        }
+        },
+        /*************************** 데런런 ***************************/
+        {
+            class: "잠식 억모닉",
+            conditions: [
+                { core: "매시브 컨슘", point: 17, support: "억제" }
+            ]
+        },
     ];
 
 
