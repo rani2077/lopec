@@ -2,6 +2,8 @@
 * variable name		:	mobileCheck
 * description       : 	현재 접속한 디바이스 기기가 모바일, 태블릿일 경우 true를 반환
 *********************************************************************************************************************** */
+import { getJsonCookie, setJsonCookie } from '../js/storage-cookie.js';
+
 let mobileCheck = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(navigator.userAgent.toLowerCase())
 export async function importModuleManager() {
     // 이 함수는 매개변수를 받지 않으며, 정의된 모든 모듈을 무조건 로드합니다.
@@ -362,22 +364,30 @@ function userBookmarkSave(userName) {
     element.addEventListener("click", bookmarkToggle)
     // localStorage.removeItem("userBookmark");                                             //로컬스토리지 비우기
     // localStorage.clear();                                                                //로컬스토리지 전체 제거
-    let userBookmarkList = JSON.parse(localStorage.getItem("userBookmark")) || []           //북마크 리스트
+    let userBookmarkList = getJsonCookie('userBookmark', [])           //북마크 리스트
+    function persistBookmark(list) {
+        userBookmarkList = list;
+        setJsonCookie('userBookmark', userBookmarkList);
+    }
     function bookmarkToggle(el) {
+        const button = el.currentTarget || el.target;
+        userBookmarkList = getJsonCookie('userBookmark', []);
         // el.target.classList.toggle("active");                                                 //북마크 아이콘 토글  
-        if (userBookmarkList.length < 6 && !el.target.classList.contains("active")) {
-            userBookmarkList.push(userName)                                                 //북마크 추가하기
-            localStorage.setItem("userBookmark", JSON.stringify(userBookmarkList))
+        if (userBookmarkList.length < 6 && !button.classList.contains("active")) {
+            if (!userBookmarkList.includes(userName)) {
+                userBookmarkList.push(userName)                                             //북마크 추가하기
+            }
+            persistBookmark(userBookmarkList)
             starAnimation();
             // alert("북마크 저장")
-        } else if (el.target.classList.contains("active")) {
+        } else if (button.classList.contains("active")) {
             userBookmarkList = userBookmarkList.filter(item => item !== userName)
-            localStorage.setItem("userBookmark", JSON.stringify(userBookmarkList))
+            persistBookmark(userBookmarkList)
             starAnimation();
             // alert("북마크 저장2")
 
         } else if (userBookmarkList.length >= 6) {
-            el.target.classList.remove("active");                                             //북마크 아이콘 토글  
+            button.classList.remove("active");                                             //북마크 아이콘 토글  
             alert("즐겨찾기는 5개까지 저장됩니다.");
             return;
         }

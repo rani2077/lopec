@@ -1,3 +1,5 @@
+import { getJsonCookie, setJsonCookie } from './storage-cookie.js';
+
 /* **********************************************************************************************************************
 * variable name		:	mobileCheck
 * description       : 	현재 접속한 디바이스 기기가 모바일, 태블릿일 경우 true를 반환
@@ -87,19 +89,19 @@ function scHeaderCreate() {
     const urlParams = new URLSearchParams(window.location.search);
     const nameParam = urlParams.get('headerCharacterName');
     if (nameParam) {
-        let nameListStorage = JSON.parse(localStorage.getItem("nameList")) || []
+        let nameListStorage = getJsonCookie('nameList', []);
         // localStorage.removeItem("userBookmark");                                 //로컬스토리지 비우기
         if (nameListStorage.includes(nameParam) || nameListStorage.includes(null)) {
             //로컬스토리지 저장
             nameListStorage = nameListStorage.filter(item => item !== nameParam && item !== null)
             nameListStorage.push(nameParam)
-            localStorage.setItem('nameList', JSON.stringify(nameListStorage));
+            setJsonCookie('nameList', nameListStorage);
         } else {
             if (nameListStorage.length >= 6) {
                 nameListStorage.shift();
             }
             nameListStorage.push(nameParam);
-            localStorage.setItem('nameList', JSON.stringify(nameListStorage));
+            setJsonCookie('nameList', nameListStorage);
         }
     }
     function headerElement() {
@@ -299,14 +301,7 @@ function scHeaderCreate() {
             const trimmedValue = rawValue.trim();
             if (trimmedValue.length === 0) { return; }
 
-            let storedList;
-            try {
-                const stored = localStorage.getItem(key);
-                storedList = stored ? JSON.parse(stored) : [];
-            } catch (error) {
-                storedList = [];
-            }
-
+            let storedList = getJsonCookie(key, []);
             if (!Array.isArray(storedList)) {
                 storedList = [];
             }
@@ -323,7 +318,7 @@ function scHeaderCreate() {
                 storedList = storedList.slice(0, MAX_ITEMS);
             }
 
-            localStorage.setItem(key, JSON.stringify(storedList));
+            setJsonCookie(key, storedList);
         }
     }
 
@@ -493,10 +488,10 @@ darkModeSetting()
 // 최근검색및 즐겨찾기
 function recentBookmark() {
 
-    let nameListStorage = JSON.parse(localStorage.getItem("nameList")) || []            //로컬스토리지 최근 검색어
-    let userBookmarkStorage = JSON.parse(localStorage.getItem("userBookmark")) || []    //로컬스토리지 즐겨찾기 목록
-    nameListStorage = nameListStorage.reverse()                                         //최신순으로 정렬
-    userBookmarkStorage = userBookmarkStorage.reverse()                                 //최신순으로 정렬
+    const nameListStorage = getJsonCookie('nameList', []);            // 쿠키 최근 검색어
+    const userBookmarkStorage = getJsonCookie('userBookmark', []);    // 쿠키 즐겨찾기 목록
+    const recentNameList = [...nameListStorage].reverse();            // 최신순으로 정렬
+    const bookmarkNameList = [...userBookmarkStorage].reverse();      // 최신순으로 정렬
 
     let recentNameBox = ""
     let bookmarkNameBox = ""
@@ -504,7 +499,7 @@ function recentBookmark() {
     if (mobileCheck) {
         mobilePath = "/mobile"
     }
-    nameListStorage.forEach(function (recentNameArry) {                                       //최근검색HTML목록
+    recentNameList.forEach(function (recentNameArry) {                                       //최근검색HTML목록
 
         recentNameBox += `
             <div class="name-box" data-sort="recent">
@@ -517,7 +512,7 @@ function recentBookmark() {
             </div>`;
     })
 
-    userBookmarkStorage.forEach(function (bookmarkArry) {
+    bookmarkNameList.forEach(function (bookmarkArry) {
 
         bookmarkNameBox += `
         <div class="name-box" data-sort="bookmark">
@@ -594,7 +589,8 @@ function userInputMemoHtml(inputElement) {
         })
 
         // 목록제거버튼
-        let nowUserName = JSON.parse(localStorage.getItem("nameList")).reverse()[0]                  // 현재 검색된 유저명
+        const storedNameList = getJsonCookie('nameList', []);
+        const nowUserName = storedNameList.length ? storedNameList[storedNameList.length - 1] : null;   // 현재 검색된 유저명
         document.querySelectorAll(".group-recent .memo .remove").forEach(function (removeBtn) {
 
             removeBtn.addEventListener("click", function () {
@@ -603,19 +599,15 @@ function userInputMemoHtml(inputElement) {
 
                 if (removeBtn.parentElement.getAttribute("data-sort") == "recent") {
 
-                    let nameListStorage = JSON.parse(localStorage.getItem("nameList")).reverse()     // 로컬스토리지 최근 검색어
-
-
-                    nameListStorage = nameListStorage.filter(item => item !== nowRecentName);
-                    localStorage.setItem("nameList", JSON.stringify(nameListStorage.reverse()))
+                    const cookieNameList = getJsonCookie('nameList', []);
+                    const updatedNameList = cookieNameList.filter(item => item !== nowRecentName);
+                    setJsonCookie('nameList', updatedNameList);
 
                 } else if (removeBtn.parentElement.getAttribute("data-sort") == "bookmark") {
 
-                    let nameListStorage = JSON.parse(localStorage.getItem("userBookmark")).reverse() // 즐겨찾기 리스트
-
-
-                    nameListStorage = nameListStorage.filter(item => item !== nowRecentName);
-                    localStorage.setItem("userBookmark", JSON.stringify(nameListStorage.reverse()))
+                    const cookieBookmarkList = getJsonCookie('userBookmark', []);
+                    const updatedBookmarkList = cookieBookmarkList.filter(item => item !== nowRecentName);
+                    setJsonCookie('userBookmark', updatedBookmarkList);
 
                     if (document.querySelector(".star.full") && nowRecentName == nowUserName) {
 
