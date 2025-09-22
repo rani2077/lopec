@@ -3166,105 +3166,207 @@ export async function getCharacterProfile(data, dataBase) {
      * description            :   현재 유저통계 중앙값 정보를 반환
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
-    function medianInfoExtract() {
-        let result = {
+    async function medianInfoExtract() {
+        const fallbackResult = {
             dealerMedianValue: "미제공",
             supportMedianValue: 0,
             supportMinMedianValue: 469.23,
             supportMaxMedianValue: 1630.71,
             dealerMinMedianValue: 853.43,
             dealerMaxMedianValue: 3265.48,
-
         };
-        let itemLevel = Number(data.ArmoryProfile.ItemAvgLevel.replace(",", ""));
-        if (itemLevel >= 1660 && itemLevel < 1665) {
-            result.dealerMedianValue = 868.87;
-        } else if (itemLevel >= 1665 && itemLevel < 1670) {
-            result.dealerMedianValue = 917.60;
-        } else if (itemLevel >= 1670 && itemLevel < 1675) {
-            result.dealerMedianValue = 964.38;
-        } else if (itemLevel >= 1675 && itemLevel < 1680) {
-            result.dealerMedianValue = 989.95;
-        } else if (itemLevel >= 1680 && itemLevel < 1685) {
-            result.dealerMedianValue = 1356.94;
-        } else if (itemLevel >= 1685 && itemLevel < 1690) {
-            result.dealerMedianValue = 1522.24;
-        } else if (itemLevel >= 1690 && itemLevel < 1695) {
-            result.dealerMedianValue = 1585.47;
-        } else if (itemLevel >= 1695 && itemLevel < 1700) {
-            result.dealerMedianValue = 1683.30;
-        } else if (itemLevel >= 1700 && itemLevel < 1705) {
-            result.dealerMedianValue = 1829.85;
-        } else if (itemLevel >= 1705 && itemLevel < 1710) {
-            result.dealerMedianValue = 1982.23;
-        } else if (itemLevel >= 1710 && itemLevel < 1715) {
-            result.dealerMedianValue = 2076.34;
-        } else if (itemLevel >= 1715 && itemLevel < 1720) {
-            result.dealerMedianValue = 2140.00;
-        } else if (itemLevel >= 1720 && itemLevel < 1725) {
-            result.dealerMedianValue = 2307.12;
-        } else if (itemLevel >= 1725 && itemLevel < 1730) {
-            result.dealerMedianValue = 2426.64;
-        } else if (itemLevel >= 1730 && itemLevel < 1735) {
-            result.dealerMedianValue = 2583.30;
-        } else if (itemLevel >= 1735 && itemLevel < 1740) {
-            result.dealerMedianValue = 2741.69;
-        } else if (itemLevel >= 1740 && itemLevel < 1745) {
-            result.dealerMedianValue = 2969.72;
-        } else if (itemLevel >= 1745 && itemLevel < 1750) {
-            result.dealerMedianValue = 3272.14;
-        } else if (itemLevel >= 1750 && itemLevel < 1755) {
-            result.dealerMedianValue = 3521.55;
-        } else if (itemLevel >= 1755) {
-            result.dealerMedianValue = 3740.29;
+
+        const storageKey = "lopecMedianInfoCacheV1";
+        const hasWindow = typeof window !== "undefined";
+        const canUseLocalStorage = hasWindow && window.localStorage;
+        const apiOrigin = "https://api.lopec.kr";
+
+        const safeRound = (value) => Math.round(value * 100) / 100;
+        const isFiniteNumber = (value) => typeof value === "number" && Number.isFinite(value);
+
+        const parseLevelRange = (levelLabel) => {
+            if (typeof levelLabel !== "string") {
+                return null;
+            }
+            const cleaned = levelLabel.replace(/\s+/g, "");
+            if (cleaned.includes("미만")) {
+                const match = cleaned.match(/(\d+)-(\d+)/);
+                if (!match) {
+                    return null;
+                }
+                return {
+                    min: Number(match[1]),
+                    max: Number(match[2]),
+                };
+            }
+            if (cleaned.includes("이상")) {
+                const minMatch = cleaned.match(/(\d+)/);
+                if (!minMatch) {
+                    return null;
+        }
+                return {
+                    min: Number(minMatch[1]),
+                    max: null,
+                };
+            }
+            return null;
+        };
+
+        const transformMedianResponse = (apiResponse) => {
+            if (!apiResponse || !Array.isArray(apiResponse.details)) {
+                return null;
+            }
+
+            const transformedDetails = apiResponse.details
+                .map((detail) => {
+                    const range = parseLevelRange(detail.level);
+                    if (!range) {
+                        return null;
+                    }
+
+                    const dealerScoreRaw = detail?.dealerMedian?.score;
+                    const supportScoreRaw = detail?.supporterMedian?.score;
+                    const dealerScore = Number(dealerScoreRaw);
+                    const supportScore = Number(supportScoreRaw);
+
+                    return {
+                        label: detail.level,
+                        minLevel: range.min,
+                        maxLevel: range.max,
+                        dealerScore: isFiniteNumber(dealerScore) ? dealerScore : null,
+                        supportScore: isFiniteNumber(supportScore) ? supportScore : null,
+                    };
+                })
+                .filter(Boolean);
+
+            const supportScores = transformedDetails
+                .map((detail) => detail.supportScore)
+                .filter(isFiniteNumber);
+            const dealerScores = transformedDetails
+                .map((detail) => detail.dealerScore)
+                .filter(isFiniteNumber);
+
+            return {
+                baseDate: apiResponse.baseDate,
+                details: transformedDetails,
+                supportMin: supportScores.length ? Math.min(...supportScores) : null,
+                supportMax: supportScores.length ? Math.max(...supportScores) : null,
+                dealerMin: dealerScores.length ? Math.min(...dealerScores) : null,
+                dealerMax: dealerScores.length ? Math.max(...dealerScores) : null,
+            };
+        };
+
+        const readCachedMedian = () => {
+            if (!canUseLocalStorage) {
+                return null;
+            }
+            try {
+                const cacheRaw = window.localStorage.getItem(storageKey);
+                return cacheRaw ? JSON.parse(cacheRaw) : null;
+            } catch (err) {
+                console.warn("Failed to parse cached median info", err);
+                return null;
+            }
+        };
+
+        const writeCachedMedian = (payload) => {
+            if (!canUseLocalStorage) {
+                return;
+            }
+            try {
+                window.localStorage.setItem(storageKey, JSON.stringify(payload));
+            } catch (err) {
+                console.warn("Failed to cache median info", err);
+            }
+        };
+
+        const needsRefresh = (cachedPayload) => {
+            if (!cachedPayload || !cachedPayload.baseDate) {
+                return true;
+            }
+            const baseDateTime = new Date(`${cachedPayload.baseDate}T05:00:00+09:00`);
+            if (Number.isNaN(baseDateTime.getTime())) {
+                return true;
+            }
+            const nextRefresh = baseDateTime.getTime() + 7 * 24 * 60 * 60 * 1000;
+            return Date.now() >= nextRefresh;
+        };
+
+        let cachedMedian = readCachedMedian();
+        let medianPayload = cachedMedian;
+
+        if (needsRefresh(cachedMedian)) {
+            const canRequestMedian = typeof fetch === "function";
+            try {
+                if (canRequestMedian) {
+                    const response = await fetch(`${apiOrigin}/api/median`);
+                    if (response.ok) {
+                        const apiData = await response.json();
+                        console.log("api", apiData);
+                        const transformed = transformMedianResponse(apiData);
+                        if (transformed) {
+                            medianPayload = transformed;
+                            writeCachedMedian(transformed);
+                        }
+                    } else {
+                        console.warn(`Median API responded with status ${response.status}`);
+      }
+                } else {
+                    console.warn("Fetch API is not available in this environment for median info");
+                }
+            } catch (error) {
+                console.warn("Median API request failed", error);
+            }
+
+            if (!medianPayload) {
+                medianPayload = cachedMedian;
+      }
         }
 
-        // console.log(itemLevel)
-        if (itemLevel >= 1660 && itemLevel < 1665) {
-            result.supportMedianValue = 1022.14;
-        } else if (itemLevel >= 1665 && itemLevel < 1670) {
-            result.supportMedianValue = 1057.95;
-        } else if (itemLevel >= 1670 && itemLevel < 1675) {
-            result.supportMedianValue = 1094.42;
-        } else if (itemLevel >= 1675 && itemLevel < 1680) {
-            result.supportMedianValue = 1119.94;
-        } else if (itemLevel >= 1680 && itemLevel < 1685) {
-            result.supportMedianValue = 1394.56;
-        } else if (itemLevel >= 1685 && itemLevel < 1690) {
-            result.supportMedianValue = 1488.58;
-        } else if (itemLevel >= 1690 && itemLevel < 1695) {
-            result.supportMedianValue = 1549.66;
-        } else if (itemLevel >= 1695 && itemLevel < 1700) {
-            result.supportMedianValue = 1640.15;
-        } else if (itemLevel >= 1700 && itemLevel < 1705) {
-            result.supportMedianValue = 1769.76;
-        } else if (itemLevel >= 1705 && itemLevel < 1710) {
-            result.supportMedianValue = 1916.04;
-        } else if (itemLevel >= 1710 && itemLevel < 1715) {
-            result.supportMedianValue = 2025.63;
-        } else if (itemLevel >= 1715 && itemLevel < 1720) {
-            result.supportMedianValue = 2100.11;
-        } else if (itemLevel >= 1720 && itemLevel < 1725) {
-            result.supportMedianValue = 2257.75;
-        } else if (itemLevel >= 1725 && itemLevel < 1730) {
-            result.supportMedianValue = 2444.81;
-        } else if (itemLevel >= 1730 && itemLevel < 1735) {
-            result.supportMedianValue = 2627.55;
-        } else if (itemLevel >= 1735 && itemLevel < 1740) {
-            result.supportMedianValue = 2848.10;
-        } else if (itemLevel >= 1740 && itemLevel < 1745) {
-            result.supportMedianValue = 3075.01;
-        } else if (itemLevel >= 1745 && itemLevel < 1750) {
-            result.supportMedianValue = 3353.54;
-        } else if (itemLevel >= 1750 && itemLevel < 1755) {
-            result.supportMedianValue = 3587.85;
-        } else if (itemLevel >= 1755) {
-            result.supportMedianValue = 3824.50;
+        if (!medianPayload || !Array.isArray(medianPayload.details) || medianPayload.details.length === 0) {
+            return { ...fallbackResult };
+        }
+
+        const itemLevelRaw = data?.ArmoryProfile?.ItemAvgLevel;
+        const itemLevel = typeof itemLevelRaw === "string"
+            ? Number(itemLevelRaw.replace(/,/g, ""))
+            : Number(itemLevelRaw);
+
+        const result = { ...fallbackResult, medianBaseDate: medianPayload.baseDate };
+
+        if (isFiniteNumber(medianPayload.supportMin)) {
+            result.supportMinMedianValue = safeRound(medianPayload.supportMin);
+        }
+        if (isFiniteNumber(medianPayload.supportMax)) {
+            result.supportMaxMedianValue = safeRound(medianPayload.supportMax);
+        }
+        if (isFiniteNumber(medianPayload.dealerMin)) {
+            result.dealerMinMedianValue = safeRound(medianPayload.dealerMin);
+        }
+        if (isFiniteNumber(medianPayload.dealerMax)) {
+            result.dealerMaxMedianValue = safeRound(medianPayload.dealerMax);
+        }
+
+        if (Number.isFinite(itemLevel)) {
+            const matchedDetail = medianPayload.details.find((detail) => {
+                const minLevel = detail.minLevel ?? Number.NEGATIVE_INFINITY;
+                const maxLevel = detail.maxLevel == null ? Number.POSITIVE_INFINITY : detail.maxLevel;
+                return itemLevel >= minLevel && itemLevel < maxLevel;
+            });
+
+            if (matchedDetail) {
+                if (isFiniteNumber(matchedDetail.dealerScore)) {
+                    result.dealerMedianValue = safeRound(matchedDetail.dealerScore);
+                }
+                if (isFiniteNumber(matchedDetail.supportScore)) {
+                    result.supportMedianValue = safeRound(matchedDetail.supportScore);
+      }
+    }
         }
 
         return result;
     }
-    htmlObj.medianInfo = medianInfoExtract();
+    htmlObj.medianInfo = await medianInfoExtract();
     /* **********************************************************************************************************************
      * name		              :	  elxirInfoExtract
      * version                :   2.0

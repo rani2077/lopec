@@ -1,3 +1,31 @@
+/* Autocomplete suggestion list for team search */
+#teamNameSuggestions {
+  position: relative;
+  margin-top: 6px;
+}
+#teamNameSuggestions .suggestion-list {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #ddd);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+#teamNameSuggestions .item {
+  padding: 10px 12px;
+  cursor: pointer;
+}
+#teamNameSuggestions .item[aria-selected="true"],
+#teamNameSuggestions .item:hover {
+  background: var(--hover, #f5f5f5);
+}
+#teamNameSuggestions .empty {
+  padding: 12px;
+  color: var(--muted, #888);
+}
 /* ==========================================================================
    # 기본 & 전역 스타일 (Base & Global Styles)
    - 전체 페이지에 적용되는 기본 스타일과 변수를 정의합니다.
@@ -19,6 +47,7 @@
     --cleared-tag-text: #7a5b00;
     --cleared-tag-border: #f0e1a6;
     --btn-bg: #fff;
+    --private-progress-bg: #d0d5dd; /* 비방 공대용 회색 */
   }
   
   html.dark-mode {
@@ -37,6 +66,7 @@
     --cleared-tag-text: #f0e1a6;
     --cleared-tag-border: #5c4b28;
     --btn-bg: #1d2939;
+    --private-progress-bg: #475467; /* 비방 공대용 회색 (다크모드) */
   }
   
   * {
@@ -64,11 +94,74 @@
   
   .board-container {
     position: relative;
+    padding-top: 24px; /* 상단 메타 영역 공간 - 컴팩트 */
   }
-  
+
+  .final-message {
+    margin-bottom: 24px;
+    line-height: 1.8;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .final-message p {
+    margin: 0 0 12px;
+    text-align: center;
+  }
+
+  .final-message p:last-child {
+    margin-bottom: 0;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .final-message hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  .final-message .btn-primary {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+    text-decoration: none;
+    padding: 10px 24px;
+    line-height: 1.5; /* 세로 정렬을 위한 line-height 추가 */
+    background-color: #5d8bff; /* 연한 파란색으로 변경 */
+    border-color: #5d8bff;
+  }
+
+  html.dark-mode .final-message .btn-primary {
+      background-color: #4a7dff; /* 다크모드에서도 연하게 */
+      border-color: #4a7dff;
+  }
+
+/* Sponsor badge (top-right) */
+  .sponsor-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sponsor-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
   .last-updated {
     position: absolute;
-    top: -24px;
+    top: 0;
     left: 0;
     font-size: 12px;
     color: var(--muted);
@@ -104,7 +197,7 @@
   .board > header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* 중앙 정렬로 변경 */
     margin-bottom: 16px;
     gap: 12px;
     flex-wrap: wrap;
@@ -231,13 +324,64 @@
      ========================================================================== */
   
   .team-name {
+    display: flex;
+    align-items: baseline;
     color: var(--text);
     font-size: 16px;
     font-weight: 700;
   }
+
+  .team-rank {
+    flex: 0 0 80px; /* 고정 너비 할당 (너비 확장) */
+    font-variant-numeric: tabular-nums;
+    margin-right: 10px; /* 순위와 공대명 사이 여백 추가 */
+    padding: 4px 0;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #475467; /* 4-10위 기본 색상 */
+    color: #f5f5f5;
+  }
+  
+  /* 1st Place - Gold */
+  .team-rank.rank-1 {
+    background-color: #2C3E50; /* 요청하신 색상으로 변경 */
+    color: #ffd700; /* 금색 텍스트 */
+    /* 4방향 그림자로 선명한 외곽선 효과 생성 */
+    text-shadow: 
+      -1px -1px 0 #000,  
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+  }
+  
+  /* 2nd Place - Silver */
+  .team-rank.rank-2 {
+    background-color: #d6d6d6;
+    color: #fff; /* 흰색 텍스트로 변경 */
+    text-shadow: 
+      -1px -1px 0 #555,  /* 부드러운 진회색 외곽선 */
+       1px -1px 0 #555,
+      -1px  1px 0 #555,
+       1px  1px 0 #555;
+  }
+  
+  /* 3rd Place - Bronze */
+  .team-rank.rank-3 {
+    background-color: #c58953;
+    color: #fff;
+    text-shadow: 
+      -1px -1px 0 #000,  
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+  }
   
   .team-lopec {
-    margin-left: 6px;
+    margin-left: 8px; /* 간격 미세 조정 */
     color: #667085;
     /* Muted 색상 직접 사용 (디자인 일관성) */
     font-size: 12px;
@@ -262,6 +406,11 @@
     background: var(--accent);
     border-radius: 999px;
     z-index: 0;
+  }
+  
+  .progress.private,
+  .progress.unknown-progress {
+    background: var(--private-progress-bg);
   }
   
   .progress.cleared {
@@ -684,6 +833,11 @@
   }
   
   @media (max-width: 600px) {
+    .dot.cleared .tag {
+      transform: translateX(-100%);
+      margin-right: 8px; /* 화면 가장자리 여백 추가 */
+    }
+
     .page-space {
       height: 100px;
     }
