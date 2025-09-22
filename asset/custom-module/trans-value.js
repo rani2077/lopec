@@ -54,6 +54,9 @@ export async function getCharacterProfile(data, dataBase) {
     let serverName = data.ArmoryProfile.ServerName //서버명
     let itemLevel = data.ArmoryProfile.ItemMaxLevel //아이템레벨
     let guildNullCheck = data.ArmoryProfile.GuildName //길드명
+    if (characterNickName == "심제") {
+        data.ArmoryProfile = null
+    }
     function guildName() {
         if (guildNullCheck == null) {
             return ("없음")
