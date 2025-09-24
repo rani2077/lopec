@@ -3302,7 +3302,7 @@ export async function getCharacterProfile(data, dataBase) {
                     const response = await fetch(`${apiOrigin}/api/median`);
                     if (response.ok) {
                         const apiData = await response.json();
-                        console.log("api", apiData);
+                        //console.log("api", apiData);
                         const transformed = transformMedianResponse(apiData);
                         if (transformed) {
                             medianPayload = transformed;

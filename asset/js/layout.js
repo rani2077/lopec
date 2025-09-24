@@ -1,5 +1,3 @@
-import { getJsonCookie, setJsonCookie } from './storage-cookie.js';
-
 /* **********************************************************************************************************************
 * variable name		:	mobileCheck
 * description       : 	현재 접속한 디바이스 기기가 모바일, 태블릿일 경우 true를 반환
@@ -24,6 +22,7 @@ export async function importModuleManager() {
         { key: 'calcValue', path: '../custom-module/calculator.js' },
         { key: 'apiCalcValue', path: '../custom-module/api-calc.js' },
         { key: 'component', path: '../custom-module/component.js' },
+        { key: 'storageCookie', path: '../js/storage-cookie.js' },
         { key: 'dataBase', path: '../js/character.js' },
         { key: 'originFilter', path: '../filter/filter.js' },
         { key: 'simulatorFilter', path: '../filter/simulator-filter.js' },
@@ -89,19 +88,19 @@ function scHeaderCreate() {
     const urlParams = new URLSearchParams(window.location.search);
     const nameParam = urlParams.get('headerCharacterName');
     if (nameParam) {
-        let nameListStorage = getJsonCookie('nameList', []);
+        let nameListStorage = Modules.storageCookie.getJsonCookie('nameList', []);
         // localStorage.removeItem("userBookmark");                                 //로컬스토리지 비우기
         if (nameListStorage.includes(nameParam) || nameListStorage.includes(null)) {
             //로컬스토리지 저장
             nameListStorage = nameListStorage.filter(item => item !== nameParam && item !== null)
             nameListStorage.push(nameParam)
-            setJsonCookie('nameList', nameListStorage);
+            Modules.storageCookie.setJsonCookie('nameList', nameListStorage);
         } else {
             if (nameListStorage.length >= 6) {
                 nameListStorage.shift();
             }
             nameListStorage.push(nameParam);
-            setJsonCookie('nameList', nameListStorage);
+            Modules.storageCookie.setJsonCookie('nameList', nameListStorage);
         }
     }
     function headerElement() {
@@ -301,7 +300,7 @@ function scHeaderCreate() {
             const trimmedValue = rawValue.trim();
             if (trimmedValue.length === 0) { return; }
 
-            let storedList = getJsonCookie(key, []);
+            let storedList = Modules.storageCookie.getJsonCookie(key, []);
             if (!Array.isArray(storedList)) {
                 storedList = [];
             }
@@ -318,7 +317,7 @@ function scHeaderCreate() {
                 storedList = storedList.slice(0, MAX_ITEMS);
             }
 
-            setJsonCookie(key, storedList);
+            Modules.storageCookie.setJsonCookie(key, storedList);
         }
     }
 
@@ -488,8 +487,8 @@ darkModeSetting()
 // 최근검색및 즐겨찾기
 function recentBookmark() {
 
-    const nameListStorage = getJsonCookie('nameList', []);            // 쿠키 최근 검색어
-    const userBookmarkStorage = getJsonCookie('userBookmark', []);    // 쿠키 즐겨찾기 목록
+    const nameListStorage = Modules.storageCookie.getJsonCookie('nameList', []);            // 쿠키 최근 검색어
+    const userBookmarkStorage = Modules.storageCookie.getJsonCookie('userBookmark', []);    // 쿠키 즐겨찾기 목록
     const recentNameList = [...nameListStorage].reverse();            // 최신순으로 정렬
     const bookmarkNameList = [...userBookmarkStorage].reverse();      // 최신순으로 정렬
 
@@ -589,7 +588,7 @@ function userInputMemoHtml(inputElement) {
         })
 
         // 목록제거버튼
-        const storedNameList = getJsonCookie('nameList', []);
+        const storedNameList = Modules.storageCookie.getJsonCookie('nameList', []);
         const nowUserName = storedNameList.length ? storedNameList[storedNameList.length - 1] : null;   // 현재 검색된 유저명
         document.querySelectorAll(".group-recent .memo .remove").forEach(function (removeBtn) {
 
@@ -599,15 +598,15 @@ function userInputMemoHtml(inputElement) {
 
                 if (removeBtn.parentElement.getAttribute("data-sort") == "recent") {
 
-                    const cookieNameList = getJsonCookie('nameList', []);
+                    const cookieNameList = Modules.storageCookie.getJsonCookie('nameList', []);
                     const updatedNameList = cookieNameList.filter(item => item !== nowRecentName);
-                    setJsonCookie('nameList', updatedNameList);
+                    Modules.storageCookie.setJsonCookie('nameList', updatedNameList);
 
                 } else if (removeBtn.parentElement.getAttribute("data-sort") == "bookmark") {
 
-                    const cookieBookmarkList = getJsonCookie('userBookmark', []);
+                    const cookieBookmarkList = Modules.storageCookie.getJsonCookie('userBookmark', []);
                     const updatedBookmarkList = cookieBookmarkList.filter(item => item !== nowRecentName);
-                    setJsonCookie('userBookmark', updatedBookmarkList);
+                    Modules.storageCookie.setJsonCookie('userBookmark', updatedBookmarkList);
 
                     if (document.querySelector(".star.full") && nowRecentName == nowUserName) {
 

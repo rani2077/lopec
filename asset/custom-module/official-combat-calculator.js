@@ -85,6 +85,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
 
     //console.log("인게임 전투력", originCombat)
     //console.log("계산 전투력", Math.ceil(calcCombat * 100) / 100)
+    console.log("계산 전투력", (calcCombat * 100) / 100)
 
 /* **********************************************************************************************************************
  * function name		:	서폿 계산식
