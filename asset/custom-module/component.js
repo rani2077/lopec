@@ -511,15 +511,69 @@ async function scArkgrid(inputName) {
         return arkgridListHtml.join('');
     }
 
+    const gradePriority = ["고대", "유물", "전설", "영웅"];
+    const gradeClassMap = {
+        "고대": "core-grade-ancient",
+        "유물": "core-grade-relic",
+        "전설": "core-grade-legendary",
+        "영웅": "core-grade-epic"
+    };
+
+    function stripHtmlTags(text) {
+        return typeof text === 'string' ? text.replace(/<[^>]*>/g, " ") : "";
+    }
+
+    function detectCoreGrade(slot) {
+        if (!slot || !slot.Tooltip) {
+            return null;
+        }
+
+        let aggregatedText = "";
+
+        try {
+            const tooltipData = JSON.parse(slot.Tooltip);
+            for (const key in tooltipData) {
+                if (!Object.prototype.hasOwnProperty.call(tooltipData, key)) {
+                    continue;
+                }
+                const element = tooltipData[key];
+                if (!element || !element.value) {
+                    continue;
+                }
+
+                if (typeof element.value === 'string') {
+                    aggregatedText += ` ${stripHtmlTags(element.value)}`;
+                } else if (typeof element.value === 'object') {
+                    for (const innerKey in element.value) {
+                        if (!Object.prototype.hasOwnProperty.call(element.value, innerKey)) {
+                            continue;
+                        }
+                        const innerValue = element.value[innerKey];
+                        if (typeof innerValue === 'string') {
+                            aggregatedText += ` ${stripHtmlTags(innerValue)}`;
+                        }
+                    }
+                }
+            }
+        } catch (error) {
+            aggregatedText = stripHtmlTags(slot.Tooltip);
+        }
+
+        const grade = gradePriority.find(keyword => aggregatedText.includes(keyword));
+        return grade ? grade : null;
+    }
+
     function coreItem() {
         let coreItemHtml = data.ArkGrid.Slots.map((obj, index) => {
+            const grade = detectCoreGrade(obj);
+            const gradeClass = grade ? ` ${gradeClassMap[grade]}` : "";
             return `
                 <div class="core-item">
                     <div class="image-box">
                         <img alt="코어 이미지" src="${obj.Icon}" />
                         ${coreTooltip(index)}
                     </div>
-                    <span class="name">${obj.Name}(${obj.Point}P)</span>
+                    <span class="name${gradeClass}">${obj.Name}(${obj.Point}P)</span>
                 </div>`
         })
         return coreItemHtml.join('');

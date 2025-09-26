@@ -1352,7 +1352,29 @@
     top: 100%;
 }
 
-.group-effect .core-area .core-item .name {}
+.group-effect .core-area .core-item .name {
+    font-weight: 600;
+}
+
+.group-effect .core-area .core-item .name.core-grade-ancient {
+    color: #b8913eab;
+}
+
+.dark-mode .group-effect .core-area .core-item .name.core-grade-ancient {
+    color: #f7d488;
+}
+
+.group-effect .core-area .core-item .name.core-grade-relic {
+    color: #ff6e61;
+}
+
+.group-effect .core-area .core-item .name.core-grade-legendary {
+    color: #ffa800;
+}
+
+.group-effect .core-area .core-item .name.core-grade-epic {
+    color: #a855f7;
+}
 
 .group-effect {}
 
