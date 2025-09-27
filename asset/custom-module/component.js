@@ -484,25 +484,47 @@ async function scArkgrid(inputName) {
             <span>아크그리드 없음</span>
         </section>`
     }
+    const coreNameOrder = ["질서의 해", "질서의 달", "질서의 별", "혼돈의 해", "혼돈의 달", "혼돈의 별"];
+
+    function getCoreOrderRank(name) {
+        if (typeof name !== "string") {
+            return coreNameOrder.length;
+        }
+        const foundIndex = coreNameOrder.findIndex(keyword => name.includes(keyword));
+        return foundIndex === -1 ? coreNameOrder.length : foundIndex;
+    }
+
+    const sortedSlots = data.ArkGrid.Slots
+        .map((slot, index) => ({ slot, index }))
+        .sort((a, b) => {
+            const rankA = getCoreOrderRank(a.slot.Name);
+            const rankB = getCoreOrderRank(b.slot.Name);
+            if (rankA !== rankB) {
+                return rankA - rankB;
+            }
+            return a.index - b.index;
+        })
+        .map(item => item.slot);
+
     function arkgridList() {
-        let arkgridListHtml = data.ArkGrid.Slots.map((obj, index) => {
+        let arkgridListHtml = sortedSlots.map((slot) => {
             return `
                 <ul class="arkgrid-list">
                     <li class="arkgrid-item core">
-                        <span class="arkgrid-box"><img alt="코어 이미지" src="${obj.Icon}" /></span>
-                        ${arkgridItem(index)}
+                        <span class="arkgrid-box"><img alt="코어 이미지" src="${slot.Icon}" /></span>
+                        ${arkgridItem(slot)}
                     </li>
                 </ul>`
         })
 
-        function arkgridItem(index) {
-            if (!data.ArkGrid.Slots[index].Gems) {
+        function arkgridItem(slot) {
+            if (!slot.Gems) {
                 return ``;
             }
-            let result = data.ArkGrid.Slots[index].Gems.map((obj) => {
+            let result = slot.Gems.map((gem) => {
                 return `
                 <li class="arkgrid-item">
-                    <span class="arkgrid-box"><img alt="코어 이미지" src="${obj.Icon}" /></span>
+                    <span class="arkgrid-box"><img alt="코어 이미지" src="${gem.Icon}" /></span>
                 </li>`
             })
             return result.join('');
@@ -564,26 +586,26 @@ async function scArkgrid(inputName) {
     }
 
     function coreItem() {
-        let coreItemHtml = data.ArkGrid.Slots.map((obj, index) => {
-            const grade = detectCoreGrade(obj);
+        let coreItemHtml = sortedSlots.map((slot) => {
+            const grade = detectCoreGrade(slot);
             const gradeClass = grade ? ` ${gradeClassMap[grade]}` : "";
             return `
                 <div class="core-item">
                     <div class="image-box">
-                        <img alt="코어 이미지" src="${obj.Icon}" />
-                        ${coreTooltip(index)}
+                        <img alt="코어 이미지" src="${slot.Icon}" />
+                        ${coreTooltip(slot)}
                     </div>
-                    <span class="name${gradeClass}">${obj.Name}(${obj.Point}P)</span>
+                    <span class="name${gradeClass}">${slot.Name}(${slot.Point}P)</span>
                 </div>`
         })
         return coreItemHtml.join('');
     }
 
-    function coreTooltip(index) {
-        if (!data.ArkGrid) {
+    function coreTooltip(slot) {
+        if (!data.ArkGrid || !slot) {
             return;
         }
-        const jsonData = JSON.parse(data.ArkGrid.Slots[index].Tooltip);
+        const jsonData = JSON.parse(slot.Tooltip);
 
         let htmlString = '';
         let title = '';
