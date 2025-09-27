@@ -2688,6 +2688,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "무공탄 역천2",
+        skill: [
+            { name: "무공탄", per: 0.24 },
+            { name: "섬열파", per: 0.20},
+            { name: "여래신장", per: 0.11 },
+            { name: "풍뢰일광포", per: 0.10 },
+            { name: "기공장", per: 0.08 },
+        ],
+    },
+    {
         class: "섬열파 역천",
         skill: [
             { name: "섬열파", per: 0.30 },
@@ -2853,12 +2863,8 @@ export let classGemFilter = [
     {
         class: "진파천 권왕",
         skill: [
-            { name: "파천섬광", per: 0.23 },
-            { name: "권왕십이식", per: 0.327 },
-            { name: "천기심권", per: 0.077 },
-            { name: "유성 낙하", per: 0.059 },
-            { name: "징벌의 파도", per: 0.059 },
-            { name: "보정치", per: -0.059 },
+            { name: "파천섬광", per: 0.35 },
+            { name: "권왕십이식", per: 0.33 },
         ],
     },
     {
@@ -3174,6 +3180,15 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "체크메이트 황제",
+        skill: [
+            { name: "체크메이트", per: 0.27 },
+            { name: "황제", per: 0.16 },
+            { name: "이보크", per: 0.15 },
+            { name: "다크 리저렉션", per: 0.12 },
+        ],
+    },
+    {
         class: "교감",
         skill: [
             { name: "고대의 창", per: 0.114 },
@@ -3478,6 +3493,16 @@ export let classGemFilter = [
             { name: "루나틱 엣지", per: 0.057 },
             { name: "러스트 네일", per: 0.057 },
             { name: "하베스트", per: 0.063 },
+
+        ],
+    },
+    {
+        class: "광월야 그믐",
+        skill: [
+            { name: "길로틴 스윙", per: 0.177 },
+            { name: "베스티지", per: 0.139 },
+            { name: "리탈 스피닝", per: 0.115 },
+            { name: "소울 시너스", per: 0.111 },
 
         ],
     },

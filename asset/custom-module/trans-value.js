@@ -1962,7 +1962,7 @@ export async function getCharacterProfile(data, dataBase) {
             class: "노차징 고기",
             conditions: [
                 { core: "스트라이크 포인트", point: 17, support: "고기" },
-                { core: "창술", point: 17, support: "고기" }
+                { core: "창술", point: 14, support: "고기" }
             ]
         },
         {
@@ -1984,7 +1984,22 @@ export async function getCharacterProfile(data, dataBase) {
         {
             class: "무공탄 역천",
             conditions: [
-                { core: "기류탄화", point: 17, support: "역천" },
+                { core: "기류탄화", point: 14, support: "역천" },
+            ]
+        },
+        {
+            class: "무공탄 역천2",
+            conditions: [
+                { core: "기류탄화", point: 14, support: "역천" },
+                { core: "열파전조", point: 17, support: "역천" },
+            ]
+        },
+        {
+            class: "번천 역천",
+            conditions: [
+                { core: "번천귀류", point: 14, support: "역천" },
+                { core: "맹공", point: 14, support: "역천" },
+                
             ]
         },
         {
@@ -1994,13 +2009,11 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "풍진천뢰", point: 14 }
             ]
         },
-        //
         {
-            class: "번천 역천",
+            class: "진파천 권왕",
             conditions: [
-                { core: "번천귀류", point: 14, support: "역천" },
-                { core: "맹공", point: 14, support: "역천" },
-
+                { core: "파천경", point: 14, support: "권왕" },
+                { core: "진 파천섬광", point: 17 }
             ]
         },
         /*************************** 아르데 ***************************/
@@ -2017,11 +2030,25 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "매시브 컨슘", point: 17, support: "억제" }
             ]
         },
+        {
+            class: "광월야 그믐",
+            conditions: [
+                { core: "광월야", point: 17, support: "그믐" }
+            ]
+        },
         /*************************** 실린 ***************************/
         {
             class: "고창 상소",
             conditions: [
                 { core: "고대의 유산", point: 17, support: "상소" }
+            ]
+        },
+        {
+            class: "체크메이트 황제",
+            conditions: [
+                { core: "임팩트 메이트", point: 10, support: "황제" },
+                { core: "다크 메이트", point: 10, support: "황제" },
+                { core: "스피드 메이트", point: 17, support: "황제" },
             ]
         },
     ];
