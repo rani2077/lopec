@@ -2016,6 +2016,12 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "진 파천섬광", point: 17 }
             ]
         },
+        {
+            class: "종횡무진 권왕",
+            conditions: [
+                { core: "종횡무진", point: 17, support: "권왕" },
+            ]
+        },
         /*************************** 아르데 ***************************/
         {
             class: "레오불 사시",
