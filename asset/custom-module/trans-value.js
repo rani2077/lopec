@@ -1997,7 +1997,6 @@ export async function getCharacterProfile(data, dataBase) {
         {
             class: "번천 역천",
             conditions: [
-                { core: "번천귀류", point: 14, support: "역천" },
                 { core: "맹공", point: 14, support: "역천" },
                 
             ]
