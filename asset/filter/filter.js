@@ -2748,6 +2748,20 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "콤보 절제",
+        skill: [
+            { name: "선풍참혼", per: 0.13 },
+            { name: "이연격", per: 0.12 },
+            { name: "맹룡열파", per: 0.11 },
+            { name: "반월섬", per: 0.10 },
+            { name: "연환섬", per: 0.095 },
+            { name: "열공참", per: 0.095 },
+            { name: "회선창", per: 0.06 },
+            { name: "청룡출수", per: 0.06 },
+            { name: "보정치", per: -0.155 },
+        ],
+    },
+    {
         class: "충단",
         skill: [
             { name: "죽음의 선고", per: 0.172 },

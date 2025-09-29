@@ -2002,6 +2002,13 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "콤보 절제",
+            conditions: [
+                { core: "연환 타격", point: 17, support: "절제" },
+                
+            ]
+        },
+        {
             class: "무한풍신 일격",
             conditions: [
                 { core: "풍신", point: 14, support: "일격" },
@@ -2045,7 +2052,8 @@ export async function getCharacterProfile(data, dataBase) {
         {
             class: "고창 상소",
             conditions: [
-                { core: "고대의 유산", point: 17, support: "상소" }
+                { core: "고대의 유산", point: 14, support: "상소" },
+                { core: "오쉬의 지원", point: 14, support: "상소" }
             ]
         },
         {
