@@ -2044,6 +2044,12 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "서징스톰 억제",
+            conditions: [
+                { core: "서징 스톰", point: 17, support: "억제" }
+            ]
+        },
+        {
             class: "광월야 그믐",
             conditions: [
                 { core: "광월야", point: 17, support: "그믐" }
@@ -2063,6 +2069,12 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "임팩트 메이트", point: 10, support: "황제" },
                 { core: "다크 메이트", point: 10, support: "황제" },
                 { core: "스피드 메이트", point: 17, support: "황제" },
+            ]
+        },
+        {
+            class: "스파인플라워 황제",
+            conditions: [
+                { core: "셔플 댄스", point: 14, support: "황제" },
             ]
         },
     ];

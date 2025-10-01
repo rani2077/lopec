@@ -2856,10 +2856,10 @@ export let classGemFilter = [
     {
         class: "난무",
         skill: [
-            { name: "오의 : 뇌호격", per: 0.234 },
+            { name: "오의 : 풍신초래", per: 0.234 },
             { name: "오의 : 호왕출현", per: 0.215 },
             { name: "오의 : 폭쇄진", per: 0.136 },
-            { name: "오의 : 풍신초래", per: 0.116 },
+            { name: "오의 : 뇌호격", per: 0.116 },
             { name: "방천격", per: 0.063 },
         ],
     },
@@ -3206,6 +3206,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "스파인플라워 황제",
+        skill: [
+            { name: "황제", per: 0.163 },
+            { name: "다크 리저렉션", per: 0.167 },
+            { name: "이보크", per: 0.152 },
+            { name: "언리미티드 셔플", per: 0.101 },
+            { name: "댄싱 오브 스파인플라워", per: 0.089 },
+        ],
+    },
+    {
         class: "교감",
         skill: [
             { name: "고대의 창", per: 0.114 },
@@ -3326,6 +3336,17 @@ export let classGemFilter = [
             { name: "제노사이드", per: 0.10 },
             { name: "데몬 그랩", per: 0.03 },
             { name: "라이징 클로", per: 0.03 },
+        ],
+    },
+    {
+        class: "서징스톰 억제",
+        skill: [
+            { name: "크루얼 커터", per: 0.135 },
+            { name: "그라인드 체인", per: 0.114 },
+            { name: "스피닝 웨폰", per: 0.109 },
+            { name: "피어스 쏜", per: 0.055 },
+            { name: "데시메이트", per: 0.055 },
+            { name: "보정치", per: -0.055 },
         ],
     },
     {
