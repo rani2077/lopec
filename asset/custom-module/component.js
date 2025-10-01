@@ -550,39 +550,25 @@ async function scArkgrid(inputName) {
             return null;
         }
 
-        let aggregatedText = "";
-
         try {
             const tooltipData = JSON.parse(slot.Tooltip);
-            for (const key in tooltipData) {
-                if (!Object.prototype.hasOwnProperty.call(tooltipData, key)) {
-                    continue;
-                }
-                const element = tooltipData[key];
-                if (!element || !element.value) {
-                    continue;
-                }
-
-                if (typeof element.value === 'string') {
-                    aggregatedText += ` ${stripHtmlTags(element.value)}`;
-                } else if (typeof element.value === 'object') {
-                    for (const innerKey in element.value) {
-                        if (!Object.prototype.hasOwnProperty.call(element.value, innerKey)) {
-                            continue;
-                        }
-                        const innerValue = element.value[innerKey];
-                        if (typeof innerValue === 'string') {
-                            aggregatedText += ` ${stripHtmlTags(innerValue)}`;
-                        }
-                    }
-                }
+            const itemTitle = Object.values(tooltipData).find(element => element && element.type === 'ItemTitle');
+            if (!itemTitle) {
+                return null;
             }
-        } catch (error) {
-            aggregatedText = stripHtmlTags(slot.Tooltip);
-        }
 
-        const grade = gradePriority.find(keyword => aggregatedText.includes(keyword));
-        return grade ? grade : null;
+            const rawTitle = typeof itemTitle.value === 'string'
+                ? itemTitle.value
+                : itemTitle.value && typeof itemTitle.value.leftStr0 === 'string'
+                    ? itemTitle.value.leftStr0
+                    : '';
+
+            const cleanTitle = stripHtmlTags(rawTitle);
+            const grade = gradePriority.find(keyword => cleanTitle.includes(keyword));
+            return grade ? grade : null;
+        } catch (error) {
+            return null;
+        }
     }
 
     function coreItem() {
