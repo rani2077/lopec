@@ -2005,6 +2005,7 @@ export async function getCharacterProfile(data, dataBase) {
             class: "콤보 절제",
             conditions: [
                 { core: "연환 타격", point: 17, support: "절제" },
+                { core: "연격 난무", point: 10, support: "절제" },
                 
             ]
         },
