@@ -898,23 +898,23 @@ export async function specPointCalc(inputObj) {
         let tierNameArray = ['브론즈', '실버', '골드', '다이아몬드', '마스터', '그랜드마스터','에스더'];
         let tierNameEngArray = ['bronze', 'silver', 'gold', 'diamond', 'master', 'grandmaster','esther'];
         if (inputObj.etcObj.supportCheck !== "서폿") {
-            if ((lastFinalValue / 2020) >= 3300) {
+            if ((lastFinalValue / 2020) >= 4600) {
                 nextTierValue = 0;
                 nowTierValue = 0;
                 tierIndex = 6;
-            } else if ((lastFinalValue / 2020) >= 3000) {
+            } else if ((lastFinalValue / 2020) >= 4000) {
                 nextTierValue = 3300;
                 nowTierValue = 3000;
                 tierIndex = 5;
-            } else if ((lastFinalValue / 2020) >= 2400) {
+            } else if ((lastFinalValue / 2020) >= 3300) {
                 nextTierValue = 3000;
                 nowTierValue = 2400;
                 tierIndex = 4;
-            } else if ((lastFinalValue / 2020) >= 1900) {
+            } else if ((lastFinalValue / 2020) >= 2500) {
                 nextTierValue = 2400;
                 nowTierValue = 1900;
                 tierIndex = 3;
-            } else if ((lastFinalValue / 2020) >= 1600) {
+            } else if ((lastFinalValue / 2020) >= 2000) {
                 nextTierValue = 1900;
                 nowTierValue = 1600;
                 tierIndex = 2;
@@ -930,23 +930,23 @@ export async function specPointCalc(inputObj) {
 
 
         } else {
-            if (supportSpecPoint >= 3300) {
+            if (supportSpecPoint >= 4600) {
                 nextTierValue = 0;
                 nowTierValue = 0;
                 tierIndex = 6;
-            } else if (supportSpecPoint >= 3000) {
+            } else if (supportSpecPoint >= 4000) {
                 nextTierValue = 3300;
                 nowTierValue = 3000;
                 tierIndex = 5;
-            } else if (supportSpecPoint >= 2400) {
+            } else if (supportSpecPoint >= 3300) {
                 nextTierValue = 3000;
                 nowTierValue = 2400;
                 tierIndex = 4;
-            } else if (supportSpecPoint >= 1900) {
+            } else if (supportSpecPoint >= 2500) {
                 nextTierValue = 2400;
                 nowTierValue = 1900;
                 tierIndex = 3;
-            } else if (supportSpecPoint >= 1600) {
+            } else if (supportSpecPoint >= 2000) {
                 nextTierValue = 1900;
                 nowTierValue = 1600;
                 tierIndex = 2;
