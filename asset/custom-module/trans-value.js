@@ -2040,7 +2040,7 @@ export async function getCharacterProfile(data, dataBase) {
         {
             class: "잠식 억모닉",
             conditions: [
-                { core: "매시브 컨슘", point: 17, support: "억제" }
+                { core: "매시브 컨슘", point: 14, support: "억제" }
             ]
         },
         {

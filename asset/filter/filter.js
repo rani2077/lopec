@@ -3336,6 +3336,7 @@ export let classGemFilter = [
             { name: "제노사이드", per: 0.10 },
             { name: "데몬 그랩", per: 0.03 },
             { name: "라이징 클로", per: 0.03 },
+            { name: "보정치", per: -0.03 },
         ],
     },
     {
