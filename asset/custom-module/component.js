@@ -466,7 +466,6 @@ export async function scNav(userName) {
         <a href="" class="link arkgrid" data-page="sc-arkgrid">아크그리드</a>
         <a href="" class="link expedition" data-page="sc-expedition">원정대</a>
         <a href="${mobilePath}/simulator/simulator.html?headerCharacterName=${name}" class="link simulator ${simulatorClassName}" data-page="sc-info">시뮬레이터</a>
-        <a href="https://cool-kiss-ec2.notion.site/1da758f0e8da8058a37bd1b7c6f49cd3?pvs=4" target="_blink" class="link" data-page="">중앙값</a>
     </nav>`
 }
 // <a href="" class="link history" data-page="sc-history">히스토리</a>
