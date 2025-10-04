@@ -9,7 +9,8 @@
     <meta http-equiv="Expires" content="0">
     <meta name="description" content="로스트아크 스펙 점수 확인, 전투정보실, 캐릭터 정보, 랭킹, 환산점수">
     <meta name="keywords" content="로펙, 로스트아크 스펙, 로스트아크 정보, 환산점수">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5125145415518329" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5125145415518329"
+        crossorigin="anonymous"></script>
 
 
 
@@ -18,7 +19,7 @@
     <script>
         let baseUrl = "https://cdnlopec.xyz/asset";
         let interValTime = 60 * 1000 * 10;
-        if (!window.location.href.includes("lopec.kr")) {
+        if (window.location.href.includes("lopec.kr")) {
             baseUrl = "/asset"
         }
         document.write('<link rel="stylesheet" href="' + baseUrl + '/css/reset.css?' + Math.floor((new Date).getTime() / interValTime) + '">');
@@ -132,7 +133,8 @@
                 </div>
                 <div class="ads-area"
                     style="width:100%;height:114px;margin-top:20px;border-radius:4px;overflow: hidden;">
-                    <a href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blank" style="display: inline-block;width:100%;height:100%;" title="로펙 후원하고 뱃지 받기">
+                    <a href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blank"
+                        style="display: inline-block;width:100%;height:100%;" title="로펙 후원하고 뱃지 받기">
                         <img src="/asset/image/badge-ads.gif" style="width:100%;height:100%;" alt="로펙 후원 광고">
                     </a>
                 </div>
@@ -540,25 +542,32 @@
                 </div>
             </div>
             <div class="group-system">
-                <div class="ads-area" style="width:100%;height:250px;margin-bottom:20px; display:flex; justify-content:center;">
-                    <ins class="adsbygoogle"
-                        style="display:inline-block;width:300px;height:250px"
-                        data-ad-client="ca-pub-5125145415518329"
-                        data-ad-slot="1180409903"></ins>
+                <div class="ads-area"
+                    style="width:100%;height:250px;margin-bottom:20px; display:flex; justify-content:center;">
+                    <!-- 336x280 카드 -->
+                    <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px"
+                        data-ad-client="ca-pub-5125145415518329" data-ad-slot="3360668929"></ins>
+
+                    <!-- 300x250 카드드-->
+                    <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+                        data-ad-client="ca-pub-5125145415518329" data-ad-slot="1180409903"></ins>
                 </div>
                 <script>
                     (function () {
-                        const script = document.currentScript;
-                        const container = script?.previousElementSibling;
-                        const slot = container?.querySelector('.adsbygoogle');
-                        if (!slot || slot.dataset.adsbygoogleLoaded === 'true') {
-                            return;
-                        }
-                        window.adsbygoogle = window.adsbygoogle || [];
-                        window.adsbygoogle.push({});
-                        slot.dataset.adsbygoogleLoaded = 'true';
+                      const wrap = document.currentScript.previousElementSibling;    // .ad-card-wrap
+                      if (!wrap) return;
+                
+                      // CSS로 display:none이 아닌 "보이는" 슬롯만 선택해서 push()
+                      const candidates = wrap.querySelectorAll('.adsbygoogle');
+                      const target = Array.from(candidates).find(el => {
+                        return window.getComputedStyle(el).display !== 'none';
+                      });
+                
+                      if (!target || target.dataset.adsbygoogleLoaded === 'true') return;
+                      (window.adsbygoogle = window.adsbygoogle || []).push({});
+                      target.dataset.adsbygoogleLoaded = 'true';
                     })();
-                </script>
+                  </script>
                 <div class="engraving-area shadow">
                     <div class="engraving-box">
                         <img src="../asset/image/skeleton-img.png" class="engraving-img" alt="">
