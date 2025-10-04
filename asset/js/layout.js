@@ -788,6 +788,7 @@ let simpleNameFlag = "";
 // <span class="auto btn">딸깍</span>
 // <span class="auto btn" style="opacity:0.2" onClick="alert('해당 기능은 현재 준비중입니다 빠른 시일내 준비할 수 있도록 노력하겠습니다.')">딸깍</span>
 
+/* 기존 sc-lopec-click UI 주석 처리
 async function scLopecClickCreate() {
     const clickElementHtml = `
         <section class="sc-lopec-click">
@@ -1091,6 +1092,15 @@ async function scLopecClickCreate() {
     lopecClickElement.style.cursor = lopecClickElement.classList.contains('on') ? 'auto' : 'grab';
 
 }
+*/
+
+async function scLopecClickCreate() {
+    if (mobileCheck) {
+        return;
+    }
+    // sc-lopec-click UI 비활성화
+    return;
+}
 
 // 함수 실행
 await scLopecClickCreate();
@@ -1106,6 +1116,9 @@ async function lopecClickSearch() {
         return;
     }
     const lopecClickElement = document.querySelector(".sc-lopec-click");
+    if (!lopecClickElement) {
+        return;
+    }
     // let Modules = await importModuleManager();
     // accessoryAbbreviationMap import 추가
     const { accessoryAbbreviationMap } = await import("../filter/filter.js" + `?${Math.floor((new Date).getTime() / interValTime)}`);
