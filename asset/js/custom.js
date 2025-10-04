@@ -65,17 +65,6 @@ async function mainSearchFunction() {
     document.querySelector(".sc-profile").insertAdjacentHTML('afterend', await component.scNav(nameParam));
     document.querySelector(".wrapper").style.display = "block";
 
-    const adSlots = document.querySelectorAll('.group-system .adsbygoogle, .group-info .adsbygoogle, .group-equip .adsbygoogle');
-    if (adSlots.length) {
-        window.adsbygoogle = window.adsbygoogle || [];
-        adSlots.forEach((slot) => {
-            if (!slot.dataset.adsbygoogleLoaded) {
-                window.adsbygoogle.push({});
-                slot.dataset.adsbygoogleLoaded = 'true';
-            }
-        });
-    }
-
     /* **********************************************************************************************************************
     * function name		:	
     * description       : 	

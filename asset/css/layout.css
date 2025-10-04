@@ -37,12 +37,6 @@ body {
     display: inline-block;
 }
 
-@media (max-width: 1120px) {
-    .adsense-banner {
-        padding: 0 16px;
-    }
-}
-
 /* 콘텐츠 래퍼 스타일 */
 .content-wrapper {
     flex: 1 0 auto;
