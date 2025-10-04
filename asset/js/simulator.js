@@ -80,6 +80,13 @@ async function simulatorInputCalc() {
         document.querySelector(".sc-profile").insertAdjacentHTML('afterend', await Modules.component.scNav(nameParam));
         document.querySelector(".wrapper").style.display = "block";
 
+        const simulatorAdSlot = document.querySelector('.group-system .adsbygoogle');
+        if (simulatorAdSlot && !simulatorAdSlot.dataset.adsbygoogleLoaded) {
+            window.adsbygoogle = window.adsbygoogle || [];
+            window.adsbygoogle.push({});
+            simulatorAdSlot.dataset.adsbygoogleLoaded = 'true';
+        }
+
         let apiData = await Modules.apiCalcValue.apiCalcValue(nameParam);
 
         console.log("API데이터", apiData)
