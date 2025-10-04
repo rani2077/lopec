@@ -17,7 +17,7 @@
     <script>
         let baseUrl = "https://cdnlopec.xyz/asset";
         let interValTime = 60 * 1000 * 10;
-        if (window.location.href.includes("lopec.kr")) {
+        if (!window.location.href.includes("lopec.kr")) {
             baseUrl = "/asset"
         }
         document.write('<link rel="stylesheet" href="' + baseUrl + '/css/reset.css?' + Math.floor((new Date).getTime() / interValTime) + '">');

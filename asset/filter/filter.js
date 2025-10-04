@@ -2870,8 +2870,9 @@ export let classGemFilter = [
             { name: "권왕십이식", per: 0.327 },
             { name: "천기심권", per: 0.077 },
             { name: "유성 낙하", per: 0.059 },
+            { name: "연의붕권", per: 0.059 },
             { name: "징벌의 파도", per: 0.059 },
-            { name: "보정치", per: -0.059 },
+            { name: "보정치", per: -0.118 },
         ],
     },
     {
