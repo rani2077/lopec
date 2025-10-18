@@ -574,6 +574,7 @@ export async function getCharacterProfile(data, dataBase) {
         dex: 0,
         int: 0,
         statHp: 0,
+        health: 0,
         carePower: 0,
 
         weaponAtkPer: 1,
@@ -587,7 +588,7 @@ export async function getCharacterProfile(data, dataBase) {
 
         let plusArry = ['atkPlus', 'atkPer', 'weaponAtkPlus', 'criticalDamagePer', 'criticalChancePer', 'addDamagePer', 'moveSpeed', 'atkSpeed', "skillCool", 'atkBuff', 'damageBuff', 'carePower', 'weaponAtkBonus']
         let perArry = ['weaponAtkPer', 'finalDamagePer', 'criFinalDamagePer', 'finalDamagePerEff', 'atkBuffPlus', "devilDamagePer"]
-        let statsArry = ["치명:crit", "특화:special", "신속:haste", "힘:str", "민첩:dex", "지능:int", "최대 생명력:statHp"];
+        let statsArry = ["치명:crit", "특화:special", "신속:haste", "힘:str", "민첩:dex", "지능:int", "최대 생명력:statHp", "체력:health"];
 
         statsArry.forEach(function (stats) {
             const statName = stats.split(":")[0];
@@ -1879,7 +1880,7 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "어슬 작열 블리츠 잔재";
         } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "보이드 스트라이크", dmg)) {
             specialClass = "블리츠 잔재";
-        } else if (classCheck("잔재") && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
+        } else if (classCheck("잔재") && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
             specialClass = "어슬 작열 잔재";
         } else if (classCheck("잔재") && skillCheck(gemSkillArry, "데스 센텐스", dmg) && skillCheck(gemSkillArry, "블리츠 러시", dmg) && skillCheck(gemSkillArry, "터닝 슬래쉬", dmg)) {
             specialClass = "슈차 7멸 잔재";
@@ -1893,6 +1894,8 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "3오의";
         } else if (classCheck("체술") && dmgGemCount === 4) {
             specialClass = "4겁 체술";
+        } else if (classCheck("체술") && dmgGemCount === 5) {
+            specialClass = "5겁 체술";
         } else if (classCheck("체술") && !skillCheck(gemSkillArry, "일망 타진", dmg) && skillCheck(gemSkillArry, "심판", per)) {
             specialClass = "심판 체술";
         } else if (classCheck("일격") && skillCheck(gemSkillArry, "오의 : 뇌호격", dmg) && skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
@@ -1913,6 +1916,10 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "반사멸 억모닉";
         } else if (classCheck("억제") && skillCheck(gemSkillArry, "데몰리션", dmg)) {
             specialClass = "사멸 억모닉";
+        } else if (classCheck("질풍") && dmgGemCount === 6) {
+            specialClass = "6멸 질풍";
+        } else if (classCheck("질풍") && dmgGemCount === 5) {
+            specialClass = "5멸 질풍";
         } else if (classCheck("이슬비") && skillCheck(gemSkillArry, "뙤약볕", dmg) && skillCheck(gemSkillArry, "싹쓸바람", dmg) && skillCheck(gemSkillArry, "소용돌이", dmg) && skillCheck(gemSkillArry, "여우비 스킬", dmg) && skillCheck(gemSkillArry, "소나기", dmg) && skillCheck(gemSkillArry, "날아가기", dmg) && skillCheck(gemSkillArry, "센바람", dmg)) {
             specialClass = "7겁 이슬비";
         } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사")) {
@@ -1959,6 +1966,12 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "격노폭발 처단",
+            conditions: [
+                { core: "격노폭발", point: 17, support: "처단" }
+            ]
+        },
+        {
             class: "노차징 고기",
             conditions: [
                 { core: "스트라이크 포인트", point: 17, support: "고기" },
@@ -1969,6 +1982,14 @@ export async function getCharacterProfile(data, dataBase) {
             class: "어스 분망",
             conditions: [
                 { core: "어스 웨이브", point: 17, support: "분망" }
+            ]
+        },
+        {
+            class: "붕쯔 중수",
+            conditions: [
+                { core: "그라비티 코어", point: 14, support: "중수" },
+                { core: "몰아치는 중력", point: 14, support: "중수" },
+                { core: "대지 부수기", point: 14, support: "중수" }
             ]
         },
 
@@ -2007,6 +2028,12 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "연환 타격", point: 17, support: "절제" },
                 { core: "연격 난무", point: 10, support: "절제" },
                 
+            ]
+        },
+        {
+            class: "도약 체술",
+            conditions: [
+                { core: "반복 도약", point: 14, support: "체술" },
             ]
         },
         {

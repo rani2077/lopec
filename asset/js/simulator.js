@@ -398,6 +398,7 @@ async function simulatorInputCalc() {
                 devilDamagePer: 1,
                 skillCool: 0,
                 statHp: 0,
+                health: 0,
                 carePower: 0,
                 special: 0,
                 crit: 0,
@@ -431,10 +432,20 @@ async function simulatorInputCalc() {
         let numberElements = bangleElement.querySelectorAll("input.option");
 
         statsElements.forEach((statOption, idx) => {
-            if (statOption.value !== "none") {
-                arr[statOption.value] = Number(numberElements[idx].value);
+            const statValue = Number(numberElements[idx].value) || 0;
+            const selectedOption = statOption.options[statOption.selectedIndex];
+            const statKey = statOption.value;
+            const statText = selectedOption ? selectedOption.textContent.trim() : "";
+
+            if (statKey !== "none") {
+                arr[statKey] = (arr[statKey] || 0) + statValue;
+            } else if (statText === "체력") {
+                arr.health = (arr.health || 0) + statValue;
             }
         })
+        if (typeof arr.health !== "number") {
+            arr.health = 0;
+        }
         function objKeyValueCombine(objArr) {
             const grouped = {};
             const combinedObj = {};
@@ -465,7 +476,7 @@ async function simulatorInputCalc() {
         }
         return arr;
     }
-    // console.log("bangleOptionCalc()", bangleOptionCalc())
+    console.log("bangleOptionCalc()", bangleOptionCalc())
 
     /* **********************************************************************************************************************
      * function name		:	armoryLevelCalc()
@@ -4648,7 +4659,7 @@ async function calculateGemData(data) {
         specialClass = "7겁 광기";
     } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg) && skillCheck(gemSkillArry, "마운틴 클리브", dmg)) {
         specialClass = "마운틴 포식";
-    } else if (classCheck("포식") && !skillCheck(gemSkillArry, "페이탈 소드", dmg)) {
+    } else if (classCheck("포식") && skillCheck(gemSkillArry, "크림슨 블레이드", dmg)) {
         specialClass = "크블 포식";
     } else if (classCheck("죽습") && skillCheck(gemSkillArry, "크레모아 지뢰", dmg)) {
         specialClass = "지뢰 죽습";
@@ -4656,6 +4667,8 @@ async function calculateGemData(data) {
         specialClass = "5겁 기술";
     } else if (classCheck("피메") && !skillCheck(gemSkillArry, "대재앙", dmg)) {
         specialClass = "6M 피메";
+    } else if (classCheck("사시") && dmgGemCount === 6) {
+        specialClass = "6겁 사시";
     } else if (classCheck("잔재") && dmgGemCount === 8) {
         specialClass = "8딜 잔재";
     } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && skillCheck(gemSkillArry, "보이드 스트라이크", dmg) && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
@@ -4664,7 +4677,7 @@ async function calculateGemData(data) {
         specialClass = "어슬 작열 블리츠 잔재";
     } else if (classCheck("잔재") && skillCheck(gemSkillArry, "블리츠 러시", dmg) && !skillCheck(gemSkillArry, "보이드 스트라이크", dmg)) {
         specialClass = "블리츠 잔재";
-    } else if (classCheck("잔재") && !skillCheck(gemSkillArry, "터닝 슬래쉬", dmg) && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
+    } else if (classCheck("잔재") && skillCheck(gemSkillArry, "어스 슬래쉬", per)) {
         specialClass = "어슬 작열 잔재";
     } else if (classCheck("잔재") && skillCheck(gemSkillArry, "데스 센텐스", dmg) && skillCheck(gemSkillArry, "블리츠 러시", dmg) && skillCheck(gemSkillArry, "터닝 슬래쉬", dmg)) {
         specialClass = "슈차 7멸 잔재";
@@ -4678,6 +4691,8 @@ async function calculateGemData(data) {
         specialClass = "3오의";
     } else if (classCheck("체술") && dmgGemCount === 4) {
         specialClass = "4겁 체술";
+    } else if (classCheck("체술") && dmgGemCount === 5) {
+        specialClass = "5겁 체술";
     } else if (classCheck("체술") && !skillCheck(gemSkillArry, "일망 타진", dmg) && skillCheck(gemSkillArry, "심판", per)) {
         specialClass = "심판 체술";
     } else if (classCheck("일격") && skillCheck(gemSkillArry, "오의 : 뇌호격", dmg) && skillCheck(gemSkillArry, "오의 : 풍신초래", dmg) && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
@@ -4698,6 +4713,10 @@ async function calculateGemData(data) {
         specialClass = "반사멸 억모닉";
     } else if (classCheck("억제") && skillCheck(gemSkillArry, "데몰리션", dmg)) {
         specialClass = "사멸 억모닉";
+    } else if (classCheck("질풍") && dmgGemCount === 6) {
+        specialClass = "6멸 질풍";
+    } else if (classCheck("질풍") && dmgGemCount === 5) {
+        specialClass = "5멸 질풍";
     } else if (classCheck("이슬비") && skillCheck(gemSkillArry, "뙤약볕", dmg) && skillCheck(gemSkillArry, "싹쓸바람", dmg) && skillCheck(gemSkillArry, "소용돌이", dmg) && skillCheck(gemSkillArry, "여우비 스킬", dmg) && skillCheck(gemSkillArry, "소나기", dmg) && skillCheck(gemSkillArry, "날아가기", dmg) && skillCheck(gemSkillArry, "센바람", dmg)) {
         specialClass = "7겁 이슬비";
     } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사")) {
@@ -4713,14 +4732,14 @@ async function calculateGemData(data) {
         {
             class: "러쉬 광기2",
             conditions: [
-                { core: "다크 파워", point: 17, support: "광기" },
+                { core: "다크 파워", point: 14, support: "광기" },
                 { core: "어둠의 격류", point: 17, support: "광기" },
             ]
         },
         {
             class: "러쉬 광기",
             conditions: [
-                { core: "다크 파워", point: 17, support: "광기" }
+                { core: "다크 파워", point: 14, support: "광기" }
             ]
         },
         {
@@ -4742,16 +4761,30 @@ async function calculateGemData(data) {
             ]
         },
         {
+            class: "격노폭발 처단",
+            conditions: [
+                { core: "격노폭발", point: 17, support: "처단" }
+            ]
+        },
+        {
             class: "노차징 고기",
             conditions: [
                 { core: "스트라이크 포인트", point: 17, support: "고기" },
-                { core: "창술", point: 17, support: "고기" }
+                { core: "창술", point: 14, support: "고기" }
             ]
         },
         {
             class: "어스 분망",
             conditions: [
                 { core: "어스 웨이브", point: 17, support: "분망" }
+            ]
+        },
+        {
+            class: "붕쯔 중수",
+            conditions: [
+                { core: "그라비티 코어", point: 14, support: "중수" },
+                { core: "몰아치는 중력", point: 14, support: "중수" },
+                { core: "대지 부수기", point: 14, support: "중수" }
             ]
         },
 
@@ -4767,7 +4800,35 @@ async function calculateGemData(data) {
         {
             class: "무공탄 역천",
             conditions: [
-                { core: "기류탄화", point: 17, support: "역천" },
+                { core: "기류탄화", point: 14, support: "역천" },
+            ]
+        },
+        {
+            class: "무공탄 역천2",
+            conditions: [
+                { core: "기류탄화", point: 14, support: "역천" },
+                { core: "열파전조", point: 17, support: "역천" },
+            ]
+        },
+        {
+            class: "번천 역천",
+            conditions: [
+                { core: "맹공", point: 14, support: "역천" },
+
+            ]
+        },
+        {
+            class: "콤보 절제",
+            conditions: [
+                { core: "연환 타격", point: 17, support: "절제" },
+                { core: "연격 난무", point: 10, support: "절제" },
+
+            ]
+        },
+        {
+            class: "도약 체술",
+            conditions: [
+                { core: "반복 도약", point: 14, support: "체술" },
             ]
         },
         {
@@ -4777,13 +4838,17 @@ async function calculateGemData(data) {
                 { core: "풍진천뢰", point: 14 }
             ]
         },
-        //
         {
-            class: "번천 역천",
+            class: "진파천 권왕",
             conditions: [
-                { core: "번천귀류", point: 14, support: "역천" },
-                { core: "맹공", point: 14, support: "역천" },
-
+                { core: "파천경", point: 14, support: "권왕" },
+                { core: "진 파천섬광", point: 17 }
+            ]
+        },
+        {
+            class: "종횡무진 권왕",
+            conditions: [
+                { core: "종횡무진", point: 17, support: "권왕" },
             ]
         },
         /*************************** 아르데 ***************************/
@@ -4793,18 +4858,45 @@ async function calculateGemData(data) {
                 { core: "풀 매거진", point: 14, support: "사시" }
             ]
         },
-        /*************************** 데런런 ***************************/
+        /*************************** 데런 ***************************/
         {
             class: "잠식 억모닉",
             conditions: [
-                { core: "매시브 컨슘", point: 17, support: "억제" }
+                { core: "매시브 컨슘", point: 14, support: "억제" }
+            ]
+        },
+        {
+            class: "서징스톰 억제",
+            conditions: [
+                { core: "서징 스톰", point: 17, support: "억제" }
+            ]
+        },
+        {
+            class: "광월야 그믐",
+            conditions: [
+                { core: "광월야", point: 17, support: "그믐" }
             ]
         },
         /*************************** 실린 ***************************/
         {
             class: "고창 상소",
             conditions: [
-                { core: "고대의 유산", point: 17, support: "상소" }
+                { core: "고대의 유산", point: 14, support: "상소" },
+                { core: "오쉬의 지원", point: 14, support: "상소" }
+            ]
+        },
+        {
+            class: "체크메이트 황제",
+            conditions: [
+                { core: "임팩트 메이트", point: 10, support: "황제" },
+                { core: "다크 메이트", point: 10, support: "황제" },
+                { core: "스피드 메이트", point: 17, support: "황제" },
+            ]
+        },
+        {
+            class: "스파인플라워 황제",
+            conditions: [
+                { core: "셔플 댄스", point: 14, support: "황제" },
             ]
         },
     ];
@@ -4842,7 +4934,7 @@ async function calculateGemData(data) {
         // 모든 조건이 맞으면, specialClass를 변경
         if (isMatch) {
             specialClass = rule.class;
-            break; 
+            break;
         }
     }
     //console.log("보석전용 직업 : ", specialClass)

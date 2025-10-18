@@ -317,7 +317,7 @@ export async function specPointCalc(inputObj) {
     //팔찌 효율
     let bangleAddDamageValue = (bangleAddDamageResult - (bangleAddDamageResult - inputObj.bangleObj.addDamagePer / 100)) / bangleAddDamageResult
     let bangleStatusValue = ((inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1
-    let bangleValue = ((((bangleAtkValue * inputObj.bangleObj.finalDamagePer * (bangleAddDamageValue + 1) * bangleStatusValue) - 1) * 100) * 1.065).toFixed(2)
+    let bangleValue = ((((bangleAtkValue * inputObj.bangleObj.finalDamagePer * (bangleAddDamageValue + 1) * bangleStatusValue) - 1) * 100) * 1.07).toFixed(2)
     //let bangleValue = ((((1 * bangleAtkValue * inputObj.bangleObj.finalDamagePer * (bangleAddDamageValue + 1) * (((inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1)) - 1) * 100) * 1.065).toFixed(2)
 
 
@@ -617,7 +617,7 @@ export async function specPointCalc(inputObj) {
     let calcCdrPercentOnlyCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent))) 
-        //* (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.arkgridObj.cdrPercent)
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
 
     // 각성기 가치
@@ -677,7 +677,7 @@ export async function specPointCalc(inputObj) {
     // 가동률 기반 평균 초각 딜증
     let calcAvgHyperBuff = (((calcAllTimeBuffv2 * calcHyperBuffv2) - calcAllTimeBuffv2) * 100) * calcHyperUptime
 
-    // 가동률 기반 종합 버프력력
+    // 가동률 기반 종합 버프력
     let calcTotalAvgBuff = ((calcAllTimeBuffv2 - 1) * 100) + calcAvgIdentityBuff + calcAvgHyperBuff
 
     // 풀버프 가동률
@@ -728,8 +728,14 @@ export async function specPointCalc(inputObj) {
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
 
-    const bangleHealth = parseInt(inputObj?.htmlObj?.bangleInfo?.normalStatsArray?.[0]?.match(/체력 \+(\d+)/)?.[1] || '0', 10);
-    let totalHealth_MinusBangle = Number(((inputObj.etcObj.healthStatus - bangleHealth + inputObj.hyperObj.statHp + inputObj.elixirObj.statHp + inputObj.accObj.statHp + inputObj.arkgridObj.statHP) * inputObj.defaultObj.hpActive * 1.07).toFixed(0));
+    let totalHealth_MinusBangle = Number(((
+        inputObj.etcObj.healthStatus - inputObj.bangleObj.health
+        + inputObj.hyperObj.statHp 
+        + inputObj.elixirObj.statHp 
+        + inputObj.accObj.statHp
+        + inputObj.arkObj.statHp 
+        + inputObj.arkgridObj.statHP) 
+        * inputObj.defaultObj.hpActive * 1.07).toFixed(0));
 
     let finalSpecial_MinusBangle = Math.min(inputObj.defaultObj.statusSpecial, 1200)
     let calcHaste_MinusBangle = (inputObj.defaultObj.statusHaste + finalSpecial_MinusBangle) * 0.75
@@ -758,18 +764,30 @@ export async function specPointCalc(inputObj) {
         * ((inputObj.accObj.damageBuff 
         + inputObj.arkgridObj.damageBuff) / 100 + 1)) / 100 + 1 // 초각성
     
+    // 팔찌 제외 특화 딜증
     let statDamageBuff_MinusBangle = ((calcSpecial_MinusBangle) / 20.791) / 100 + 1 // 팔찌 제외 특화 딜증
     let finalDamageBuff_MinusBangle = ((13 * enlightBuffResult) * damageBuff_MinusBangle * statDamageBuff_MinusBangle) / 100 + 1 // 팔찌 제외 최종 피증
-    let carePower_MinusBangle = (1 + (inputObj.engObj.carePower + inputObj.accObj.carePower + inputObj.elixirObj.carePower + inputObj.arkgridObj.carePower)) // 케어력
-    let finalCarePower_MinusBangle = (((totalHealth_MinusBangle * 0.3) * carePower_MinusBangle) / 330000) * 100 //최종 케어력
+    
+    // 팔찌 제외 케어력
+    let carePower_MinusBangle = (1 
+        + (inputObj.engObj.carePower 
+            + inputObj.accObj.carePower 
+            + inputObj.elixirObj.carePower 
+            + (inputObj.arkgridObj.carePower / 100))) // 케어력
+
+    // 팔찌 제외 최종 캐어력
+    let finalCarePower_MinusBangle = (((totalHealth_MinusBangle * 0.3) * carePower_MinusBangle) / 330000) * 100
     
     // 팔찌 제외 상시 피증
-    let allTimeBuff_MinusBangle = (finalStigmaPer / 100 + 1) * 1.0965 * inputObj.arkgridObj.atkBuffPlus *inputObj.arkgridObj.finalDamageBuff
+    let allTimeBuff_MinusBangle = (finalStigmaPer / 100 + 1) 
+    * 1.0965 
+    * inputObj.arkgridObj.atkBuffPlus 
+    * inputObj.arkgridObj.finalDamageBuff
 
     // 팔찌 제외 스킬A 지속시간 (천상, 신분, 해그)
     let duration_A_MinusBangle = inputObj.supportSkillObj.atkBuffADuration
 
-    // 팔찌 제외 스킬A 쿨감감
+    // 팔찌 제외 스킬A 쿨감
     let cd_A_MinusBangle = (inputObj.supportSkillObj.atkBuffACool) 
         * (1 - (calcHaste_MinusBangle) * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
@@ -789,7 +807,7 @@ export async function specPointCalc(inputObj) {
     // 팔찌 제외 스킬 가동률
     let t_buff_MinusBangle = duration_A_MinusBangle + duration_B_MinusBangle;
     let t_cycle_MinusBangle = Math.max(duration_A_MinusBangle + duration_B_MinusBangle, cd_A_MinusBangle, cd_B_MinusBangle);
-    let atkBuffUptime_MinusBangle = (t_buff_MinusBangle / t_cycle_MinusBangle).toFixed(4);
+    let atkBuffUptime_MinusBangle = t_buff_MinusBangle / t_cycle_MinusBangle;
 
     // 팔찌 제외 쿨감
     let cdrPercentNoneCare_MinusBangle = ((1 - ((1 - calcHaste_MinusBangle * 0.0214739 / 100) 
@@ -805,16 +823,18 @@ export async function specPointCalc(inputObj) {
     
     // 팔찌 제외 아덴 가동률
     let awakenIdentity_MinusBangle = ((1 / ((1 - inputObj.engObj.awakencdrPercent) 
-        * (1 - (calcHaste_MinusBangle) * 0.0214739 / 100) 
-        * (1 - inputObj.engObj.cdrPercent)
-        * (1 - inputObj.arkgridObj.cdrPercent))) - 1) 
-        * 0.15 + 1;
+    * (1 - calcHaste_MinusBangle * 0.0214739 / 100) 
+    * (1 - inputObj.engObj.cdrPercent)))
+    * coolDownValue - 1) 
+    * 0.15 + 1; //각성기 가치
 
     // 팔찌 제외 특화 딜증
     let specialIdentity_MinusBangle = ((calcSpecial_MinusBangle) / 30.2 / 100 + 1)
-    
+
     // 팔찌 제외 아덴 가동률
-    let identityUptime_MinusBangle = (((20.05 * ((inputObj.accObj.identityUptime + inputObj.elixirObj.identityUptime + inputObj.arkgridObj.identityUptime) * specialIdentity_MinusBangle) * awakenIdentity_MinusBangle) / (1 - cdrPercentNoneCare_MinusBangle)) / 100).toFixed(4)
+    let identityUptime_MinusBangle = (((20.05 
+        * ((inputObj.accObj.identityUptime + inputObj.elixirObj.identityUptime + inputObj.arkgridObj.identityUptime) * specialIdentity_MinusBangle) * awakenIdentity_MinusBangle)
+         / (1 - cdrPercentNoneCare_MinusBangle)) / 100).toFixed(4)
 
     // 초각성 가동률 계산을 위한 쿨감
     let hyperCdrPercent_MinusBangle = (1 - ((1 - inputObj.arkObj.cdrPercent) 
@@ -825,7 +845,8 @@ export async function specPointCalc(inputObj) {
     // 초각성 가동률
     let hyperUptime_MinusBangle = ((24.45 / (1 - hyperCdrPercent_MinusBangle)) / 100).toFixed(4)
 
-    let defaultAtkBuff_MinusBangle = ((120000 + finalAtkBuff_MinusBangle * atkBuffUptime_MinusBangle)) / 120000 //기준딜러 공증 상승량
+    //기준딜러 공증 상승량
+    let defaultAtkBuff_MinusBangle = ((120000 + finalAtkBuff_MinusBangle * atkBuffUptime_MinusBangle)) / 120000
 
     //상시 버프력
     let allTimeBuffv2_MinusBangle = defaultAtkBuff_MinusBangle 
@@ -842,7 +863,8 @@ export async function specPointCalc(inputObj) {
     
     // 초각 피증
     let hyperBuffv2_MinusBangle = (10 
-        * damageBuff_MinusBangle) / 100 + 1 
+        * ((inputObj.accObj.damageBuff + inputObj.arkgridObj.damageBuff) / 100 + 1)) 
+        / 100 + 1 // 초각 피증
         * inputObj.arkgridObj.finalDamageBuff
     
     let fullBuffv2_MinusBangle = ((allTimeBuffv2_MinusBangle * identityBuffv2_MinusBangle * hyperBuffv2_MinusBangle) - 1) * 100 // 풀버프력
@@ -852,15 +874,23 @@ export async function specPointCalc(inputObj) {
     let avgHyperBuff_MinusBangle = (((allTimeBuffv2_MinusBangle * hyperBuffv2_MinusBangle) - allTimeBuffv2_MinusBangle) * 100) * hyperUptime_MinusBangle // 가동률 기반 평균 초각 딜증
     let totalAvgBuff_MinusBangle = ((allTimeBuffv2_MinusBangle - 1) * 100) + avgIdentityBuff_MinusBangle + avgHyperBuff_MinusBangle // 가동률 기반 종합 버프력
 
-    let doubleBuffUptime_MinusBangle = identityUptime_MinusBangle * hyperUptime_MinusBangle // 풀버프 가동률
-    let onlyIdentityUptime_MinusBangle = identityUptime_MinusBangle * (1 - hyperUptime_MinusBangle) // 아덴 가동률
-    let onlyHyperUptime_MinusBangle = hyperUptime_MinusBangle * (1 - identityUptime_MinusBangle) // 초각 가동률
-    let noBuffUptime_MinusBangle = (1 - identityUptime_MinusBangle) * (1 - hyperUptime_MinusBangle) // 버프 가동률
+    // 풀버프 가동률
+    let doubleBuffUptime_MinusBangle = identityUptime_MinusBangle * hyperUptime_MinusBangle 
+
+    //아덴 가동률
+    let onlyIdentityUptime_MinusBangle = identityUptime_MinusBangle * (1 - hyperUptime_MinusBangle)
+
+    //초각 가동률
+    let onlyHyperUptime_MinusBangle = hyperUptime_MinusBangle * (1 - identityUptime_MinusBangle)
+
+    //버프 가동률
+    let noBuffUptime_MinusBangle = (1 - identityUptime_MinusBangle) * (1 - hyperUptime_MinusBangle)
 
     // 최종 풀 버프력
     let doubleBuffPower_MinusBangle = (allTimeBuff_MinusBangle / inputObj.arkgridObj.finalDamageBuff) 
         * (identityBuffv2_MinusBangle / inputObj.arkgridObj.finalDamageBuff) 
         * (hyperBuffv2_MinusBangle / inputObj.arkgridObj.finalDamageBuff)
+        * inputObj.defaultObj.estherSupport
         * inputObj.arkgridObj.finalDamageBuff
     
     // 최종 아덴 버프력력
@@ -880,9 +910,12 @@ export async function specPointCalc(inputObj) {
     let supportCarePower_MinusBangle = (((finalCarePower_MinusBangle / ((1 - cdrPercentOnlyCare_MinusBangle)))) / 100 + 1)
 
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint_MinusBangle = (supportCombinedPower_MinusBangle ** 4.268) * 70.127 * inputObj.arkgridObj.coreValue
-    let supportBangleValue = ((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.38 
-
+    let supportSpecPoint_MinusBangle = ((supportCombinedPower_MinusBangle ** 4.268) * 69.127) * inputObj.arkgridObj.coreValue
+    let supportBangleValue = Math.max(((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.52, 0)
+    if (supportBangleValue < 0.02){
+        supportBangleValue = 0
+    }
+    
 
 
     /* **********************************************************************************************************************
