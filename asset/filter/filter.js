@@ -422,6 +422,7 @@ export const accessoryAbbreviationMap = {
 
 let arkFilter = [
     { name: "창술 수련", initial: "고기", finalDamagePer: 6.4, criticalChancePer: 15, healthPer: 2.5 },
+    { name: "고독한 기사", initial: "고기", finalDamagePer: 6.4, criticalChancePer: 15, healthPer: 2.5 }, //언제 개지랄 날지 모르니 예비
     { name: "철옹성", initial: "전태", finalDamagePer: 6.4, healthPer: 2.5 },
     { name: "강인한 육체", initial: "비기", moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 63.2, healthPer: 2.2 },
     { name: "광기", initial: "광기", moveSpeed: 15, atkSpeed: 15, finalDamagePer: 6, criticalChancePer: 33.2, healthPer: 2.2 },
@@ -480,7 +481,6 @@ let arkFilter = [
 
     { name: "핸드거너", initial: "핸건", criticalChancePer: 10, moveSpeed: 8, atkSpeed: 8, skillCool: 5, finalDamagePer: 6 },
     { name: "강화 무기", initial: "전탄", criticalChancePer: 34, finalDamagePer: 6 },
-    { name: "고독한 기사", initial: "고기", finalDamagePer: 6, criticalChancePer: 15 },
     { name: "전투 태세", initial: "전태", finalDamagePer: 6 },
     { name: "광전사의 비기", initial: "비기", moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 63.2 },
     { name: "분노의 망치", initial: "분망", finalDamagePer: 6.4, criticalChancePer: 18 },
@@ -2226,11 +2226,11 @@ export let arkCalFilter = [
     { name: "묵법 : 접무", level: 3, enlightenmentBuff: 0.2 },
 
     //도화가 낙인력
-    { name: "엥? 하나 더!", level: 1, stigmaPer: 0 },
-    { name: "엥? 하나 더!", level: 2, stigmaPer: 1 },
-    { name: "엥? 하나 더!", level: 3, stigmaPer: 2 },
-    { name: "엥? 하나 더!", level: 4, stigmaPer: 3 },
-    { name: "엥? 하나 더!", level: 5, stigmaPer: 4 },
+    { name: "오누이", level: 1, stigmaPer: 0 },
+    { name: "오누이", level: 2, stigmaPer: 1 },
+    { name: "오누이", level: 3, stigmaPer: 2 },
+    { name: "오누이", level: 4, stigmaPer: 3 },
+    { name: "오누이", level: 5, stigmaPer: 4 },
 
     { name: "낙인 강화", level: 1, stigmaPer: 0 },
     { name: "낙인 강화", level: 2, stigmaPer: 1 },
@@ -3715,29 +3715,29 @@ export let arkgridCoreFilter = {
         mainCore: [
             "질서의 해 코어 : 전술 제어",
             "질서의 해 코어 : 창술",
-            "질서의 해 코어 : 차지 숙련",
+            "질서의 해 코어 : 종전",
             "질서의 달 코어 : 방어 전술",
             "질서의 달 코어 : 스트라이크 포인트",
-            "질서의 달 코어 : 차지 임팩트",
+            "질서의 달 코어 : 랜스 차지지",
         ],
         starCore: [
             "질서의 별 코어 : 방어 포격",
             "질서의 별 코어 : 확정된 포격",
-            "질서의 별 코어 : 돌진형 포격",
+            "질서의 별 코어 : 크로스 랜스스",
         ],
     },
     "전태": {
         mainCore: [
             "질서의 해 코어 : 방패 연계",
-            "질서의 해 코어 : 전투 의지",
+            "질서의 해 코어 : 연속 돌진",
             "질서의 해 코어 : 천둥",
             "질서의 달 코어 : 방패술",
-            "질서의 달 코어 : 전투 함성",
+            "질서의 달 코어 : 함성 돌진",
             "질서의 달 코어 : 번개폭풍",
         ],
         starCore: [
             "질서의 별 코어 : 방패 타격",
-            "질서의 별 코어 : 강화 함성",
+            "질서의 별 코어 : 전차 돌진진",
             "질서의 별 코어 : 광역 낙뢰",
         ],
     },
@@ -3942,7 +3942,7 @@ export let arkgridCoreFilter = {
             "질서의 해 코어 : 연가일섬",
             "질서의 해 코어 : 맹룡오격",
             "질서의 달 코어 : 맹룡의 기운",
-            "질서의 달 코어 : 궁신탄영",
+            "질서의 달 코어 : 비기승화",
             "질서의 달 코어 : 연환 타격",
         ],
         starCore: [

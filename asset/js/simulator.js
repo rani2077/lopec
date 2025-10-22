@@ -1462,7 +1462,7 @@ async function simulatorInputCalc() {
     *********************************************************************************************************************** */
     function enlightArkCheck() {
         let result = { stigmaPer: 0, enlightenmentBuff: 1 };
-        let stigmaArkPassiveArray = ["빠른 구원", "빛의 흔적", "포용의 세레나데", "낙인의 세레나데", "엥? 하나 더!", "낙인 강화", "해방자의 흔적", "빛의 검기"]
+        let stigmaArkPassiveArray = ["빠른 구원", "빛의 흔적", "포용의 세레나데", "낙인의 세레나데", "오누이", "낙인 강화", "해방자의 흔적", "빛의 검기"]
         const mainNodeBuffs = [
             { name: "신성 해방", level: 1, buff: 0.1 },
             { name: "신성 해방", level: 2, buff: 0.15 },
@@ -3791,7 +3791,7 @@ async function selectCreate(data, Modules) {
         ];
         // 2. 옵션 목록 (각 옵션이 어떤 클래스에 속하는지 classId로 참조)
         const options = [
-            { id: 'dohwaga_option_1', classId: 'supp_dohwaga', name: '엥? 하나 더!' },
+            { id: 'dohwaga_option_1', classId: 'supp_dohwaga', name: '오누이' },
             { id: 'dohwaga_option_2', classId: 'supp_dohwaga', name: '낙인 강화' },
             { id: 'dohwaga_option_3', classId: 'supp_dohwaga', name: '묵법 : 접무' },
             { id: 'holyknight_option_1', classId: 'supp_holyknight', name: '빠른 구원' },
@@ -3806,7 +3806,7 @@ async function selectCreate(data, Modules) {
         ];
         // 3. 레벨 목록 (각 레벨이 어떤 옵션에 속하는지 optionId로 참조)
         const levels = [
-            // 도화가 : 엥? 하나 더!
+            // 도화가 : 오누이이
             { optionId: 'dohwaga_option_1', value: 'stigmaPer:0' },
             { optionId: 'dohwaga_option_1', value: 'stigmaPer:0' },
             { optionId: 'dohwaga_option_1', value: 'stigmaPer:1' },
