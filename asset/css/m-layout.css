@@ -840,7 +840,7 @@ body.home .page-content {
 /* 최근검색 */
 .group-recent {
     position: fixed;
-    top: 102px;
+    top: 150px;
     left: 0;
     border-top: 1px solid #f1f4f6;
     background: #f0f0f3;
