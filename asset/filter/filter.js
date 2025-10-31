@@ -2582,6 +2582,20 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "333 포식",
+        skill: [
+            { name: "허리케인 소드", per: 0.4 },
+            { name: "브루탈 임팩트", per: 0.09 },
+            { name: "길로틴", per: 0.085 },
+            { name: "볼케이노 이럽션", per: 0.08 },
+            { name: "페이탈 소드", per: 0.06 },
+            { name: "파이널 블로", per: 0.05 },
+            { name: "퓨리어스 클로", per: 0.05 },
+            { name: "보정치", per: -0.05 },
+
+        ],
+    },
+    {
         class: "처단",
         skill: [
             { name: "블러드러스트", per: 0.284 },
@@ -2746,6 +2760,15 @@ export let classGemFilter = [
             { name: "사두룡격", per: 0.062 },
             { name: "맹룡열파", per: 0.091 },
 
+        ],
+    },
+    {
+        class: "222 절정",
+        skill: [
+            { name: "적룡포", per: 0.35 },
+            { name: "굉열파", per: 0.15 },
+            { name: "유성강천", per: 0.10 },
+            { name: "사두룡격", per: 0.06 },
         ],
     },
     {
@@ -3071,6 +3094,17 @@ export let classGemFilter = [
             { name: "차징 샷", per: 0.07 },
             { name: "샤프 슈터", per: 0.065 },
             { name: "크레모아 지뢰", per: 0.082 },
+        ],
+    },
+    {
+        class: "222 죽습",
+        skill: [
+            { name: "애로우 샤워", per: 0.22 },
+            { name: "스나이프", per: 0.19 },
+            { name: "실버호크 스킬", per: 0.16 },
+            { name: "호크 샷", per: 0.09 },
+            { name: "차징 샷", per: 0.07 },
+            { name: "블레이드 스톰", per: 0.05 },
         ],
     },
     {

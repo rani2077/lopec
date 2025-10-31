@@ -268,7 +268,8 @@ export async function specPointCalc(inputObj) {
     //최종 환산
     let lastFinalValue = (((totalAtk) 
         * evolutionDamageResult
-        * bangleFinalDamageResult 
+        * bangleFinalDamageResult
+        * inputObj.defaultObj.trinityValue
         * enlightResult
         * inputObj.arkObj.leapDamage 
         * inputObj.etcObj.gemCheckFnc.gemValue 
@@ -288,6 +289,7 @@ export async function specPointCalc(inputObj) {
     let minusHyperValue = (((minusHyperAtk) 
     * evolutionDamageResult 
     * minusHyperFinal
+    * inputObj.defaultObj.trinityValue
     * enlightResult
     * inputObj.arkObj.leapDamage
     * inputObj.etcObj.gemCheckFnc.gemValue 
@@ -303,6 +305,7 @@ export async function specPointCalc(inputObj) {
     let minusElixirValue = (((minusElixirAtk) 
         * evolutionDamageResult 
         * minusElixirFinal
+        * inputObj.defaultObj.trinityValue
         * enlightResult 
         * inputObj.arkObj.leapDamage 
         * inputObj.etcObj.gemCheckFnc.gemValue 

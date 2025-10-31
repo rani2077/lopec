@@ -287,6 +287,8 @@ export async function getCharacterProfile(data, dataBase) {
         hpActive: 0,
         estherDeal: 1,
         estherSupport: 1,
+        trinityPower: 0,
+        trinityValue: 0,
     }
     defaultObj.combatPower = parseFloat(data.ArmoryProfile.CombatPower.replace(/,/g, ''));
     data.ArmoryProfile.Stats.forEach(function (statsArry) {
@@ -312,6 +314,23 @@ export async function getCharacterProfile(data, dataBase) {
             //console.log(defaultObj.hpActive)
         }
     })
+
+    function findMaxtrinityPower(obj) {
+        const re = /시즌?1\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
+        let result = null;
+      
+        (function dfs(v) {
+          if (result !== null) return;
+          if (typeof v === 'string') {
+            const m = v.match(re);
+            if (m) result = Number(m[1].replace(/,/g, ''));
+          } else if (v && typeof v === 'object') {
+            for (const val of Object.values(v)) dfs(val);
+          }
+        })(obj);
+      
+        return result;
+      }
 
 
     let vitalitySum = 0; // 툴팁에서 추출한 생명 활성력 합계를 위한 변수
@@ -359,6 +378,22 @@ export async function getCharacterProfile(data, dataBase) {
             } catch (e) {
                 console.error("Error parsing tooltip or finding vitality for:", equip.Type, e);
             }
+        } else if (equip.Type == "보주") {
+            const tooltipObj = typeof equip.Tooltip === 'string'
+            ? JSON.parse(equip.Tooltip)
+            : equip.Tooltip;
+
+            const val = findMaxtrinityPower(tooltipObj);
+            defaultObj.trinityPower = (val ?? 0);
+
+            const text = JSON.stringify(tooltipObj);
+
+            if (/(성창|비전)/.test(text)) {
+                defaultObj.trinityValue = (20 + 800 * defaultObj.trinityPower / 100000000) / 10000 + 1
+              }
+              if (/자연/.test(text)) {
+                defaultObj.trinityValue = (14 + 544 * defaultObj.trinityPower / 100000000) / 10000 + 1
+              }
         }
     });
 
@@ -1848,7 +1883,7 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "블스 두동";
         } else if (classCheck("두동") && !skillCheck(gemSkillArry, "애로우 해일", dmg) && skillCheck(gemSkillArry, "크레모아 지뢰", dmg)) {
             specialClass = "지뢰 두동";
-        } else if (classCheck("질풍") && !skillCheck(gemSkillArry, "여우비 스킬", dmg)) {
+        } else if (classCheck("질풍") && dmgGemCount === 5) {
             specialClass = "5멸 질풍";
         } else if (classCheck("그믐") && !skillCheck(gemSkillArry, "소울 시너스", dmg)) {
             specialClass = "데이터 없음";
@@ -1954,6 +1989,14 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "333 포식",
+            conditions: [
+                { core: "회오리", point: 14, support: "포식" },
+                { core: "소용돌이", point: 14, support: "포식" },
+                { core: "파괴의 바람", point: 14, support: "포식" }
+            ]
+        },
+        {
             class: "허리케인 포식",
             conditions: [
                 { core: "소용돌이", point: 10, support: "포식" }
@@ -2023,6 +2066,15 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "222 절정",
+            conditions: [
+                { core: "적룡연격", point: 14, support: "절정" },
+                { core: "집중 강화", point: 14, support: "절정" },
+                { core: "한 점 돌파", point: 14, support: "절정" },
+                
+            ]
+        },
+        {
             class: "콤보 절제",
             conditions: [
                 { core: "연환 타격", point: 17, support: "절제" },
@@ -2061,6 +2113,14 @@ export async function getCharacterProfile(data, dataBase) {
             class: "레오불 사시",
             conditions: [
                 { core: "풀 매거진", point: 14, support: "사시" }
+            ]
+        },
+        {
+            class: "222 죽습",
+            conditions: [
+                { core: "ATB-07 니들레인", point: 14, support: "죽습" },
+                { core: "HSU-21 실버 레인", point: 14, support: "죽습" },
+                { core: "HSU-17 일렉트릭 노바", point: 14, support: "죽습" }
             ]
         },
         /*************************** 데런 ***************************/

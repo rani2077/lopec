@@ -312,7 +312,7 @@ export async function simulatorToOffcialCombatObj() {
             { name: '신념', level: 1, value: 1 },
             { name: '신념', level: 2, value: 1 }
         ]
-    
+
 
         function totalElixirLevel() {
             if (helmetElixirName !== gloveElixirName) {
@@ -440,7 +440,7 @@ export async function simulatorToOffcialCombatObj() {
         }
     };
 
-    
+
 
     //console.log("엘릭서", elixirToOffcialCombatSupport());
 
@@ -930,20 +930,20 @@ export async function simulatorToOffcialCombatObj() {
 
     function arkgridGemOffcialCombat() {
         const arkgridGemMapping = {
-            "공격력" : {
-                value : level => (Math.floor(10 * level / 3)) / 10000 + 1
+            "공격력": {
+                value: level => (Math.floor(10 * level / 3)) / 10000 + 1
             },
-            "추가 피해" : {
-                value : level => (Math.floor(35 * level / 6)) / 10000 + 1
+            "추가 피해": {
+                value: level => (Math.floor(35 * level / 6)) / 10000 + 1
             },
-            "보스 피해" : {
-                value : level => (Math.floor(25 * level / 3)) / 10000 + 1
+            "보스 피해": {
+                value: level => (Math.floor(25 * level / 3)) / 10000 + 1
             },
         }
 
         let totalMultiplier = 1;
         if (apiData.data.ArkGrid && Array.isArray(apiData.data.ArkGrid.Effects)) {
-            apiData.data.ArkGrid.Effects.forEach(effect =>{
+            apiData.data.ArkGrid.Effects.forEach(effect => {
                 const mapping = arkgridGemMapping[effect.Name];
                 if (mapping) {
                     let effectValue = mapping.value(effect.Level);
@@ -957,20 +957,20 @@ export async function simulatorToOffcialCombatObj() {
 
     function arkgridGemOffcialCombatSupport() {
         const arkgridGemMapping = {
-            "낙인력" : {
-                value : level => (Math.floor(35 * level / 4)) / 10000 + 1
+            "낙인력": {
+                value: level => (Math.floor(35 * level / 4)) / 10000 + 1
             },
-            "아군 공격 강화" : {
-                value : level => (Math.floor(12.5 * level)) / 10000 + 1
+            "아군 공격 강화": {
+                value: level => (Math.floor(12.5 * level)) / 10000 + 1
             },
-            "아군 피해 강화" : {
-                value : level => (5 * level) / 10000 + 1
+            "아군 피해 강화": {
+                value: level => (5 * level) / 10000 + 1
             },
         }
 
         let totalMultiplier = 1;
         if (apiData.data.ArkGrid && Array.isArray(apiData.data.ArkGrid.Effects)) {
-            apiData.data.ArkGrid.Effects.forEach(effect =>{
+            apiData.data.ArkGrid.Effects.forEach(effect => {
                 const mapping = arkgridGemMapping[effect.Name];
                 if (mapping) {
                     let effectValue = mapping.value(effect.Level);
@@ -1001,26 +1001,26 @@ export async function simulatorToOffcialCombatObj() {
 
         const totalMultiplier = arkgridCoreData.reduce((multiplier, slot) => {
             const { Grade, Name, Point } = slot;
- 
+
             let effectiveGrade = Grade;
             if (Grade === "영웅" || Grade === "전설") {
                 effectiveGrade = "유물";
             }
- 
+
             const gradeFilter = arkgridCoreFilter[effectiveGrade];
- 
+
             if (gradeFilter) {
                 const coreNameKey = Object.keys(gradeFilter).find(key => Name.includes(key));
- 
+
                 if (coreNameKey) {
                     const value = gradeFilter[coreNameKey]?.[Point];
- 
+
                     if (typeof value === 'number') {
                         return multiplier * value;
                     }
                 }
             }
- 
+
             return multiplier;
         }, 1);
 
@@ -1038,26 +1038,26 @@ export async function simulatorToOffcialCombatObj() {
 
         const totalMultiplier = arkgridCoreData.reduce((multiplier, slot) => {
             const { Grade, Name, Point } = slot;
- 
+
             let effectiveGrade = Grade;
             if (Grade === "영웅" || Grade === "전설") {
                 effectiveGrade = "유물";
             }
- 
+
             const gradeFilter = arkgridCoreFilter[effectiveGrade];
- 
+
             if (gradeFilter) {
                 const coreNameKey = Object.keys(gradeFilter).find(key => Name.includes(key));
- 
+
                 if (coreNameKey) {
                     const value = gradeFilter[coreNameKey]?.[Point];
- 
+
                     if (typeof value === 'number') {
                         return multiplier * value;
                     }
                 }
             }
- 
+
             return multiplier;
         }, 1);
 
@@ -1074,34 +1074,80 @@ export async function simulatorToOffcialCombatObj() {
 
         const totalMultiplier = arkgridCoreData.reduce((multiplier, slot) => {
             const { Grade, Name, Point } = slot;
- 
+
             let effectiveGrade = Grade;
             if (Grade === "영웅" || Grade === "전설") {
                 effectiveGrade = "유물";
             }
- 
+
             const gradeFilter = arkgridCoreFilter[effectiveGrade];
- 
+
             if (gradeFilter) {
                 const coreNameKey = Object.keys(gradeFilter).find(key => Name.includes(key));
- 
+
                 if (coreNameKey) {
                     const value = gradeFilter[coreNameKey]?.[Point];
- 
+
                     if (typeof value === 'number') {
                         return multiplier * value;
                     }
                 }
             }
- 
+
             return multiplier;
         }, 1);
 
         //console.log("코어 총 곱연산 값:", totalMultiplier);
         return totalMultiplier;
     }
+    /* **********************************************************************************************************************
+    * name		             :	 trinityCombat
+    * version                :   2.0
+    * description            :   
+    * USE_TN                 :   사용
+    *********************************************************************************************************************** */
+    function findMaxtrinityPower(obj) {
+        const re = /시즌?1\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
+        let result = null;
 
+        (function dfs(v) {
+            if (result !== null) return;
+            if (typeof v === 'string') {
+                const m = v.match(re);
+                if (m) result = Number(m[1].replace(/,/g, ''));
+            } else if (v && typeof v === 'object') {
+                for (const val of Object.values(v)) dfs(val);
+            }
+        })(obj);
 
+        return result;
+    }
+
+    function trinityValueOfficialCombat() {
+        let trinityPower = 0;
+        let trinityValue = 0;
+        apiData.data.ArmoryEquipment.forEach(function (equip) {
+            if (equip.Type == "보주") {
+                const tooltipObj = typeof equip.Tooltip === 'string'
+                    ? JSON.parse(equip.Tooltip)
+                    : equip.Tooltip;
+
+                const val = findMaxtrinityPower(tooltipObj);
+                trinityPower = (val ?? 0);
+
+                const text = JSON.stringify(tooltipObj);
+
+                if (/(성창|비전)/.test(text)) {
+                    trinityValue = (20 + 800 * trinityPower / 100000000) / 10000 + 1
+                }
+                if (/자연/.test(text)) {
+                    trinityValue = (14 + 544 * trinityPower / 100000000) / 10000 + 1
+                }
+            }
+        });
+        return {trinityValue}
+    }
+    console.log(trinityValueOfficialCombat())
 
 
     let officialCombatObj = {
@@ -1119,7 +1165,8 @@ export async function simulatorToOffcialCombatObj() {
         stats: statsOffcialCombat(),
         card: cardOffcialCombat(),
         arkgridGem: arkgridGemOffcialCombat(),
-        arkgridCore: arkgridCoreOffcialCombat()
+        arkgridCore: arkgridCoreOffcialCombat(),
+        trinity: trinityValueOfficialCombat()
     };
 
     let officialCombatObjSupport_defense = {

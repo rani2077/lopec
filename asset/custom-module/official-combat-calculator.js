@@ -26,6 +26,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         
     let originBasePoint = originCombat /
         1.0077 /
+        combatObj.dealer.trinity /
         combatObj.dealer.arkgridGem /
         combatObj.dealer.arkgridCore /
         combatObj.dealer.weaponQuality /
@@ -81,6 +82,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.weaponQuality *
         combatObj.dealer.arkgridGem *
         combatObj.dealer.arkgridCore *
+        combatObj.dealer.trinity *
         1.0077;
 
     //console.log("인게임 전투력", originCombat)
