@@ -437,14 +437,14 @@ export async function specPointCalc(inputObj) {
         * (1 - inputObj.engObj.cdrPercent)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
-    console.log("아덴이 차지 않는 스킬 제외 쿨감", cdrPercentNoneCare)
+    //console.log("아덴이 차지 않는 스킬 제외 쿨감", cdrPercentNoneCare)
 
     // Only 케어 스킬 쿨감
     let cdrPercentOnlyCare = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.engObj.cdrPercent))) / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
-    console.log("Only 케어 스킬 쿨감", cdrPercentOnlyCare)
+    //console.log("Only 케어 스킬 쿨감", cdrPercentOnlyCare)
         
     // 각성기 가치
     let awakenIdentity = ((1 / ((1 - inputObj.engObj.awakencdrPercent) 

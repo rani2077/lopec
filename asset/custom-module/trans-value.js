@@ -288,7 +288,7 @@ export async function getCharacterProfile(data, dataBase) {
         estherDeal: 1,
         estherSupport: 1,
         trinityPower: 0,
-        trinityValue: 0,
+        trinityValue: 1,
     }
     defaultObj.combatPower = parseFloat(data.ArmoryProfile.CombatPower.replace(/,/g, ''));
     data.ArmoryProfile.Stats.forEach(function (statsArry) {
@@ -1970,6 +1970,46 @@ export async function getCharacterProfile(data, dataBase) {
 
         /*************************** 슈샤이어 ***************************/
         {
+            class: "111 고기",
+            conditions: [
+                { core: "전술 제어", point: 14, support: "고기" },
+                { core: "방어 전술", point: 14, support: "고기" },
+                { core: "방어 포격", point: 14, support: "고기" },
+            ]
+        },
+        {
+            class: "311 고기",
+            conditions: [
+                { core: "종전", point: 14, support: "고기" },
+                { core: "방어 전술", point: 14, support: "고기" },
+                { core: "방어 포격", point: 14, support: "고기" },
+            ]
+        },
+        {
+            class: "331 고기",
+            conditions: [
+                { core: "종전", point: 14, support: "고기" },
+                { core: "랜스 차지", point: 14, support: "고기" },
+                { core: "방어 포격", point: 14, support: "고기" },
+            ]
+        },
+        {
+            class: "333 고기",
+            conditions: [
+                { core: "종전", point: 14, support: "고기" },
+                { core: "랜스 차지", point: 14, support: "고기" },
+                { core: "크로스 랜스", point: 14, support: "고기" },
+            ]
+        },
+        {
+            class: "222 전태",
+            conditions: [
+                { core: "연속 돌진", point: 14, support: "전태" },
+                { core: "함성 돌진", point: 14, support: "전태" },
+                { core: "전차 돌진", point: 14, support: "전태" },
+            ]
+        },
+        {
             class: "러쉬 광기2",
             conditions: [
                 { core: "다크 파워", point: 14, support: "광기" },
@@ -2086,6 +2126,14 @@ export async function getCharacterProfile(data, dataBase) {
             class: "도약 체술",
             conditions: [
                 { core: "반복 도약", point: 14, support: "체술" },
+            ]
+        },
+        {
+            class: "111 일격",
+            conditions: [
+                { core: "호령", point: 14, support: "일격" },
+                { core: "천뢰포효", point: 14, support: "일격" },
+                { core: "뇌호극권", point: 14, support: "일격" },
             ]
         },
         {

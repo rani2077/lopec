@@ -1147,13 +1147,13 @@ export async function simulatorToOffcialCombatObj() {
         });
         return {trinityValue}
     }
-    console.log(trinityValueOfficialCombat())
+    //console.log(trinityValueOfficialCombat())
 
 
     let officialCombatObj = {
         level: characterLevelToOffcialCombat(),
         weaponQuality: weaponQualityToOffcialCombat(),
-        ark: characterArkToOffcialCombat(),
+        ark: Number(characterArkToOffcialCombat()),
         karma: characterKarmaToOffcialCombat(),
         engraving: engravingToOffcialCombat(),
         elixir: elixirToOffcialCombat(),

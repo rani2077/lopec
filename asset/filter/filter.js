@@ -2455,6 +2455,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "222 전태",
+        skill: [
+            { name: "방패 돌진", per: 0.25 },
+            { name: "가디언의 낙뢰", per: 0.15 },
+            { name: "리프 어택", per: 0.13 },
+            { name: "방패 밀치기", per: 0.10 },
+            { name: "방패 격동", per: 0.05 },
+        ],
+    },
+    {
         class: "고기",
         skill: [
             { name: "버스트 캐넌", per: 0.257 },
@@ -2492,6 +2502,47 @@ export let classGemFilter = [
             { name: "파이어 불릿", per: 0.051 },
             { name: "보정치", per: -0.051 },
 
+        ],
+    },
+    {
+        class: "111 고기",
+        skill: [
+            { name: "버스트 캐넌", per: 0.33 },
+            { name: "차지 스팅거", per: 0.20 },
+            { name: "스피어 샷", per: 0.10 },
+            { name: "대쉬 어퍼 파이어", per: 0.09},
+            { name: "카운터 스피어", per: 0.06 },
+        ],
+    },
+    {
+        class: "311 고기",
+        skill: [
+            { name: "버스트 캐넌", per: 0.27 },
+            { name: "차지 스팅거", per: 0.27 },
+            { name: "스피어 샷", per: 0.09 },
+            { name: "대쉬 어퍼 파이어", per: 0.08 },
+            { name: "카운터 스피어", per: 0.06 },
+        ],
+    },
+    {
+        class: "331 고기",
+        skill: [
+            { name: "차지 스팅거", per: 0.33 },
+            { name: "버스트 캐넌", per: 0.20 },
+            { name: "스피어 샷", per: 0.10 },
+            { name: "대쉬 어퍼 파이어", per: 0.09},
+            { name: "카운터 스피어", per: 0.06 },
+        ],
+    },
+    {
+        class: "333 고기",
+        skill: [
+            { name: "차지 스팅거", per: 0.33 },
+            { name: "버스트 캐넌", per: 0.20 },
+            { name: "스피어 샷", per: 0.10 },
+            { name: "대쉬 어퍼 파이어", per: 0.09},
+            { name: "카운터 스피어", per: 0.08 },
+            { name: "라이징 스피어", per: 0.03 },
         ],
     },
     {
@@ -2588,10 +2639,10 @@ export let classGemFilter = [
             { name: "브루탈 임팩트", per: 0.09 },
             { name: "길로틴", per: 0.085 },
             { name: "볼케이노 이럽션", per: 0.08 },
-            { name: "페이탈 소드", per: 0.06 },
+            { name: "페이탈 소드", per: 0.05 },
             { name: "파이널 블로", per: 0.05 },
             { name: "퓨리어스 클로", per: 0.05 },
-            { name: "보정치", per: -0.05 },
+            { name: "퓨리어스 클로", per: -0.1 },
 
         ],
     },
@@ -2907,6 +2958,13 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "111 일격",
+        skill: [
+            { name: "오의 : 뇌호격", per: 0.26 },
+            { name: "오의 : 풍신초래", per: 0.17 },
+        ],
+    },
+    {
         class: "무한풍신 일격",
         skill: [
             { name: "오의 : 풍신초래", per: 0.55 },
@@ -2919,7 +2977,6 @@ export let classGemFilter = [
             { name: "오의 : 호왕출현", per: 0.215 },
             { name: "오의 : 폭쇄진", per: 0.136 },
             { name: "오의 : 뇌호격", per: 0.116 },
-            { name: "방천격", per: 0.063 },
         ],
     },
     {
@@ -3772,7 +3829,7 @@ export let arkgridCoreFilter = {
         ],
         starCore: [
             "질서의 별 코어 : 방패 타격",
-            "질서의 별 코어 : 전차 돌진진",
+            "질서의 별 코어 : 전차 돌진",
             "질서의 별 코어 : 광역 낙뢰",
         ],
     },

@@ -476,7 +476,7 @@ async function simulatorInputCalc() {
         }
         return arr;
     }
-    console.log("bangleOptionCalc()", bangleOptionCalc())
+    //console.log("bangleOptionCalc()", bangleOptionCalc())
 
     /* **********************************************************************************************************************
      * function name		:	armoryLevelCalc()
@@ -1624,7 +1624,7 @@ async function simulatorInputCalc() {
     }
     simulatorDataToExtractValue()
     //console.log("totalStatus", extractValue.defaultObj.totalStatus)
-    console.log("오리진OBJ", extractValue)
+    //console.log("오리진OBJ", extractValue)
 
     /* **********************************************************************************************************************
      * function name		:	specPointCalc

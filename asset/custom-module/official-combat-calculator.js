@@ -8,7 +8,7 @@ let cacheCollectStatSupport = null;
 let cacheCollectHealthSupport = null;
 
 export async function officialCombatCalculator(combatObj, extractObj) {
-    //console.log("공식전투력", combatObj);
+    console.log("공식전투력", combatObj);
     //console.log("오리진obj", extractObj);
 
     let originCombat = extractObj.defaultObj.combatPower; // 인게임 전투력
@@ -26,7 +26,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         
     let originBasePoint = originCombat /
         1.0077 /
-        combatObj.dealer.trinity /
+        combatObj.dealer.trinity.trinityValue /
         combatObj.dealer.arkgridGem /
         combatObj.dealer.arkgridCore /
         combatObj.dealer.weaponQuality /
@@ -82,7 +82,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.weaponQuality *
         combatObj.dealer.arkgridGem *
         combatObj.dealer.arkgridCore *
-        combatObj.dealer.trinity *
+        combatObj.dealer.trinity.trinityValue *
         1.0077;
 
     //console.log("인게임 전투력", originCombat)
