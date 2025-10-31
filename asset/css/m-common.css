@@ -957,6 +957,9 @@ i.lopec_badge_5th:hover:after {
     content: "카제로스 The 5th, 쥐구멍단!";
 }
 
+i.lopec_badge_pumkin {
+    background-image: url("/asset/image/lopec_badge_pumkin.png");
+}
 
 
 
