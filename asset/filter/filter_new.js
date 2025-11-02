@@ -1,509 +1,4 @@
-let keywordList = [
-    "</FONT> 힘 <FONT color='#FFD200'>",
-    "</FONT> 민첩 <FONT color='#FFD200'>",
-    "</FONT> 지능 <FONT color='#FFD200'>",
-    "</FONT> 공격력 <FONT color='#FFD200'>",
-    "</FONT> 무기 공격력 <FONT color='#FFD200'>",
-    "</FONT> 탈출의 달인 <FONT color='#FFD200'>",
-    "</FONT> 회피의 달인 <FONT color='#FFD200'>",
-    "</FONT> 마나 <FONT color='#FFD200'>",
-    "</FONT> 생명의 축복 <FONT color='#FFD200'>",
-    "</FONT> 자원의 축복 <FONT color='#FFD200'>",
-    "</FONT> 방랑자 <FONT color='#FFD200'>",
-    "</FONT> 무력화 <FONT color='#FFD200'>",
-    "</FONT> 물약 중독 <FONT color='#FFD200'>",
-    "</FONT> 폭발물 달인 <FONT color='#FFD200'>",
-    "</FONT> 행운 (질서) <FONT color='#FFD200'>",
-    "</FONT> 회심 (질서) <FONT color='#FFD200'>",
-    "</FONT> 달인 (질서) <FONT color='#FFD200'>",
-    "</FONT> 강맹 (질서) <FONT color='#FFD200'>",
-    "</FONT> 칼날 방패 (질서) <FONT color='#FFD200'>",
-    "</FONT> 선봉대 (질서) <FONT color='#FFD200'>",
-    "</FONT> 선각자 (질서) <FONT color='#FFD200'>",
-    "</FONT> 진군 (질서) <FONT color='#FFD200'>",
-    "</FONT> 신념 (질서) <FONT color='#FFD200'>",
-    "</FONT> 보스 피해 <FONT color='#FFD200'>",
-    "</FONT> 각성기 피해 <FONT color='#FFD200'>",
-    "</FONT> 보호막 강화 <FONT color='#FFD200'>",
-    "</FONT> 회복 강화 <FONT color='#FFD200'>",
-    "</FONT> 최대 생명력 <FONT color='#FFD200'>",
-    "</FONT> 받는 피해 감소 <FONT color='#FFD200'>",
-    "</FONT> 물리 방어력 <FONT color='#FFD200'>",
-    "</FONT> 마법 방어력 <FONT color='#FFD200'>",
-    "</FONT> 치명타 피해 <FONT color='#FFD200'>",
-    "</FONT> 추가 피해 <FONT color='#FFD200'>",
-    "</FONT> 아이덴티티 획득 <FONT color='#FFD200'>",
-    "</FONT> 아군 강화 <FONT color='#FFD200'>",
-    "</FONT> 행운 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 회심 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 달인 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 강맹 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 칼날 방패 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 선봉대 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 선각자 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 진군 (혼돈) <FONT color='#FFD200'>",
-    "</FONT> 신념 (혼돈) <FONT color='#FFD200'>"
-];
-
-
-// 악세서리 상중하 구분 필터
-
-let grindingFilter = [
-
-    "추가 피해 +0.39%:low",
-    "추가 피해 +0.90%:middle",
-    "추가 피해 +1.50%:high",
-    "추가 피해 +0.48%:low",
-    "추가 피해 +1.09%:middle",
-    "추가 피해 +1.82%:high",
-    "추가 피해 +0.70%:low",
-    "추가 피해 +1.60%:middle",
-    "추가 피해 +2.60%:high",
-
-    "적에게 주는 피해 +0.30%:low",
-    "적에게 주는 피해 +0.69%:middle",
-    "적에게 주는 피해 +1.15%:high",
-    "적에게 주는 피해 +0.37%:low",
-    "적에게 주는 피해 +0.84%:middle",
-    "적에게 주는 피해 +1.40%:high",
-    "적에게 주는 피해 +0.55%:low",
-    "적에게 주는 피해 +1.20%:middle",
-    "적에게 주는 피해 +2.00%:high",
-
-    "낙인력 +1.20%:low",
-    "낙인력 +2.76%:middle",
-    "낙인력 +4.60%:high",
-    "낙인력 +1.48%:low",
-    "낙인력 +3.36%:middle",
-    "낙인력 +5.60%:high",
-    "낙인력 +2.15%:low",
-    "낙인력 +4.80%:middle",
-    "낙인력 +8.00%:high",
-
-    "세레나데, 신앙, 조화 게이지 획득량 +0.90%:low",
-    "세레나데, 신앙, 조화 게이지 획득량 +2.07%:middle",
-    "세레나데, 신앙, 조화 게이지 획득량 +3.45%:high",
-    "세레나데, 신앙, 조화 게이지 획득량 +1.48%:low",
-    "세레나데, 신앙, 조화 게이지 획득량 +3.36%:middle",
-    "세레나데, 신앙, 조화 게이지 획득량 +5.60%:high",
-    "세레나데, 신앙, 조화 게이지 획득량 +1.60%:low",
-    "세레나데, 신앙, 조화 게이지 획득량 +3.60%:middle",
-    "세레나데, 신앙, 조화 게이지 획득량 +6.00%:high",
-
-    "무기 공격력 +0.46%:low",
-    "무기 공격력 +1.04%:middle",
-    "무기 공격력 +1.72%:high",
-    "무기 공격력 +0.56%:low",
-    "무기 공격력 +1.26%:middle",
-    "무기 공격력 +2.10%:high",
-    "무기 공격력 +0.80%:low",
-    "무기 공격력 +1.80%:middle",
-    "무기 공격력 +3.00%:high",
-
-    "공격력 +0.24%:low",
-    "공격력 +0.54%:middle",
-    "공격력 +0.89%:high",
-    "공격력 +0.29%:low",
-    "공격력 +0.66%:middle",
-    "공격력 +1.09%:high",
-    "공격력 +0.40%:low",
-    "공격력 +0.95%:middle",
-    "공격력 +1.55%:high",
-
-    "파티원 회복 효과 +0.54%:low",
-    "파티원 회복 효과 +1.21%:middle",
-    "파티원 회복 효과 +2.01%:high",
-    "파티원 회복 효과 +0.65%:low",
-    "파티원 회복 효과 +1.47%:middle",
-    "파티원 회복 효과 +2.45%:high",
-    "파티원 회복 효과 +0.95%:low",
-    "파티원 회복 효과 +2.10%:middle",
-    "파티원 회복 효과 +3.50%:high",
-
-    "파티원 보호막 효과 +0.54%:low",
-    "파티원 보호막 효과 +1.21%:middle",
-    "파티원 보호막 효과 +2.01%:high",
-    "파티원 보호막 효과 +0.65%:low",
-    "파티원 보호막 효과 +1.47%:middle",
-    "파티원 보호막 효과 +2.45%:high",
-    "파티원 보호막 효과 +0.95%:low",
-    "파티원 보호막 효과 +2.10%:middle",
-    "파티원 보호막 효과 +3.50%:high",
-
-    "치명타 적중률 +0.24%:low",
-    "치명타 적중률 +0.54%:middle",
-    "치명타 적중률 +0.89%:high",
-    "치명타 적중률 +0.29%:low",
-    "치명타 적중률 +0.66%:middle",
-    "치명타 적중률 +1.09%:high",
-    "치명타 적중률 +0.40%:low",
-    "치명타 적중률 +0.95%:middle",
-    "치명타 적중률 +1.55%:high",
-
-    "치명타 피해 +0.61%:low",
-    "치명타 피해 +1.38%:middle",
-    "치명타 피해 +2.30%:high",
-    "치명타 피해 +0.74%:low",
-    "치명타 피해 +1.70%:middle",
-    "치명타 피해 +2.82%:high",
-    "치명타 피해 +1.10%:low",
-    "치명타 피해 +2.40%:middle",
-    "치명타 피해 +4.00%:high",
-
-    "아군 공격력 강화 효과 +0.76%:low",
-    "아군 공격력 강화 효과 +1.72%:middle",
-    "아군 공격력 강화 효과 +2.88%:high",
-    "아군 공격력 강화 효과 +0.92%:low",
-    "아군 공격력 강화 효과 +2.12%:middle",
-    "아군 공격력 강화 효과 +3.52%:high",
-    "아군 공격력 강화 효과 +1.35%:low",
-    "아군 공격력 강화 효과 +3.00%:middle",
-    "아군 공격력 강화 효과 +5.00%:high",
-
-    "아군 피해량 강화 효과 +1.14%:low",
-    "아군 피해량 강화 효과 +2.58%:middle",
-    "아군 피해량 강화 효과 +4.32%:high",
-    "아군 피해량 강화 효과 +1.38%:low",
-    "아군 피해량 강화 효과 +3.18%:middle",
-    "아군 피해량 강화 효과 +5.28%:high",
-    "아군 피해량 강화 효과 +2.00%:low",
-    "아군 피해량 강화 효과 +4.50%:middle",
-    "아군 피해량 강화 효과 +7.50%:high",
-
-    "무기 공격력 +32:low",
-    "무기 공격력 +75:middle",
-    "무기 공격력 +155:high",
-    "무기 공격력 +57:low",
-    "무기 공격력 +147:middle",
-    "무기 공격력 +285:high",
-    "무기 공격력 +195:low",
-    "무기 공격력 +480:middle",
-    "무기 공격력 +960:high",
-
-    "공격력 +14:low",
-    "공격력 +33:middle",
-    "공격력 +68:high",
-    "공격력 +24:low",
-    "공격력 +61:middle",
-    "공격력 +118:high",
-    "공격력 +80:low",
-    "공격력 +195:middle",
-    "공격력 +390:high",
-
-    "최대 생명력 +719:low",
-    "최대 생명력 +1654:middle",
-    "최대 생명력 +2756:high",
-    "최대 생명력 +992:low",
-    "최대 생명력 +2253:middle",
-    "최대 생명력 +3755:high",
-    "최대 생명력 +1300:low",
-    "최대 생명력 +3250:middle",
-    "최대 생명력 +6500:high",
-
-    "최대 마나 +5:low",
-    "최대 마나 +10:middle",
-    "최대 마나 +17:high",
-    "최대 마나 +6:low",
-    "최대 마나 +13:middle",
-    "최대 마나 +21:high",
-    "최대 마나 +15:middle",
-    "최대 마나 +30:high",
-
-    "상태이상 공격 지속시간 +0.15%:low",
-    "상태이상 공격 지속시간 +0.35%:middle",
-    "상태이상 공격 지속시간 +0.58%:high",
-    "상태이상 공격 지속시간 +0.19%:low",
-    "상태이상 공격 지속시간 +0.42%:middle",
-    "상태이상 공격 지속시간 +0.70%:high",
-    "상태이상 공격 지속시간 +0.20%:low",
-    "상태이상 공격 지속시간 +0.50%:middle",
-    "상태이상 공격 지속시간 +1.00%:high",
-
-    "전투 중 생명력 회복량 +50:high",
-    "전투 중 생명력 회복량 +5:low",
-    "전투 중 생명력 회복량 +13:middle",
-    "전투 중 생명력 회복량 +21:high",
-    "전투 중 생명력 회복량 +8:low",
-    "전투 중 생명력 회복량 +17:middle",
-    "전투 중 생명력 회복량 +28:high",
-    "전투 중 생명력 회복량 +10:low",
-    "전투 중 생명력 회복량 +25:middle",
-
-
-
-
-
-
-
-]
-
-
-
-// 액세서리 옵션명 축약 매핑
-export const accessoryAbbreviationMap = {
-    "추가 피해 +0.39%": "추피",
-    "추가 피해 +0.90%": "추피",
-    "추가 피해 +1.50%": "추피",
-    "추가 피해 +0.48%": "추피",
-    "추가 피해 +1.09%": "추피",
-    "추가 피해 +1.82%": "추피",
-    "추가 피해 +0.70%": "추피",
-    "추가 피해 +1.60%": "추피",
-    "추가 피해 +2.60%": "추피",
-
-    "적에게 주는 피해 +0.30%": "적주피",
-    "적에게 주는 피해 +0.69%": "적주피",
-    "적에게 주는 피해 +1.15%": "적주피",
-    "적에게 주는 피해 +0.37%": "적주피",
-    "적에게 주는 피해 +0.84%": "적주피",
-    "적에게 주는 피해 +1.40%": "적주피",
-    "적에게 주는 피해 +0.55%": "적주피",
-    "적에게 주는 피해 +1.20%": "적주피",
-    "적에게 주는 피해 +2.00%": "적주피",
-
-    "낙인력 +1.20%": "낙인력",
-    "낙인력 +2.76%": "낙인력",
-    "낙인력 +4.60%": "낙인력",
-    "낙인력 +1.48%": "낙인력",
-    "낙인력 +3.36%": "낙인력",
-    "낙인력 +5.60%": "낙인력",
-    "낙인력 +2.15%": "낙인력",
-    "낙인력 +4.80%": "낙인력",
-    "낙인력 +8.00%": "낙인력",
-
-    "세레나데, 신앙, 조화 게이지 획득량 +0.90%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +2.07%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +3.45%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +1.48%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +3.36%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +5.60%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +1.60%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +3.60%": "아덴 회복",
-    "세레나데, 신앙, 조화 게이지 획득량 +6.00%": "아덴 회복",
-
-    "무기 공격력 +0.46%": "무공%",
-    "무기 공격력 +1.04%": "무공%",
-    "무기 공격력 +1.72%": "무공%",
-    "무기 공격력 +0.56%": "무공%",
-    "무기 공격력 +1.26%": "무공%",
-    "무기 공격력 +2.10%": "무공%",
-    "무기 공격력 +0.80%": "무공%",
-    "무기 공격력 +1.80%": "무공%",
-    "무기 공격력 +3.00%": "무공%",
-
-    "공격력 +0.24%": "공격력%",
-    "공격력 +0.54%": "공격력%",
-    "공격력 +0.89%": "공격력%",
-    "공격력 +0.29%": "공격력%",
-    "공격력 +0.66%": "공격력%",
-    "공격력 +1.09%": "공격력%",
-    "공격력 +0.40%": "공격력%",
-    "공격력 +0.95%": "공격력%",
-    "공격력 +1.55%": "공격력%",
-
-    "파티원 회복 효과 +0.54%": "회복 효과%",
-    "파티원 회복 효과 +1.21%": "회복 효과%",
-    "파티원 회복 효과 +2.01%": "회복 효과%",
-    "파티원 회복 효과 +0.65%": "회복 효과%",
-    "파티원 회복 효과 +1.47%": "회복 효과%",
-    "파티원 회복 효과 +2.45%": "회복 효과%",
-    "파티원 회복 효과 +0.95%": "회복 효과%",
-    "파티원 회복 효과 +2.10%": "회복 효과%",
-    "파티원 회복 효과 +3.50%": "회복 효과%",
-
-    "파티원 보호막 효과 +0.54%": "보호막 효과%",
-    "파티원 보호막 효과 +1.21%": "보호막 효과%",
-    "파티원 보호막 효과 +2.01%": "보호막 효과%",
-    "파티원 보호막 효과 +0.65%": "보호막 효과%",
-    "파티원 보호막 효과 +1.47%": "보호막 효과%",
-    "파티원 보호막 효과 +2.45%": "보호막 효과%",
-    "파티원 보호막 효과 +0.95%": "보호막 효과%",
-    "파티원 보호막 효과 +2.10%": "보호막 효과%",
-    "파티원 보호막 효과 +3.50%": "보호막 효과%",
-
-    "치명타 적중률 +0.24%": "치적%",
-    "치명타 적중률 +0.54%": "치적%",
-    "치명타 적중률 +0.89%": "치적%",
-    "치명타 적중률 +0.29%": "치적%",
-    "치명타 적중률 +0.66%": "치적%",
-    "치명타 적중률 +1.09%": "치적%",
-    "치명타 적중률 +0.40%": "치적%",
-    "치명타 적중률 +0.95%": "치적%",
-    "치명타 적중률 +1.55%": "치적%",
-
-    "치명타 피해 +1.70%": "치피%",
-    "치명타 피해 +2.82%": "치피%",
-    "치명타 피해 +1.10%": "치피%",
-    "치명타 피해 +2.40%": "치피%",
-    "치명타 피해 +4.00%": "치피%",
-
-    "아군 공격력 강화 효과 +0.76%": "아공강",
-    "아군 공격력 강화 효과 +1.72%": "아공강",
-    "아군 공격력 강화 효과 +2.88%": "아공강",
-    "아군 공격력 강화 효과 +0.92%": "아공강",
-    "아군 공격력 강화 효과 +2.12%": "아공강",
-    "아군 공격력 강화 효과 +3.52%": "아공강",
-    "아군 공격력 강화 효과 +1.35%": "아공강",
-    "아군 공격력 강화 효과 +3.00%": "아공강",
-    "아군 공격력 강화 효과 +5.00%": "아공강",
-
-    "아군 피해량 강화 효과 +1.14%": "아피강",
-    "아군 피해량 강화 효과 +2.58%": "아피강",
-    "아군 피해량 강화 효과 +4.32%": "아피강",
-    "아군 피해량 강화 효과 +1.38%": "아피강",
-    "아군 피해량 강화 효과 +3.18%": "아피강",
-    "아군 피해량 강화 효과 +5.28%": "아피강",
-    "아군 피해량 강화 효과 +2.00%": "아피강",
-    "아군 피해량 강화 효과 +4.50%": "아피강",
-    "아군 피해량 강화 효과 +7.50%": "아피강",
-
-    "무기 공격력 +32": "무공+",
-    "무기 공격력 +75": "무공+",
-    "무기 공격력 +155": "무공+",
-    "무기 공격력 +57": "무공+",
-    "무기 공격력 +147": "무공+",
-    "무기 공격력 +285": "무공+",
-    "무기 공격력 +195": "무공+",
-    "무기 공격력 +480": "무공+",
-    "무기 공격력 +960": "무공+",
-
-    "공격력 +14": "공격력+",
-    "공격력 +33": "공격력+",
-    "공격력 +68": "공격력+",
-    "공격력 +24": "공격력+",
-    "공격력 +61": "공격력+",
-    "공격력 +118": "공격력+",
-    "공격력 +80": "공격력+",
-    "공격력 +195": "공격력+",
-    "공격력 +390": "공격력+",
-
-    "최대 생명력 +719": "최생",
-    "최대 생명력 +1654": "최생",
-    "최대 생명력 +2756": "최생",
-    "최대 생명력 +992": "최생",
-    "최대 생명력 +2253": "최생",
-    "최대 생명력 +3755": "최생",
-    "최대 생명력 +1300": "최생",
-    "최대 생명력 +3250": "최생",
-    "최대 생명력 +6500": "최생",
-
-    "최대 마나 +5": "마나",
-    "최대 마나 +10": "마나",
-    "최대 마나 +17": "마나",
-    "최대 마나 +6": "마나",
-    "최대 마나 +13": "마나",
-    "최대 마나 +21": "마나",
-    "최대 마나 +15": "마나",
-    "최대 마나 +30": "마나",
-
-    "상태이상 공격 지속시간 +0.15%": "상태이상",
-    "상태이상 공격 지속시간 +0.35%": "상태이상",
-    "상태이상 공격 지속시간 +0.58%": "상태이상",
-    "상태이상 공격 지속시간 +0.19%": "상태이상",
-    "상태이상 공격 지속시간 +0.42%": "상태이상",
-    "상태이상 공격 지속시간 +0.70%": "상태이상",
-    "상태이상 공격 지속시간 +0.20%": "상태이상",
-    "상태이상 공격 지속시간 +0.50%": "상태이상",
-    "상태이상 공격 지속시간 +1.00%": "상태이상",
-
-    "전투 중 생명력 회복량 +50": "생회",
-    "전투 중 생명력 회복량 +5": "생회",
-    "전투 중 생명력 회복량 +13": "생회",
-    "전투 중 생명력 회복량 +21": "생회",
-    "전투 중 생명력 회복량 +8": "생회",
-    "전투 중 생명력 회복량 +17": "생회",
-    "전투 중 생명력 회복량 +28": "생회",
-    "전투 중 생명력 회복량 +10": "생회",
-    "전투 중 생명력 회복량 +25": "생회",
-};
-
-
-// 2차전직
-
-let arkFilter = [
-    { name: "창술 수련", initial: "고기", finalDamagePer: 6.4, criticalChancePer: 15, healthPer: 2.5 },
-    { name: "고독한 기사", initial: "고기", finalDamagePer: 6.4, criticalChancePer: 15, healthPer: 2.5 }, //언제 개지랄 날지 모르니 예비
-    { name: "철옹성", initial: "전태", finalDamagePer: 6.4, healthPer: 2.5 },
-    { name: "강인한 육체", initial: "비기", moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 63.2, healthPer: 2.2 },
-    { name: "광기", initial: "광기", moveSpeed: 15, atkSpeed: 15, finalDamagePer: 6, criticalChancePer: 33.2, healthPer: 2.2 },
-    { name: "중력 갑옷", initial: "분망", finalDamagePer: 6.4, criticalChancePer: 18, healthPer: 2.3 },
-    { name: "중력 충격", initial: "중수", finalDamagePer: 6.4, criticalChancePer: 30, healthPer: 2.3 },
-    { name: "빛의 기사", initial: "빛의 기사", finalDamagePer: 6, healthPer: 2.2 },
-    { name: "해방자", initial: "서폿", stigmaPer: 10, healthPer: 2.2 },
-    { name: "신성한 의무", initial: "심판자", criFinalDamagePer: 8, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "신성 보호", initial: "서폿", stigmaPer: 10, healthPer: 2.1 },
-    { name: "지치지 않는 힘", initial: "처단", criticalChancePer: 10, moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 30, healthPer: 2.2 },
-    { name: "끝나지 않는 분노", initial: "포식", criticalChancePer: 10, moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 30, healthPer: 2.2 },
-    { name: "기력 회복", initial: "체술", criticalChancePer: 10, moveSpeed: 1, atkSpeed: 1, finalDamagePer: 6, healthPer: 2.3 },
-    { name: "속도 강화", initial: "충단", criticalChancePer: 10, moveSpeed: 1, atkSpeed: 20, finalDamagePer: 6, healthPer: 2.3 },
-    { name: "강력한 체술", initial: "초심", criticalChancePer: 30, moveSpeed: 16, atkSpeed: 20.8, criticalDamagePer: 35, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "강력한 오의", initial: "오의", criticalChancePer: 30, moveSpeed: 16, atkSpeed: 20.8, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "세맥타통", initial: "세맥", moveSpeed: 1, atkSpeed: 10, atkPer: 6, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "역천지체", initial: "역천", moveSpeed: 1, atkSpeed: 15, atkPer: 6, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "절제", initial: "절제", criticalChancePer: 10, criFinalDamagePer: 8, criticalChancePer: 20, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "절정", initial: "절정", criticalChancePer: 10, moveSpeed: 15, atkSpeed: 15, criFinalDamagePer: 8, criticalChancePer: 20, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "일격필살", initial: "일격", criticalChancePer: 30, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "오의난무", initial: "난무", criticalChancePer: 30, atkSpeed: 8, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "권왕파천무", initial: "권왕", atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 15, healthPer: 2.3 },
-    { name: "수라의 길", initial: "수라", moveSpeed: 15, finalDamagePer: 6, healthPer: 2.3 },
-    { name: "전술 탄환", initial: "전탄", criticalChancePer: 34, finalDamagePer: 6, healthPer: 2.0 },
-    { name: "핸드 거너", initial: "핸건", criticalChancePer: 10, moveSpeed: 8, atkSpeed: 8, skillCool: 5, finalDamagePer: 6, healthPer: 2.0 },
-    { name: "죽음의 습격", initial: "죽습", finalDamagePer: 6, healthPer: 2.1 },
-    { name: "두 번째 동료", initial: "두동", moveSpeed: 8, finalDamagePer: 6, criticalChancePer: 40, healthPer: 2.1 },
-    { name: "포격 강화", initial: "포강", atkSpeed: 4, finalDamagePer: 6.4, criticalChancePer: 40, healthPer: 2.1 },
-    { name: "화력 강화", initial: "화강", finalDamagePer: 6.4, healthPer: 2.1 },
-    { name: "진화의 유산", initial: "유산", moveSpeed: 30, atkSpeed: 15, atkPer: 6, finalDamagePer: 6, healthPer: 2.0 },
-    { name: "아르데타인의 기술", initial: "기술", moveSpeed: 29.2, atkPer: 6, finalDamagePer: 6, healthPer: 2.0 },
-    { name: "피스메이커", initial: "피메", criticalChancePer: 10, atkSpeed: 16, finalDamagePer: 6, healthPer: 2.0 },
-    { name: "사냥의 시간", initial: "사시", criticalChancePer: 10, finalDamagePer: 6, healthPer: 2.0 },
-    { name: "황후의 은총", initial: "황후", criticalChancePer: 10, moveSpeed: 30, atkSpeed: 19.2, criticalChancePer: 33, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "황제의 칙령", initial: "황제", criticalChancePer: 10, criticalChancePer: 37.6, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "넘치는 교감", initial: "교감", moveSpeed: 10, atkSpeed: 10, finalDamagePer: 6.4, criticalChancePer: 11.8, healthPer: 2.1 },
-    { name: "상급 소환사", initial: "상소", moveSpeed: 1, atkSpeed: 1, finalDamagePer: 6.4, criticalChancePer: 27.8, healthPer: 2.1 },
-    { name: "구원의 선물", initial: "서폿", stigmaPer: 10, healthPer: 2.0 },
-    { name: "진실된 용맹", initial: "진실된 용맹", healthPer: 2.0 },
-    { name: "점화", initial: "점화", finalDamagePer: 6, criticalChancePer: 30, criticalDamagePer: 55, healthPer: 2.1 },
-    { name: "환류", initial: "환류", finalDamagePer: 6, healthPer: 2.1 },
-    { name: "버스트 강화", initial: "버스트", criticalChancePer: 10, moveSpeed: 22.8, atkSpeed: 32.8, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "신속한 일격", initial: "잔재", criticalChancePer: 10, moveSpeed: 24.8, atkSpeed: 24.8, finalDamagePer: 6, healthPer: 2.2 },
-    { name: "멈출 수 없는 충동", initial: "충동", moveSpeed: 20, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "완벽한 억제", initial: "억제", moveSpeed: 30, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "달의 소리", initial: "달소", criticalChancePer: 10, moveSpeed: 30, atkSpeed: 12, finalDamagePer: 6.4, criticalChancePer: 37, healthPer: 2.0 },
-    { name: "피냄새", initial: "갈증", criticalChancePer: 10, moveSpeed: 10, atkSpeed: 10, finalDamagePer: 6.4, criticalChancePer: 43, healthPer: 2.0 },
-    { name: "영혼친화력", initial: "만월", moveSpeed: 39.2, atkSpeed: 10, finalDamagePer: 6, criticalChancePer: 34, healthPer: 2.1 },
-    { name: "그믐의 경계", initial: "그믐", moveSpeed: 29.2, atkSpeed: 20, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "해의 조화", initial: "서폿", stigmaPer: 10, healthPer: 2.0 },
-    { name: "회귀", initial: "회귀", healthPer: 2.0 },
-    { name: "질풍노도", initial: "질풍", criticalChancePer: 10, criticalDamagePer: 102.08, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "이슬비", initial: "이슬비", criticalChancePer: 10, finalDamagePer: 6, healthPer: 2.1 },
-    { name: "야성", initial: "야성", healthPer: 2.1 },
-    { name: "환수 각성", initial: "환각", healthPer: 2.1 },
-
-    { name: "핸드거너", initial: "핸건", criticalChancePer: 10, moveSpeed: 8, atkSpeed: 8, skillCool: 5, finalDamagePer: 6 },
-    { name: "강화 무기", initial: "전탄", criticalChancePer: 34, finalDamagePer: 6 },
-    { name: "전투 태세", initial: "전태", finalDamagePer: 6 },
-    { name: "광전사의 비기", initial: "비기", moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 63.2 },
-    { name: "분노의 망치", initial: "분망", finalDamagePer: 6.4, criticalChancePer: 18 },
-    { name: "중력 수련", initial: "중수", finalDamagePer: 6.4, criticalChancePer: 30 },
-    { name: "심판자", initial: "심판자", criFinalDamagePer: 8, finalDamagePer: 6 },
-    { name: "축복의 오라", initial: "서폿", stigmaPer: 10 },
-    { name: "처단자", initial: "처단", criticalChancePer: 10, moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 30 },
-    { name: "포식자", initial: "포식", criticalChancePer: 10, moveSpeed: 20, atkSpeed: 20, finalDamagePer: 6, criticalChancePer: 30 },
-    { name: "극의: 체술", initial: "체술", criticalChancePer: 10, finalDamagePer: 6 },
-    { name: "충격 단련", initial: "충단", criticalChancePer: 10, atkSpeed: 20, finalDamagePer: 6 },
-    { name: "초심", initial: "초심", criticalChancePer: 30, moveSpeed: 16, atkSpeed: 20.8, finalDamagePer: 6 },
-    { name: "오의 강화", initial: "오의", criticalChancePer: 30, moveSpeed: 16, atkSpeed: 20.8, finalDamagePer: 6 },
-    { name: "절실한 구원", initial: "서폿", stigmaPer: 10 },
-    { name: "버스트", initial: "버스트", criticalChancePer: 10, moveSpeed: 22.8, atkSpeed: 32.8, finalDamagePer: 6 },
-    { name: "잔재된 기운", initial: "잔재", criticalChancePer: 10, moveSpeed: 24.8, atkSpeed: 24.8, finalDamagePer: 6 },
-    { name: "깔쯩", initial: "갈증", criticalChancePer: 10, moveSpeed: 10, atkSpeed: 10, finalDamagePer: 6.4, criticalChancePer: 43 },
-    { name: "만월의 집행자", initial: "만월", moveSpeed: 39.2, atkSpeed: 10, finalDamagePer: 6, criticalChancePer: 34 },
-    { name: "만개", initial: "서폿", stigmaPer: 10 },
-
-]
-
-
-// pow:힘, dex:민첩 , int:지능 중복표기는 힘>민첩>지능 순서로
+// str:힘, dex:민첩 , int:지능
 export let bangleJobFilter = [
 
     { job: "워로드", stats: "str" },
@@ -540,7 +35,7 @@ export let bangleJobFilter = [
 
 
 
-
+//각인 이미지
 let engravingImg = [
 
     "없음^https://placehold.co/30",
@@ -593,291 +88,160 @@ let engravingImg = [
     "공격력 감소^https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Ability/Ability_218.png",
 ]
 
-export let engravingFilter = [
-    , { name: "각성", short: "각성", }
-    , { name: "강령술", short: "강령", }
-    , { name: "강화 방패", short: "강화방패", }
-    , { name: "결투의 대가", short: "결대", }
-    , { name: "구슬동자", short: "구동", }
-    , { name: "굳은 의지", short: "굳은 의지", }
-    , { name: "급소 타격", short: "급타", }
-    , { name: "기습의 대가", short: "기습", }
-    , { name: "긴급구조", short: "긴급구조", }
-    , { name: "달인의 저력", short: "달저", }
-    , { name: "돌격대장", short: "돌대", }
-    , { name: "마나 효율 증가", short: "마효증", }
-    , { name: "마나의 흐름", short: "마흐", }
-    , { name: "바리케이드", short: "바리", }
-    , { name: "번개의 분노", short: "번분", }
-    , { name: "부러진 뼈", short: "부뼈", }
-    , { name: "분쇄의 주먹", short: "분쇄의주먹", }
-    , { name: "불굴", short: "불굴", }
-    , { name: "선수필승", short: "선필", }
-    , { name: "속전속결", short: "속속", }
-    , { name: "슈퍼 차지", short: "슈차", }
-    , { name: "승부사", short: "승부사", }
-    , { name: "시선 집중", short: "시집", }
-    , { name: "실드 관통", short: "실드관통", }
-    , { name: "아드레날린", short: "아드", }
-    , { name: "안정된 상태", short: "안상", }
-    , { name: "약자 무시", short: "약무", }
-    , { name: "에테르 포식자", short: "에포", }
-    , { name: "여신의 가호", short: "가호", }
-    , { name: "예리한 둔기", short: "예둔", }
-    , { name: "원한", short: "원한", }
-    , { name: "위기 모면", short: "위모", }
-    , { name: "저주받은 인형", short: "저받", }
-    , { name: "전문의", short: "전문의", }
-    , { name: "정기 흡수", short: "정흡", }
-    , { name: "정밀 단도", short: "정단", }
-    , { name: "중갑 착용", short: "중갑", }
-    , { name: "질량 증가", short: "질증", }
-    , { name: "최대 마나 증가", short: "최마증", }
-    , { name: "추진력", short: "추진력", }
-    , { name: "타격의 대가", short: "타대", }
-    , { name: "탈출의 명수", short: "탈출", }
-    , { name: "폭발물 전문가", short: "폭전", }
-    , { name: "이동속도 감소", short: "이속감", }
-    , { name: "공격속도 감소", short: "공속감", }
-    , { name: "방어력 감소", short: "방감", }
-    , { name: "공격력 감소", short: "공감", }
-]
 
 
 
-//전투력 계산식 악세서리 필터 딜러
-let dealerAccessoryFilter = [
-    // SP = 딜러특옵 / Support = 서폿기본 / SupportSP = 서폿특옵 / Duel = 딜러서폿 공용 특옵 / Z = 무효 / PUB = 딜러공용옵션 / DuelPub = 딜러서폿 공용 공옵
-    "</img>추가 피해 +0.39%:SPlow:AddDamagePer:0.39",
-    "</img>추가 피해 +0.90%:SPmiddle:AddDamagePer:0.9",
-    "</img>추가 피해 +1.50%:SPhigh:AddDamagePer:1.5",
-    "</img>추가 피해 +0.48%:SPlow:AddDamagePer:0.48",
-    "</img>추가 피해 +1.09%:SPmiddle:AddDamagePer:1.09",
-    "</img>추가 피해 +1.82%:SPhigh:AddDamagePer:1.82",
-    "</img>추가 피해 +0.70%:SPlow:AddDamagePer:0.7",
-    "</img>추가 피해 +1.60%:SPmiddle:AddDamagePer:1.6",
-    "</img>추가 피해 +2.60%:SPhigh:AddDamagePer:2.6",
-
-    "</img>적에게 주는 피해 +0.30%:SPlow:FinalDamagePer:0.30",
-    "</img>적에게 주는 피해 +0.69%:SPmiddle:FinalDamagePer:0.69",
-    "</img>적에게 주는 피해 +1.15%:SPhigh:FinalDamagePer:1.15",
-    "</img>적에게 주는 피해 +0.37%:SPlow:FinalDamagePer:0.37",
-    "</img>적에게 주는 피해 +0.84%:SPmiddle:FinalDamagePer:0.84",
-    "</img>적에게 주는 피해 +1.40%:SPhigh:FinalDamagePer:1.4",
-    "</img>적에게 주는 피해 +0.55%:SPlow:FinalDamagePer:0.55",
-    "</img>적에게 주는 피해 +1.20%:SPmiddle:FinalDamagePer:1.2",
-    "</img>적에게 주는 피해 +2.00%:SPhigh:FinalDamagePer:2.0",
-
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +0.90%:Supportlow:IdentityUptime:0.009",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +2.07%:Supportmiddle:IdentityUptime:0.0207",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +3.45%:Supporthigh:IdentityUptime:0.0345",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +1.48%:Supportlow:IdentityUptime:0.0148",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +3.36%:Supportmiddle:IdentityUptime:0.0336",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +5.60%:Supporthigh:IdentityUptime:0.056",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +1.60%:Supportlow:IdentityUptime:0.016",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +3.60%:Supportmiddle:IdentityUptime:0.036",
-    "</img>세레나데, 신앙, 조화 게이지 획득량 +6.00%:Supporthigh:IdentityUptime:0.06",
-
-    "</img>낙인력 +2.15%:SupportSPlow:StigmaPer:2.15",
-    "</img>낙인력 +4.80%:SupportSPmiddle:StigmaPer:4.8",
-    "</img>낙인력 +8.00%:SupportSPhigh:StigmaPer:8.0",
-
-    "</img>최대 생명력 +1300:Zlow",
-    "</img>최대 생명력 +3250:Zmiddle",
-    "</img>최대 생명력 +6500:Zhigh",
-    "</img>공격력 +80:PUBlow:AtkPlus:80",
-    "</img>공격력 +195:PUBmiddle:AtkPlus:195",
-    "</img>공격력 +390:PUBhigh:AtkPlus:390",
-    "</img>무기 공격력 +195:DuelPublow:WeaponAtkPlus:195",
-    "</img>무기 공격력 +480:DuelPubmiddle:WeaponAtkPlus:480",
-    "</img>무기 공격력 +960:DuelPubhigh:WeaponAtkPlus:960",
-    "</img>최대 마나 +6:Zlow",
-    "</img>최대 마나 +15:Zmiddle",
-    "</img>최대 마나 +30:Zhigh",
-    "</img>상태이상 공격 지속시간 +0.20%:Zlow",
-    "</img>상태이상 공격 지속시간 +0.50%:Zmiddle",
-    "</img>상태이상 공격 지속시간 +1.00%:Zhigh",
-    "</img>전투 중 생명력 회복량 +10:Zlow",
-    "</img>전투 중 생명력 회복량 +25:Zmiddle",
-    "</img>전투 중 생명력 회복량 +50:Zhigh",
-    "</img>공격력 +0.40%:SPlow:AtkPer:0.4",
-    "</img>공격력 +0.95%:SPmiddle:AtkPer:0.95",
-    "</img>공격력 +1.55%:SPhigh:AtkPer:1.55",
-    "</img>무기 공격력 +0.80%:Duellow",
-    "</img>무기 공격력 +1.80%:Duelmiddle",
-    "</img>무기 공격력 +3.00%:Duelhigh",
-    "</img>파티원 회복 효과 +0.95%:Supportlow",
-    "</img>파티원 회복 효과 +2.10%:Supportmiddle",
-    "</img>파티원 회복 효과 +3.50%:Supporthigh",
-    "</img>파티원 보호막 효과 +0.95%:Supportlow",
-    "</img>파티원 보호막 효과 +2.10%:Supportmiddle",
-    "</img>파티원 보호막 효과 +3.50%:Supporthigh",
-    "</img>치명타 적중률 +0.40%:SPlow",
-    "</img>치명타 적중률 +0.95%:SPmiddle",
-    "</img>치명타 적중률 +1.55%:SPhigh",
-    "</img>치명타 피해 +1.10%:SPlow",
-    "</img>치명타 피해 +2.40%:SPmiddle",
-    "</img>치명타 피해 +4.00%:SPhigh",
-    "</img>아군 공격력 강화 효과 +1.35%:SupportSPlow:AtkBuff:1.35",
-    "</img>아군 공격력 강화 효과 +3.00%:SupportSPmiddle:AtkBuff:3",
-    "</img>아군 공격력 강화 효과 +5.00%:SupportSPhigh:AtkBuff:5",
-    "</img>아군 피해량 강화 효과 +2.00%:SupportSPlow",
-    "</img>아군 피해량 강화 효과 +4.50%:SupportSPmiddle",
-    "</img>아군 피해량 강화 효과 +7.50%:SupportSPhigh",
-]
-
-
-
+// deal.acc. 매핑
 let calAccessoryFilter = [
-    { name: "추가 피해  +0.39%", attr: "AddDamagePer", value: 0.39 },
-    { name: "추가 피해  +0.90%", attr: "AddDamagePer", value: 0.9 },
-    { name: "추가 피해  +1.50%", attr: "AddDamagePer", value: 1.5 },
-    { name: "추가 피해  +0.48%", attr: "AddDamagePer", value: 0.48 },
-    { name: "추가 피해  +1.09%", attr: "AddDamagePer", value: 1.09 },
-    { name: "추가 피해  +1.82%", attr: "AddDamagePer", value: 1.82 },
-    { name: "추가 피해  +0.70%", attr: "AddDamagePer", value: 0.7 },
-    { name: "추가 피해  +1.60%", attr: "AddDamagePer", value: 1.6 },
-    { name: "추가 피해  +2.60%", attr: "AddDamagePer", value: 2.6 },
+    { name: "추가 피해  +0.39%", attr: "addDmg", value: 0.39 },
+    { name: "추가 피해  +0.90%", attr: "addDmg", value: 0.9 },
+    { name: "추가 피해  +1.50%", attr: "addDmg", value: 1.5 },
+    { name: "추가 피해  +0.48%", attr: "addDmg", value: 0.48 },
+    { name: "추가 피해  +1.09%", attr: "addDmg", value: 1.09 },
+    { name: "추가 피해  +1.82%", attr: "addDmg", value: 1.82 },
+    { name: "추가 피해  +0.70%", attr: "addDmg", value: 0.7 },
+    { name: "추가 피해  +1.60%", attr: "addDmg", value: 1.6 },
+    { name: "추가 피해  +2.60%", attr: "addDmg", value: 2.6 },
 
-    { name: "적에게 주는 피해  +0.30%", attr: "FinalDamagePer", value: 0.3 },
-    { name: "적에게 주는 피해  +0.69%", attr: "FinalDamagePer", value: 0.69 },
-    { name: "적에게 주는 피해  +1.15%", attr: "FinalDamagePer", value: 1.15 },
-    { name: "적에게 주는 피해  +0.37%", attr: "FinalDamagePer", value: 0.37 },
-    { name: "적에게 주는 피해  +0.84%", attr: "FinalDamagePer", value: 0.84 },
-    { name: "적에게 주는 피해  +1.40%", attr: "FinalDamagePer", value: 1.4 },
-    { name: "적에게 주는 피해  +0.55%", attr: "FinalDamagePer", value: 0.55 },
-    { name: "적에게 주는 피해  +1.20%", attr: "FinalDamagePer", value: 1.2 },
-    { name: "적에게 주는 피해  +2.00%", attr: "FinalDamagePer", value: 2.0 },
+    { name: "적에게 주는 피해  +0.30%", attr: "finalDmg", value: 0.3 },
+    { name: "적에게 주는 피해  +0.69%", attr: "finalDmg", value: 0.69 },
+    { name: "적에게 주는 피해  +1.15%", attr: "finalDmg", value: 1.15 },
+    { name: "적에게 주는 피해  +0.37%", attr: "finalDmg", value: 0.37 },
+    { name: "적에게 주는 피해  +0.84%", attr: "finalDmg", value: 0.84 },
+    { name: "적에게 주는 피해  +1.40%", attr: "finalDmg", value: 1.4 },
+    { name: "적에게 주는 피해  +0.55%", attr: "finalDmg", value: 0.55 },
+    { name: "적에게 주는 피해  +1.20%", attr: "finalDmg", value: 1.2 },
+    { name: "적에게 주는 피해  +2.00%", attr: "finalDmg", value: 2.0 },
 
-    { name: "무기 공격력  +32", attr: "WeaponAtkPlus", value: 32 },
-    { name: "무기 공격력  +75", attr: "WeaponAtkPlus", value: 75 },
-    { name: "무기 공격력  +155", attr: "WeaponAtkPlus", value: 155 },
-    { name: "무기 공격력  +57", attr: "WeaponAtkPlus", value: 57 },
-    { name: "무기 공격력  +147", attr: "WeaponAtkPlus", value: 147 },
-    { name: "무기 공격력  +285", attr: "WeaponAtkPlus", value: 285 },
-    { name: "무기 공격력  +195", attr: "WeaponAtkPlus", value: 195 },
-    { name: "무기 공격력  +480", attr: "WeaponAtkPlus", value: 480 },
-    { name: "무기 공격력  +960", attr: "WeaponAtkPlus", value: 960 },
+    { name: "무기 공격력  +32", attr: "weaponAtkPlus", value: 32 },
+    { name: "무기 공격력  +75", attr: "weaponAtkPlus", value: 75 },
+    { name: "무기 공격력  +155", attr: "weaponAtkPlus", value: 155 },
+    { name: "무기 공격력  +57", attr: "weaponAtkPlus", value: 57 },
+    { name: "무기 공격력  +147", attr: "weaponAtkPlus", value: 147 },
+    { name: "무기 공격력  +285", attr: "weaponAtkPlus", value: 285 },
+    { name: "무기 공격력  +195", attr: "weaponAtkPlus", value: 195 },
+    { name: "무기 공격력  +480", attr: "weaponAtkPlus", value: 480 },
+    { name: "무기 공격력  +960", attr: "weaponAtkPlus", value: 960 },
 
-    { name: "무기 공격력  +0.46%", attr: "WeaponAtkPer", value: 0.46 },
-    { name: "무기 공격력  +1.04%", attr: "WeaponAtkPer", value: 1.04 },
-    { name: "무기 공격력  +1.72%", attr: "WeaponAtkPer", value: 1.72 },
-    { name: "무기 공격력  +0.56%", attr: "WeaponAtkPer", value: 0.56 },
-    { name: "무기 공격력  +1.26%", attr: "WeaponAtkPer", value: 1.26 },
-    { name: "무기 공격력  +2.10%", attr: "WeaponAtkPer", value: 2.1 },
-    { name: "무기 공격력  +0.80%", attr: "WeaponAtkPer", value: 0.8 },
-    { name: "무기 공격력  +1.80%", attr: "WeaponAtkPer", value: 1.8 },
-    { name: "무기 공격력  +3.00%", attr: "WeaponAtkPer", value: 3.0 },
+    { name: "무기 공격력  +0.46%", attr: "weaponAtkPer", value: 0.46 },
+    { name: "무기 공격력  +1.04%", attr: "weaponAtkPer", value: 1.04 },
+    { name: "무기 공격력  +1.72%", attr: "weaponAtkPer", value: 1.72 },
+    { name: "무기 공격력  +0.56%", attr: "weaponAtkPer", value: 0.56 },
+    { name: "무기 공격력  +1.26%", attr: "weaponAtkPer", value: 1.26 },
+    { name: "무기 공격력  +2.10%", attr: "weaponAtkPer", value: 2.1 },
+    { name: "무기 공격력  +0.80%", attr: "weaponAtkPer", value: 0.8 },
+    { name: "무기 공격력  +1.80%", attr: "weaponAtkPer", value: 1.8 },
+    { name: "무기 공격력  +3.00%", attr: "weaponAtkPer", value: 3.0 },
 
-    { name: "  공격력  +14", attr: "AtkPlus", value: 14 },
-    { name: "  공격력  +33", attr: "AtkPlus", value: 33 },
-    { name: "  공격력  +68", attr: "AtkPlus", value: 68 },
-    { name: "  공격력  +24", attr: "AtkPlus", value: 24 },
-    { name: "  공격력  +61", attr: "AtkPlus", value: 61 },
-    { name: "  공격력  +118", attr: "AtkPlus", value: 118 },
-    { name: "  공격력  +80", attr: "AtkPlus", value: 80 },
-    { name: "  공격력  +195", attr: "AtkPlus", value: 195 },
-    { name: "  공격력  +390", attr: "AtkPlus", value: 390 },
+    { name: "  공격력  +14", attr: "atkPlus", value: 14 },
+    { name: "  공격력  +33", attr: "atkPlus", value: 33 },
+    { name: "  공격력  +68", attr: "atkPlus", value: 68 },
+    { name: "  공격력  +24", attr: "atkPlus", value: 24 },
+    { name: "  공격력  +61", attr: "atkPlus", value: 61 },
+    { name: "  공격력  +118", attr: "atkPlus", value: 118 },
+    { name: "  공격력  +80", attr: "atkPlus", value: 80 },
+    { name: "  공격력  +195", attr: "atkPlus", value: 195 },
+    { name: "  공격력  +390", attr: "atkPlus", value: 390 },
 
-    { name: "공격력  +0.24%", attr: "AtkPer", value: 0.24 },
-    { name: "공격력  +0.54%", attr: "AtkPer", value: 0.54 },
-    { name: "공격력  +0.89%", attr: "AtkPer", value: 0.89 },
-    { name: "공격력  +0.29%", attr: "AtkPer", value: 0.29 },
-    { name: "공격력  +0.66%", attr: "AtkPer", value: 0.66 },
-    { name: "공격력  +1.09%", attr: "AtkPer", value: 1.09 },
-    { name: "공격력  +0.40%", attr: "AtkPer", value: 0.4 },
-    { name: "공격력  +0.95%", attr: "AtkPer", value: 0.95 },
-    { name: "공격력  +1.55%", attr: "AtkPer", value: 1.55 },
+    { name: "공격력  +0.24%", attr: "atkPer", value: 0.24 },
+    { name: "공격력  +0.54%", attr: "atkPer", value: 0.54 },
+    { name: "공격력  +0.89%", attr: "atkPer", value: 0.89 },
+    { name: "공격력  +0.29%", attr: "atkPer", value: 0.29 },
+    { name: "공격력  +0.66%", attr: "atkPer", value: 0.66 },
+    { name: "공격력  +1.09%", attr: "atkPer", value: 1.09 },
+    { name: "공격력  +0.40%", attr: "atkPer", value: 0.4 },
+    { name: "공격력  +0.95%", attr: "atkPer", value: 0.95 },
+    { name: "공격력  +1.55%", attr: "atkPer", value: 1.55 },
 
-    { name: "치명타 적중률  +0.24%", attr: "CriticalChancePer", value: 0.24 },
-    { name: "치명타 적중률  +0.54%", attr: "CriticalChancePer", value: 0.54 },
-    { name: "치명타 적중률  +0.89%", attr: "CriticalChancePer", value: 0.89 },
-    { name: "치명타 적중률  +0.29%", attr: "CriticalChancePer", value: 0.29 },
-    { name: "치명타 적중률  +0.66%", attr: "CriticalChancePer", value: 0.66 },
-    { name: "치명타 적중률  +1.09%", attr: "CriticalChancePer", value: 1.09 },
-    { name: "치명타 적중률  +0.40%", attr: "CriticalChancePer", value: 0.4 },
-    { name: "치명타 적중률  +0.95%", attr: "CriticalChancePer", value: 0.95 },
-    { name: "치명타 적중률  +1.55%", attr: "CriticalChancePer", value: 1.55 },
+    { name: "치명타 적중률  +0.24%", attr: "critRate", value: 0.24 },
+    { name: "치명타 적중률  +0.54%", attr: "critRate", value: 0.54 },
+    { name: "치명타 적중률  +0.89%", attr: "critRate", value: 0.89 },
+    { name: "치명타 적중률  +0.29%", attr: "critRate", value: 0.29 },
+    { name: "치명타 적중률  +0.66%", attr: "critRate", value: 0.66 },
+    { name: "치명타 적중률  +1.09%", attr: "critRate", value: 1.09 },
+    { name: "치명타 적중률  +0.40%", attr: "critRate", value: 0.4 },
+    { name: "치명타 적중률  +0.95%", attr: "critRate", value: 0.95 },
+    { name: "치명타 적중률  +1.55%", attr: "critRate", value: 1.55 },
 
-    { name: "치명타 피해  +0.61%", attr: "CriticalDamagePer", value: 0.61 },
-    { name: "치명타 피해  +1.38%", attr: "CriticalDamagePer", value: 1.38 },
-    { name: "치명타 피해  +2.30%", attr: "CriticalDamagePer", value: 2.3 },
-    { name: "치명타 피해  +0.74%", attr: "CriticalDamagePer", value: 0.74 },
-    { name: "치명타 피해  +1.70%", attr: "CriticalDamagePer", value: 1.7 },
-    { name: "치명타 피해  +2.82%", attr: "CriticalDamagePer", value: 2.82 },
-    { name: "치명타 피해  +1.10%", attr: "CriticalDamagePer", value: 1.1 },
-    { name: "치명타 피해  +2.40%", attr: "CriticalDamagePer", value: 2.4 },
-    { name: "치명타 피해  +4.00%", attr: "CriticalDamagePer", value: 4.0 },
+    { name: "치명타 피해  +0.61%", attr: "critDmg", value: 0.61 },
+    { name: "치명타 피해  +1.38%", attr: "critDmg", value: 1.38 },
+    { name: "치명타 피해  +2.30%", attr: "critDmg", value: 2.3 },
+    { name: "치명타 피해  +0.74%", attr: "critDmg", value: 0.74 },
+    { name: "치명타 피해  +1.70%", attr: "critDmg", value: 1.7 },
+    { name: "치명타 피해  +2.82%", attr: "critDmg", value: 2.82 },
+    { name: "치명타 피해  +1.10%", attr: "critDmg", value: 1.1 },
+    { name: "치명타 피해  +2.40%", attr: "critDmg", value: 2.4 },
+    { name: "치명타 피해  +4.00%", attr: "critDmg", value: 4.0 },
 
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +0.90%", attr: "IdentityUptime", value: 0.009 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +2.07%", attr: "IdentityUptime", value: 0.0207 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +3.45%", attr: "IdentityUptime", value: 0.0345 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +1.48%", attr: "IdentityUptime", value: 0.0148 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +3.36%", attr: "IdentityUptime", value: 0.0336 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +5.60%", attr: "IdentityUptime", value: 0.056 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +1.60%", attr: "IdentityUptime", value: 0.016 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +3.60%", attr: "IdentityUptime", value: 0.036 },
-    { name: "세레나데, 신앙, 조화 게이지 획득량  +6.00%", attr: "IdentityUptime", value: 0.06 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +0.90%", attr: "identityUptime", value: 0.009 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +2.07%", attr: "identityUptime", value: 0.0207 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +3.45%", attr: "identityUptime", value: 0.0345 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +1.48%", attr: "identityUptime", value: 0.0148 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +3.36%", attr: "identityUptime", value: 0.0336 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +5.60%", attr: "identityUptime", value: 0.056 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +1.60%", attr: "identityUptime", value: 0.016 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +3.60%", attr: "identityUptime", value: 0.036 },
+    { name: "세레나데, 신앙, 조화 게이지 획득량  +6.00%", attr: "identityUptime", value: 0.06 },
 
-    { name: "낙인력  +1.20%", attr: "StigmaPer", value: 1.2 },
-    { name: "낙인력  +2.76%", attr: "StigmaPer", value: 2.76 },
-    { name: "낙인력  +4.60%", attr: "StigmaPer", value: 4.6 },
-    { name: "낙인력  +1.48%", attr: "StigmaPer", value: 1.48 },
-    { name: "낙인력  +3.36%", attr: "StigmaPer", value: 3.36 },
-    { name: "낙인력  +5.60%", attr: "StigmaPer", value: 5.6 },
-    { name: "낙인력  +2.15%", attr: "StigmaPer", value: 2.15 },
-    { name: "낙인력  +4.80%", attr: "StigmaPer", value: 4.8 },
-    { name: "낙인력  +8.00%", attr: "StigmaPer", value: 8.0 },
+    { name: "낙인력  +1.20%", attr: "stigma", value: 1.2 },
+    { name: "낙인력  +2.76%", attr: "stigma", value: 2.76 },
+    { name: "낙인력  +4.60%", attr: "stigma", value: 4.6 },
+    { name: "낙인력  +1.48%", attr: "stigma", value: 1.48 },
+    { name: "낙인력  +3.36%", attr: "stigma", value: 3.36 },
+    { name: "낙인력  +5.60%", attr: "stigma", value: 5.6 },
+    { name: "낙인력  +2.15%", attr: "stigma", value: 2.15 },
+    { name: "낙인력  +4.80%", attr: "stigma", value: 4.8 },
+    { name: "낙인력  +8.00%", attr: "stigma", value: 8.0 },
 
-    { name: "아군 공격력 강화 효과  +0.76%", attr: "AtkBuff", value: 0.76 },
-    { name: "아군 공격력 강화 효과  +1.72%", attr: "AtkBuff", value: 1.72 },
-    { name: "아군 공격력 강화 효과  +2.88%", attr: "AtkBuff", value: 2.88 },
-    { name: "아군 공격력 강화 효과  +0.92%", attr: "AtkBuff", value: 0.92 },
-    { name: "아군 공격력 강화 효과  +2.12%", attr: "AtkBuff", value: 2.12 },
-    { name: "아군 공격력 강화 효과  +3.52%", attr: "AtkBuff", value: 3.52 },
-    { name: "아군 공격력 강화 효과  +1.35%", attr: "AtkBuff", value: 1.35 },
-    { name: "아군 공격력 강화 효과  +3.00%", attr: "AtkBuff", value: 3.0 },
-    { name: "아군 공격력 강화 효과  +5.00%", attr: "AtkBuff", value: 5.0 },
+    { name: "아군 공격력 강화 효과  +0.76%", attr: "atkBuff", value: 0.76 },
+    { name: "아군 공격력 강화 효과  +1.72%", attr: "atkBuff", value: 1.72 },
+    { name: "아군 공격력 강화 효과  +2.88%", attr: "atkBuff", value: 2.88 },
+    { name: "아군 공격력 강화 효과  +0.92%", attr: "atkBuff", value: 0.92 },
+    { name: "아군 공격력 강화 효과  +2.12%", attr: "atkBuff", value: 2.12 },
+    { name: "아군 공격력 강화 효과  +3.52%", attr: "atkBuff", value: 3.52 },
+    { name: "아군 공격력 강화 효과  +1.35%", attr: "atkBuff", value: 1.35 },
+    { name: "아군 공격력 강화 효과  +3.00%", attr: "atkBuff", value: 3.0 },
+    { name: "아군 공격력 강화 효과  +5.00%", attr: "atkBuff", value: 5.0 },
 
-    { name: "아군 피해량 강화 효과  +1.14%", attr: "DamageBuff", value: 1.14 },
-    { name: "아군 피해량 강화 효과  +2.58%", attr: "DamageBuff", value: 2.58 },
-    { name: "아군 피해량 강화 효과  +4.32%", attr: "DamageBuff", value: 4.32 },
-    { name: "아군 피해량 강화 효과  +1.38%", attr: "DamageBuff", value: 1.38 },
-    { name: "아군 피해량 강화 효과  +3.18%", attr: "DamageBuff", value: 3.18 },
-    { name: "아군 피해량 강화 효과  +5.28%", attr: "DamageBuff", value: 7.5 },
-    { name: "아군 피해량 강화 효과  +2.00%", attr: "DamageBuff", value: 2.0 },
-    { name: "아군 피해량 강화 효과  +4.50%", attr: "DamageBuff", value: 4.5 },
-    { name: "아군 피해량 강화 효과  +7.50%", attr: "DamageBuff", value: 7.5 },
+    { name: "아군 피해량 강화 효과  +1.14%", attr: "dmgBuff", value: 1.14 },
+    { name: "아군 피해량 강화 효과  +2.58%", attr: "dmgBuff", value: 2.58 },
+    { name: "아군 피해량 강화 효과  +4.32%", attr: "dmgBuff", value: 4.32 },
+    { name: "아군 피해량 강화 효과  +1.38%", attr: "dmgBuff", value: 1.38 },
+    { name: "아군 피해량 강화 효과  +3.18%", attr: "dmgBuff", value: 3.18 },
+    { name: "아군 피해량 강화 효과  +5.28%", attr: "dmgBuff", value: 7.5 },
+    { name: "아군 피해량 강화 효과  +2.00%", attr: "dmgBuff", value: 2.0 },
+    { name: "아군 피해량 강화 효과  +4.50%", attr: "dmgBuff", value: 4.5 },
+    { name: "아군 피해량 강화 효과  +7.50%", attr: "dmgBuff", value: 7.5 },
 
-    { name: "파티원 보호막 효과  +0.54%", attr: "CarePower", value: 0.0054 },
-    { name: "파티원 보호막 효과  +1.21%", attr: "CarePower", value: 0.0121 },
-    { name: "파티원 보호막 효과  +2.01%", attr: "CarePower", value: 0.0201 },
-    { name: "파티원 보호막 효과  +0.65%", attr: "CarePower", value: 0.0065 },
-    { name: "파티원 보호막 효과  +1.47%", attr: "CarePower", value: 0.0147 },
-    { name: "파티원 보호막 효과  +2.45%", attr: "CarePower", value: 0.0245 },
-    { name: "파티원 보호막 효과  +0.95%", attr: "CarePower", value: 0.0095 },
-    { name: "파티원 보호막 효과  +2.10%", attr: "CarePower", value: 0.021 },
-    { name: "파티원 보호막 효과  +3.50%", attr: "CarePower", value: 0.035 },
+    { name: "파티원 보호막 효과  +0.54%", attr: "careBuff", value: 0.0054 },
+    { name: "파티원 보호막 효과  +1.21%", attr: "careBuff", value: 0.0121 },
+    { name: "파티원 보호막 효과  +2.01%", attr: "careBuff", value: 0.0201 },
+    { name: "파티원 보호막 효과  +0.65%", attr: "careBuff", value: 0.0065 },
+    { name: "파티원 보호막 효과  +1.47%", attr: "careBuff", value: 0.0147 },
+    { name: "파티원 보호막 효과  +2.45%", attr: "careBuff", value: 0.0245 },
+    { name: "파티원 보호막 효과  +0.95%", attr: "careBuff", value: 0.0095 },
+    { name: "파티원 보호막 효과  +2.10%", attr: "careBuff", value: 0.021 },
+    { name: "파티원 보호막 효과  +3.50%", attr: "careBuff", value: 0.035 },
 
-    { name: "파티원 회복 효과  +0.54%", attr: "CarePower", value: 0.0054 },
-    { name: "파티원 회복 효과  +1.21%", attr: "CarePower", value: 0.0121 },
-    { name: "파티원 회복 효과  +2.01%", attr: "CarePower", value: 0.0201 },
-    { name: "파티원 회복 효과  +0.65%", attr: "CarePower", value: 0.0065 },
-    { name: "파티원 회복 효과  +1.47%", attr: "CarePower", value: 0.0147 },
-    { name: "파티원 회복 효과  +2.45%", attr: "CarePower", value: 0.0245 },
-    { name: "파티원 회복 효과  +0.95%", attr: "CarePower", value: 0.0095 },
-    { name: "파티원 회복 효과  +2.10%", attr: "CarePower", value: 0.021 },
-    { name: "파티원 회복 효과  +3.50%", attr: "CarePower", value: 0.035 },
+    { name: "파티원 회복 효과  +0.54%", attr: "careBuff", value: 0.0054 },
+    { name: "파티원 회복 효과  +1.21%", attr: "careBuff", value: 0.0121 },
+    { name: "파티원 회복 효과  +2.01%", attr: "careBuff", value: 0.0201 },
+    { name: "파티원 회복 효과  +0.65%", attr: "careBuff", value: 0.0065 },
+    { name: "파티원 회복 효과  +1.47%", attr: "careBuff", value: 0.0147 },
+    { name: "파티원 회복 효과  +2.45%", attr: "careBuff", value: 0.0245 },
+    { name: "파티원 회복 효과  +0.95%", attr: "careBuff", value: 0.0095 },
+    { name: "파티원 회복 효과  +2.10%", attr: "careBuff", value: 0.021 },
+    { name: "파티원 회복 효과  +3.50%", attr: "careBuff", value: 0.035 },
 
-    { name: "최대 생명력  +719", attr: "StatHp", value: 719 },
-    { name: "최대 생명력  +1654", attr: "StatHp", value: 1654 },
-    { name: "최대 생명력  +2756", attr: "StatHp", value: 2756 },
-    { name: "최대 생명력  +992", attr: "StatHp", value: 992 },
-    { name: "최대 생명력  +2253", attr: "StatHp", value: 2253 },
-    { name: "최대 생명력  +3755", attr: "StatHp", value: 3755 },
-    { name: "최대 생명력  +1300", attr: "StatHp", value: 1300 },
-    { name: "최대 생명력  +3250", attr: "StatHp", value: 3250 },
-    { name: "최대 생명력  +6500", attr: "StatHp", value: 6500 },
+    { name: "최대 생명력  +719", attr: "hp", value: 719 },
+    { name: "최대 생명력  +1654", attr: "hp", value: 1654 },
+    { name: "최대 생명력  +2756", attr: "hp", value: 2756 },
+    { name: "최대 생명력  +992", attr: "hp", value: 992 },
+    { name: "최대 생명력  +2253", attr: "hp", value: 2253 },
+    { name: "최대 생명력  +3755", attr: "hp", value: 3755 },
+    { name: "최대 생명력  +1300", attr: "hp", value: 1300 },
+    { name: "최대 생명력  +3250", attr: "hp", value: 3250 },
+    { name: "최대 생명력  +6500", attr: "hp", value: 6500 },
 
     { name: "최대 마나  +5", attr: "UtilityPower", value: 0.008 },
     { name: "최대 마나  +10", attr: "UtilityPower", value: 0.016 },
@@ -891,77 +255,9 @@ let calAccessoryFilter = [
 
 ]
 
-// [딜러 : PUB = 유효 공용옵션 / SP1 = 특옵 1순위 / SP2 = 특옵 2순위 / DuelPuB = 서폿과 공용인 유효 공용옵션]
-// [서폿 : SupPub = 유효 공용옵션 / DuelPub = 딜러와 공요인 유효 공용옵션 / Sup1 = 특옵 1순위 / Sup2 = 특옵 2순위 / Sup3 = 특옵3순위]
-let elixirFilter = [
-
-    "> 공격력 :pub",
-    "> 무기 공격력 :DuelPub",
-    "> 힘 :DuelPub",
-    "> 민첩 :pub",
-    "> 지능 :DuelPub",
-    "> 행운 :sp",
-    "> 강맹 :sp",
-    "> 칼날방패 :sp",
-    "> 선봉대 (질서) :sp1",
-    "> 선봉대 (혼돈) :sp1",
-    "> 선각자 (질서) :Sup1",
-    "> 선각자 (혼돈) :Sup1",
-    "> 진군 (질서) :Sup2",
-    "> 진군 (혼돈) :Sup2",
-    "> 신념 (질서) :Sup2",
-    "> 신념 (혼돈) :Sup2",
-    "> 회심 (질서) :sp1",
-    "> 회심 (혼돈) :sp1",
-    "> 달인 (질서) :sp1",
-    "> 달인 (혼돈) :sp1",
-    "> 보스 피해 :sp2",
-    "> 치명타 피해 :sp2",
-    "> 추가 피해 :sp2",
-    "> 탈출의 달인 :zero",
-    "> 회피의 달인 :zero",
-    "> 마나 :SupPub",
-    "> 생명의 축복 :zero",
-    "> 자원의 축복 :zero",
-    "> 방랑자 :zero",
-    "> 무력화 :zero",
-    "> 물약 중독 :zero",
-    "> 폭발물 달인 :zero",
-    "> 각성기 피해 :zero",
-    "> 보호막 강화 :SupPub",
-    "> 회복 강화 :zero",
-    "> 최대 생명력 :SupPub",
-    "> 받는 피해 감소 :zero",
-    "> 물리 방어력 :zero",
-    "> 마법 방어력 :zero",
-    "> 아이덴티티 획득 :zero",
-    "> 아군 강화 :Sup3",
-]
 
 
-
-
-let cardPointFilter = [
-    '알고 보면:1',
-    '너는 계획이 다 있구나:1',
-    '에어가이츠 계획:1',
-    '남겨진 바람의 절벽:2',
-    '창의 달인:2',
-    '몰아치는 뇌전의 가호:2',
-    '세상을 구하는 빛:2',
-    '카제로스의 군단장:2',
-    '날랜 뇌전의 숨결:2',
-    '굳센 대지의 숨결:2',
-    '몰아치는 뇌전의 가호:2',
-    '잠재우는 대지의 가호:2'
-]
-
-
-
-
-// 접두사 [딜러 : z = 무효 / P = 1티어 옵션 / L = 3티어 옵션 / F = 4티어 옵션 / DuelP = 1티어지만 서폿과 공용 옵션 / Duel = 2티어지만 서폿과 공용 옵션 / DuelL = 3티어지만 서폿과 공용 옵션] 
-//        [서폿 : SpP = 1티어 옵션 / SpM =  2티어 옵션 / SpL = 3티어 옵션 / Sp = 4티어 옵션 / Duel = 딜러와 공용 옵션]
-//        secondCheck의 경우 secondCheck명이 없는 경우 출력되도록 한다
+// 팔찌 필터인데.. name 부분 풀네임으로 다 정리할까? (어차피 1차 파싱에서 잘 해오니까?)
 let bangleFilter = [
     { name: "공격 및 이동 속도가", option: "3%", tier: "Flow1", initial: "공이속 +3%", atkSpeed: 3, moveSpeed: 3, finalDamagePer: 1.0 },
     { name: "공격 및 이동 속도가", option: "4%", tier: "Flow2", initial: "공이속 +4%", atkSpeed: 4, moveSpeed: 4, finalDamagePer: 1.2 },
@@ -1275,7 +571,7 @@ let bangleFilter = [
 ];
 
 
-// 블럭각인
+// 무효 각인
 export let engravingCalFilter = [
 
     { job: "일격", block: ['결투의 대가', '마나 효율 증가', '추진력', '타격의 대가', '바리케이드', '추진력', '달인의 저력', '시선 집중'] },
@@ -1922,7 +1218,7 @@ export let stoneCheckFilter = [
     { name: '구슬동자', level: 4, engBonusPer: 1.5, criticalChancePer: 0, criticalDamagePer: 0, atkPer: 0, atkSpeed: 0, moveSpeed: 0, finalDamagePer: 0, cdrPercent: 0, awakencdrPercent: 0, utilityPower: 23, carePower: 0 },
 ]
 
-
+//deal.elixir
 export let elixirCalFilter = [
 
     { name: "> 공격력 ", atkPlus: [122, 253, 383, 575, 767] },
@@ -1979,302 +1275,20 @@ export let elixirCalFilter = [
 
 ]
 
+//deal.arkPassive.hyperCdr. 거의 서폿용 필터라 딜러용은 이게 다임임
 export let arkCalFilter = [
-    //{name:"끝없는 마나",level:1,skillCool:7},
-    //{name:"끝없는 마나",level:2,skillCool:14},
-    //
-    //{name:"금단의 주문",level:1,evolutionDamage:0},
-    //{name:"금단의 주문",level:2,evolutionDamage:0},
-    //
-    //{name:"예리한 감각",level:1,evolutionDamage:0, criticalChancePer:4},
-    //{name:"예리한 감각",level:2,evolutionDamage:0, criticalChancePer:8},
-    //
-    //{name:"한계 돌파",level:1,evolutionDamage:0},
-    //{name:"한계 돌파",level:2,evolutionDamage:0},
-    //{name:"한계 돌파",level:3,evolutionDamage:0},
-    //
-    //{name:"최적화 훈련",level:1,evolutionDamage:0,skillCool:4},
-    //{name:"최적화 훈련",level:2,evolutionDamage:0,skillCool:8},
-    //
-    //{name:"축복의 여신",level:1,moveSpeed:3,atkSpeed:3},
-    //{name:"축복의 여신",level:2,moveSpeed:6,atkSpeed:6},
-    //{name:"축복의 여신",level:3,moveSpeed:9,atkSpeed:9},
-
-    //// 여기부터 3티어
-
-    //{name:"무한한 마력",level:1,evolutionDamage:0,skillCool:7},
-    //{name:"무한한 마력",level:2,evolutionDamage:0,skillCool:14},
-    //
-    //{name:"혼신의 강타",level:1,evolutionDamage:0, criticalChancePer:12},
-    //{name:"혼신의 강타",level:2,evolutionDamage:0, criticalChancePer:24},
-    //
-    //{name:"일격",level:1,criticalDamagePer:16, criticalChancePer:10},
-    //{name:"일격",level:2,criticalDamagePer:32, criticalChancePer:20},
-    //
-    //{name:"파괴 전차",level:1,evolutionDamage:0, atkSpeed:4},
-    //{name:"파괴 전차",level:2,evolutionDamage:0, atkSpeed:8},
-    //
-    //{name:"타이밍 지배",level:1,evolutionDamage:0, skillCool:5},
-    //{name:"타이밍 지배",level:2,evolutionDamage:0, skillCool:10},
-
-    { name: "정열의 춤사위", level: 1, evolutionDamage: 0, evolutionBuff: 7 },
-    { name: "정열의 춤사위", level: 2, evolutionDamage: 0, evolutionBuff: 14 },
-
-    //// 여기부터 4티어
-
-
-    { name: "입식 타격가", level: 1, evolutionDamage: 0, stigmaPer: 10 },
-    { name: "입식 타격가", level: 2, evolutionDamage: 0, stigmaPer: 20 },
-
-    { name: "마나 용광로", level: 1, evolutionDamage: 0, stigmaPer: 10 },
-    { name: "마나 용광로", level: 2, evolutionDamage: 0, stigmaPer: 20 },
-
-    { name: "안정된 관리자", level: 1, stigmaPer: 10 },
-    { name: "안정된 관리자", level: 2, stigmaPer: 20 },
-
-    //{name:"인파이팅",level:1,evolutionDamage:0},
-    //{name:"인파이팅",level:2,evolutionDamage:0},
-
-    //// 여기서부터 깨달음
-
-    { name: "전술 훈련", level: 1, criticalChancePer: 1.6 },
-    { name: "전술 훈련", level: 2, criticalChancePer: 3.2 },
-    { name: "전술 훈련", level: 3, criticalChancePer: 4.8 },
-    { name: "전술 훈련", level: 4, criticalChancePer: 6.4 },
-    { name: "전술 훈련", level: 5, criticalChancePer: 8 },
-
-    { name: "분노 자극", level: 1, criticalDamagePer: 3 },
-    { name: "분노 자극", level: 2, criticalDamagePer: 6 },
-    { name: "분노 자극", level: 3, criticalDamagePer: 9 },
-    { name: "분노 자극", level: 4, criticalDamagePer: 12 },
-    { name: "분노 자극", level: 5, criticalDamagePer: 15 },
-
-    { name: "영역 강화", level: 1, criticalChancePer: 2 },
-    { name: "영역 강화", level: 2, criticalChancePer: 4 },
-    { name: "영역 강화", level: 3, criticalChancePer: 6 },
-    { name: "영역 강화", level: 4, criticalChancePer: 8 },
-    { name: "영역 강화", level: 5, criticalChancePer: 10 },
-
-    { name: "징벌 강화", level: 1, criticalChancePer: 1 },
-    { name: "징벌 강화", level: 2, criticalChancePer: 2 },
-    { name: "징벌 강화", level: 3, criticalChancePer: 3 },
-    { name: "징벌 강화", level: 4, criticalChancePer: 4 },
-    { name: "징벌 강화", level: 5, criticalChancePer: 5 },
-
-    { name: "열성", level: 1, criticalDamagePer: 4.8 },
-    { name: "열성", level: 2, criticalDamagePer: 9.6 },
-    { name: "열성", level: 3, criticalDamagePer: 14.4 },
-    { name: "열성", level: 4, criticalDamagePer: 19.2 },
-    { name: "열성", level: 5, criticalDamagePer: 24 },
-
-    { name: "날카로운 타격", level: 1, criticalChancePer: 1, criticalDamagePer: 4 },
-    { name: "날카로운 타격", level: 2, criticalChancePer: 2, criticalDamagePer: 8 },
-    { name: "날카로운 타격", level: 3, criticalChancePer: 3, criticalDamagePer: 12 },
-    { name: "날카로운 타격", level: 4, criticalChancePer: 4, criticalDamagePer: 16 },
-    { name: "날카로운 타격", level: 5, criticalChancePer: 5, criticalDamagePer: 20 },
-
-    { name: "치명적인 투지", level: 1, criticalChancePer: 2 },
-    { name: "치명적인 투지", level: 2, criticalChancePer: 4 },
-    { name: "치명적인 투지", level: 3, criticalChancePer: 6 },
-    { name: "치명적인 투지", level: 4, criticalChancePer: 8 },
-    { name: "치명적인 투지", level: 5, criticalChancePer: 10 },
-
-    { name: "치명적인 체술", level: 1, criticalDamagePer: 3 },
-    { name: "치명적인 체술", level: 2, criticalDamagePer: 6 },
-    { name: "치명적인 체술", level: 3, criticalDamagePer: 9 },
-    { name: "치명적인 체술", level: 4, criticalDamagePer: 12 },
-    { name: "치명적인 체술", level: 5, criticalDamagePer: 15 },
-
-    { name: "공수래", level: 1, criticalChancePer: 0.8 },
-    { name: "공수래", level: 2, criticalChancePer: 1.6 },
-    { name: "공수래", level: 3, criticalChancePer: 2.4 },
-    { name: "공수래", level: 4, criticalChancePer: 3.2 },
-    { name: "공수래", level: 5, criticalChancePer: 4 },
-
-    { name: "날카로운 기공", level: 1, criticalDamagePer: 4 },
-    { name: "날카로운 기공", level: 2, criticalDamagePer: 8 },
-    { name: "날카로운 기공", level: 3, criticalDamagePer: 12 },
-    { name: "날카로운 기공", level: 4, criticalDamagePer: 16 },
-    { name: "날카로운 기공", level: 5, criticalDamagePer: 20 },
-
-    { name: "치명적인 베기", level: 1, criticalDamagePer: 4 },
-    { name: "치명적인 베기", level: 2, criticalDamagePer: 8 },
-    { name: "치명적인 베기", level: 3, criticalDamagePer: 12 },
-    { name: "치명적인 베기", level: 4, criticalDamagePer: 16 },
-    { name: "치명적인 베기", level: 5, criticalDamagePer: 20 },
-
-    { name: "전환 난무", level: 1, criticalChancePer: 0.8 },
-    { name: "전환 난무", level: 2, criticalChancePer: 1.6 },
-    { name: "전환 난무", level: 3, criticalChancePer: 2.4 },
-    { name: "전환 난무", level: 4, criticalChancePer: 3.2 },
-    { name: "전환 난무", level: 5, criticalChancePer: 4 },
-
-    { name: "체술 강화", level: 1, criticalChancePer: 1.2 },
-    { name: "체술 강화", level: 2, criticalChancePer: 2.4 },
-    { name: "체술 강화", level: 3, criticalChancePer: 3.6 },
-    { name: "체술 강화", level: 4, criticalChancePer: 4.8 },
-    { name: "체술 강화", level: 5, criticalChancePer: 6 },
-
-    { name: "치명적인 오의", level: 1, criticalDamagePer: 4 },
-    { name: "치명적인 오의", level: 2, criticalDamagePer: 8 },
-    { name: "치명적인 오의", level: 3, criticalDamagePer: 12 },
-    { name: "치명적인 오의", level: 4, criticalDamagePer: 16 },
-    { name: "치명적인 오의", level: 5, criticalDamagePer: 20 },
-
-    { name: "퀵 드로우", level: 1, criticalChancePer: 1 },
-    { name: "퀵 드로우", level: 2, criticalChancePer: 2 },
-    { name: "퀵 드로우", level: 3, criticalChancePer: 3 },
-    { name: "퀵 드로우", level: 4, criticalChancePer: 4 },
-    { name: "퀵 드로우", level: 5, criticalChancePer: 5 },
-
-    { name: "페일 노트", level: 1, criticalDamagePer: 4 },
-    { name: "페일 노트", level: 2, criticalDamagePer: 8 },
-    { name: "페일 노트", level: 3, criticalDamagePer: 12 },
-    { name: "페일 노트", level: 4, criticalDamagePer: 16 },
-    { name: "페일 노트", level: 5, criticalDamagePer: 20 },
-
-    { name: "신속 포격", level: 1, criticalDamagePer: 4 },
-    { name: "신속 포격", level: 2, criticalDamagePer: 8 },
-    { name: "신속 포격", level: 3, criticalDamagePer: 12 },
-    { name: "신속 포격", level: 4, criticalDamagePer: 16 },
-    { name: "신속 포격", level: 5, criticalDamagePer: 20 },
-
-    { name: "급소 전문가", level: 1, criticalChancePer: 1.2 },
-    { name: "급소 전문가", level: 2, criticalChancePer: 2.4 },
-    { name: "급소 전문가", level: 3, criticalChancePer: 3.6 },
-    { name: "급소 전문가", level: 4, criticalChancePer: 4.8 },
-    { name: "급소 전문가", level: 5, criticalChancePer: 6 },
-
-    { name: "저격수의 의지", level: 1, criticalDamagePer: 1 },
-    { name: "저격수의 의지", level: 2, criticalDamagePer: 2 },
-    { name: "저격수의 의지", level: 3, criticalDamagePer: 3 },
-    { name: "저격수의 의지", level: 4, criticalDamagePer: 4 },
-    { name: "저격수의 의지", level: 5, criticalDamagePer: 5 },
-
-    { name: "황제의 자비", level: 1, criticalChancePer: 1.6 },
-    { name: "황제의 자비", level: 2, criticalChancePer: 3.2 },
-    { name: "황제의 자비", level: 3, criticalChancePer: 4.8 },
-    { name: "황제의 자비", level: 4, criticalChancePer: 6.4 },
-    { name: "황제의 자비", level: 5, criticalChancePer: 8 },
-
-    { name: "교감 강화", level: 1, criticalChancePer: 2 },
-    { name: "교감 강화", level: 2, criticalChancePer: 4 },
-    { name: "교감 강화", level: 3, criticalChancePer: 6 },
-    { name: "교감 강화", level: 4, criticalChancePer: 9 },
-    { name: "교감 강화", level: 5, criticalChancePer: 12 },
-
-    { name: "고대 기운 강화", level: 1, criticalDamagePer: 4 },
-    { name: "고대 기운 강화", level: 2, criticalDamagePer: 8 },
-    { name: "고대 기운 강화", level: 3, criticalDamagePer: 12 },
-    { name: "고대 기운 강화", level: 4, criticalDamagePer: 16 },
-    { name: "고대 기운 강화", level: 5, criticalDamagePer: 20 },
-
-    { name: "곡예사", level: 1, criticalDamagePer: 3 },
-    { name: "곡예사", level: 2, criticalDamagePer: 6 },
-    { name: "곡예사", level: 3, criticalDamagePer: 9 },
-    { name: "곡예사", level: 4, criticalDamagePer: 12 },
-    { name: "곡예사", level: 5, criticalDamagePer: 15 },
-
-    { name: "단련", level: 1, criticalChancePer: 1 },
-    { name: "단련", level: 2, criticalChancePer: 2 },
-    { name: "단련", level: 3, criticalChancePer: 3 },
-    { name: "단련", level: 4, criticalChancePer: 4 },
-    { name: "단련", level: 5, criticalChancePer: 5 },
-
-
-    //서폿 깨달음
-
-    //홀나 메인노드
-    { name: "신성 해방", level: 1, enlightenmentBuff: 0.1 },
-    { name: "신성 해방", level: 2, enlightenmentBuff: 0.15 },
-    { name: "신성 해방", level: 3, enlightenmentBuff: 0.2 },
-    //홀나 낙인력
-    { name: "빠른 구원", level: 1, stigmaPer: 0 },
-    { name: "빠른 구원", level: 2, stigmaPer: 1 },
-    { name: "빠른 구원", level: 3, stigmaPer: 2 },
-    { name: "빠른 구원", level: 4, stigmaPer: 3 },
-    { name: "빠른 구원", level: 5, stigmaPer: 4 },
-
-    { name: "빛의 흔적", level: 1, stigmaPer: 0 },
-    { name: "빛의 흔적", level: 2, stigmaPer: 1 },
-    { name: "빛의 흔적", level: 3, stigmaPer: 2 },
-    { name: "빛의 흔적", level: 4, stigmaPer: 3 },
-    { name: "빛의 흔적", level: 5, stigmaPer: 4 },
-
-
-    //바드 메인노드
-    { name: "세레나데 코드", level: 1, enlightenmentBuff: 0.1 },
-    { name: "세레나데 코드", level: 2, enlightenmentBuff: 0.15 },
-    { name: "세레나데 코드", level: 3, enlightenmentBuff: 0.2 },
-    //바드 낙인력
-    { name: "포용의 세레나데", level: 1, stigmaPer: 0 },
-    { name: "포용의 세레나데", level: 2, stigmaPer: 1 },
-    { name: "포용의 세레나데", level: 3, stigmaPer: 2 },
-    { name: "포용의 세레나데", level: 4, stigmaPer: 3 },
-    { name: "포용의 세레나데", level: 5, stigmaPer: 4 },
-
-    { name: "낙인의 세레나데", level: 1, stigmaPer: 0 },
-    { name: "낙인의 세레나데", level: 2, stigmaPer: 1 },
-    { name: "낙인의 세레나데", level: 3, stigmaPer: 2 },
-    { name: "낙인의 세레나데", level: 4, stigmaPer: 3 },
-    { name: "낙인의 세레나데", level: 5, stigmaPer: 4 },
-
-
-    //도화가 메인노드
-    { name: "묵법 : 접무", level: 1, enlightenmentBuff: 0.1 },
-    { name: "묵법 : 접무", level: 2, enlightenmentBuff: 0.15 },
-    { name: "묵법 : 접무", level: 3, enlightenmentBuff: 0.2 },
-
-    //도화가 낙인력
-    { name: "오누이", level: 1, stigmaPer: 0 },
-    { name: "오누이", level: 2, stigmaPer: 1 },
-    { name: "오누이", level: 3, stigmaPer: 2 },
-    { name: "오누이", level: 4, stigmaPer: 3 },
-    { name: "오누이", level: 5, stigmaPer: 4 },
-
-    { name: "낙인 강화", level: 1, stigmaPer: 0 },
-    { name: "낙인 강화", level: 2, stigmaPer: 1 },
-    { name: "낙인 강화", level: 3, stigmaPer: 2 },
-    { name: "낙인 강화", level: 4, stigmaPer: 3 },
-    { name: "낙인 강화", level: 5, stigmaPer: 4 },
-
-    //발키리 메인노드
-    { name: "해방의 날개", level: 1, enlightenmentBuff: 0.1 },
-    { name: "해방의 날개", level: 2, enlightenmentBuff: 0.15 },
-    { name: "해방의 날개", level: 3, enlightenmentBuff: 0.2 },
-
-
-    //발키리 낙인력
-    { name: "해방자의 흔적", level: 1, stigmaPer: 0 },
-    { name: "해방자의 흔적", level: 2, stigmaPer: 1 },
-    { name: "해방자의 흔적", level: 3, stigmaPer: 2 },
-    { name: "해방자의 흔적", level: 4, stigmaPer: 3 },
-    { name: "해방자의 흔적", level: 5, stigmaPer: 4 },
-
-    { name: "빛의 검기", level: 1, stigmaPer: 0 },
-    { name: "빛의 검기", level: 2, stigmaPer: 1 },
-    { name: "빛의 검기", level: 3, stigmaPer: 2 },
-    { name: "빛의 검기", level: 4, stigmaPer: 3 },
-    { name: "빛의 검기", level: 5, stigmaPer: 4 },
-
-
-
-
     //도약
-    { name: "잠재력 해방", level: 1, cdrPercent: 0.02 },
-    { name: "잠재력 해방", level: 2, cdrPercent: 0.04 },
-    { name: "잠재력 해방", level: 3, cdrPercent: 0.06 },
-    { name: "잠재력 해방", level: 4, cdrPercent: 0.08 },
-    { name: "잠재력 해방", level: 5, cdrPercent: 0.1 },
-
-
-
+    { name: "잠재력 해방", level: 1, hyperCdr: 0.02 },
+    { name: "잠재력 해방", level: 2, hyperCdr: 0.04 },
+    { name: "잠재력 해방", level: 3, hyperCdr: 0.06 },
+    { name: "잠재력 해방", level: 4, hyperCdr: 0.08 },
+    { name: "잠재력 해방", level: 5, hyperCdr: 0.1 },
 
 ]
 
 
 
-
+//딜지분
 export let classGemFilter = [
     {
         class: "광기",
@@ -2802,19 +1816,6 @@ export let classGemFilter = [
         ],
     },
     {
-        class: "111 역천",
-        skill: [
-            { name: "난화격", per: 0.17 },
-            { name: "번천장", per: 0.1 },
-            { name: "기공장", per: 0.1 },
-            { name: "여래신장", per: 0.1 },
-            { name: "풍뢰일광포", per: 0.09 },
-            { name: "환영격", per: 0.07 },
-            { name: "벽력장", per: 0.07 },
-            { name: "보정치", per: -0.1 },
-        ],
-    },
-    {
         class: "절정",
         skill: [
             { name: "적룡포", per: 0.19 },
@@ -2975,8 +1976,6 @@ export let classGemFilter = [
         skill: [
             { name: "오의 : 뇌호격", per: 0.26 },
             { name: "오의 : 풍신초래", per: 0.17 },
-            { name: "오의 : 호왕출현", per: 0.17 },
-            { name: "보정치", per: -0.17 },
         ],
     },
     {
@@ -3227,18 +2226,6 @@ export let classGemFilter = [
             { name: "명령 : 플레어 빔", per: 0.074 },
             { name: "전술 사격", per: 0.074 },
             { name: "보정치", per: -0.148 },
-
-        ],
-    },
-    {
-        class: "222 기술",
-        skill: [
-            { name: "어나힐레이션 모드", per: 0.23 },
-            { name: "아발란체", per: 0.13 },
-            { name: "불릿 해일", per: 0.12 },
-            { name: "전술 사격", per: 0.1 },
-            { name: "명령 : 레이드 미사일", per: 0.07 },
-            { name: "명령 : 베이비 드론", per: 0.07 },
 
         ],
     },

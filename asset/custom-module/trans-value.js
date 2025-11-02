@@ -2078,6 +2078,15 @@ export async function getCharacterProfile(data, dataBase) {
 
         /*************************** 애니츠 ***************************/
         {
+            class: "111 역천",
+            conditions: [
+                { core: "기강결", point: 14, support: "역천" },
+                { core: "금강진체", point: 14, support: "역천" },
+                { core: "천화난무", point: 14, support: "역천" },
+                
+            ]
+        },
+        {
             class: "섬열파 역천",
             conditions: [
                 { core: "기류탄화", point: 17, support: "역천" },
@@ -2110,8 +2119,6 @@ export async function getCharacterProfile(data, dataBase) {
             conditions: [
                 { core: "적룡연격", point: 14, support: "절정" },
                 { core: "집중 강화", point: 14, support: "절정" },
-                { core: "한 점 돌파", point: 14, support: "절정" },
-                
             ]
         },
         {
@@ -2169,6 +2176,13 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "ATB-07 니들레인", point: 14, support: "죽습" },
                 { core: "HSU-21 실버 레인", point: 14, support: "죽습" },
                 { core: "HSU-17 일렉트릭 노바", point: 14, support: "죽습" }
+            ]
+        },
+        {
+            class: "222 기술",
+            conditions: [
+                { core: "에이전트 SMG", point: 14, support: "기술" },
+                { core: "불릿 템페스트", point: 14, support: "기술" }
             ]
         },
         /*************************** 데런 ***************************/
