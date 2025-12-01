@@ -67,7 +67,7 @@ export async function specPointCalc(inputObj) {
         + inputObj.bangleObj.str 
         + inputObj.bangleObj.dex 
         + inputObj.bangleObj.int) 
-        * inputObj.etcObj.avatarStats
+        * (inputObj.etcObj.avatarStats)
 
     // 무기 공격력
     let totalWeaponAtk = ((inputObj.defaultObj.weaponAtk 
@@ -79,7 +79,6 @@ export async function specPointCalc(inputObj) {
         + inputObj.arkgridObj.weaponAtkPlus) 
         * (inputObj.arkObj.weaponAtkPer 
         + (inputObj.accObj.weaponAtkPer / 100) + (inputObj.arkgridObj.weaponAtkPer / 100)))
-
     // 공격력
     let totalAtk = (((totalStat * totalWeaponAtk / 6) ** 0.5) * attackBonus 
     + (inputObj.elixirObj.atkPlus 
@@ -88,7 +87,7 @@ export async function specPointCalc(inputObj) {
         + inputObj.elixirObj.atkBonus 
         + inputObj.arkgridObj.atkPlus)) 
         * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1)    
-
+        console.log(totalAtk,"공격력")
     // 추피 총합
     let bangleAddDamageResult = ((inputObj.defaultObj.addDamagePer 
         + inputObj.accObj.addDamagePer 

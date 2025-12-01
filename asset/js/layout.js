@@ -684,7 +684,7 @@ function scFooterCreate() {
                     <span class="sc-footer__text">${copyMarkup}</span>
                 </div>
                 <div class="sc-footer__links">
-                    <a class="sc-footer__link" href="https://cool-kiss-ec2.notion.site/FAQ-1da758f0e8da80618220fe697190f345" target="_blank">1:1문의</a>
+                    <a class="sc-footer__link" href="https://lopec.kr/policy" target="_blank">개인정보처리방침</a>
                     <a class="sc-footer__link" href="https://cool-kiss-ec2.notion.site/120758f0e8da80889d2fe738c694a7a1" target="_blank">후원안내</a>
                     <a class="sc-footer__link" href="https://discord.com/invite/5B8SjX4ug4" target="_blank">디스코드</a>
                     <a class="sc-footer__link" href="https://cool-kiss-ec2.notion.site/LOPEC-CREDIT-1cc758f0e8da80a18f49f93dafb886f3" target="_blank">Credit</a>

@@ -1103,6 +1103,15 @@ i.lopec_badge_pumkin {
     background-image: url("/asset/image/lopec_badge_pumkin.png");
 }
 
+i.lopec_badge_seramge {
+    background-image: url("/asset/image/lopec_badge_seramge.png");
+}
+
+i.lopec_badge_seramge:hover:after {
+   content: "희망나래 콘서트 펀딩 참여자를 위한 세램쥐!"
+}
+
+
 
 
 
