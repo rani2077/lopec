@@ -287,24 +287,24 @@ async function mainSearchFunction() {
                 advancedLevel = "X" + item.advancedLevel;
             }
             let elixirWrap = ""
-            if (item.elixir.length !== 0) {
-                let spanElixir = ""
-                item.elixir.forEach(elixirItem => {
-                    spanElixir += `<span class="elixir radius"> ${elixirItem.name} ${elixirItem.level}</span>`;
-                });
-                elixirWrap = `
-                    <div class="elixir-wrap">
-                        ${spanElixir}
-                    </div>`
-            };
+            // if (item.elixir.length !== 0) {
+            //     let spanElixir = ""
+            //     item.elixir.forEach(elixirItem => {
+            //         spanElixir += `<span class="elixir radius"> ${elixirItem.name} ${elixirItem.level}</span>`;
+            //     });
+            //     elixirWrap = `
+            //         <div class="elixir-wrap">
+            //             ${spanElixir}
+            //         </div>`
+            // };
             let hyperWrap = ""
-            if (item.hyperIndex !== -1) {
-                hyperWrap = `
-                    <div class="hyper-wrap">
-                        <span class="hyper"><img src="https://cdn-lostark.game.onstove.com/2018/obt/assets/images/common/game/ico_tooltip_transcendence.png" alt="꽃모양 아이콘">${item.hyperStar}</span>
-                        <span class="level">${item.hyperLevel}단계</span>
-                    </div>`
-            }
+            // if (item.hyperIndex !== -1) {
+            //     hyperWrap = `
+            //         <div class="hyper-wrap">
+            //             <span class="hyper"><img src="https://cdn-lostark.game.onstove.com/2018/obt/assets/images/common/game/ico_tooltip_transcendence.png" alt="꽃모양 아이콘">${item.hyperStar}</span>
+            //             <span class="level">${item.hyperLevel}단계</span>
+            //         </div>`
+            // }
             let armorItem = `
             <li class="armor-item">
                 <div class="img-box radius ${backgroundClassName}-background">
@@ -343,97 +343,32 @@ async function mainSearchFunction() {
     * description       : 	armor-item 엘릭서 초월 정보 html을 생성함
     *********************************************************************************************************************** */
     function armorItemDetailInfoCreate() {
-        let elixirDouble = ["회심", "달인 (", "강맹", "칼날방패", "선봉대", "행운", "선각자", "진군", "신념"]
-        // extractValue.htmlObj.armoryInfo[i].elixir[i]
-        let allElixirData = [];
-        extractValue.htmlObj.armoryInfo.forEach(item => {
-            if (item.elixir && Array.isArray(item.elixir)) {
-                allElixirData = allElixirData.concat(item.elixir);
-            }
-        });
-        let specialElixir = allElixirData.filter(elixir => elixirDouble.find(double => elixir.name.includes(double)));
-        specialElixir = specialElixir.map(elixir => elixir.name.replace(/\([^)]*\)/g, '').trim())
-        function countDuplicates(arr) {
-            const counts = {};
-            for (const item of arr) {
-                counts[item] = (counts[item] || 0) + 1;
-            }
-            let mostFrequent = null;
-            let maxCount = 0;
-            for (const item in counts) {
-                if (counts[item] > 1) { // 중복된 값만 고려
-                    if (counts[item] > maxCount) {
-                        maxCount = counts[item];
-                        mostFrequent = { name: item, count: counts[item] };
-                    }
-                }
-            }
-            return mostFrequent;
-        }
-        let elixirResult = "비활성화";
-        if (countDuplicates(specialElixir) !== null && countDuplicates(specialElixir).count > 1) {
-            elixirResult = countDuplicates(specialElixir).name + " 2단계"
-        }
-        function elixirLevelSum(array) {
-            let sumValue = 0;
-            array.forEach(item => {
-                let value = Number(item.level.match(/Lv\.(\d+)/)[1]);
-                sumValue += value;
-            })
-            return sumValue
-        }
-        let elixirProgressClassName = "";
-        if (elixirLevelSum(allElixirData) < 35) {
-            elixirProgressClassName = "common"
-        } else if (elixirLevelSum(allElixirData) < 40) {
-            elixirProgressClassName = "epic"
-        } else if (elixirLevelSum(allElixirData) < 50) {
-            elixirProgressClassName = "legendary"
-        } else if (elixirLevelSum(allElixirData) < 999) {
-            elixirProgressClassName = "mythic"
-        }
-
-        let hyperStarArray = extractValue.htmlObj.armoryInfo.map(item => item.hyperStar);
-        function hyperAvgValue(array) {
-            let sumValue = 0;
-            let obj = {};
-            array.forEach(item => {
-                sumValue += Number(item);
-            })
-            obj.avgValue = sumValue / array.length;
-            obj.sumValue = sumValue;
-
-            return obj;
-        }
-        let hyperProgressClassName = "";
-        if (hyperAvgValue(hyperStarArray).sumValue < 100) {
-            hyperProgressClassName = "common"
-        } else if (hyperAvgValue(hyperStarArray).sumValue < 120) {
-            hyperProgressClassName = "epic"
-        } else if (hyperAvgValue(hyperStarArray).sumValue < 126) {
-            hyperProgressClassName = "legendary"
-        } else if (hyperAvgValue(hyperStarArray).sumValue < 999) {
-            hyperProgressClassName = "mythic"
-        }
-
+        let artifactData = data.ArmoryEquipment.filter((item) => item.Type === "보주");
+        artifactData = artifactData?.[0];
         let element = document.querySelectorAll(".sc-info .group-equip .armor-item")[6];
-        element.innerHTML = `
-            <div class="img-box radius ultra-background">
-                <img src="/asset/image/elixir.png" alt="">
-                <span class="progress ${elixirProgressClassName}-progressbar">${elixirLevelSum(allElixirData)}</span>
-            </div>
-            <div class="text-box">
-                <div class="name-wrap">엘릭서</div>
-                <div class="name-wrap">${elixirResult}</div>
-            </div>
-            <div class="img-box radius ultra-background">
-                <img src="/asset/image/hyper.png" alt="">
-                <span class="progress ${hyperProgressClassName}-progressbar">${hyperAvgValue(hyperStarArray).sumValue}</span>
-            </div>
-            <div class="text-box">
-                <div class="name-wrap">초월</div>
-                <div class="name-wrap">평균 ${hyperAvgValue(hyperStarArray).avgValue.toFixed(1)}성</div>
-            </div>`
+
+        // let elixirProgressClassName = "";
+        // if (elixirLevelSum(allElixirData) < 35) {
+        //     elixirProgressClassName = "common"
+        // } else if (elixirLevelSum(allElixirData) < 40) {
+        //     elixirProgressClassName = "epic"
+        // } else if (elixirLevelSum(allElixirData) < 50) {
+        //     elixirProgressClassName = "legendary"
+        // } else if (elixirLevelSum(allElixirData) < 999) {
+        //     elixirProgressClassName = "mythic"
+        // }
+
+        if (artifactData) {
+            console.log(artifactData);
+            element.innerHTML = `
+                <div class="img-box radius ultra-background">
+                    <img src="${artifactData.Icon}" alt="보주 아이콘">
+                    <span class="progress legendary-progressbar">${artifactData.Grade}</span>
+                </div>
+                <div class="text-box">
+                    <div class="name-wrap">${artifactData.Name}</div>
+                </div>`
+        }
     }
     armorItemDetailInfoCreate()
 

@@ -49,8 +49,8 @@ export async function specPointCalc(inputObj) {
     //총합 체력
     let totalHealth = Number(((
         inputObj.etcObj.healthStatus 
-        + inputObj.hyperObj.statHp 
-        + inputObj.elixirObj.statHp 
+        //+ inputObj.hyperObj.statHp 
+        //+ inputObj.elixirObj.statHp 
         + inputObj.bangleObj.statHp 
         + inputObj.accObj.statHp 
         + inputObj.arkObj.statHp 
@@ -60,10 +60,10 @@ export async function specPointCalc(inputObj) {
     // 스탯 (힘민지)
     let totalStat = (inputObj.etcObj.armorStatus 
         + inputObj.etcObj.expeditionStats 
-        + inputObj.hyperObj.str 
-        + inputObj.elixirObj.str 
-        + inputObj.elixirObj.dex 
-        + inputObj.elixirObj.int 
+        //+ inputObj.hyperObj.str 
+        //+ inputObj.elixirObj.str 
+        //+ inputObj.elixirObj.dex 
+        //+ inputObj.elixirObj.int 
         + inputObj.bangleObj.str 
         + inputObj.bangleObj.dex 
         + inputObj.bangleObj.int) 
@@ -71,8 +71,8 @@ export async function specPointCalc(inputObj) {
 
     // 무기 공격력
     let totalWeaponAtk = ((inputObj.defaultObj.weaponAtk 
-        + inputObj.hyperObj.weaponAtkPlus 
-        + inputObj.elixirObj.weaponAtkPlus
+        //+ inputObj.hyperObj.weaponAtkPlus 
+        //+ inputObj.elixirObj.weaponAtkPlus
         + inputObj.accObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkBonus 
@@ -82,12 +82,12 @@ export async function specPointCalc(inputObj) {
 
     // 공격력
     let totalAtk = (((totalStat * totalWeaponAtk / 6) ** 0.5) * attackBonus 
-    + (inputObj.elixirObj.atkPlus 
-        + inputObj.hyperObj.atkPlus 
+    + (//inputObj.elixirObj.atkPlus 
+        //+ inputObj.hyperObj.atkPlus 
         + inputObj.accObj.atkPlus 
-        + inputObj.elixirObj.atkBonus 
+        //+ inputObj.elixirObj.atkBonus 
         + inputObj.arkgridObj.atkPlus)) 
-        * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1)    
+        * (((inputObj.accObj.atkPer + /*inputObj.elixirObj.atkPer +*/ inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + /*inputObj.elixirObj.atkPer*/ + inputObj.arkgridObj.atkPer)) / 100 + 1)    
 
     // 추피 총합
     let bangleAddDamageResult = ((inputObj.defaultObj.addDamagePer 
@@ -98,10 +98,10 @@ export async function specPointCalc(inputObj) {
     // 적에게 주는 피해 총합
     let bangleFinalDamageResult = (bangleAddDamageResult 
         * inputObj.accObj.finalDamagePer 
-        * inputObj.hyperObj.finalDamagePer 
+        //* inputObj.hyperObj.finalDamagePer 
         * inputObj.engObj.finalDamagePer 
         * inputObj.bangleObj.finalDamagePer
-        * inputObj.elixirObj.finalDamagePer 
+        //* inputObj.elixirObj.finalDamagePer 
         * inputObj.arkgridObj.finalDamagePer
         * inputObj.arkgridObj.coreValue)
 
@@ -118,18 +118,18 @@ export async function specPointCalc(inputObj) {
     // 악세 제외 스탯 (힘민지)
     let minusAccStat = (inputObj.etcObj.armorStatus 
         + inputObj.etcObj.expeditionStats 
-        + inputObj.hyperObj.str 
-        + inputObj.elixirObj.str 
-        + inputObj.elixirObj.dex 
-        + inputObj.elixirObj.int
+        //+ inputObj.hyperObj.str 
+        //+ inputObj.elixirObj.str 
+        //+ inputObj.elixirObj.dex 
+        //+ inputObj.elixirObj.int
         + inputObj.bangleObj.str 
         + inputObj.bangleObj.dex 
         + inputObj.bangleObj.int - inputObj.etcObj.sumStats) * inputObj.etcObj.avatarStats
 
     // 악세 제외 무기 공격력
     let minusAccWeaponAtk = ((inputObj.defaultObj.weaponAtk 
-        + inputObj.hyperObj.weaponAtkPlus 
-        + inputObj.elixirObj.weaponAtkPlus 
+        //+ inputObj.hyperObj.weaponAtkPlus 
+        //+ inputObj.elixirObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkPlus
         + inputObj.bangleObj.weaponAtkBonus 
         + inputObj.arkgridObj.weaponAtkPlus) 
@@ -137,17 +137,17 @@ export async function specPointCalc(inputObj) {
 
     // 악세 제외 공격력
     let minusAccAtk = (((minusAccStat * minusAccWeaponAtk / 6) ** 0.5) * attackBonus 
-    + (inputObj.elixirObj.atkPlus 
-        + inputObj.hyperObj.atkPlus 
-        + inputObj.elixirObj.atkBonus
+    + (//inputObj.elixirObj.atkPlus 
+        //+ inputObj.hyperObj.atkPlus 
+        //+ inputObj.elixirObj.atkBonus
         + inputObj.arkgridObj.atkPlus)) 
-        * (((inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1) 
+        * (((/*inputObj.elixirObj.atkPer +*/ inputObj.arkgridObj.atkPer) === 0 ? 1 : (/*inputObj.elixirObj.atkPer +*/ inputObj.arkgridObj.atkPer)) / 100 + 1) 
 
     // 악세 제외 적에게 주는 피해
     let minusAccFinal = (inputObj.engObj.finalDamagePer 
-        * inputObj.hyperObj.finalDamagePer 
+        //* inputObj.hyperObj.finalDamagePer 
         * (((inputObj.defaultObj.addDamagePer + inputObj.bangleObj.addDamagePer + inputObj.arkgridObj.addDamagePer) / 100) + 1) 
-        * inputObj.bangleObj.finalDamagePer * inputObj.elixirObj.finalDamagePer * inputObj.arkgridObj.finalDamagePer)
+        * inputObj.bangleObj.finalDamagePer /* inputObj.elixirObj.finalDamagePer*/ * inputObj.arkgridObj.finalDamagePer)
     
 
     /**************************************************** 초월 *****************************************************************/
@@ -155,9 +155,9 @@ export async function specPointCalc(inputObj) {
     // 초월 제외 스탯 (힘민지)
     let minusHyperStat = (inputObj.etcObj.armorStatus 
         + inputObj.etcObj.expeditionStats 
-        + inputObj.elixirObj.str 
-        + inputObj.elixirObj.dex 
-        + inputObj.elixirObj.int 
+        //+ inputObj.elixirObj.str 
+        //+ inputObj.elixirObj.dex 
+        //+ inputObj.elixirObj.int 
         + inputObj.bangleObj.str 
         + inputObj.bangleObj.dex 
         + inputObj.bangleObj.int) 
@@ -167,7 +167,7 @@ export async function specPointCalc(inputObj) {
         
     // 초월 제외 무기 공격력
     let minusHyperWeaponAtk = ((inputObj.defaultObj.weaponAtk 
-        + inputObj.elixirObj.weaponAtkPlus 
+        //+ inputObj.elixirObj.weaponAtkPlus 
         + inputObj.accObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkPlus
         + inputObj.bangleObj.weaponAtkBonus 
@@ -177,11 +177,11 @@ export async function specPointCalc(inputObj) {
 
     // 초월 공격력
     let minusHyperAtk = (((minusHyperStat * minusHyperWeaponAtk / 6) ** 0.5) * attackBonus
-        + (inputObj.elixirObj.atkPlus 
+        + (//inputObj.elixirObj.atkPlus 
             + inputObj.accObj.atkPlus
-            + inputObj.elixirObj.atkBonus
+            //+ inputObj.elixirObj.atkBonus
             + inputObj.arkgridObj.atkPlus))
-            * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1)
+            * (((inputObj.accObj.atkPer /*+ inputObj.elixirObj.atkPer*/ + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer /*+ inputObj.elixirObj.atkPer*/ + inputObj.arkgridObj.atkPer)) / 100 + 1)
 
 
     // 초월 제외 적에게 주는 피해
@@ -189,7 +189,7 @@ export async function specPointCalc(inputObj) {
         * inputObj.accObj.finalDamagePer 
         * inputObj.engObj.finalDamagePer 
         * inputObj.bangleObj.finalDamagePer 
-        * inputObj.elixirObj.finalDamagePer 
+        //* inputObj.elixirObj.finalDamagePer 
         * inputObj.arkgridObj.finalDamagePer
         * inputObj.arkgridObj.coreValue)
 
@@ -198,7 +198,7 @@ export async function specPointCalc(inputObj) {
     // 엘릭서 제외 스탯(힘민지)
     let minusElixirStat = (inputObj.etcObj.armorStatus 
         + inputObj.etcObj.expeditionStats
-        + inputObj.hyperObj.str 
+        //+ inputObj.hyperObj.str 
         + inputObj.bangleObj.str 
         + inputObj.bangleObj.dex 
         + inputObj.bangleObj.int) 
@@ -206,7 +206,7 @@ export async function specPointCalc(inputObj) {
 
     // 엘릭서 제외 무기 공격력
     let minusElixirWeaponAtk = ((inputObj.defaultObj.weaponAtk 
-        + inputObj.hyperObj.weaponAtkPlus 
+        //+ inputObj.hyperObj.weaponAtkPlus 
         + inputObj.accObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkPlus 
         + inputObj.bangleObj.weaponAtkBonus 
@@ -216,7 +216,7 @@ export async function specPointCalc(inputObj) {
 
     // 엘릭서 제외 공격력
     let minusElixirAtk = (((minusElixirStat * minusElixirWeaponAtk / 6) ** 0.5) * attackBonus 
-        + (inputObj.hyperObj.atkPlus 
+        + (//inputObj.hyperObj.atkPlus 
             + inputObj.accObj.atkPlus
             + inputObj.arkgridObj.atkPlus))
             * (((inputObj.accObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1) 
@@ -224,7 +224,7 @@ export async function specPointCalc(inputObj) {
     // 엘릭서 제외 적에게 주는 피해.
     let minusElixirFinal = (bangleAddDamageResult
         * inputObj.accObj.finalDamagePer 
-        * inputObj.hyperObj.finalDamagePer 
+        //* inputObj.hyperObj.finalDamagePer 
         * inputObj.engObj.finalDamagePer 
         * inputObj.bangleObj.finalDamagePer
         * inputObj.arkgridObj.finalDamagePer
@@ -235,16 +235,17 @@ export async function specPointCalc(inputObj) {
     // 팔찌 제외 스탯
     let minusBangleStat = (inputObj.etcObj.armorStatus 
         + inputObj.etcObj.expeditionStats 
-        + inputObj.hyperObj.str 
-        + inputObj.elixirObj.str 
-        + inputObj.elixirObj.dex 
-        + inputObj.elixirObj.int) 
+        //+ inputObj.hyperObj.str 
+        //+ inputObj.elixirObj.str 
+        //+ inputObj.elixirObj.dex 
+        //+ inputObj.elixirObj.int
+        ) 
         * inputObj.etcObj.avatarStats
 
     // 팔찌 제외 무기 공격력
     let minusBangleWeaponAtk = ((inputObj.defaultObj.weaponAtk 
-        + inputObj.hyperObj.weaponAtkPlus 
-        + inputObj.elixirObj.weaponAtkPlus 
+        //+ inputObj.hyperObj.weaponAtkPlus 
+        //+ inputObj.elixirObj.weaponAtkPlus 
         + inputObj.accObj.weaponAtkPlus 
         + inputObj.arkgridObj.weaponAtkPlus) 
         * (inputObj.arkObj.weaponAtkPer + ((inputObj.accObj.weaponAtkPer + inputObj.arkgridObj.weaponAtkPer) / 100)))
@@ -252,8 +253,8 @@ export async function specPointCalc(inputObj) {
     // 팔찌 제외 공격력
     let minusBangleAtk = (((minusBangleStat * minusBangleWeaponAtk / 6) ** 0.5) 
         * attackBonus 
-        + (inputObj.elixirObj.atkPlus + inputObj.hyperObj.atkPlus + inputObj.accObj.atkPlus + inputObj.arkgridObj.atkPlus + inputObj.elixirObj.atkBonus)) 
-        * (((inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + inputObj.elixirObj.atkPer + inputObj.arkgridObj.atkPer)) / 100 + 1)
+        + (/*inputObj.elixirObj.atkPlus + inputObj.hyperObj.atkPlus +*/ inputObj.accObj.atkPlus + inputObj.arkgridObj.atkPlus /*inputObj.elixirObj.atkBonus*/)) 
+        * (((inputObj.accObj.atkPer /*+ inputObj.elixirObj.atkPer*/ + inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer /*+ inputObj.elixirObj.atkPer*/ + inputObj.arkgridObj.atkPer)) / 100 + 1)
     
     // 팔찌로 얻은 공격력 퍼센티지
     let bangleAtkValue = ((totalAtk - minusBangleAtk) / minusBangleAtk) + 1
@@ -343,14 +344,14 @@ export async function specPointCalc(inputObj) {
     let finalStigmaPer = ((10 
         * ((inputObj.accObj.stigmaPer 
         + inputObj.arkObj.stigmaPer 
-        + inputObj.hyperObj.stigmaPer 
+        //+ inputObj.hyperObj.stigmaPer 
         + inputObj.arkgridObj.stigmaPer) / 100 + 1)).toFixed(2))
 
     // 아공강
     let atkBuff = (1 
         + ((inputObj.accObj.atkBuff
-             + inputObj.elixirObj.atkBuff 
-             + inputObj.hyperObj.atkBuff 
+             //+ inputObj.elixirObj.atkBuff 
+             //+ inputObj.hyperObj.atkBuff 
              + inputObj.bangleObj.atkBuff 
              + inputObj.gemObj.atkBuff
              + inputObj.arkgridObj.atkBuff) / 100))
@@ -379,7 +380,7 @@ export async function specPointCalc(inputObj) {
     let carePower = (1 
         + (inputObj.engObj.carePower 
             + inputObj.accObj.carePower 
-            + inputObj.elixirObj.carePower 
+            //+ inputObj.elixirObj.carePower 
             + inputObj.bangleObj.carePower
             + (inputObj.arkgridObj.carePower / 100)))
 
@@ -388,7 +389,7 @@ export async function specPointCalc(inputObj) {
 
     // 최종 유틸력
     let finalUtilityPower = (inputObj.engObj.utilityPower 
-        + inputObj.elixirObj.utilityPower 
+        //+ inputObj.elixirObj.utilityPower 
         + inputObj.accObj.utilityPower
         + inputObj.arkgridObj.utilityPower) 
 
@@ -458,7 +459,7 @@ export async function specPointCalc(inputObj) {
 
     // 아덴 가동률
     let identityUptime = ((((20.05 
-        * ((inputObj.accObj.identityUptime + inputObj.elixirObj.identityUptime + inputObj.arkgridObj.identityUptime) * specialIdentity) * awakenIdentity) 
+        * ((inputObj.accObj.identityUptime /*+ inputObj.elixirObj.identityUptime*/ + inputObj.arkgridObj.identityUptime) * specialIdentity) * awakenIdentity) 
         / (1 - cdrPercentNoneCare)) / 100)).toFixed(4) //아덴 가동률
 
     // 초각성 가동률 계산을 위한 쿨감
@@ -635,7 +636,7 @@ export async function specPointCalc(inputObj) {
 
     // 아덴 가동률
     let calcIdentityUptime = ((((20.05 
-        * ((inputObj.accObj.identityUptime + inputObj.elixirObj.identityUptime + inputObj.arkgridObj.identityUptime) * calcSpecialIdentity) * calcAwakenIdentity) 
+        * ((inputObj.accObj.identityUptime /*+ inputObj.elixirObj.identityUptime*/ + inputObj.arkgridObj.identityUptime) * calcSpecialIdentity) * calcAwakenIdentity) 
         / (1 - calcCdrPercentNoneCare)) / 100)).toFixed(4)
 
     // 초각성 가동률 계산을 위한 쿨감
@@ -733,8 +734,8 @@ export async function specPointCalc(inputObj) {
 
     let totalHealth_MinusBangle = Number(((
         inputObj.etcObj.healthStatus - inputObj.bangleObj.health
-        + inputObj.hyperObj.statHp 
-        + inputObj.elixirObj.statHp 
+        //+ inputObj.hyperObj.statHp 
+        //+ inputObj.elixirObj.statHp 
         + inputObj.accObj.statHp
         + inputObj.arkObj.statHp 
         + inputObj.arkgridObj.statHP) 
@@ -749,8 +750,8 @@ export async function specPointCalc(inputObj) {
     // 팔찌 제외 아공강
     let atkBuff_MinusBangle = (1 
         + ((inputObj.accObj.atkBuff
-             + inputObj.elixirObj.atkBuff 
-             + inputObj.hyperObj.atkBuff 
+             //+ inputObj.elixirObj.atkBuff 
+             //+ inputObj.hyperObj.atkBuff 
              + inputObj.gemObj.atkBuff 
              + inputObj.arkgridObj.atkBuff) / 100))
 
@@ -775,7 +776,7 @@ export async function specPointCalc(inputObj) {
     let carePower_MinusBangle = (1 
         + (inputObj.engObj.carePower 
             + inputObj.accObj.carePower 
-            + inputObj.elixirObj.carePower 
+            //+ inputObj.elixirObj.carePower 
             + (inputObj.arkgridObj.carePower / 100))) // 케어력
 
     // 팔찌 제외 최종 캐어력
@@ -836,7 +837,7 @@ export async function specPointCalc(inputObj) {
 
     // 팔찌 제외 아덴 가동률
     let identityUptime_MinusBangle = (((20.05 
-        * ((inputObj.accObj.identityUptime + inputObj.elixirObj.identityUptime + inputObj.arkgridObj.identityUptime) * specialIdentity_MinusBangle) * awakenIdentity_MinusBangle)
+        * ((inputObj.accObj.identityUptime /*+ inputObj.elixirObj.identityUptime*/ + inputObj.arkgridObj.identityUptime) * specialIdentity_MinusBangle) * awakenIdentity_MinusBangle)
          / (1 - cdrPercentNoneCare_MinusBangle)) / 100).toFixed(4)
 
     // 초각성 가동률 계산을 위한 쿨감

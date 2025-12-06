@@ -995,8 +995,8 @@ let bangleFilter = [
 
     { name: "추가 피해가", option: "2%", tier: "Plow1", initial: "추피 +2.0% | 악마&대악마 피해량 +2.5%", addDamagePer: 2, devilDamagePer: 2.5 },
     { name: "추가 피해가", option: "2.5%", tier: "Plow2", initial: "추피 +2.5% | 악마&대악마 피해량 +2.5%", addDamagePer: 2.5, devilDamagePer: 2.5 },
-    { name: "추가 피해가", option: "3%", tier: "Pmiddle", initial: "추피 +3.0% | 악마&대악마 피해량 +2.5%", addDamagePer: 3, devilDamagePer: 2.5  },
-    { name: "추가 피해가", option: "3.5%", tier: "Phigh", initial: "추피 +3.5% | 악마&대악마 피해량 +2.5%", addDamagePer: 3.5, devilDamagePer: 2.5  },
+    { name: "추가 피해가", option: "3%", tier: "Pmiddle", initial: "추피 +3.0% | 악마&대악마 피해량 +2.5%", addDamagePer: 3, devilDamagePer: 2.5 },
+    { name: "추가 피해가", option: "3.5%", tier: "Phigh", initial: "추피 +3.5% | 악마&대악마 피해량 +2.5%", addDamagePer: 3.5, devilDamagePer: 2.5 },
 
     { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1000", tier: "DuelLlow1", initial: "공격 적중 시 무공 1000, 공이속 1% 증가", finalDamagePer: 1.9, weaponAtkPlus: 0, weaponAtkBonus: 6000 },
     { name: "공격 적중 시 매 초마다 10초 동안 무기 공격력이", option: "1160", tier: "DuelLlow2", initial: "공격 적중 시 무공 1160, 공이속 1% 증가", finalDamagePer: 1.9, weaponAtkPlus: 0, weaponAtkBonus: 6960 },
@@ -2497,7 +2497,7 @@ export let classGemFilter = [
             { name: "스피어 샷", per: 0.355 },
             { name: "버스트 캐넌", per: 0.15 },
             { name: "대쉬 어퍼 파이어", per: 0.12 },
-            { name: "라이징 스피어", per: 0.09},
+            { name: "라이징 스피어", per: 0.09 },
             { name: "카운터 스피어", per: 0.051 },
             { name: "파이어 불릿", per: 0.051 },
             { name: "보정치", per: -0.051 },
@@ -2510,7 +2510,7 @@ export let classGemFilter = [
             { name: "버스트 캐넌", per: 0.33 },
             { name: "차지 스팅거", per: 0.20 },
             { name: "스피어 샷", per: 0.10 },
-            { name: "대쉬 어퍼 파이어", per: 0.09},
+            { name: "대쉬 어퍼 파이어", per: 0.09 },
             { name: "카운터 스피어", per: 0.06 },
         ],
     },
@@ -2525,12 +2525,22 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "313 고기",
+        skill: [
+            { name: "차지 스팅거", per: 0.32 },
+            { name: "버스트 캐넌", per: 0.25 },
+            { name: "스피어 샷", per: 0.09 },
+            { name: "대쉬 어퍼 파이어", per: 0.08 },
+            { name: "라이징 스피어", per: 0.03 },
+        ],
+    },
+    {
         class: "331 고기",
         skill: [
             { name: "차지 스팅거", per: 0.33 },
             { name: "버스트 캐넌", per: 0.20 },
             { name: "스피어 샷", per: 0.10 },
-            { name: "대쉬 어퍼 파이어", per: 0.09},
+            { name: "대쉬 어퍼 파이어", per: 0.09 },
             { name: "카운터 스피어", per: 0.06 },
         ],
     },
@@ -2540,7 +2550,7 @@ export let classGemFilter = [
             { name: "차지 스팅거", per: 0.33 },
             { name: "버스트 캐넌", per: 0.20 },
             { name: "스피어 샷", per: 0.10 },
-            { name: "대쉬 어퍼 파이어", per: 0.09},
+            { name: "대쉬 어퍼 파이어", per: 0.09 },
             { name: "카운터 스피어", per: 0.08 },
             { name: "라이징 스피어", per: 0.03 },
         ],
@@ -2575,6 +2585,13 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "231 포식",
+        skill: [
+            { name: "브루탈 임팩트", per: 0.75 },
+            { name: "허리케인 소드", per: 0.14 },
+        ],
+    },
+    {
         class: "허리케인 포식", // 질서의 해 소용돌이
         skill: [
             { name: "브루탈 임팩트", per: 0.16 },
@@ -2596,8 +2613,8 @@ export let classGemFilter = [
             { name: "브루탈 임팩트", per: 0.185 },
             { name: "길로틴", per: 0.126 },
             { name: "볼케이노 이럽션", per: 0.115 },
-            { name: "허리케인 소드", per: 0.10},
-            
+            { name: "허리케인 소드", per: 0.10 },
+
             { name: "파이널 블로", per: 0.056 },
             { name: "퓨리어스 클로", per: 0.056 },
             { name: "페이탈 소드", per: 0.056 },
@@ -2720,6 +2737,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "111 세맥",
+        skill: [
+            { name: "벽력장", per: 0.18 },
+            { name: "난화격", per: 0.16 },
+            { name: "낙영장", per: 0.14 },
+            { name: "여래신장", per: 0.10 },
+            { name: "섬열파", per: 0.06 },
+            { name: "환영격", per: 0.05 },
+        ],
+    },
+    {
         class: "5멸 세맥",
         skill: [
             { name: "벽력장", per: 0.173 },
@@ -2772,7 +2800,7 @@ export let classGemFilter = [
         class: "무공탄 역천2",
         skill: [
             { name: "무공탄", per: 0.24 },
-            { name: "섬열파", per: 0.20},
+            { name: "섬열파", per: 0.20 },
             { name: "여래신장", per: 0.11 },
             { name: "풍뢰일광포", per: 0.10 },
             { name: "기공장", per: 0.08 },
@@ -2827,6 +2855,18 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "111 절정",
+        skill: [
+            { name: "적룡포", per: 0.31 },
+            { name: "굉열파", per: 0.11 },
+            { name: "맹룡열파", per: 0.09 },
+            { name: "유성강천", per: 0.09 },
+            { name: "사두룡격", per: 0.055 },
+            { name: "반월섬", per: 0.03 },
+
+        ],
+    },
+    {
         class: "222 절정",
         skill: [
             { name: "적룡포", per: 0.35 },
@@ -2848,6 +2888,17 @@ export let classGemFilter = [
             { name: "맹룡열파", per: 0.07 },
             { name: "보정치", per: -0.09 },
 
+        ],
+    },
+    {
+        class: "232 절제",
+        skill: [
+            { name: "선풍참혼", per: 0.12 },
+            { name: "열공참", per: 0.09 },
+            { name: "맹룡열파", per: 0.09 },
+            { name: "연환섬", per: 0.09 },
+            { name: "반월섬", per: 0.08 },
+            { name: "청룡출수", per: 0.06 },
         ],
     },
     {
@@ -2876,6 +2927,25 @@ export let classGemFilter = [
             { name: "심판", per: 0.064 },
             { name: "보정치", per: -0.1 },
 
+        ],
+    },
+    {
+        class: "222 충단",
+        skill: [
+            { name: "연환파신권", per: 0.49 },
+            { name: "파쇄격", per: 0.14 },
+            { name: "풍신권", per: 0.07 },
+            { name: "초신성 폭발", per: 0.055 },
+            { name: "진 용출권", per: 0.055 },
+        ],
+    },
+    {
+        class: "333 충단",
+        skill: [
+            { name: "파쇄격", per: 0.30 },
+            { name: "죽음의 선고", per: 0.23 },
+            { name: "풍신권", per: 0.155 },
+            { name: "진 용출권", per: 0.125 },
         ],
     },
     {
@@ -2973,10 +3043,18 @@ export let classGemFilter = [
     {
         class: "111 일격",
         skill: [
-            { name: "오의 : 뇌호격", per: 0.26 },
-            { name: "오의 : 풍신초래", per: 0.17 },
-            { name: "오의 : 호왕출현", per: 0.17 },
-            { name: "보정치", per: -0.17 },
+            { name: "오의 : 뇌호격", per: 0.3 },
+            { name: "오의 : 풍신초래", per: 0.2 },
+            { name: "방천격", per: 0.02 },
+        ],
+    },
+    {
+        class: "222 일격",
+        skill: [
+            { name: "오의 : 폭쇄진", per: 0.24 },
+            { name: "오의 : 풍신초래", per: 0.1 },
+            { name: "광폭진", per: 0.1 },
+            { name: "방천격", per: 0.02 },
         ],
     },
     {
@@ -2992,6 +3070,15 @@ export let classGemFilter = [
             { name: "오의 : 호왕출현", per: 0.215 },
             { name: "오의 : 폭쇄진", per: 0.136 },
             { name: "오의 : 뇌호격", per: 0.116 },
+        ],
+    },
+    {
+        class: "312 권왕",
+        skill: [
+            { name: "권왕십이식", per: 0.43 },
+            { name: "파천섬광", per: 0.19 },
+            { name: "천기심권", per: 0.07 },
+            { name: "연의붕권", per: 0.05 },
         ],
     },
     {
@@ -3038,6 +3125,19 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "322 수라",
+        skill: [
+            { name: "수라결 기본 공격", per: 0.65 },
+            { name: "파천섬광", per: 0.06 },
+            { name: "비상격", per: 0.04 },
+            { name: "진 파공권", per: 0.035 },
+            { name: "유성 낙하", per: 0.03 },
+            { name: "징벌의 파도", per: 0.03 },
+            { name: "보정치", per: -0.03 },
+
+        ],
+    },
+    {
         class: "4겁 수라",
         skill: [
             { name: "수라결 기본 공격", per: 0.483 },
@@ -3075,6 +3175,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "111 전탄",
+        skill: [
+            { name: "심판의 날", per: 0.2 },
+            { name: "샷건 연사", per: 0.16 },
+            { name: "최후의 만찬", per: 0.12 },
+            { name: "샷건의 지배자", per: 0.12 },
+            { name: "종말의 전조", per: 0.085 },
+            { name: "데스페라도", per: 0.05 },
+        ],
+    },
+    {
         class: "7멸 핸건",
         skill: [
             { name: "데스페라도", per: 0.17 },
@@ -3100,6 +3211,18 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "133 핸건",
+        skill: [
+            { name: "나선의 추적자", per: 0.18 },
+            { name: "데스페라도", per: 0.14 },
+            { name: "메테오 스트림", per: 0.08 },
+            { name: "이퀄리브리엄", per: 0.08 },
+            { name: "퀵 샷", per: 0.065 },
+            { name: "잔혹한 추적자", per: 0.055 },
+
+        ],
+    },
+    {
         class: "포강",
         skill: [
             { name: "포격 스킬", per: 0.399 },
@@ -3107,6 +3230,17 @@ export let classGemFilter = [
             { name: "공중 폭격", per: 0.053 },
             { name: "중력 폭발", per: 0.033 },
             { name: "고압열탄", per: 0.029 },
+
+        ],
+    },
+    {
+        class: "333 포강",
+        skill: [
+            { name: "포격 스킬", per: 0.54 },
+            { name: "미사일 폭격", per: 0.045 },
+            { name: "공중 폭격", per: 0.03 },
+            { name: "중력 폭발", per: 0.03 },
+            { name: "고압열탄", per: 0.015 },
 
         ],
     },
@@ -3120,7 +3254,7 @@ export let classGemFilter = [
             { name: "고압열탄", per: 0.053 },
         ],
     },
-        {
+    {
         class: "에필 포강",
         skill: [
             { name: "포격 스킬", per: 0.405 },
@@ -3142,6 +3276,24 @@ export let classGemFilter = [
             { name: "화염방사기", per: 0.064 },
             { name: "보정치", per: -0.064 },
 
+        ],
+    },
+    {
+        class: "313 화강",
+        skill: [
+            { name: "고압열탄", per: 0.25 },
+            { name: "다연장로켓포", per: 0.16 },
+            { name: "미사일 폭격", per: 0.12 },
+            { name: "공중 폭격", per: 0.11 },
+        ],
+    },
+    {
+        class: "333 화강",
+        skill: [
+            { name: "고압열탄", per: 0.26 },
+            { name: "다연장로켓포", per: 0.17 },
+            { name: "미사일 폭격", per: 0.13 },
+            { name: "공중 폭격", per: 0.11 },
         ],
     },
     {
@@ -3169,6 +3321,19 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "311 죽습",
+        skill: [
+            { name: "실버호크 스킬", per: 0.29 },
+            { name: "스나이프", per: 0.22 },
+            { name: "호크 샷", per: 0.08 },
+            { name: "샤프 슈터", per: 0.08 },
+            { name: "차징 샷", per: 0.07 },
+            { name: "블레이드 스톰", per: 0.045 },
+            { name: "애로우 해일", per: 0.045 },
+            { name: "보정치", per: -0.045 },
+        ],
+    },
+    {
         class: "222 죽습",
         skill: [
             { name: "애로우 샤워", per: 0.22 },
@@ -3177,6 +3342,17 @@ export let classGemFilter = [
             { name: "호크 샷", per: 0.09 },
             { name: "차징 샷", per: 0.07 },
             { name: "블레이드 스톰", per: 0.05 },
+        ],
+    },
+    {
+        class: "333 죽습",
+        skill: [
+            { name: "스나이프", per: 0.19 },
+            { name: "실버호크 스킬", per: 0.13 },
+            { name: "크레모아 지뢰", per: 0.12 },
+            { name: "호크 샷", per: 0.09 },
+            { name: "샤프 슈터", per: 0.09 },
+            { name: "차징 샷", per: 0.07 },
         ],
     },
     {
@@ -3302,6 +3478,28 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "122 사시",
+        skill: [
+            { name: "로즈 블로섬", per: 0.34 },
+            { name: "레인 오브 불릿", per: 0.15 },
+            { name: "포커스 샷", per: 0.09 },
+            { name: "타겟 다운", per: 0.08 },
+            { name: "대재앙", per: 0.06 },
+            { name: "스파이럴 플레임", per: 0.05 },
+        ],
+    },
+    {
+        class: "222 사시",
+        skill: [
+            { name: "로즈 블로섬", per: 0.26 },
+            { name: "레인 오브 불릿", per: 0.24 },
+            { name: "포커스 샷", per: 0.08 },
+            { name: "타겟 다운", per: 0.06 },
+            { name: "대재앙", per: 0.06 },
+            { name: "스파이럴 플레임", per: 0.05 },
+        ],
+    },
+    {
         class: "6겁 사시",
         skill: [
             { name: "로즈 블로섬", per: 0.40 },
@@ -3344,6 +3542,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "211 황제",
+        skill: [
+            { name: "황제", per: 0.25 },
+            { name: "다크 리저렉션", per: 0.18 },
+            { name: "이보크", per: 0.18 },
+            { name: "언리미티드 셔플", per: 0.12 },
+            { name: "셀레스티얼 레인", per: 0.03 },
+        ],
+    },
+    {
         class: "또황",
         skill: [
             { name: "다크 리저렉션", per: 0.167 },
@@ -3372,6 +3580,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "112 교감",
+        skill: [
+            { name: "마리린", per: 0.19 },
+            { name: "파우루", per: 0.13 },
+            { name: "엘씨드", per: 0.12 },
+            { name: "슈르디", per: 0.09 },
+            { name: "마력의 질주", per: 0.09 },
+            { name: "쏜살 바람새", per: 0.09 },
+        ],
+    },
+    {
         class: "교감",
         skill: [
             { name: "고대의 창", per: 0.114 },
@@ -3383,6 +3602,7 @@ export let classGemFilter = [
             { name: "슈르디", per: 0.032 },
         ],
     },
+
     {
         class: "상소",
         skill: [
@@ -3415,6 +3635,18 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "333 점화",
+        skill: [
+            { name: "종말의 날", per: 0.5 },
+            { name: "익스플로전", per: 0.11 },
+            { name: "천벌", per: 0.111 },
+            { name: "숭고한 해일", per: 0.035 },
+            { name: "아이스 애로우", per: 0.035 },
+            { name: "보정치", per: -0.035 },
+            { name: "인페르노", per: 0.02 },
+        ],
+    },
+    {
         class: "7딜 환류",
         skill: [
             { name: "리버스 그래비티", per: 0.146 },
@@ -3440,6 +3672,17 @@ export let classGemFilter = [
             { name: "블레이즈", per: 0.11 },
             { name: "인페르노", per: 0.11 },
             { name: "보정치", per: -0.22 },
+        ],
+    },
+    {
+        class: "333 환류",
+        skill: [
+            { name: "라이트닝 볼트", per: 0.29 },
+            { name: "리버스 그래비티", per: 0.13 },
+            { name: "엘리멘탈 리액트", per: 0.11 },
+            { name: "아이스 애로우", per: 0.11 },
+            { name: "천벌", per: 0.08 },
+            { name: "혹한의 부름", per: 0.04 },
         ],
     },
     {
@@ -3507,6 +3750,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "111 갈증",
+        skill: [
+            { name: "레이지 스피어", per: 0.19 },
+            { name: "라스트 그래피티", per: 0.15 },
+            { name: "댄싱 오브 퓨리", per: 0.13 },
+            { name: "쉐도우 스톰", per: 0.01 },
+            { name: "사일런트 스매셔", per: 0.07 },
+
+        ],
+    },
+    {
         class: "갈증",
         skill: [
             { name: "레이지 스피어", per: 0.171 },
@@ -3549,6 +3803,19 @@ export let classGemFilter = [
             { name: "블리츠 러시", per: 0.065 },
             { name: "보이드 스트라이크", per: 0.05 },
             { name: "어스 슬래쉬", per: 0.055 },
+            // 합계: 0.731
+        ],
+    },
+    {
+        class: "111 잔재",
+        skill: [
+            { name: "블레이드 버스트", per: 0.2 },
+            { name: "데스 센텐스", per: 0.15 },
+            { name: "트윈 쉐도우", per: 0.10 },
+            { name: "터닝 슬래쉬", per: 0.09 },
+            { name: "소울 앱소버", per: 0.08 },
+            { name: "블리츠 러시", per: 0.07 },
+            { name: "보이드 스트라이크", per: 0.05 },
             // 합계: 0.731
         ],
     },
@@ -3682,6 +3949,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "222 그믐",
+        skill: [
+            { name: "길로틴 스윙", per: 0.20 },
+            { name: "소울 시너스", per: 0.16 },
+            { name: "베스티지", per: 0.15 },
+            { name: "리탈 스피닝", per: 0.06 },
+
+        ],
+    },
+    {
         class: "2사신 그믐",
         skill: [
             { name: "길로틴 스윙", per: 0.195 },
@@ -3721,6 +3998,28 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "333 이슬비",
+        skill: [
+            { name: "싹쓸바람", per: 0.20 },
+            { name: "뙤약볕", per: 0.15 },
+            { name: "소나기", per: 0.07 },
+            { name: "소용돌이", per: 0.08 },
+            { name: "센바람", per: 0.06 },
+            { name: "여우비 스킬", per: 0.06 },
+        ],
+    },
+    {
+        class: "133 이슬비",
+        skill: [
+            { name: "뙤약볕", per: 0.15 },
+            { name: "싹쓸바람", per: 0.13 },
+            { name: "소나기", per: 0.09 },
+            { name: "소용돌이", per: 0.08 },
+            { name: "센바람", per: 0.08 },
+            { name: "여우비 스킬", per: 0.07 },
+        ],
+    },
+    {
         class: "7겁 이슬비",
         skill: [
             { name: "뙤약볕", per: 0.113 },
@@ -3745,6 +4044,29 @@ export let classGemFilter = [
             { name: "마주바람", per: 0.05 },
             { name: "뙤약볕", per: 0.05 },
             { name: "보정치", per: -0.1 },
+
+        ],
+    },
+    {
+        class: "111 질풍",
+        skill: [
+            { name: "회오리 걸음", per: 0.15 },
+            { name: "몰아치기", per: 0.15 },
+            { name: "바람송곳", per: 0.13 },
+            { name: "칼바람", per: 0.13 },
+            { name: "마주바람", per: 0.07 },
+
+        ],
+    },
+    {
+        class: "333 질풍",
+        skill: [
+            { name: "칼바람", per: 0.31 },
+            { name: "바람송곳", per: 0.11 },
+            { name: "몰아치기", per: 0.10 },
+            { name: "마주바람", per: 0.06 },
+            { name: "싹쓸바람", per: 0.04 },
+            { name: "여우비 스킬", per: 0.03 },
 
         ],
     },
@@ -3791,6 +4113,18 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "112 환각",
+        skill: [
+            { name: "빙글빙글 꽝", per: 0.245 },
+            { name: "바위 곰", per: 0.15 },
+            { name: "여우 불꽃", per: 0.13 },
+            { name: "슈웅 곰", per: 0.10 },
+            { name: "여우 폴짝", per: 0.08 },
+            { name: "데굴방아", per: 0.095 },
+            { name: "마구 쪼기", per: 0.03 },
+        ],
+    },
+    {
         class: "데이터 없음",
         skill: [
             { name: "기타", per: 1 },
@@ -3829,7 +4163,7 @@ export let arkgridCoreFilter = {
             "질서의 별 코어 : 대지 부수기",
         ],
     },
-    
+
     "고기": {
         mainCore: [
             "질서의 해 코어 : 전술 제어",
@@ -4191,7 +4525,7 @@ export let arkgridCoreFilter = {
         ],
     },
     "죽습": {
-        mainCore: [ 
+        mainCore: [
             "질서의 해 코어 : TA-09 피어싱 애로우",
             "질서의 해 코어 : ATB-07 니들레인",
             "질서의 해 코어 : TA-12 버스팅 애로우",
@@ -4624,24 +4958,24 @@ export let arkgridCoreFilter = {
     },
 };
 
-const DEALER_GROUP1_VALUE = { 
-   "유물" : {10: 1.015, 14: 1.04, 17: 1.075, 18: 1.0767, 19: 1.0783, 20: 1.08},
-   "고대" : {10: 1.015, 14: 1.04, 17: 1.085, 18: 1.0867, 19: 1.0883, 20: 1.09}
+const DEALER_GROUP1_VALUE = {
+    "유물": { 10: 1.015, 14: 1.04, 17: 1.075, 18: 1.0767, 19: 1.0783, 20: 1.08 },
+    "고대": { 10: 1.015, 14: 1.04, 17: 1.085, 18: 1.0867, 19: 1.0883, 20: 1.09 }
 };
 
 const DEALER_GROUP2_VALUE = {
-    "유물" : {10: 1.01, 14: 1.025, 17: 1.045, 18: 1.0467, 19: 1.0483, 20: 1.05},
-    "고대" : {10: 1.01, 14: 1.025, 17: 1.055, 18: 1.0567, 19: 1.0583, 20: 1.06}
+    "유물": { 10: 1.01, 14: 1.025, 17: 1.045, 18: 1.0467, 19: 1.0483, 20: 1.05 },
+    "고대": { 10: 1.01, 14: 1.025, 17: 1.055, 18: 1.0567, 19: 1.0583, 20: 1.06 }
 };
 
 const SUPPORT_GROUP1_VALUE = {
-    "유물" : {10: 1.012, 14: 1.012, 17: 1.078, 18: 1.0798, 19: 1.081, 20: 1.0822},
-    "고대" : {10: 1.012, 14: 1.012, 17: 1.09, 18: 1.0918, 19: 1.093, 20: 1.0942}
+    "유물": { 10: 1.012, 14: 1.012, 17: 1.078, 18: 1.0798, 19: 1.081, 20: 1.0822 },
+    "고대": { 10: 1.012, 14: 1.012, 17: 1.09, 18: 1.0918, 19: 1.093, 20: 1.0942 }
 };
 
 const SUPPORT_GROUP2_VALUE = {
-    "유물" : {10: 1, 14: 1.006, 17: 1.021, 18: 1.022, 19: 1.023, 20: 1.024},
-    "고대" : {10: 1, 14: 1.006, 17: 1.03, 18: 1.031, 19: 1.032, 20: 1.033}
+    "유물": { 10: 1, 14: 1.006, 17: 1.021, 18: 1.022, 19: 1.023, 20: 1.024 },
+    "고대": { 10: 1, 14: 1.006, 17: 1.03, 18: 1.031, 19: 1.032, 20: 1.033 }
 };
 
 
@@ -4658,370 +4992,370 @@ export let arkgridCoreValues = {
 
 
 export const chaosCoreValues = {
-    "혼돈의 해 코어 : 현란한 공격" : {
-        10: {finalDamagePer : 1.005},
-        14: {finalDamagePer : 1.01},
+    "혼돈의 해 코어 : 현란한 공격": {
+        10: { finalDamagePer: 1.005 },
+        14: { finalDamagePer: 1.01 },
         17: {
-            "유물" : {finalDamagePer : 1.026},
-            "고대" : {finalDamagePer : 1.037}
+            "유물": { finalDamagePer: 1.026 },
+            "고대": { finalDamagePer: 1.037 }
         },
         18: {
-            "유물" : {finalDamagePer : 1.0276},
-            "고대" : {finalDamagePer : 1.0386}
+            "유물": { finalDamagePer: 1.0276 },
+            "고대": { finalDamagePer: 1.0386 }
         },
         19: {
-            "유물" : {finalDamagePer : 1.0292},
-            "고대" : {finalDamagePer : 1.0402}
+            "유물": { finalDamagePer: 1.0292 },
+            "고대": { finalDamagePer: 1.0402 }
         },
         20: {
-            "유물" : {finalDamagePer : 1.0308},
-            "고대" : {finalDamagePer : 1.0419}
+            "유물": { finalDamagePer: 1.0308 },
+            "고대": { finalDamagePer: 1.0419 }
         }
     },
-    "혼돈의 해 코어 : 안정적인 공격" : {
-        10: {addDamagePer : 0},
-        14: {addDamagePer : 0.7},
+    "혼돈의 해 코어 : 안정적인 공격": {
+        10: { addDamagePer: 0 },
+        14: { addDamagePer: 0.7 },
         17: {
-            "유물" : {addDamagePer : 2.1},
-            "고대" : {addDamagePer : 3.5}
+            "유물": { addDamagePer: 2.1 },
+            "고대": { addDamagePer: 3.5 }
         },
         18: {
-            "유물" : {addDamagePer : 2.33},
-            "고대" : {addDamagePer : 3.73}
+            "유물": { addDamagePer: 2.33 },
+            "고대": { addDamagePer: 3.73 }
         },
         19: {
-            "유물" : {addDamagePer : 2.56},
-            "고대" : {addDamagePer : 3.96}
+            "유물": { addDamagePer: 2.56 },
+            "고대": { addDamagePer: 3.96 }
         },
         20: {
-            "유물" : {addDamagePer : 2.78},
-            "고대" : {addDamagePer : 4.19}
+            "유물": { addDamagePer: 2.78 },
+            "고대": { addDamagePer: 4.19 }
         }
     },
-    "혼돈의 해 코어 : 재빠른 공격" : {
-        10: {finalDamagePer : 1},
-        14: {finalDamagePer : 1.005},
+    "혼돈의 해 코어 : 재빠른 공격": {
+        10: { finalDamagePer: 1 },
+        14: { finalDamagePer: 1.005 },
         17: {
-            "유물" : {finalDamagePer : 1.015},
-            "고대" : {finalDamagePer : 1.025}
+            "유물": { finalDamagePer: 1.015 },
+            "고대": { finalDamagePer: 1.025 }
         },
         18: {
-            "유물" : {finalDamagePer : 1.0168},
-            "고대" : {finalDamagePer : 1.027}
+            "유물": { finalDamagePer: 1.0168 },
+            "고대": { finalDamagePer: 1.027 }
         },
         19: {
-            "유물" : {finalDamagePer : 1.0185},
-            "고대" : {finalDamagePer : 1.0286}
+            "유물": { finalDamagePer: 1.0185 },
+            "고대": { finalDamagePer: 1.0286 }
         },
         20: {
-            "유물" : {finalDamagePer : 1.02},
-            "고대" : {finalDamagePer : 1.03}
+            "유물": { finalDamagePer: 1.02 },
+            "고대": { finalDamagePer: 1.03 }
         }
     },
-    "혼돈의 해 코어 : 신념의 강화" : {
-        10: { identityUptime: 0.006},
-        14: { identityUptime: 0.006, damageBuff: 0.7},
+    "혼돈의 해 코어 : 신념의 강화": {
+        10: { identityUptime: 0.006 },
+        14: { identityUptime: 0.006, damageBuff: 0.7 },
         17: {
-            "유물" : { identityUptime: 0.02, damageBuff: 1.9},
-            "고대" : { identityUptime: 0.024, damageBuff: 3.5}
+            "유물": { identityUptime: 0.02, damageBuff: 1.9 },
+            "고대": { identityUptime: 0.024, damageBuff: 3.5 }
         },
         18: {
-            "유물" : { identityUptime: 0.02, damageBuff: 2.1},
-            "고대" : { identityUptime: 0.024, damageBuff: 3.7}
+            "유물": { identityUptime: 0.02, damageBuff: 2.1 },
+            "고대": { identityUptime: 0.024, damageBuff: 3.7 }
         },
         19: {
-            "유물" : { identityUptime: 0.02, damageBuff: 2.3},
-            "고대" : { identityUptime: 0.024, damageBuff: 3.9}
+            "유물": { identityUptime: 0.02, damageBuff: 2.3 },
+            "고대": { identityUptime: 0.024, damageBuff: 3.9 }
         },
         20: {
-            "유물" : { identityUptime: 0.02, damageBuff: 2.5},
-            "고대" : { identityUptime: 0.024, damageBuff: 4.1}
+            "유물": { identityUptime: 0.02, damageBuff: 2.5 },
+            "고대": { identityUptime: 0.024, damageBuff: 4.1 }
         }
     },
-    "혼돈의 해 코어 : 흐르는 마나" : {
-        10: { utilityPower: 0.09},
-        14: { utilityPower: 0.09, cdrPercent: 0.004},
+    "혼돈의 해 코어 : 흐르는 마나": {
+        10: { utilityPower: 0.09 },
+        14: { utilityPower: 0.09, cdrPercent: 0.004 },
         17: {
-            "유물" : { utilityPower: 0.384, cdrPercent: 0.012},
-            "고대" : { utilityPower: 0.48, cdrPercent: 0.02}
+            "유물": { utilityPower: 0.384, cdrPercent: 0.012 },
+            "고대": { utilityPower: 0.48, cdrPercent: 0.02 }
         },
         18: {
-            "유물" : { utilityPower: 0.09, cdrPercent: 0.0133},
-            "고대" : { utilityPower: 0.48, cdrPercent: 0.0213}
+            "유물": { utilityPower: 0.09, cdrPercent: 0.0133 },
+            "고대": { utilityPower: 0.48, cdrPercent: 0.0213 }
         },
         19: {
-            "유물" : { utilityPower: 0.09, cdrPercent: 0.0146},
-            "고대" : { utilityPower: 0.48, cdrPercent: 0.0226}
+            "유물": { utilityPower: 0.09, cdrPercent: 0.0146 },
+            "고대": { utilityPower: 0.48, cdrPercent: 0.0226 }
         },
         20: {
-            "유물" : { utilityPower: 0.09, cdrPercent: 0.0159},
-            "고대" : { utilityPower: 0.48, cdrPercent: 0.0239}
+            "유물": { utilityPower: 0.09, cdrPercent: 0.0159 },
+            "고대": { utilityPower: 0.48, cdrPercent: 0.0239 }
         }
     },
-    "혼돈의 해 코어 : 불굴의 강화" : {
-        10: { atkBuff: 0},
-        14: { atkBuff: 0.55},
+    "혼돈의 해 코어 : 불굴의 강화": {
+        10: { atkBuff: 0 },
+        14: { atkBuff: 0.55 },
         17: {
-            "유물" : { atkBuff: 1.65},
-            "고대" : { atkBuff: 2.75}
+            "유물": { atkBuff: 1.65 },
+            "고대": { atkBuff: 2.75 }
         },
         18: {
-            "유물" : { atkBuff: 1.8},
-            "고대" : { atkBuff: 2.9}
+            "유물": { atkBuff: 1.8 },
+            "고대": { atkBuff: 2.9 }
         },
         19: {
-            "유물" : { atkBuff: 1.95},
-            "고대" : { atkBuff: 3.05}
+            "유물": { atkBuff: 1.95 },
+            "고대": { atkBuff: 3.05 }
         },
         20: {
-            "유물" : { atkBuff: 2.1},
-            "고대" : { atkBuff: 3.2}
+            "유물": { atkBuff: 2.1 },
+            "고대": { atkBuff: 3.2 }
         }
     },
-    "혼돈의 달 코어 : 불타는 일격" : {
-        10: { finalDamagePer: 1.005},
-        14: { finalDamagePer: 1.01},
+    "혼돈의 달 코어 : 불타는 일격": {
+        10: { finalDamagePer: 1.005 },
+        14: { finalDamagePer: 1.01 },
         17: {
-            "유물" : { finalDamagePer: 1.025},
-            "고대" : { finalDamagePer: 1.035}
+            "유물": { finalDamagePer: 1.025 },
+            "고대": { finalDamagePer: 1.035 }
         },
         18: {
-            "유물" : { finalDamagePer: 1.0267},
-            "고대" : { finalDamagePer: 1.0368}
+            "유물": { finalDamagePer: 1.0267 },
+            "고대": { finalDamagePer: 1.0368 }
         },
         19: {
-            "유물" : { finalDamagePer: 1.0283},
-            "고대" : { finalDamagePer: 1.0384}
+            "유물": { finalDamagePer: 1.0283 },
+            "고대": { finalDamagePer: 1.0384 }
         },
         20: {
-            "유물" : { finalDamagePer: 1.03},
-            "고대" : { finalDamagePer: 1.04}
+            "유물": { finalDamagePer: 1.03 },
+            "고대": { finalDamagePer: 1.04 }
         }
     },
-    "혼돈의 달 코어 : 흡수의 일격" : {
-        10: { finalDamagePer: 1},
-        14: { finalDamagePer: 1.005},
+    "혼돈의 달 코어 : 흡수의 일격": {
+        10: { finalDamagePer: 1 },
+        14: { finalDamagePer: 1.005 },
         17: {
-            "유물" : { finalDamagePer: 1.015},
-            "고대" : { finalDamagePer: 1.025}
+            "유물": { finalDamagePer: 1.015 },
+            "고대": { finalDamagePer: 1.025 }
         },
         18: {
-            "유물" : { finalDamagePer: 1.0166},
-            "고대" : { finalDamagePer: 1.0266}
+            "유물": { finalDamagePer: 1.0166 },
+            "고대": { finalDamagePer: 1.0266 }
         },
         19: {
-            "유물" : { finalDamagePer: 1.0182},
-            "고대" : { finalDamagePer: 1.0282}
+            "유물": { finalDamagePer: 1.0182 },
+            "고대": { finalDamagePer: 1.0282 }
         },
         20: {
-            "유물" : { finalDamagePer: 1.0198},
-            "고대" : { finalDamagePer: 1.0298}
+            "유물": { finalDamagePer: 1.0198 },
+            "고대": { finalDamagePer: 1.0298 }
         }
     },
-    "혼돈의 달 코어 : 부수는 일격" : {
-        10: { finalDamagePer: 1},
-        14: { finalDamagePer: 1.00445},
+    "혼돈의 달 코어 : 부수는 일격": {
+        10: { finalDamagePer: 1 },
+        14: { finalDamagePer: 1.00445 },
         17: {
-            "유물" : { finalDamagePer: 1.01334},
-            "고대" : { finalDamagePer: 1.0222}
+            "유물": { finalDamagePer: 1.01334 },
+            "고대": { finalDamagePer: 1.0222 }
         },
         18: {
-            "유물" : { finalDamagePer: 1.01477},
-            "고대" : { finalDamagePer: 1.02366}
+            "유물": { finalDamagePer: 1.01477 },
+            "고대": { finalDamagePer: 1.02366 }
         },
         19: {
-            "유물" : { finalDamagePer: 1.01621},
-            "고대" : { finalDamagePer: 1.0251}
+            "유물": { finalDamagePer: 1.01621 },
+            "고대": { finalDamagePer: 1.0251 }
         },
         20: {
-            "유물" : { finalDamagePer: 1.01765},
-            "고대" : { finalDamagePer: 1.02654}
+            "유물": { finalDamagePer: 1.01765 },
+            "고대": { finalDamagePer: 1.02654 }
         }
     },
-    "혼돈의 달 코어 : 낙인의 흔적" : {
-        10: { finalDamageBuff: 1.001},
-        14: { finalDamageBuff: 1.001, stigmaPer: 1.2},
+    "혼돈의 달 코어 : 낙인의 흔적": {
+        10: { finalDamageBuff: 1.001 },
+        14: { finalDamageBuff: 1.001, stigmaPer: 1.2 },
         17: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 3.6},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 4.8}
+            "유물": { finalDamageBuff: 1.003, stigmaPer: 3.6 },
+            "고대": { finalDamageBuff: 1.005, stigmaPer: 4.8 }
         },
         18: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 4.0},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 5.2}
+            "유물": { finalDamageBuff: 1.003, stigmaPer: 4.0 },
+            "고대": { finalDamageBuff: 1.005, stigmaPer: 5.2 }
         },
         19: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 4.4},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 5.6}
+            "유물": { finalDamageBuff: 1.003, stigmaPer: 4.4 },
+            "고대": { finalDamageBuff: 1.005, stigmaPer: 5.6 }
         },
         20: {
-            "유물" : { finalDamageBuff: 1.003, stigmaPer: 4.8},
-            "고대" : { finalDamageBuff: 1.005, stigmaPer: 6.0}
+            "유물": { finalDamageBuff: 1.003, stigmaPer: 4.8 },
+            "고대": { finalDamageBuff: 1.005, stigmaPer: 6.0 }
         }
     },
-    "혼돈의 달 코어 : 강철의 흔적" : {
-        10: { atkBuffPlus: 1.001, finalDamagePer: 1.001},
-        14: { atkBuffPlus: 1.001, finalDamagePer: 1.001},
+    "혼돈의 달 코어 : 강철의 흔적": {
+        10: { atkBuffPlus: 1.001, finalDamagePer: 1.001 },
+        14: { atkBuffPlus: 1.001, finalDamagePer: 1.001 },
         17: {
-            "유물" : { atkBuffPlus: 1.003, finalDamagePer: 1.003},
-            "고대" : { atkBuffPlus: 1.005, finalDamagePer: 1.005}
+            "유물": { atkBuffPlus: 1.003, finalDamagePer: 1.003 },
+            "고대": { atkBuffPlus: 1.005, finalDamagePer: 1.005 }
         },
         18: {
-            "유물" : { atkBuffPlus: 1.003, finalDamagePer: 1.003},
-            "고대" : { atkBuffPlus: 1.005, finalDamagePer: 1.005}
+            "유물": { atkBuffPlus: 1.003, finalDamagePer: 1.003 },
+            "고대": { atkBuffPlus: 1.005, finalDamagePer: 1.005 }
         },
         19: {
-            "유물" : { atkBuffPlus: 1.003, finalDamagePer: 1.003},
-            "고대" : { atkBuffPlus: 1.005, finalDamagePer: 1.005}
+            "유물": { atkBuffPlus: 1.003, finalDamagePer: 1.003 },
+            "고대": { atkBuffPlus: 1.005, finalDamagePer: 1.005 }
         },
         20: {
-            "유물" : { atkBuffPlus: 1.003, finalDamagePer: 1.003},
-            "고대" : { atkBuffPlus: 1.005, finalDamagePer: 1.005}
+            "유물": { atkBuffPlus: 1.003, finalDamagePer: 1.003 },
+            "고대": { atkBuffPlus: 1.005, finalDamagePer: 1.005 }
         }
     },
-    "혼돈의 달 코어 : 치명적인 흔적" : {
-        10: { atkBuffPlus: 1.00108, finalDamagePer: 1.00108},
-        14: { atkBuffPlus: 1.00108, finalDamagePer: 1.00108},
+    "혼돈의 달 코어 : 치명적인 흔적": {
+        10: { atkBuffPlus: 1.00108, finalDamagePer: 1.00108 },
+        14: { atkBuffPlus: 1.00108, finalDamagePer: 1.00108 },
         17: {
-            "유물" : { atkBuffPlus: 1.00326, finalDamagePer: 1.00326},
-            "고대" : { atkBuffPlus: 1.00543, finalDamagePer: 1.00543}
+            "유물": { atkBuffPlus: 1.00326, finalDamagePer: 1.00326 },
+            "고대": { atkBuffPlus: 1.00543, finalDamagePer: 1.00543 }
         },
         18: {
-            "유물" : { atkBuffPlus: 1.00326, finalDamagePer: 1.00326},
-            "고대" : { atkBuffPlus: 1.00543, finalDamagePer: 1.00543}
+            "유물": { atkBuffPlus: 1.00326, finalDamagePer: 1.00326 },
+            "고대": { atkBuffPlus: 1.00543, finalDamagePer: 1.00543 }
         },
         19: {
-            "유물" : { atkBuffPlus: 1.00326, finalDamagePer: 1.00326},
-            "고대" : { atkBuffPlus: 1.00543, finalDamagePer: 1.00543}
+            "유물": { atkBuffPlus: 1.00326, finalDamagePer: 1.00326 },
+            "고대": { atkBuffPlus: 1.00543, finalDamagePer: 1.00543 }
         },
         20: {
-            "유물" : { atkBuffPlus: 1.00326, finalDamagePer: 1.00326},
-            "고대" : { atkBuffPlus: 1.00543, finalDamagePer: 1.00543}
+            "유물": { atkBuffPlus: 1.00326, finalDamagePer: 1.00326 },
+            "고대": { atkBuffPlus: 1.00543, finalDamagePer: 1.00543 }
         }
     },
-    "혼돈의 별 코어 : 공격" : {
-        10: { atkPlus: 900},
-        14: { atkPlus: 900, atkPer: 0.55},
+    "혼돈의 별 코어 : 공격": {
+        10: { atkPlus: 900 },
+        14: { atkPlus: 900, atkPer: 0.55 },
         17: {
-            "유물" : { atkPlus: 2700, atkPer : 1.65},
-            "고대" : { atkPlus: 3600, atkPer : 2.2}
+            "유물": { atkPlus: 2700, atkPer: 1.65 },
+            "고대": { atkPlus: 3600, atkPer: 2.2 }
         },
         18: {
-            "유물" : { atkPlus: 2700, atkPer: 1.81},
-            "고대" : { atkPlus: 3600, atkPer: 2.36}
+            "유물": { atkPlus: 2700, atkPer: 1.81 },
+            "고대": { atkPlus: 3600, atkPer: 2.36 }
         },
         19: {
-            "유물" : { atkPlus: 2700, atkPer: 1.97},
-            "고대" : { atkPlus: 3600, atkPer: 2.52}
+            "유물": { atkPlus: 2700, atkPer: 1.97 },
+            "고대": { atkPlus: 3600, atkPer: 2.52 }
         },
         20: {
-            "유물" : { atkPlus: 2700, atkPer: 2.13},
-            "고대" : { atkPlus: 3600, atkPer: 2.68}
+            "유물": { atkPlus: 2700, atkPer: 2.13 },
+            "고대": { atkPlus: 3600, atkPer: 2.68 }
         }
     },
-    "혼돈의 별 코어 : 무기" : {
-        10: { weaponAtkPlus: 1300},
-        14: { weaponAtkPlus: 1300, weaponAtkPer: 0.75},
+    "혼돈의 별 코어 : 무기": {
+        10: { weaponAtkPlus: 1300 },
+        14: { weaponAtkPlus: 1300, weaponAtkPer: 0.75 },
         17: {
-            "유물" : { weaponAtkPlus: 3900, weaponAtkPer : 2.25},
-            "고대" : { weaponAtkPlus: 5200, weaponAtkPer : 3}
+            "유물": { weaponAtkPlus: 3900, weaponAtkPer: 2.25 },
+            "고대": { weaponAtkPlus: 5200, weaponAtkPer: 3 }
         },
         18: {
-            "유물" : { weaponAtkPlus: 3900, weaponAtkPer: 2.48},
-            "고대" : { weaponAtkPlus: 5200, weaponAtkPer: 3.23}
+            "유물": { weaponAtkPlus: 3900, weaponAtkPer: 2.48 },
+            "고대": { weaponAtkPlus: 5200, weaponAtkPer: 3.23 }
         },
         19: {
-            "유물" : { weaponAtkPlus: 3900, weaponAtkPer: 2.71},
-            "고대" : { weaponAtkPlus: 5200, weaponAtkPer: 3.46}
+            "유물": { weaponAtkPlus: 3900, weaponAtkPer: 2.71 },
+            "고대": { weaponAtkPlus: 5200, weaponAtkPer: 3.46 }
         },
         20: {
-            "유물" : { weaponAtkPlus: 3900, weaponAtkPer: 2.94},
-            "고대" : { weaponAtkPlus: 5200, weaponAtkPer: 3.69}
+            "유물": { weaponAtkPlus: 3900, weaponAtkPer: 2.94 },
+            "고대": { weaponAtkPlus: 5200, weaponAtkPer: 3.69 }
         }
     },
-    "혼돈의 별 코어 : 구원" : {
+    "혼돈의 별 코어 : 구원": {
         10: { carePower: 0.012 },
         14: { carePower: 0.024 },
         17: {
-            "유물" : { carePower: 0.048},
-            "고대" : { carePower: 0.072}
+            "유물": { carePower: 0.048 },
+            "고대": { carePower: 0.072 }
         },
         18: {
-            "유물" : { carePower: 0.052},
-            "고대" : { carePower: 0.076}
+            "유물": { carePower: 0.052 },
+            "고대": { carePower: 0.076 }
         },
         19: {
-            "유물" : { carePower: 0.056},
-            "고대" : { carePower: 0.08}
+            "유물": { carePower: 0.056 },
+            "고대": { carePower: 0.08 }
         },
         20: {
-            "유물" : { carePower: 0.06},
-            "고대" : { carePower: 0.084}
+            "유물": { carePower: 0.06 },
+            "고대": { carePower: 0.084 }
         }
     },
-    "혼돈의 별 코어 : 생명" : {
-        10: { health: 420},
-        14: { health: 420, statHP: 900},
+    "혼돈의 별 코어 : 생명": {
+        10: { health: 420 },
+        14: { health: 420, statHP: 900 },
         17: {
-            "유물" : { health: 1260, statHP: 2700},
-            "고대" : { health: 1680, statHP: 3600}
+            "유물": { health: 1260, statHP: 2700 },
+            "고대": { health: 1680, statHP: 3600 }
         },
         18: {
-            "유물" : { health: 1400, statHP: 2700},
-            "고대" : { health: 1820, statHP: 3600}
+            "유물": { health: 1400, statHP: 2700 },
+            "고대": { health: 1820, statHP: 3600 }
         },
         19: {
-            "유물" : { health: 1540, statHP: 2700},
-            "고대" : { health: 1960, statHP: 3600}
+            "유물": { health: 1540, statHP: 2700 },
+            "고대": { health: 1960, statHP: 3600 }
         },
         20: {
-            "유물" : { health: 1680, statHP: 2700},
-            "고대" : { health: 2100, statHP: 3600}
+            "유물": { health: 1680, statHP: 2700 },
+            "고대": { health: 2100, statHP: 3600 }
         }
     },
-    "혼돈의 별 코어 : 속도" : {
-        10: { finalDamagePer: 1},
-        14: { finalDamagePer: 1},
+    "혼돈의 별 코어 : 속도": {
+        10: { finalDamagePer: 1 },
+        14: { finalDamagePer: 1 },
         17: {
-            "유물" : { finalDamagePer: 1},
-            "고대" : { finalDamagePer: 1.0108}
+            "유물": { finalDamagePer: 1 },
+            "고대": { finalDamagePer: 1.0108 }
         },
         18: {
-            "유물" : { finalDamagePer: 1.0099},
-            "고대" : { finalDamagePer: 1.0117}
+            "유물": { finalDamagePer: 1.0099 },
+            "고대": { finalDamagePer: 1.0117 }
         },
         19: {
-            "유물" : { finalDamagePer: 1.0108},
-            "고대" : { finalDamagePer: 1.0126}
+            "유물": { finalDamagePer: 1.0108 },
+            "고대": { finalDamagePer: 1.0126 }
         },
         20: {
-            "유물" : { finalDamagePer: 1.0117},
-            "고대" : { finalDamagePer: 1.0135}
+            "유물": { finalDamagePer: 1.0117 },
+            "고대": { finalDamagePer: 1.0135 }
         }
     },
-    "혼돈의 별 코어 : 방어" : {
-        10: { finalDamagePer: 1},
-        14: { finalDamagePer: 1},
+    "혼돈의 별 코어 : 방어": {
+        10: { finalDamagePer: 1 },
+        14: { finalDamagePer: 1 },
         17: {
-            "유물" : { finalDamagePer: 1},
-            "고대" : { finalDamagePer: 1}
+            "유물": { finalDamagePer: 1 },
+            "고대": { finalDamagePer: 1 }
         },
         18: {
-            "유물" : { finalDamagePer: 1},
-            "고대" : { finalDamagePer: 1}
+            "유물": { finalDamagePer: 1 },
+            "고대": { finalDamagePer: 1 }
         },
         19: {
-            "유물" : { finalDamagePer: 1},
-            "고대" : { finalDamagePer: 1}
+            "유물": { finalDamagePer: 1 },
+            "고대": { finalDamagePer: 1 }
         },
         20: {
-            "유물" : { finalDamagePer: 1},
-            "고대" : { finalDamagePer: 1}
+            "유물": { finalDamagePer: 1 },
+            "고대": { finalDamagePer: 1 }
         }
     },
-    
-    
-    
-    
+
+
+
+
 }
 
 

@@ -26,8 +26,8 @@ export async function importModuleManager() {
         { key: 'simulatorFilter', path: '../filter/simulator-filter.js' },
         { key: 'simulatorData', path: '../filter/simulator-data.js' },
         { key: 'lopecOcr', path: '../custom-module/lopec-ocr.js' },
-        { key: 'officialCombatSimulator', path: '../js/offiicial-combat-simulator.js' },
-        { key: 'officialCombatCalculator', path: '../custom-module/official-combat-calculator.js' },
+        // { key: 'officialCombatSimulator', path: '../js/offiicial-combat-simulator.js' },
+        // { key: 'officialCombatCalculator', path: '../custom-module/official-combat-calculator.js' },
     ];
 
     const promisesToLoad = [];
@@ -661,153 +661,6 @@ async function simulatorInputCalc() {
         return combinedObj;
     }
 
-    /* **********************************************************************************************************************
-     * function name		:	extractHyperStageValue
-     * description			: 	초월 N성 N단계 추출 후 계산 모듈에 넣기
-     *********************************************************************************************************************** */
-
-    function extractHyperStageValue() {
-        let result
-        let elementLevels = document.querySelectorAll(".hyper-wrap select.level");
-        let elementHypers = document.querySelectorAll(".hyper-wrap select.hyper");
-        let totalHyper = 0;
-
-        let helmetHyper = elementHypers[0].value;
-        let shoulderHyper = elementHypers[1].value;
-        let armorHyper = elementHypers[2].value;
-        let pantsHyper = elementHypers[3].value;
-        let gloveHyper = elementHypers[4].value;
-        let weaponHyper = elementHypers[5].value;
-
-        let helmetLevel = elementLevels[0].value;
-        let shoulderLevel = elementLevels[1].value;
-        let armorLevel = elementLevels[2].value;
-        let pantsLevel = elementLevels[3].value;
-        let gloveLevel = elementLevels[4].value;
-        let weaponLevel = elementLevels[5].value;
-
-        let obj = {
-            atkPlus: 0,
-            weaponAtkPlus: 0,
-            atkBuff: 0,
-            stigmaPer: 0,
-            stats: 0,
-            str: 0,
-            dex: 0,
-            int: 0,
-            statHp: 0,
-            finalDamagePer: 1,
-        }
-
-        elementLevels.forEach((level, idx) => {
-            if (idx !== 5) {
-                obj.stats += 560 * Number(level.value) + 40 * (Number(level.value) ** 2);
-            } else {
-                obj.weaponAtkPlus += 280 * Number(level.value) + 20 * (Number(level.value) ** 2)
-            }
-        })
-        elementHypers.forEach(hyper => {
-            totalHyper += Number(hyper.value);
-        })
-        // 투구 초월 별 개수에 따른 버프 계산 (helmetHyper)
-        if (helmetHyper >= 20) {
-            obj.statHp += totalHyper * 80
-            obj.atkBuff += totalHyper * 0.04
-            obj.stats += totalHyper * 55;
-            obj.weaponAtkPlus += totalHyper * 14;
-            obj.atkPlus += totalHyper * 6;
-        } else if (helmetHyper >= 15) {
-            obj.statHp += totalHyper * 80
-            obj.atkBuff += totalHyper * 0.03;
-            obj.stats += totalHyper * 55;
-            obj.weaponAtkPlus += totalHyper * 14;
-        } else if (helmetHyper >= 10) {
-            obj.statHp += totalHyper * 80
-            obj.atkBuff += totalHyper * 0.02;
-            obj.stats += totalHyper * 55;
-        } else if (helmetHyper >= 5) {
-            obj.atkBuff += totalHyper * 0.01;
-        }
-
-        // 어깨
-        if (shoulderHyper >= 20) {
-            obj.atkBuff += 3
-            obj.weaponAtkPlus += 3600
-        } else if (shoulderHyper >= 15) {
-            obj.atkBuff += 2
-            obj.weaponAtkPlus += 2400
-        } else if (shoulderHyper >= 10) {
-            obj.atkBuff += 1
-            obj.weaponAtkPlus += 1200
-        } else if (shoulderHyper >= 5) {
-            obj.atkBuff += 1
-            obj.weaponAtkPlus += 1200
-        }
-
-        // 상의
-        if (armorHyper >= 20) {
-            obj.weaponAtkPlus += 7200
-        } else if (armorHyper >= 15) {
-            obj.weaponAtkPlus += 4000
-        } else if (armorHyper >= 10) {
-            obj.weaponAtkPlus += 2000
-        } else if (armorHyper >= 5) {
-            obj.weaponAtkPlus += 2000
-        }
-
-        // 하의
-        if (pantsHyper >= 20) {
-            obj.atkBuff += 6
-            obj.finalDamagePer *= 1.015 * 1.01
-        } else if (pantsHyper >= 15) {
-            obj.atkBuff += 3
-            obj.finalDamagePer *= 1.01
-        } else if (pantsHyper >= 10) {
-            obj.atkBuff += 1.5
-            obj.finalDamagePer *= 1.005
-        }
-
-        // 장갑
-        if (gloveHyper >= 20) {
-            obj.stats += 12600
-            obj.atkBuff += 3
-        } else if (gloveHyper >= 15) {
-            obj.stats += 8400
-            obj.atkBuff += 2
-        } else if (gloveHyper >= 10) {
-            obj.stats += 4200
-            obj.atkBuff += 1
-        } else if (gloveHyper >= 5) {
-            obj.stats += 4200
-            obj.atkBuff += 1
-        }
-
-        // 무기
-        if (weaponHyper >= 20) {
-            obj.atkPlus += 3525
-            obj.stigmaPer += 8
-            obj.atkBuff += 2
-        } else if (weaponHyper >= 15) {
-            obj.atkPlus += 2400
-            obj.stigmaPer += 4
-            obj.atkBuff += 2
-        } else if (weaponHyper >= 10) {
-            obj.atkPlus += 1600
-            obj.stigmaPer += 2
-            obj.atkBuff += 2
-        } else if (weaponHyper >= 5) {
-            obj.atkPlus += 800
-            obj.stigmaPer += 2
-        }
-        obj.str = obj.stats
-        obj.dex = obj.stats
-        obj.int = obj.stats
-
-
-        // console.log(obj)
-        return result = obj;
-    }
-    // console.log("초월OBJ",extractHyperStageValue())
 
     /* **********************************************************************************************************************
      * function name		:	defaultObjAddDamgerPerEdit
@@ -1619,7 +1472,6 @@ async function simulatorInputCalc() {
         extractValue.engObj = engOutputCalc(engExtract());
         // extractValue.etcObj = etcObjChangeValue();
         extractValue.gemObj = supportGemValueCalc();
-        extractValue.hyperObj = extractHyperStageValue();
         etcObjChangeValue()
     }
     simulatorDataToExtractValue()
@@ -1681,19 +1533,19 @@ async function simulatorInputCalc() {
     *********************************************************************************************************************** */
     // 계산값 변경을 추적할 수 있는 캐싱처리
     if (!officialCombatCachedFlag) {
-        let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
-        let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+        // let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+        // let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
 
         if (extractValue.etcObj.supportCheck === "서폿") {
-            cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.support;
+            // cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.support;
         } else {
-            cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.dealer;
+            // cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.dealer;
         }
         officialCombatCachedFlag = "flag";
     }
     // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
-    let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
-    let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+    // let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+    // let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
     //console.log("공식전투력 계산결과", officialCombatCalcValue);
 
 
@@ -1786,9 +1638,9 @@ async function simulatorInputCalc() {
                 return `<em style="color:#fff;font-size:${fontSizeValue}">(▬0)</em>`;
             }
         }
-        let combatInfo = [
-            { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.dealer) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.dealer), icon: "bolt-lightning-solid" },
-        ]
+        //let combatInfo = [
+        //    { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.dealer) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.dealer), icon: "bolt-lightning-solid" },
+        //]
         let armorInfo = [
             { name: "공격력", value: Number(originSpecPoint.dealerAttackPowResult).toFixed(0) + compareValue(cachedDetailInfo.specPoint.dealerAttackPowResult, originSpecPoint.dealerAttackPowResult), icon: "bolt-solid" },
             { name: "엘릭서", value: Number(originSpecPoint.dealerExlixirValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerExlixirValue, originSpecPoint.dealerExlixirValue), icon: "flask-solid" },
@@ -1818,9 +1670,9 @@ async function simulatorInputCalc() {
                 { name: "보석 보정치", value: Number(extractValue.etcObj.gemCheckFnc.specialSkill).toFixed(2) + compareValue(cachedDetailInfo.extractValue.etcObj.gemCheckFnc.specialSkill, extractValue.etcObj.gemCheckFnc.specialSkill), icon: "gem-solid", question: "보석에 포함되지 않는 스킬 및 효과를 보정하기 위한 계수. 직각 별로 고정값이며, 소수점 두 번째 자리까지만 표시" },
             ]
         }
-        let supportCombatInfo = [
-            { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.support) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.support), icon: "bolt-lightning-solid" },
-        ]
+        //let supportCombatInfo = [
+        //    { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.support) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.support), icon: "bolt-lightning-solid" },
+        //]
         let supportImportantBuffInfo = [
             //{ name: "공격력 증가", value: Number(originSpecPoint.supportFinalAtkBuff).toFixed(0) + compareValue(cachedDetailInfo.specPoint.supportFinalAtkBuff, originSpecPoint.supportFinalAtkBuff), icon: "bolt-solid" },
             { name: "종합 버프력", value: Number(originSpecPoint.supportAvgBuffPower).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.supportAvgBuffPower, originSpecPoint.supportAvgBuffPower), icon: "bolt-solid" },
@@ -1854,12 +1706,12 @@ async function simulatorInputCalc() {
         }
         // extractValue.etcObj.supportCheck !== "서폿"
         if (!/서폿|회귀|심판자|진실된 용맹/.test(extractValue.etcObj.supportCheck) || (extractValue.engObj.dealpport === "true")) {
-            result += infoWrap("전투력", combatInfo);
+            //result += infoWrap("전투력", combatInfo);
             result += infoWrap("장비 효과", armorInfo);
             result += infoWrap("아크패시브", arkPassiveInfo);
             result += infoWrap("보석 효과", gemInfo);
         } else {
-            result += infoWrap("전투력", supportCombatInfo);
+            //result += infoWrap("전투력", supportCombatInfo);
             result += infoWrap("주요 버프", supportImportantBuffInfo);
             result += infoWrap("버프 정보", supportBuffInfo);
             result += infoWrap("가동률", supportUtilizationRate);
@@ -1971,168 +1823,6 @@ async function selectCreate(data, Modules) {
         })
     }
     engravingGradeToLimit()
-    /* **********************************************************************************************************************
-    * function name		:	elixirFilterToOption()
-    * description	    : 	엘릭서의 고유옵션과 공용옵션을 동적으로 생성(좌측 고유옵션+공용옵션 우측 공용옵션만)
-    *********************************************************************************************************************** */
-
-    function elixirFilterToOption() {
-        let commonElixirElements = document.querySelectorAll('.armor-item .elixir.common');
-        let helmetElixirElement = document.querySelector(".armor-item .elixir.helmet");
-        let shoulderElixirElement = document.querySelector(".armor-item .elixir.shoulder");
-        let armorElixirElement = document.querySelector(".armor-item .elixir.armor");
-        let pantsElixirElement = document.querySelector(".armor-item .elixir.pants");
-        let gloveElixirElement = document.querySelector(".armor-item .elixir.glove");
-
-
-        optionCreate(commonElixirElements, Modules.simulatorFilter.elixirOptionData.common)
-
-        optionCreate(helmetElixirElement, Modules.simulatorFilter.elixirOptionData.helmet)
-        optionCreate(helmetElixirElement, Modules.simulatorFilter.elixirOptionData.common, "common")
-
-        optionCreate(shoulderElixirElement, Modules.simulatorFilter.elixirOptionData.shoulder)
-        optionCreate(shoulderElixirElement, Modules.simulatorFilter.elixirOptionData.common, "common")
-
-        optionCreate(armorElixirElement, Modules.simulatorFilter.elixirOptionData.armor)
-        optionCreate(armorElixirElement, Modules.simulatorFilter.elixirOptionData.common, "common")
-
-        optionCreate(pantsElixirElement, Modules.simulatorFilter.elixirOptionData.pants)
-        optionCreate(pantsElixirElement, Modules.simulatorFilter.elixirOptionData.common, "common")
-
-        optionCreate(gloveElixirElement, Modules.simulatorFilter.elixirOptionData.glove)
-        optionCreate(gloveElixirElement, Modules.simulatorFilter.elixirOptionData.common, "common")
-
-        // function optionCreate(element, filter, tag) {
-        //     if (element instanceof NodeList) {
-
-        //         element.forEach((element) => {
-        //             // console.log(element)
-        //             let tag = document.createElement("option");
-        //             tag.value = "";
-        //             tag.disabled = true;
-        //             tag.textContent = "--------공용--------";
-        //             element.appendChild(tag);
-        //             filter.forEach(common => {
-        //                 for (const key in common) {
-        //                     if (common.hasOwnProperty(key) && key !== "name" && key !== "level") {
-        //                         let option = document.createElement("option");
-        //                         option.value = `${key}:${common[key]}:${common.level}`;
-        //                         option.textContent = common.name;
-        //                         element.appendChild(option);
-        //                     }
-        //                 }
-        //             })
-        //         })
-        //     } else {
-
-        //         filter.forEach((specialFilter, idx) => {
-        //             if (idx === 0 && tag === "common") {
-        //                 let tag = document.createElement("option");
-        //                 tag.value = "";
-        //                 tag.disabled = true;
-        //                 tag.textContent = "--------공용--------";
-        //                 element.appendChild(tag);
-        //             } else if (idx === 0) {
-        //                 let tag = document.createElement("option");
-        //                 tag.value = "";
-        //                 tag.disabled = true;
-        //                 tag.textContent = "--------특옵--------";
-        //                 element.appendChild(tag);
-        //             }
-        //             for (const key in specialFilter) {
-        //                 if (Object.keys(specialFilter).length >= 4) {
-        //                     console.log(key)
-        //                     console.log(specialFilter)
-        //                     console.log(Object.keys(specialFilter).length)
-
-        //                 }
-        //                 if (specialFilter.hasOwnProperty(key) && key !== "name" && key !== "level") {
-        //                     let option = document.createElement("option");
-        //                     option.value = `${key}:${specialFilter[key]}:${specialFilter.level}`;
-        //                     option.textContent = specialFilter.name;
-        //                     element.appendChild(option);
-        //                 }
-        //             }
-        //         })
-        //     }
-        // }
-        function optionCreate(element, filter, tag) {
-            if (element instanceof NodeList) {
-                // NodeList handling remains the same...
-                element.forEach((el) => { // Changed variable name to avoid conflict
-                    let headerOption = document.createElement("option");
-                    headerOption.value = "";
-                    headerOption.disabled = true;
-                    headerOption.textContent = "--------공용--------";
-                    el.appendChild(headerOption);
-                    filter.forEach(common => {
-                        let valueParts = [];
-                        for (const key in common) {
-                            if (common.hasOwnProperty(key) && key !== "name" && key !== "level") {
-                                valueParts.push(`${key}:${common[key]}`);
-                            }
-                        }
-                        // Add level at the end
-                        valueParts.push(`level:${common.level}`);
-
-                        let option = document.createElement("option");
-                        option.value = valueParts.join("|"); // Join parts with '|'
-                        option.textContent = common.name;
-                        el.appendChild(option);
-                    });
-                });
-            } else {
-                // Single element handling
-                filter.forEach((specialFilter, idx) => {
-                    // Header/tag logic remains the same...
-                    if (idx === 0 && tag === "common") {
-                        let headerOption = document.createElement("option");
-                        headerOption.value = "";
-                        headerOption.disabled = true;
-                        headerOption.textContent = "--------공용--------";
-                        element.appendChild(headerOption);
-                    } else if (idx === 0) {
-                        let headerOption = document.createElement("option");
-                        headerOption.value = "";
-                        headerOption.disabled = true;
-                        headerOption.textContent = "--------특옵--------";
-                        element.appendChild(headerOption);
-                    }
-
-                    // --- MODIFIED PART ---
-                    let valueParts = []; // Array to hold "key:value" strings
-
-                    // Iterate through keys of the current specialFilter object
-                    for (const key in specialFilter) {
-                        // Check if the key is relevant (not 'name', not 'level')
-                        if (specialFilter.hasOwnProperty(key) && key !== "name" && key !== "level") {
-                            // Add "key:value" to the array
-                            valueParts.push(`${key}:${specialFilter[key]}`);
-                        }
-                    }
-
-                    // Add the level at the end
-                    valueParts.push(`level:${specialFilter.level}`); // Add level as the last part
-
-                    // Create the option element (only once per specialFilter)
-                    let option = document.createElement("option");
-
-                    // Join the parts with '|' for the value attribute
-                    option.value = valueParts.join("|");
-
-                    // Set the text content
-                    option.textContent = specialFilter.name;
-
-                    // Append the option to the select element
-                    element.appendChild(option);
-                    // --- END OF MODIFIED PART ---
-                });
-            }
-        }
-
-
-    }
-    elixirFilterToOption()
 
 
 
@@ -3420,15 +3110,8 @@ async function selectCreate(data, Modules) {
 
                             }
 
-                            let level = parent.querySelector("select.level");
-                            optionElementAutoCheck(level, hyperLevel, 'value');
-
-                            let star = parent.querySelector("select.hyper");
-                            star.dataset.hyperStar = hyperStar;
-
-                            if (!armorUpgrade.dataset.initialized && !star.dataset.initialized) {
+                            if (!armorUpgrade.dataset.initialized) {
                                 armorUpgrade.dataset.initialized = 'true'; // 이미 처리된 요소인지 표시
-                                star.dataset.initialized = 'true'; // 이미 처리된 요소인지 표시
                                 armorName.dispatchEvent(new Event('change', { bubbles: true }));
                                 // armoryEnforceLimite(); // 해당 armor-name에 대한 option을 생성
                                 // hyperStageToStarCreate(); // 초월 N단계를 바탕으로 3N성 생성

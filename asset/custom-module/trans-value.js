@@ -318,19 +318,19 @@ export async function getCharacterProfile(data, dataBase) {
     function findMaxtrinityPower(obj) {
         const re = /시즌?1\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
         let result = null;
-      
+
         (function dfs(v) {
-          if (result !== null) return;
-          if (typeof v === 'string') {
-            const m = v.match(re);
-            if (m) result = Number(m[1].replace(/,/g, ''));
-          } else if (v && typeof v === 'object') {
-            for (const val of Object.values(v)) dfs(val);
-          }
+            if (result !== null) return;
+            if (typeof v === 'string') {
+                const m = v.match(re);
+                if (m) result = Number(m[1].replace(/,/g, ''));
+            } else if (v && typeof v === 'object') {
+                for (const val of Object.values(v)) dfs(val);
+            }
         })(obj);
-      
+
         return result;
-      }
+    }
 
 
     let vitalitySum = 0; // 툴팁에서 추출한 생명 활성력 합계를 위한 변수
@@ -380,8 +380,8 @@ export async function getCharacterProfile(data, dataBase) {
             }
         } else if (equip.Type == "보주") {
             const tooltipObj = typeof equip.Tooltip === 'string'
-            ? JSON.parse(equip.Tooltip)
-            : equip.Tooltip;
+                ? JSON.parse(equip.Tooltip)
+                : equip.Tooltip;
 
             const val = findMaxtrinityPower(tooltipObj);
             defaultObj.trinityPower = (val ?? 0);
@@ -390,10 +390,10 @@ export async function getCharacterProfile(data, dataBase) {
 
             if (/(성창|비전)/.test(text)) {
                 defaultObj.trinityValue = (20 + 800 * defaultObj.trinityPower / 100000000) / 10000 + 1
-              }
-              if (/자연/.test(text)) {
+            }
+            if (/자연/.test(text)) {
                 defaultObj.trinityValue = (14 + 544 * defaultObj.trinityPower / 100000000) / 10000 + 1
-              }
+            }
         }
     });
 
@@ -1468,6 +1468,7 @@ export async function getCharacterProfile(data, dataBase) {
     if (arkPassiveValue(0) >= 120) { // arkPassiveValue(0) == 진화수치
 
         arkObj.evolutionDamage += 1.45
+        //arkObj.evolutionDamage += 2.111
 
     } else if (arkPassiveValue(0) >= 105) {
 
@@ -1986,6 +1987,14 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "313 고기",
+            conditions: [
+                { core: "종전", point: 14, support: "고기" },
+                { core: "방어 전술", point: 14, support: "고기" },
+                { core: "크로스 랜스", point: 14, support: "고기" },
+            ]
+        },
+        {
             class: "331 고기",
             conditions: [
                 { core: "종전", point: 14, support: "고기" },
@@ -2026,6 +2035,14 @@ export async function getCharacterProfile(data, dataBase) {
             class: "휠윈드 광기",
             conditions: [
                 { core: "지옥 뒤집기", point: 14, support: "광기" }
+            ]
+        },
+        {
+            class: "231 포식",
+            conditions: [
+                { core: "예측불가", point: 14, support: "포식" },
+                { core: "소용돌이", point: 14, support: "포식" },
+                { core: "즉결 처형", point: 14, support: "포식" }
             ]
         },
         {
@@ -2078,12 +2095,20 @@ export async function getCharacterProfile(data, dataBase) {
 
         /*************************** 애니츠 ***************************/
         {
+            class: "111 세맥",
+            conditions: [
+                { core: "임독양맥 타통", point: 14, support: "세맥" },
+                { core: "귀환결", point: 14, support: "세맥" },
+                { core: "벽파장공", point: 14, support: "세맥" },
+            ]
+        },
+        {
             class: "111 역천",
             conditions: [
                 { core: "기강결", point: 14, support: "역천" },
                 { core: "금강진체", point: 14, support: "역천" },
                 { core: "천화난무", point: 14, support: "역천" },
-                
+
             ]
         },
         {
@@ -2111,7 +2136,15 @@ export async function getCharacterProfile(data, dataBase) {
             class: "번천 역천",
             conditions: [
                 { core: "맹공", point: 14, support: "역천" },
-                
+
+            ]
+        },
+        {
+            class: "111 절정",
+            conditions: [
+                { core: "적룡의 기운", point: 14, support: "절정" },
+                { core: "일점 집중", point: 14, support: "절정" },
+                { core: "진화의 끝", point: 14, support: "절정" },
             ]
         },
         {
@@ -2122,17 +2155,41 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "232 절제",
+            conditions: [
+                { core: "연가일섬", point: 14, support: "절제" },
+                { core: "연환타격", point: 14, support: "절제" },
+                { core: "환영", point: 14, support: "절제" },
+            ]
+        },
+        {
             class: "콤보 절제",
             conditions: [
                 { core: "연환 타격", point: 17, support: "절제" },
                 { core: "연격 난무", point: 10, support: "절제" },
-                
+
             ]
         },
         {
             class: "도약 체술",
             conditions: [
                 { core: "반복 도약", point: 14, support: "체술" },
+            ]
+        },
+        {
+            class: "222 충단",
+            conditions: [
+                { core: "충격파", point: 14, support: "충단" },
+                { core: "대지연타", point: 14, support: "충단" },
+                { core: "지면분쇄", point: 14, support: "충단" },
+            ]
+        },
+        {
+            class: "333 충단",
+            conditions: [
+                { core: "충격 억제", point: 14, support: "충단" },
+                { core: "기력 절약", point: 14, support: "충단" },
+                { core: "역발산", point: 14, support: "충단" },
             ]
         },
         {
@@ -2144,10 +2201,26 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "222 일격",
+            conditions: [
+                { core: "광폭", point: 14, support: "일격" },
+                { core: "호뢰진", point: 14, support: "일격" },
+                { core: "쌍극광폭진", point: 14, support: "일격" },
+            ]
+        },
+        {
             class: "무한풍신 일격",
             conditions: [
                 { core: "풍신", point: 14, support: "일격" },
                 { core: "풍진천뢰", point: 14 }
+            ]
+        },
+        {
+            class: "312 권왕",
+            conditions: [
+                { core: "충전된 충격", point: 14, support: "권왕" },
+                { core: "권왕태세", point: 14, support: "권왕" },
+                { core: "파천 돌파", point: 14, support: "권왕" },
             ]
         },
         {
@@ -2163,11 +2236,29 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "종횡무진", point: 17, support: "권왕" },
             ]
         },
+        {
+            class: "322 수라",
+            conditions: [
+                { core: "그림자 주먹", point: 14, support: "수라" },
+                { core: "수라결", point: 14, support: "수라" },
+                { core: "수라", point: 14, support: "수라" },
+            ]
+        },
         /*************************** 아르데 ***************************/
         {
-            class: "레오불 사시",
+            class: "111 전탄",
             conditions: [
-                { core: "풀 매거진", point: 14, support: "사시" }
+                { core: "블러드 하운드", point: 14, support: "전탄" },
+                { core: "산탄강화", point: 14, support: "전탄" },
+                { core: "탄환 폭발", point: 14, support: "전탄" },
+            ]
+        },
+        {
+            class: "133 핸건",
+            conditions: [
+                { core: "섀도우 불릿", point: 14, support: "핸건" },
+                { core: "이터널 리볼버", point: 14, support: "핸건" },
+                { core: "끝없는 나선", point: 14, support: "핸건" },
             ]
         },
         {
@@ -2179,13 +2270,99 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "311 죽습",
+            conditions: [
+                { core: "TA-12 버스팅 애로우", point: 14, support: "죽습" },
+                { core: "HSU-98 버드 스트라이크", point: 14, support: "죽습" },
+                { core: "HSU-04 자동 제어 스코프", point: 14, support: "죽습" }
+            ]
+        },
+        {
+            class: "333 죽습",
+            conditions: [
+                { core: "TA-12 버스팅 애로우", point: 14, support: "죽습" },
+                { core: "HSU-13 특제 고폭약", point: 14, support: "죽습" },
+                { core: "HSU-31 블록버스터", point: 14, support: "죽습" }
+            ]
+        },
+        {
             class: "222 기술",
             conditions: [
                 { core: "에이전트 SMG", point: 14, support: "기술" },
                 { core: "불릿 템페스트", point: 14, support: "기술" }
             ]
         },
+        {
+            class: "333 포강",
+            conditions: [
+                { core: "포화 전차", point: 14, support: "포강" },
+                { core: "세이프 존", point: 14, support: "포강" },
+                { core: "초토화", point: 14, support: "포강" },
+            ]
+        },
+        {
+            class: "313 화강",
+            conditions: [
+                { core: "점핑맨", point: 14, support: "화강" },
+                { core: "질풍 포병", point: 14, support: "화강" },
+                { core: "오토 락온", point: 14, support: "화강" },
+            ]
+        },
+        {
+            class: "333 화강",
+            conditions: [
+                { core: "점핑맨", point: 14, support: "화강" },
+                { core: "도약의 순간", point: 14, support: "화강" },
+                { core: "오토 락온", point: 14, support: "화강" },
+            ]
+        },
+        {
+            class: "122 사시",
+            conditions: [
+                { core: "미드나잇 로즈", point: 14, support: "사시" },
+                { core: "불릿 무빙", point: 14, support: "사시" },
+                { core: "풀 매거진", point: 14, support: "사시" },
+            ]
+        },
+        {
+            class: "222 사시",
+            conditions: [
+                { core: "무법지대", point: 14, support: "사시" },
+                { core: "불릿 무빙", point: 14, support: "사시" },
+                { core: "풀 매거진", point: 14, support: "사시" },
+            ]
+        },
+        {
+            class: "레오불 사시",
+            conditions: [
+                { core: "풀 매거진", point: 14, support: "사시" }
+            ]
+        },
         /*************************** 데런 ***************************/
+        {
+            class: "111 갈증",
+            conditions: [
+                { core: "갈증의 악몽", point: 14, support: "갈증" },
+                { core: "치명적 악몽", point: 14, support: "갈증" },
+                { core: "급습 악몽", point: 14, support: "갈증" }
+            ]
+        },
+        {
+            class: "111 잔재",
+            conditions: [
+                { core: "아츠 마스터", point: 14, support: "잔재" },
+                { core: "아츠 코어", point: 14, support: "잔재" },
+                { core: "기본기", point: 14, support: "잔재" },
+            ]
+        },
+        {
+            class: "222 그믐",
+            conditions: [
+                { core: "사신의 부름", point: 14, support: "그믐" },
+                { core: "광월야", point: 14, support: "그믐" },
+                { core: "사신의 힘", point: 14, support: "그믐" },
+            ]
+        },
         {
             class: "잠식 억모닉",
             conditions: [
@@ -2206,10 +2383,42 @@ export async function getCharacterProfile(data, dataBase) {
         },
         /*************************** 실린 ***************************/
         {
+            class: "112 교감",
+            conditions: [
+                { core: "정령 결속", point: 14, support: "교감" },
+                { core: "결속 증폭", point: 14, support: "교감" },
+                { core: "명령 각성", point: 14, support: "교감" }
+            ]
+        },
+        {
             class: "고창 상소",
             conditions: [
                 { core: "고대의 유산", point: 14, support: "상소" },
                 { core: "오쉬의 지원", point: 14, support: "상소" }
+            ]
+        },
+        {
+            class: "333 점화",
+            conditions: [
+                { core: "종말의 시작", point: 14, support: "점화" },
+                { core: "반복된 종말", point: 14, support: "점화" },
+                { core: "종말의 시", point: 14, support: "점화" },
+            ]
+        },
+        {
+            class: "333 환류",
+            conditions: [
+                { core: "응축", point: 14, support: "환류" },
+                { core: "와류", point: 14, support: "환류" },
+                { core: "청뢰", point: 14, support: "환류" },
+            ]
+        },
+        {
+            class: "211 황제",
+            conditions: [
+                { core: "노말 인핸스", point: 14, support: "황제" },
+                { core: "황제의 심장", point: 14, support: "황제" },
+                { core: "다크 콜렉션", point: 14, support: "황제" },
             ]
         },
         {
@@ -2224,6 +2433,47 @@ export async function getCharacterProfile(data, dataBase) {
             class: "스파인플라워 황제",
             conditions: [
                 { core: "셔플 댄스", point: 14, support: "황제" },
+            ]
+        },
+        /*************************** 요즈 ***************************/
+        {
+            class: "111 질풍",
+            conditions: [
+                { core: "비연참", point: 14, support: "질풍" },
+                { core: "우산의 춤", point: 14, support: "질풍" },
+                { core: "휘몰아치기", point: 14, support: "질풍" },
+            ]
+        },
+        {
+            class: "333 질풍",
+            conditions: [
+                { core: "바람의 칼날", point: 14, support: "질풍" },
+                { core: "쾌속", point: 14, support: "질풍" },
+                { core: "강풍일섬", point: 14, support: "질풍" },
+            ]
+        },
+        {
+            class: "133 이슬비",
+            conditions: [
+                { core: "싸라기눈", point: 14, support: "이슬비" },
+                { core: "뜨거운 햇볕", point: 14, support: "이슬비" },
+                { core: "나그네의 외투를 벗긴건", point: 14, support: "이슬비" },
+            ]
+        },
+        {
+            class: "333 이슬비",
+            conditions: [
+                { core: "해와 바람", point: 14, support: "이슬비" },
+                { core: "뜨거운 햇볕", point: 14, support: "이슬비" },
+                { core: "나그네의 외투를 벗긴건", point: 14, support: "이슬비" },
+            ]
+        },
+        {
+            class: "112 환각",
+            conditions: [
+                { core: "무한 각성", point: 14, support: "환각" },
+                { core: "환수 해방", point: 14, support: "환각" },
+                { core: "붕붕 펀치", point: 14, support: "환각" },
             ]
         },
     ];
@@ -3405,7 +3655,7 @@ export async function getCharacterProfile(data, dataBase) {
                 const minMatch = cleaned.match(/(\d+)/);
                 if (!minMatch) {
                     return null;
-        }
+                }
                 return {
                     min: Number(minMatch[1]),
                     max: null,
@@ -3512,7 +3762,7 @@ export async function getCharacterProfile(data, dataBase) {
                         }
                     } else {
                         console.warn(`Median API responded with status ${response.status}`);
-      }
+                    }
                 } else {
                     console.warn("Fetch API is not available in this environment for median info");
                 }
@@ -3522,7 +3772,7 @@ export async function getCharacterProfile(data, dataBase) {
 
             if (!medianPayload) {
                 medianPayload = cachedMedian;
-      }
+            }
         }
 
         if (!medianPayload || !Array.isArray(medianPayload.details) || medianPayload.details.length === 0) {
@@ -3562,8 +3812,8 @@ export async function getCharacterProfile(data, dataBase) {
                 }
                 if (isFiniteNumber(matchedDetail.supportScore)) {
                     result.supportMedianValue = safeRound(matchedDetail.supportScore);
-      }
-    }
+                }
+            }
         }
 
         return result;
