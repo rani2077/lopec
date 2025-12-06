@@ -510,6 +510,7 @@ html.dark-mode .sc-header .link-box:hover .text{
 .sc-footer__text {
     display: block;
     font-size: 12px;
+    letter-spacing: -0.02em;
     line-height: 16px;
     font-weight: 400;
     color: inherit;
