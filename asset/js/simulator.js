@@ -2747,9 +2747,9 @@ async function selectCreate(data, Modules) {
         elements.forEach((element, idx) => {
             if (idx !== 5) {
                 if (/T3 고대|T4 유물/.test(element.options[element.selectedIndex].text)) {
-                    levelEvolution += 16;
-                } else if (/T4 고대/.test(element.options[element.selectedIndex].text)) {
                     levelEvolution += 20;
+                } else if (/T4 고대/.test(element.options[element.selectedIndex].text)) {
+                    levelEvolution += 24;
                 }
             }
         })
