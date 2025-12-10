@@ -240,6 +240,10 @@ function profileImagePosition(jobName) {
             posObj.left = -214;
             posObj.top = -166;
             break;
+        case "가디언나이트":
+            posObj.left = -214;
+            posObj.top = -83;
+            break;
         default:
             // Handle unknown job names (optional)
             console.warn(`Unknown job name: ${jobName}`);

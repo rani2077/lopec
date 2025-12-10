@@ -478,6 +478,8 @@ let arkFilter = [
     { name: "이슬비", initial: "이슬비", criticalChancePer: 10, finalDamagePer: 6, healthPer: 2.1 },
     { name: "야성", initial: "야성", healthPer: 2.1 },
     { name: "환수 각성", initial: "환각", healthPer: 2.1 },
+    { name: "업화의 계승자", initial: "업화", healthPer: 2.1 },
+    { name: "드레드 로어", initial: "로어", healthPer: 2.1 },
 
     { name: "핸드거너", initial: "핸건", criticalChancePer: 10, moveSpeed: 8, atkSpeed: 8, skillCool: 5, finalDamagePer: 6 },
     { name: "강화 무기", initial: "전탄", criticalChancePer: 34, finalDamagePer: 6 },
@@ -518,6 +520,7 @@ export let bangleJobFilter = [
     { job: "창술사", stats: "str" },
     { job: "스트라이커", stats: "str" },
     { job: "브레이커", stats: "str" },
+    { job: "가디언나이트", stats: "str" },
     { job: "데빌헌터", stats: "dex" },
     { job: "호크아이", stats: "dex" },
     { job: "블래스터", stats: "dex" },
@@ -1329,7 +1332,9 @@ export let engravingCalFilter = [
     { job: "질풍", block: ['결투의 대가', '기습의 대가', '속전속결', '슈퍼 차지', '달인의 저력', '추진력', '시선 집중'] },
     { job: "이슬비", block: ['결투의 대가', '기습의 대가', '속전속결', '슈퍼 차지', '달인의 저력', '바리케이드', '추진력', '시선 집중'] },
     { job: "야성", block: [''] },
-    { job: "환각", block: [''] }
+    { job: "환각", block: [''] },
+    { job: "업화", block: [''] },
+    { job: "로어", block: [''] },
 
 ]
 
@@ -4912,6 +4917,36 @@ export let arkgridCoreFilter = {
             "질서의 별 코어 : 환영 곰",
             "질서의 별 코어 : 붕붕 펀치",
             "질서의 별 코어 : 까마귀 대난투",
+        ],
+    },
+    "업화": {
+        mainCore: [
+            "질서의 해 코어 : 피니셔",
+            "질서의 해 코어 : 매니페스트",
+            "질서의 해 코어 : 붉은날개",
+            "질서의 달 코어 : 노바 플레임",
+            "질서의 달 코어 : 리버레이션",
+            "질서의 달 코어 : 복수귀",
+        ],
+        starCore: [
+            "질서의 별 코어 : 라스트 스탠드",
+            "질서의 별 코어 : 엑스큐셔너",
+            "질서의 별 코어 : 추격 시작",
+        ],
+    },
+    "로어": {
+        mainCore: [
+            "질서의 해 코어 : 차지 인핸스",
+            "질서의 해 코어 : 브랜디쉬",
+            "질서의 해 코어 : 에이펙스",
+            "질서의 달 코어 : 위압",
+            "질서의 달 코어 : 플러리쉬",
+            "질서의 달 코어 : 도미넌트",
+        ],
+        starCore: [
+            "질서의 별 코어 : 그랜드 피날레",
+            "질서의 별 코어 : 일당백",
+            "질서의 별 코어 : 파멸",
         ],
     },
     "서폿": {

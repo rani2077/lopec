@@ -1465,34 +1465,38 @@ export async function getCharacterProfile(data, dataBase) {
 
 
 
-    if (arkPassiveValue(0) >= 120) { // arkPassiveValue(0) == 진화수치
+    if (arkPassiveValue(0) >= 140) {
 
-        arkObj.evolutionDamage += 1.45
+        arkObj.evolutionDamage += 1.79
+    }
+    else if (arkPassiveValue(0) >= 120) { // arkPassiveValue(0) == 진화수치
+
+        arkObj.evolutionDamage += 1.65
         //arkObj.evolutionDamage += 2.111
 
     } else if (arkPassiveValue(0) >= 105) {
 
-        arkObj.evolutionDamage += 1.35
+        arkObj.evolutionDamage += 1.45
 
     } else if (arkPassiveValue(0) >= 90) {
 
-        arkObj.evolutionDamage += 1.30
+        arkObj.evolutionDamage += 1.40
 
     } else if (arkPassiveValue(0) >= 80) {
 
-        arkObj.evolutionDamage += 1.25
+        arkObj.evolutionDamage += 1.35
 
     } else if (arkPassiveValue(0) >= 70) {
 
-        arkObj.evolutionDamage += 1.20
+        arkObj.evolutionDamage += 1.30
 
     } else if (arkPassiveValue(0) >= 60) {
 
-        arkObj.evolutionDamage += 1.15
+        arkObj.evolutionDamage += 1.25
 
     } else if (arkPassiveValue(0) >= 50) {
 
-        arkObj.evolutionDamage += 1.10
+        arkObj.evolutionDamage += 1.20
 
     } else if (arkPassiveValue(0) >= 40) {
 
@@ -1958,7 +1962,7 @@ export async function getCharacterProfile(data, dataBase) {
             specialClass = "5멸 질풍";
         } else if (classCheck("이슬비") && skillCheck(gemSkillArry, "뙤약볕", dmg) && skillCheck(gemSkillArry, "싹쓸바람", dmg) && skillCheck(gemSkillArry, "소용돌이", dmg) && skillCheck(gemSkillArry, "여우비 스킬", dmg) && skillCheck(gemSkillArry, "소나기", dmg) && skillCheck(gemSkillArry, "날아가기", dmg) && skillCheck(gemSkillArry, "센바람", dmg)) {
             specialClass = "7겁 이슬비";
-        } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사")) {
+        } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사") || classCheck("업화") || classCheck("로어")) {
             specialClass = "데이터 없음";
         } else {
             specialClass = supportCheck();

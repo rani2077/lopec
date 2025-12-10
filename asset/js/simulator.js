@@ -1112,20 +1112,22 @@ async function simulatorInputCalc() {
         let evolutionKarmaLevelElement = Number(document.querySelector(".ark-area .ark-list.evolution .ark-item .input-number").value);
         let leapElement = Number(document.querySelector(".ark-area .title-box.leap .title").textContent)
 
-        if (evolutionElement >= 120) { //  == 진화수치
-            result.evolutionDamage += 1.45
+        if (evolutionElement >= 140){
+            result.evolutionDamage += 1.79
+        } else if (evolutionElement >= 120) { //  == 진화수치
+            result.evolutionDamage += 1.65
         } else if (evolutionElement >= 105) {
-            result.evolutionDamage += 1.35
+            result.evolutionDamage += 1.45
         } else if (evolutionElement >= 90) {
-            result.evolutionDamage += 1.30
+            result.evolutionDamage += 1.40
         } else if (evolutionElement >= 80) {
-            result.evolutionDamage += 1.25
+            result.evolutionDamage += 1.35
         } else if (evolutionElement >= 70) {
-            result.evolutionDamage += 1.20
+            result.evolutionDamage += 1.30
         } else if (evolutionElement >= 60) {
-            result.evolutionDamage += 1.15
+            result.evolutionDamage += 1.25
         } else if (evolutionElement >= 50) {
-            result.evolutionDamage += 1.10
+            result.evolutionDamage += 1.20
         } else if (evolutionElement >= 40) {
             result.evolutionDamage += 1
         }
@@ -4402,7 +4404,7 @@ async function calculateGemData(data) {
         specialClass = "5멸 질풍";
     } else if (classCheck("이슬비") && skillCheck(gemSkillArry, "뙤약볕", dmg) && skillCheck(gemSkillArry, "싹쓸바람", dmg) && skillCheck(gemSkillArry, "소용돌이", dmg) && skillCheck(gemSkillArry, "여우비 스킬", dmg) && skillCheck(gemSkillArry, "소나기", dmg) && skillCheck(gemSkillArry, "날아가기", dmg) && skillCheck(gemSkillArry, "센바람", dmg)) {
         specialClass = "7겁 이슬비";
-    } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사")) {
+    } else if (classCheck("환각") || classCheck("서폿") || classCheck("진실된 용맹") || classCheck("회귀") || classCheck("환류") || classCheck("비기") || classCheck("교감") || classCheck("빛의 기사") || classCheck("업화") || classCheck("로어")) {
         specialClass = "데이터 없음";
     } else {
         specialClass = supportCheck;
