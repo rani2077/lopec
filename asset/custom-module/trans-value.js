@@ -1400,6 +1400,7 @@ export async function getCharacterProfile(data, dataBase) {
 
     let arkPassiveArry = [];
     let arkObj = {
+        atkBuff: 0,
         skillCool: 0,
         evolutionDamage: 0,
         enlightenmentDamage: 0,
@@ -1441,7 +1442,7 @@ export async function getCharacterProfile(data, dataBase) {
     })
 
     function arkAttrCheck(validValue) {
-        let arkAttr = ['skillCool', 'evolutionDamage', 'criticalChancePer', 'moveSpeed', 'atkSpeed', 'stigmaPer', 'criticalDamagePer', 'evolutionBuff', 'cdrPercent', 'enlightenmentBuff']
+        let arkAttr = ['skillCool', 'evolutionDamage', 'criticalChancePer', 'moveSpeed', 'atkSpeed', 'stigmaPer', 'criticalDamagePer', 'evolutionBuff', 'cdrPercent', 'enlightenmentBuff', 'atkBuff']
         arkAttr.forEach(function (attrArry) {
             if (!(validValue[attrArry] == undefined) && data.ArkPassive.IsArkPassive) {
                 arkObj[attrArry] += validValue[attrArry];

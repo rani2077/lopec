@@ -2025,7 +2025,9 @@ export let arkCalFilter = [
     { name: "정열의 춤사위", level: 1, evolutionDamage: 0, evolutionBuff: 7 },
     { name: "정열의 춤사위", level: 2, evolutionDamage: 0, evolutionBuff: 14 },
 
-    //// 여기부터 4티어
+    { name: "선각자", level: 1, skillCool:0.05, atkBuff: 22 },
+    { name: "진군", level: 1, evolutionDamage: 0, atkBuff: 24 },
+    { name: "기원", level: 1, evolutionDamage: 0, atkBuff: 22, stigmaPer : 4 },
 
 
     { name: "입식 타격가", level: 1, evolutionDamage: 0, stigmaPer: 10 },

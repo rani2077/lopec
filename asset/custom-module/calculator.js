@@ -352,6 +352,7 @@ export async function specPointCalc(inputObj) {
              //+ inputObj.elixirObj.atkBuff 
              //+ inputObj.hyperObj.atkBuff 
              + inputObj.bangleObj.atkBuff 
+             + inputObj.arkObj.atkBuff
              + inputObj.gemObj.atkBuff
              + inputObj.arkgridObj.atkBuff) / 100))
 
@@ -406,6 +407,7 @@ export async function specPointCalc(inputObj) {
     let cd_A = (inputObj.supportSkillObj.atkBuffACool) 
         * (1 - inputObj.defaultObj.haste * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.gemObj.atkBuffACdr / 100)
         
@@ -416,6 +418,7 @@ export async function specPointCalc(inputObj) {
     let cd_B = (inputObj.supportSkillObj.atkBuffBCool) 
         * (1 - inputObj.defaultObj.haste * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.gemObj.atkBuffBCdr / 100)
 
@@ -428,6 +431,7 @@ export async function specPointCalc(inputObj) {
     let cdrPercent = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemsCoolAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
     
@@ -435,6 +439,7 @@ export async function specPointCalc(inputObj) {
     let cdrPercentNoneCare = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3) 
     //console.log("아덴이 차지 않는 스킬 제외 쿨감", cdrPercentNoneCare)
@@ -443,6 +448,7 @@ export async function specPointCalc(inputObj) {
     let cdrPercentOnlyCare = ((1 - ((1 - fakeHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100)
         * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.engObj.cdrPercent))) / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
     //console.log("Only 케어 스킬 쿨감", cdrPercentOnlyCare)
         
@@ -462,9 +468,10 @@ export async function specPointCalc(inputObj) {
         / (1 - cdrPercentNoneCare)) / 100)).toFixed(4) //아덴 가동률
 
     // 초각성 가동률 계산을 위한 쿨감
-    let hyperCdrPercent = (1 - ((1 - inputObj.arkObj.cdrPercent) 
+    let hyperCdrPercent = (1 - ((1 - inputObj.arkObj.skillCool) 
         * (1 - inputObj.engObj.cdrPercent)
         * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - fakeHaste * 0.0214739 / 100))) 
         / (1 + inputObj.bangleObj.skillCool).toFixed(3)
 
@@ -581,7 +588,8 @@ export async function specPointCalc(inputObj) {
     // A스킬 쿨감 (천상, 신분, 해그)
     let calccd_A = (inputObj.supportSkillObj.atkBuffACool) 
         * (1 - calcHaste * 0.0214739 / 100) 
-        * (1 - inputObj.engObj.cdrPercent) 
+        * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.gemObj.atkBuffACdr / 100) 
 
@@ -592,6 +600,7 @@ export async function specPointCalc(inputObj) {
     let calccd_B = (inputObj.supportSkillObj.atkBuffBCool) 
         * (1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.gemObj.atkBuffBCdr / 100) 
 
@@ -605,6 +614,7 @@ export async function specPointCalc(inputObj) {
     let calcCdrPercent = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemsCoolAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
     
@@ -613,6 +623,7 @@ export async function specPointCalc(inputObj) {
     let calcCdrPercentNoneCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)))
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
 
@@ -620,6 +631,7 @@ export async function specPointCalc(inputObj) {
     let calcCdrPercentOnlyCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent))) 
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
 
@@ -639,9 +651,10 @@ export async function specPointCalc(inputObj) {
         / (1 - calcCdrPercentNoneCare)) / 100)).toFixed(4)
 
     // 초각성 가동률 계산을 위한 쿨감
-    let calcHyperCdrPercent = (1 - ((1 - inputObj.arkObj.cdrPercent) 
+    let calcHyperCdrPercent = (1 - ((1 - inputObj.arkObj.skillCool) 
         * (1 - inputObj.engObj.cdrPercent) 
         * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - calcHaste * 0.0214739 / 100))) 
         / (1 + inputObj.bangleObj.skillCool).toFixed(3)
 
@@ -721,7 +734,7 @@ export async function specPointCalc(inputObj) {
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint = ((calcSupportCombinedPower ** 4.268) * 69.127) * inputObj.arkgridObj.coreValue
+    let supportSpecPoint = ((calcSupportCombinedPower ** 4.195) * 69.127) * inputObj.arkgridObj.coreValue
 
 
     /* **********************************************************************************************************************
@@ -752,6 +765,7 @@ export async function specPointCalc(inputObj) {
              //+ inputObj.elixirObj.atkBuff 
              //+ inputObj.hyperObj.atkBuff 
              + inputObj.gemObj.atkBuff 
+             + inputObj.arkObj.atkBuff
              + inputObj.arkgridObj.atkBuff) / 100))
 
     //  팔찌 제외 최종 공증
@@ -794,6 +808,7 @@ export async function specPointCalc(inputObj) {
     let cd_A_MinusBangle = (inputObj.supportSkillObj.atkBuffACool) 
         * (1 - (calcHaste_MinusBangle) * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.gemObj.atkBuffACdr / 100)
 
@@ -804,6 +819,7 @@ export async function specPointCalc(inputObj) {
     let cd_B_MinusBangle = (inputObj.supportSkillObj.atkBuffBCool) 
         * (1 - (calcHaste_MinusBangle) * 0.0214739 / 100) 
         * (1 - inputObj.engObj.cdrPercent) 
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - inputObj.arkgridObj.cdrPercent)
         * (1 - inputObj.gemObj.atkBuffBCdr / 100)
 
@@ -816,12 +832,14 @@ export async function specPointCalc(inputObj) {
     let cdrPercentNoneCare_MinusBangle = ((1 - ((1 - calcHaste_MinusBangle * 0.0214739 / 100) 
     * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
     * (1 - inputObj.engObj.cdrPercent)
+    * (1 - inputObj.arkObj.skillCool)
     * (1 - inputObj.arkgridObj.cdrPercent)))).toFixed(3)
     
     // 노아덴 스킬 제외 쿨감
     let cdrPercentOnlyCare_MinusBangle = ((1 - ((1 - calcHaste_MinusBangle * 0.0214739 / 100) 
     * (1 - inputObj.etcObj.gemCheckFnc.careSkillAvg / 100) 
     * (1 - inputObj.engObj.cdrPercent)
+    * (1 - inputObj.arkObj.skillCool)
     * (1 - inputObj.arkgridObj.cdrPercent)))).toFixed(3)
     
     // 팔찌 제외 아덴 가동률
@@ -840,9 +858,10 @@ export async function specPointCalc(inputObj) {
          / (1 - cdrPercentNoneCare_MinusBangle)) / 100).toFixed(4)
 
     // 초각성 가동률 계산을 위한 쿨감
-    let hyperCdrPercent_MinusBangle = (1 - ((1 - inputObj.arkObj.cdrPercent) 
+    let hyperCdrPercent_MinusBangle = (1 - ((1 - inputObj.arkObj.skillCool) 
         * (1 - inputObj.engObj.cdrPercent) 
         * (1 - inputObj.arkgridObj.cdrPercent)
+        * (1 - inputObj.arkObj.skillCool)
         * (1 - (calcHaste_MinusBangle) * 0.0214739 / 100))).toFixed(3) 
 
     // 초각성 가동률
