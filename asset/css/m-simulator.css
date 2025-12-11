@@ -42,6 +42,40 @@ input[type=number]::-ms-expand {
     opacity: 1;
 }
 
+.group-info .extra-area {
+    margin-top: 20px;
+    padding: 15px;
+    background: #2f2f2f;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.group-info .extra-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.group-info .extra-box .text {
+    font-size: 16px;
+}
+
+.group-info .radio-item {
+    display: flex;
+}
+
+.group-info .radio-item input {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.group-info .radio-item input:first-child {
+    margin-left: 0;
+}
+
+
 .group-info .spec-area .tier-box .difference {
     position: relative;
     padding-left: 13px;

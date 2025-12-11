@@ -1,0 +1,24 @@
+{
+  "name": "legacy_lopec_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "scripts": {
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rani2077/lopec.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rani2077/lopec/issues"
+  },
+  "homepage": "https://github.com/rani2077/lopec#readme",
+  "devDependencies": {
+    "terser": "^5.44.1",
+    "vite": "^7.2.7",
+    "vite-plugin-singlefile": "^2.3.0"
+  }
+}

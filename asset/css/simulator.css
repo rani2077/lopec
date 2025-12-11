@@ -93,6 +93,40 @@ input[type=number]::-ms-expand {
     cursor: pointer;
 }
 
+.group-info .extra-area {
+    margin-top: 20px;
+    padding: 15px;
+    background: #2f2f2f;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.group-info .extra-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.group-info .extra-box .text {
+    font-size: 16px;
+}
+
+.group-info .radio-item {
+    display: flex;
+}
+
+.group-info .radio-item input {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.group-info .radio-item input:first-child {
+    margin-left: 0;
+}
+
+
 .group-info .detail-area {
     /* padding: 10px; */
     line-height: 1.2;
@@ -262,6 +296,10 @@ input[type=number]::-ms-expand {
     width: calc(100% - 20px);
 }
 
+.sc-info .engraving-area {
+    margin-bottom: 20px;
+}
+
 .sc-info .engraving-area .engraving-box {
     gap: 5px;
 }
@@ -283,7 +321,6 @@ input[type=number]::-ms-expand {
 .sc-info .engraving-area .engraving-name {
     min-width: 0;
 }
-
 
 .sc-info .armor-area .armor-item .name-wrap {
     display: flex;

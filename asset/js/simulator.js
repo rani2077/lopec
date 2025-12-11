@@ -92,6 +92,7 @@ async function simulatorInputCalc() {
         cachedDetailInfo.specPoint = specPoint;
         cachedData = data;
 
+        extraLoadSelection() // 아제나, 펫 설정 로드
         // await Modules.fetchApi.clearLostarkApiCache(nameParam, document.querySelector(".sc-info .spec-area span.reset")); // 캐싱없이 api갱신
         await originSpecPointToHtml(specPoint, extractValue);
         const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -1112,7 +1113,7 @@ async function simulatorInputCalc() {
         let evolutionKarmaLevelElement = Number(document.querySelector(".ark-area .ark-list.evolution .ark-item .input-number").value);
         let leapElement = Number(document.querySelector(".ark-area .title-box.leap .title").textContent)
 
-        if (evolutionElement >= 140){
+        if (evolutionElement >= 140) {
             result.evolutionDamage += 1.79
         } else if (evolutionElement >= 120) { //  == 진화수치
             result.evolutionDamage += 1.65
@@ -1436,6 +1437,68 @@ async function simulatorInputCalc() {
     }
 
     /* **********************************************************************************************************************
+    * function name		:	extraSettingSelect
+    * description       : 	아제나, 펫 효과 등 api상으로 알 수 없는 정보를 유저한테 선택시킴
+    *********************************************************************************************************************** */
+    function extraValueExtract() {
+        const azenaElement = document.querySelector(".extra-area .extra-box.azena input[name='azena']:checked");
+        const azenaValue = Number(azenaElement?.value ?? 0);
+
+        const damageElement = document.querySelector(".extra-area .extra-box.damage input[name='damage']:checked");
+        const damageValue = Number(damageElement?.value ?? 0);
+
+        const statsElement = document.querySelector(".extra-area .extra-box.stats input[name='stats']:checked");
+        const statsValue = Number(statsElement?.value ?? 0);
+        return {
+            azena: azenaValue,
+            petAddDmg: damageValue,
+            petStats: statsValue
+        }
+    }
+    /* **********************************************************************************************************************
+    * function name		:	extraSaveSelection
+    * description       : 	현재 선택된 값을 로컬 스토리지에 저장하는 함수
+    *********************************************************************************************************************** */
+    function extraSaveSelection() {
+        // 1. 현재 선택된 값의 value만 추출합니다.
+        const selection = {
+            azena: document.querySelector("input[name='azena']:checked")?.value,
+            damage: document.querySelector("input[name='damage']:checked")?.value,
+            stats: document.querySelector("input[name='stats']:checked")?.value
+        };
+
+        // 2. 객체를 JSON 문자열로 변환하여 로컬 스토리지에 저장
+        localStorage.setItem('extraSelections', JSON.stringify(selection));
+    }
+    extraSaveSelection()
+    /* **********************************************************************************************************************
+    * function name		:	extraLoadSelection
+    * description       : 	로컬 스토리지에서 값을 읽어와 선택 상태를 복원하는 함수
+    *********************************************************************************************************************** */
+    function extraLoadSelection() {
+        const stored = localStorage.getItem('extraSelections');
+
+        if (!stored) return;
+
+        const selection = JSON.parse(stored);
+
+        // 각 name과 value에 해당하는 라디오 버튼을 찾아 checked=true 설정
+        for (const name in selection) {
+            const value = selection[name];
+            if (value) {
+                const element = document.querySelector(`input[name='${name}'][value='${value}']`);
+                if (element) {
+                    element.checked = true;
+                }
+            }
+        }
+
+        // (선택 사항) 로딩 후 바로 계산 함수 실행
+        // extraValueExtract()를 사용하여 값을 계산하는 로직이 있다면 여기서 실행할 수 있습니다.
+        // console.log("복원된 값으로 계산:", extraValueExtract());
+    }
+
+    /* **********************************************************************************************************************
      * function name		:	etcObjChangeValue
      * description			: 	
      *********************************************************************************************************************** */
@@ -1474,11 +1537,12 @@ async function simulatorInputCalc() {
         extractValue.engObj = engOutputCalc(engExtract());
         // extractValue.etcObj = etcObjChangeValue();
         extractValue.gemObj = supportGemValueCalc();
+        extractValue.extraObj = extraValueExtract();
         etcObjChangeValue()
     }
     simulatorDataToExtractValue()
     //console.log("totalStatus", extractValue.defaultObj.totalStatus)
-    //console.log("오리진OBJ", extractValue)
+    console.log("오리진OBJ", extractValue)
 
     /* **********************************************************************************************************************
      * function name		:	specPointCalc
