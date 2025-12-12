@@ -6,26 +6,38 @@
 let cacheCollectStat = null;
 let cacheCollectStatSupport = null;
 let cacheCollectHealthSupport = null;
+let petAdd = 0;
+
 
 export async function officialCombatCalculator(combatObj, extractObj) {
-    console.log("공식전투력", combatObj);
+    //console.log("공식전투력", combatObj);
     //console.log("오리진obj", extractObj);
+    if (extractObj.extraObj.petAddDmg == 1){
+        petAdd = 1.0077
+    } else if (extractObj.extraObj.petAddDmg == 0.7){
+        petAdd = 1.0054
+    } else if (extractObj.extraObj.petAddDmg == 0.4){
+        petAdd = 1.0031
+    } else {
+        petAdd = 1
+    }
+
 
     let originCombat = extractObj.defaultObj.combatPower; // 인게임 전투력
 
     let baseAttackBonus = (extractObj.etcObj.gemAttackBonus + extractObj.etcObj.abilityAttackBonus) / 100 + 1;
+    //console.log(baseAttackBonus)
 
-    let weaponAtk = ((extractObj.defaultObj.weaponAtk +
-        extractObj.hyperObj.weaponAtkPlus +
-        extractObj.elixirObj.weaponAtkPlus +
+    let weaponAtk = Math.floor((extractObj.defaultObj.weaponAtk +
         extractObj.accObj.weaponAtkPlus +
         extractObj.arkgridObj.weaponAtkPlus +
         extractObj.bangleObj.weaponAtkPlus) *
         (extractObj.arkObj.weaponAtkPer + (extractObj.accObj.weaponAtkPer / 100) + (extractObj.arkgridObj.weaponAtkPer / 100)))
+        //console.log(weaponAtk)
 
         
     let originBasePoint = originCombat /
-        1.0077 /
+        petAdd /
         combatObj.dealer.trinity.trinityValue /
         combatObj.dealer.arkgridGem /
         combatObj.dealer.arkgridCore /
@@ -33,36 +45,31 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.stats /
         combatObj.dealer.level /
         combatObj.dealer.karma /
-        combatObj.dealer.hyper /
         combatObj.dealer.gem /
         combatObj.dealer.esther /
         combatObj.dealer.engraving /
-        combatObj.dealer.elixir /
         combatObj.dealer.card /
         combatObj.dealer.bangle /
         combatObj.dealer.ark /
         combatObj.dealer.accessory;
 
-    let originAtk = Math.floor(originBasePoint * 1000000 / 288);
+    let originAtk = (originBasePoint * 1000000 / 288);
+    //console.log(originAtk)
 
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStat = ((extractObj.etcObj.armorStatus +
         extractObj.etcObj.expeditionStats +
-        extractObj.hyperObj.str +
-        extractObj.elixirObj.str +
-        extractObj.elixirObj.dex +
-        extractObj.elixirObj.int +
         extractObj.bangleObj.str +
         extractObj.bangleObj.dex +
         extractObj.bangleObj.int) *
-        extractObj.etcObj.avatarStats);
+        (extractObj.etcObj.avatarStats + extractObj.extraObj.petStats/100));
 
     if (!cacheCollectStat) {
         cacheCollectStat = originTotalStat - calcBaseStat
     }
-    //console.log("실제 스탯", originTotalStat);
-    //console.log("계산 스탯1", calcBaseStat)
-    //console.log("계산 스탯2", calcBaseStat + cacheCollectStat);
+    //onsole.log("실제 스탯", originTotalStat);
+    //onsole.log("계산 스탯1", calcBaseStat)
+    //onsole.log("계산 스탯2", calcBaseStat + cacheCollectStat);
 
     let calcTotalStat = calcBaseStat + cacheCollectStat
     let calcBasePoint = (((calcTotalStat * weaponAtk / 6) ** 0.5) * baseAttackBonus) * 288 / 1000000
@@ -71,11 +78,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.ark *
         combatObj.dealer.bangle *
         combatObj.dealer.card *
-        combatObj.dealer.elixir *
         combatObj.dealer.engraving *
         combatObj.dealer.esther *
         combatObj.dealer.gem *
-        combatObj.dealer.hyper *
         combatObj.dealer.karma *
         combatObj.dealer.level *
         combatObj.dealer.stats *
@@ -83,11 +88,12 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.arkgridGem *
         combatObj.dealer.arkgridCore *
         combatObj.dealer.trinity.trinityValue *
-        1.0077;
+        petAdd;
 
+        //console.log(petAdd)
     //console.log("인게임 전투력", originCombat)
     //console.log("계산 전투력", Math.ceil(calcCombat * 100) / 100)
-    console.log("계산 전투력", (calcCombat * 100) / 100)
+    //console.log("계산 전투력", (calcCombat * 100) / 100)
 
 /* **********************************************************************************************************************
  * function name		:	서폿 계산식
@@ -96,8 +102,6 @@ export async function officialCombatCalculator(combatObj, extractObj) {
 
     let originHealth = extractObj.defaultObj.maxHp
     let calcHealth = Number(((extractObj.etcObj.RealHealthStauts + 
-        extractObj.hyperObj.statHp + 
-        extractObj.elixirObj.statHp +
          extractObj.bangleObj.statHp + 
          extractObj.accObj.statHp + 
          extractObj.arkObj.statHp +
@@ -113,9 +117,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     let calcCareCombat = calcTotalHealth  * 12 / 10000 *
     combatObj.sup_defense.accessory *
     combatObj.sup_defense.bangle *
-    combatObj.sup_defense.elixir *
     combatObj.sup_defense.engraving *
-    combatObj.sup_defense.arkgridCore
+    combatObj.sup_defense.arkgridCore *
+    combatObj.sup_defense.trinityCare
 
     let originAttackCombat = extractObj.defaultObj.combatPower - calcCareCombat
     //console.log("originAttackCombat", originAttackCombat)
@@ -125,11 +129,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     combatObj.sup_attack.ark /
     combatObj.sup_attack.bangle /
     combatObj.sup_attack.card /
-    combatObj.sup_attack.elixir /
     combatObj.sup_attack.engraving /
     combatObj.sup_attack.esther /
     combatObj.sup_attack.gem /
-    combatObj.sup_attack.hyper /
     combatObj.sup_attack.karma /
     combatObj.sup_attack.level /
     combatObj.sup_attack.stats /
@@ -140,14 +142,10 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     let originTotalStatSupport = (((originAtkSupport / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStatSupport = ((extractObj.etcObj.armorStatus +
         extractObj.etcObj.expeditionStats +
-        extractObj.hyperObj.str +
-        extractObj.elixirObj.str +
-        extractObj.elixirObj.dex +
-        extractObj.elixirObj.int +
         extractObj.bangleObj.str +
         extractObj.bangleObj.dex +
         extractObj.bangleObj.int) *
-        extractObj.etcObj.avatarStats);
+        extractObj.etcObj.avatarStats + extractObj.extraObj.petStats/100);
 
     if (!cacheCollectStatSupport) {
         cacheCollectStatSupport = originTotalStatSupport - calcBaseStatSupport
@@ -161,11 +159,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.sup_attack.ark *
         combatObj.sup_attack.bangle *
         combatObj.sup_attack.card *
-        combatObj.sup_attack.elixir *
         combatObj.sup_attack.engraving *
         combatObj.sup_attack.esther *
         combatObj.sup_attack.gem *
-        combatObj.sup_attack.hyper *
         combatObj.sup_attack.karma *
         combatObj.sup_attack.level *
         combatObj.sup_attack.stats *

@@ -91,7 +91,7 @@ export async function simulatorToOffcialCombatObj() {
         let enlightElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.enlightenment .title").textContent);
         let leapElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.leap .title").textContent);
 
-        let evolutionValue = (Math.max(evolutionElementValue - 40, 0) * 50) / 10000 + 1;
+        let evolutionValue = (Math.max(evolutionElementValue - 40, 0) * 75) / 10000 + 1;
         let enlightValue = Math.min((Math.max(enlightElementValue, 0) * 70), (100 * 70)) / 10000 + 1;
         let leapValue = (Math.max(leapElementValue, 0) * 20) / 10000 + 1;
 
@@ -103,7 +103,7 @@ export async function simulatorToOffcialCombatObj() {
         let enlightElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.enlightenment .title").textContent);
         let leapElementValue = Number(document.querySelector(".sc-info .ark-area .title-box.leap .title").textContent);
 
-        let evolutionValue = (Math.max(evolutionElementValue - 40, 0) * 90) / 10000 + 1;
+        let evolutionValue = (Math.max(evolutionElementValue - 40, 0) * 160) / 10000 + 1;
         let enlightValue = Math.min((Math.max(enlightElementValue, 0) * 72), (100 * 72)) / 10000 + 1;
         let leapValue = (Math.max(leapElementValue, 0) * 20) / 10000 + 1;
 
@@ -276,169 +276,169 @@ export async function simulatorToOffcialCombatObj() {
      * description            :   
      * USE_TN                 :   사용
      *********************************************************************************************************************** */
-    function elixirToOffcialCombat() {
-        let armoryElixirElements = Array.from(document.querySelectorAll(".sc-info .armor-area .armor-item .elixir-wrap .elixir"));
-        let armoryElixirLevels = armoryElixirElements.map(element => {
-            return element.value.split("|").filter(elixir => elixir.includes("level"));
-        });
-        armoryElixirLevels = armoryElixirLevels.flat().map(levelString => {
-            const match = levelString.match(/level:(\d+)/);
-            return match ? parseInt(match[1], 10) : 0;
-        });
-        let helmetElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[0].querySelector(".elixir-wrap .elixir");
-        let helmetElixirName = helmetElement.options[helmetElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
-        // let helmetElixirLevel = Number(helmetElement.value.split("|").filter(elixir => elixir.includes("level"))[0].split(":")[1]);
-
-        let gloveElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[4].querySelector(".elixir-wrap .elixir");
-        let gloveElixirName = gloveElement.options[gloveElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
-
-        let elixirList = [
-            { name: '행운', level: 1, value: 1.05 },
-            { name: '행운', level: 2, value: 1.10 },
-            { name: '회심', level: 1, value: 1.060 },
-            { name: '회심', level: 2, value: 1.12 },
-            { name: '달인', level: 1, value: 1.06 },
-            { name: '달인', level: 2, value: 1.12 },
-            { name: '강맹', level: 1, value: 1.035 },
-            { name: '강맹', level: 2, value: 1.070 },
-            { name: '칼날 방패', level: 1, value: 1.04 },
-            { name: '칼날 방패', level: 2, value: 1.08 },
-            { name: '선봉대', level: 1, value: 1.06 },
-            { name: '선봉대', level: 2, value: 1.11 },
-            { name: '선각자', level: 1, value: 1 },
-            { name: '선각자', level: 2, value: 1.05 },
-            { name: '진군', level: 1, value: 1.02 },
-            { name: '진군', level: 2, value: 1.02 },
-            { name: '신념', level: 1, value: 1 },
-            { name: '신념', level: 2, value: 1 }
-        ]
-
-
-        function totalElixirLevel() {
-            if (helmetElixirName !== gloveElixirName) {
-                return { name: '없음', value: 1 };
-            }
-
-            let totalSum = armoryElixirLevels.reduce((a, b) => {
-                return a + b;
-            }, 0);
-            let elixirGrade = 0;
-            if (totalSum >= 40) {
-                elixirGrade = 2;
-            } else if (totalSum >= 35) {
-                elixirGrade = 1;
-            }
-
-            let doubleElixirValue = elixirList.find(item => item.name === gloveElixirName && item.level === elixirGrade);
-            return doubleElixirValue;
-        };
-        // console.log();
-
-        let elixirFilter = Modules.officialCombatDealer.officialCombatDealer.attack.elixir_grade_attack;
-
-        let eachElixirValue = armoryElixirElements.map(element => {
-            let elixirName = element.options[element.selectedIndex].textContent;
-            let elixirValue = elixirFilter[elixirName] ? elixirFilter[elixirName] / 10000 + 1 : 1;
-            let result = {
-                name: elixirName,
-                value: elixirValue
-            }
-            return result;
-        })
-        let eachElixirSum = eachElixirValue.reduce((a, b) => { return a * b.value }, 1);
-        // let result = {
-        //     doubleElixir: totalElixirLevel(),
-        //     eachElixir: eachElixirSum
-        // }
-        return eachElixirSum * totalElixirLevel().value;
-    };
-
-    function elixirToOffcialCombatSupport() {
-        let armoryElixirElements = Array.from(document.querySelectorAll(".sc-info .armor-area .armor-item .elixir-wrap .elixir"));
-        let armoryElixirLevels = armoryElixirElements.map(element => {
-            return element.value.split("|").filter(elixir => elixir.includes("level"));
-        });
-        armoryElixirLevels = armoryElixirLevels.flat().map(levelString => {
-            const match = levelString.match(/level:(\d+)/);
-            return match ? parseInt(match[1], 10) : 0;
-        });
-        let helmetElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[0].querySelector(".elixir-wrap .elixir");
-        let helmetElixirName = helmetElement.options[helmetElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
-        // let helmetElixirLevel = Number(helmetElement.value.split("|").filter(elixir => elixir.includes("level"))[0].split(":")[1]);
-
-        let gloveElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[4].querySelector(".elixir-wrap .elixir");
-        let gloveElixirName = gloveElement.options[gloveElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
-
-        let elixirList = [
-            { name: '행운', level: 1, value: 1.05 },
-            { name: '행운', level: 2, value: 1.10 },
-            { name: '선각자', level: 1, value: 1.06 },
-            { name: '선각자', level: 2, value: 1.14 },
-            { name: '신념', level: 1, value: 1.06 },
-            { name: '신념', level: 2, value: 1.14 },
-            { name: '진군', level: 1, value: 1.06 },
-            { name: '진군', level: 2, value: 1.14 },
-            { name: '회심', level: 1, value: 1 },
-            { name: '회심', level: 2, value: 1 },
-            { name: '달인', level: 1, value: 1 },
-            { name: '달인', level: 2, value: 1 },
-            { name: '강맹', level: 1, value: 1 },
-            { name: '강맹', level: 2, value: 1 },
-            { name: '칼날 방패', level: 1, value: 1 },
-            { name: '칼날 방패', level: 2, value: 1 },
-            { name: '선봉대', level: 1, value: 1 },
-            { name: '선봉대', level: 2, value: 1 },
-        ]
-
-        function totalElixirLevel() {
-            if (helmetElixirName !== gloveElixirName) {
-                return { name: '없음', value: 1 };
-            }
-
-            let totalSum = armoryElixirLevels.reduce((a, b) => {
-                return a + b;
-            }, 0);
-            let elixirGrade = 0;
-            if (totalSum >= 40) {
-                elixirGrade = 2;
-            } else if (totalSum >= 35) {
-                elixirGrade = 1;
-            }
-
-            let doubleElixirValue = elixirList.find(item => item.name === gloveElixirName && item.level === elixirGrade);
-            return doubleElixirValue;
-        };
-
-        let elixirFilter_attack = Modules.officialCombatDealer.officialCombatDealer.defense.elixir_grade_attack;
-        let elixirFilter_defense = Modules.officialCombatDealer.officialCombatDealer.defense.elixir_grade_defense;
-
-        let helmetProcessed = false;
-
-        let eachElixirValue = armoryElixirElements.map(element => {
-            let elixirName = element.options[element.selectedIndex].textContent;
-
-            if (elixirName.includes("선각자") || elixirName.includes("신념") || elixirName.includes("진군") || elixirName.includes("행운")) {
-                if (helmetProcessed) {
-                    return null;
-                }
-                helmetProcessed = true;
-            }
-            let elixirValue_attack = elixirFilter_attack[elixirName] ? elixirFilter_attack[elixirName] / 10000 + 1 : 1;
-            let elixirValue_defense = elixirFilter_defense[elixirName] ? elixirFilter_defense[elixirName] / 10000 + 1 : 1;
-            let result = {
-                name: elixirName,
-                value_attack: elixirValue_attack,
-                value_defense: elixirValue_defense
-            }
-            return result;
-        }).filter(item => item !== null);
-        let eachElixirSum_attack = eachElixirValue.reduce((a, b) => { return a * b.value_attack }, 1);
-        let eachElixirSum_defense = eachElixirValue.reduce((a, b) => { return a * b.value_defense }, 1);
-        return {
-            eachElixirSum_attack: eachElixirSum_attack * totalElixirLevel().value,
-            eachElixirSum_defense: eachElixirSum_defense
-        }
-    };
+    //function elixirToOffcialCombat() {
+    //    let armoryElixirElements = Array.from(document.querySelectorAll(".sc-info .armor-area .armor-item .elixir-wrap .elixir"));
+    //    let armoryElixirLevels = armoryElixirElements.map(element => {
+    //        return element.value.split("|").filter(elixir => elixir.includes("level"));
+    //    });
+    //    armoryElixirLevels = armoryElixirLevels.flat().map(levelString => {
+    //        const match = levelString.match(/level:(\d+)/);
+    //        return match ? parseInt(match[1], 10) : 0;
+    //    });
+    //    let helmetElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[0].querySelector(".elixir-wrap .elixir");
+    //    let helmetElixirName = helmetElement.options[helmetElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
+    //    // let helmetElixirLevel = Number(helmetElement.value.split("|").filter(elixir => elixir.includes("level"))[0].split(":")[1]);
+//
+    //    let gloveElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[4].querySelector(".elixir-wrap .elixir");
+    //    let gloveElixirName = gloveElement.options[gloveElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
+//
+    //    let elixirList = [
+    //        { name: '행운', level: 1, value: 1.05 },
+    //        { name: '행운', level: 2, value: 1.10 },
+    //        { name: '회심', level: 1, value: 1.060 },
+    //        { name: '회심', level: 2, value: 1.12 },
+    //        { name: '달인', level: 1, value: 1.06 },
+    //        { name: '달인', level: 2, value: 1.12 },
+    //        { name: '강맹', level: 1, value: 1.035 },
+    //        { name: '강맹', level: 2, value: 1.070 },
+    //        { name: '칼날 방패', level: 1, value: 1.04 },
+    //        { name: '칼날 방패', level: 2, value: 1.08 },
+    //        { name: '선봉대', level: 1, value: 1.06 },
+    //        { name: '선봉대', level: 2, value: 1.11 },
+    //        { name: '선각자', level: 1, value: 1 },
+    //        { name: '선각자', level: 2, value: 1.05 },
+    //        { name: '진군', level: 1, value: 1.02 },
+    //        { name: '진군', level: 2, value: 1.02 },
+    //        { name: '신념', level: 1, value: 1 },
+    //        { name: '신념', level: 2, value: 1 }
+    //    ]
+//
+//
+    //    function totalElixirLevel() {
+    //        if (helmetElixirName !== gloveElixirName) {
+    //            return { name: '없음', value: 1 };
+    //        }
+//
+    //        let totalSum = armoryElixirLevels.reduce((a, b) => {
+    //            return a + b;
+    //        }, 0);
+    //        let elixirGrade = 0;
+    //        if (totalSum >= 40) {
+    //            elixirGrade = 2;
+    //        } else if (totalSum >= 35) {
+    //            elixirGrade = 1;
+    //        }
+//
+    //        let doubleElixirValue = elixirList.find(item => item.name === gloveElixirName && item.level === elixirGrade);
+    //        return doubleElixirValue;
+    //    };
+    //    // console.log();
+//
+    //    let elixirFilter = Modules.officialCombatDealer.officialCombatDealer.attack.elixir_grade_attack;
+//
+    //    let eachElixirValue = armoryElixirElements.map(element => {
+    //        let elixirName = element.options[element.selectedIndex].textContent;
+    //        let elixirValue = elixirFilter[elixirName] ? elixirFilter[elixirName] / 10000 + 1 : 1;
+    //        let result = {
+    //            name: elixirName,
+    //            value: elixirValue
+    //        }
+    //        return result;
+    //    })
+    //    let eachElixirSum = eachElixirValue.reduce((a, b) => { return a * b.value }, 1);
+    //    // let result = {
+    //    //     doubleElixir: totalElixirLevel(),
+    //    //     eachElixir: eachElixirSum
+    //    // }
+    //    return eachElixirSum * totalElixirLevel().value;
+    //};
+//
+    //function elixirToOffcialCombatSupport() {
+    //    let armoryElixirElements = Array.from(document.querySelectorAll(".sc-info .armor-area .armor-item .elixir-wrap .elixir"));
+    //    let armoryElixirLevels = armoryElixirElements.map(element => {
+    //        return element.value.split("|").filter(elixir => elixir.includes("level"));
+    //    });
+    //    armoryElixirLevels = armoryElixirLevels.flat().map(levelString => {
+    //        const match = levelString.match(/level:(\d+)/);
+    //        return match ? parseInt(match[1], 10) : 0;
+    //    });
+    //    let helmetElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[0].querySelector(".elixir-wrap .elixir");
+    //    let helmetElixirName = helmetElement.options[helmetElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
+    //    // let helmetElixirLevel = Number(helmetElement.value.split("|").filter(elixir => elixir.includes("level"))[0].split(":")[1]);
+//
+    //    let gloveElement = document.querySelectorAll(".sc-info .armor-area .armor-item")[4].querySelector(".elixir-wrap .elixir");
+    //    let gloveElixirName = gloveElement.options[gloveElement.selectedIndex].textContent.replace(/\sLv\.\d/, '');
+//
+    //    let elixirList = [
+    //        { name: '행운', level: 1, value: 1.05 },
+    //        { name: '행운', level: 2, value: 1.10 },
+    //        { name: '선각자', level: 1, value: 1.06 },
+    //        { name: '선각자', level: 2, value: 1.14 },
+    //        { name: '신념', level: 1, value: 1.06 },
+    //        { name: '신념', level: 2, value: 1.14 },
+    //        { name: '진군', level: 1, value: 1.06 },
+    //        { name: '진군', level: 2, value: 1.14 },
+    //        { name: '회심', level: 1, value: 1 },
+    //        { name: '회심', level: 2, value: 1 },
+    //        { name: '달인', level: 1, value: 1 },
+    //        { name: '달인', level: 2, value: 1 },
+    //        { name: '강맹', level: 1, value: 1 },
+    //        { name: '강맹', level: 2, value: 1 },
+    //        { name: '칼날 방패', level: 1, value: 1 },
+    //        { name: '칼날 방패', level: 2, value: 1 },
+    //        { name: '선봉대', level: 1, value: 1 },
+    //        { name: '선봉대', level: 2, value: 1 },
+    //    ]
+//
+    //    function totalElixirLevel() {
+    //        if (helmetElixirName !== gloveElixirName) {
+    //            return { name: '없음', value: 1 };
+    //        }
+//
+    //        let totalSum = armoryElixirLevels.reduce((a, b) => {
+    //            return a + b;
+    //        }, 0);
+    //        let elixirGrade = 0;
+    //        if (totalSum >= 40) {
+    //            elixirGrade = 2;
+    //        } else if (totalSum >= 35) {
+    //            elixirGrade = 1;
+    //        }
+//
+    //        let doubleElixirValue = elixirList.find(item => item.name === gloveElixirName && item.level === elixirGrade);
+    //        return doubleElixirValue;
+    //    };
+//
+    //    let elixirFilter_attack = Modules.officialCombatDealer.officialCombatDealer.defense.elixir_grade_attack;
+    //    let elixirFilter_defense = Modules.officialCombatDealer.officialCombatDealer.defense.elixir_grade_defense;
+//
+    //    let helmetProcessed = false;
+//
+    //    let eachElixirValue = armoryElixirElements.map(element => {
+    //        let elixirName = element.options[element.selectedIndex].textContent;
+//
+    //        if (elixirName.includes("선각자") || elixirName.includes("신념") || elixirName.includes("진군") || elixirName.includes("행운")) {
+    //            if (helmetProcessed) {
+    //                return null;
+    //            }
+    //            helmetProcessed = true;
+    //        }
+    //        let elixirValue_attack = elixirFilter_attack[elixirName] ? elixirFilter_attack[elixirName] / 10000 + 1 : 1;
+    //        let elixirValue_defense = elixirFilter_defense[elixirName] ? elixirFilter_defense[elixirName] / 10000 + 1 : 1;
+    //        let result = {
+    //            name: elixirName,
+    //            value_attack: elixirValue_attack,
+    //            value_defense: elixirValue_defense
+    //        }
+    //        return result;
+    //    }).filter(item => item !== null);
+    //    let eachElixirSum_attack = eachElixirValue.reduce((a, b) => { return a * b.value_attack }, 1);
+    //    let eachElixirSum_defense = eachElixirValue.reduce((a, b) => { return a * b.value_defense }, 1);
+    //    return {
+    //        eachElixirSum_attack: eachElixirSum_attack * totalElixirLevel().value,
+    //        eachElixirSum_defense: eachElixirSum_defense
+    //    }
+    //};
 
 
 
@@ -717,130 +717,130 @@ export async function simulatorToOffcialCombatObj() {
     * description            :   
     * USE_TN                 :   사용
     *********************************************************************************************************************** */
-    function hyperOffcialCombat() {
-        let hyperElements = Array.from(document.querySelectorAll(".armor-area .armor-item"));
-        let armoryElements = hyperElements.filter((element, index) => !(index >= 6));
-        let armoryHyperList = armoryElements.map(element => {
-            let hyper = Number(element.querySelector(".hyper-wrap select.hyper").value);
-            return hyper;
-        })
-        let armoryTotalHyper = armoryHyperList.reduce((a, b) => a + b) / 10000 + 1;
-
-        let weaponElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[5].querySelector(".hyper-wrap select.hyper");
-        let weaponHyper = Number(weaponElement.value);
-
-        let pantsElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[3].querySelector(".hyper-wrap select.hyper");
-        let pantsHyper = Number(pantsElement.value);
-
-
-        let weaponValue;
-        if (weaponHyper >= 20) {
-            weaponValue = 79;
-        } else if (weaponHyper >= 15) {
-            weaponValue = 56;
-        } else if (weaponHyper >= 10) {
-            weaponValue = 56;
-        } else if (weaponHyper >= 5) {
-            weaponValue = 56;
-        } else {
-            weaponValue = 0;
-        }
-
-        let pantsValue;
-        if (pantsHyper >= 20) {
-            pantsValue = 170;
-        } else if (pantsHyper >= 15) {
-            pantsValue = 20;
-        } else if (pantsHyper >= 10) {
-            pantsValue = 10;
-        } else {
-            pantsValue = 0;
-        }
-
-        return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1);
-    };
-
-    function hyperOffcialCombatSupport() {
-        let hyperElements = Array.from(document.querySelectorAll(".armor-area .armor-item"));
-        let armoryElements = hyperElements.filter((element, index) => !(index >= 6));
-        let armoryHyperList = armoryElements.map(element => {
-            let hyper = Number(element.querySelector(".hyper-wrap select.hyper").value);
-            return hyper;
-        })
-        let armoryTotalHyper = armoryHyperList.reduce((a, b) => a + b) * 0.0003 + 1;
-
-        let weaponElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[5].querySelector(".hyper-wrap select.hyper");
-        let weaponHyper = Number(weaponElement.value);
-
-        let shoulderElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[1].querySelector(".hyper-wrap select.hyper");
-        let shoulderHyper = Number(shoulderElement.value);
-
-        let pantsElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[3].querySelector(".hyper-wrap select.hyper");
-        let pantsHyper = Number(pantsElement.value);
-
-        let glovesElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[4].querySelector(".hyper-wrap select.hyper");
-        let glovesHyper = Number(glovesElement.value);
-
-
-        let weaponValue;
-        if (weaponHyper >= 20) {
-            weaponValue = 630;
-        } else if (weaponHyper >= 15) {
-            weaponValue = 390;
-        } else if (weaponHyper >= 10) {
-            weaponValue = 270;
-        } else if (weaponHyper >= 5) {
-            weaponValue = 120;
-        } else {
-            weaponValue = 0;
-        }
-
-        let shoulderValue;
-        if (shoulderHyper >= 20) {
-            shoulderValue = 225;
-        } else if (shoulderHyper >= 15) {
-            shoulderValue = 150;
-        } else if (shoulderHyper >= 10) {
-            shoulderValue = 75;
-        } else if (shoulderHyper >= 5) {
-            shoulderValue = 0;
-        } else {
-            shoulderValue = 0;
-        }
-
-        let glovesValue;
-        if (glovesHyper >= 20) {
-            glovesValue = 225;
-        } else if (glovesHyper >= 15) {
-            glovesValue = 150;
-        } else if (glovesHyper >= 10) {
-            glovesValue = 75;
-        } else if (glovesHyper >= 5) {
-            glovesValue = 0;
-        } else {
-            glovesValue = 0;
-        }
-
-
-        let pantsValue;
-        if (pantsHyper >= 20) {
-            pantsValue = 450;
-        } else if (pantsHyper >= 15) {
-            pantsValue = 225;
-        } else if (pantsHyper >= 10) {
-            pantsValue = 113;
-        } else {
-            pantsValue = 0;
-        }
-
-
-        // let result = {
-        //     total: armoryTotalHyper,
-        //     weapon: weaponValue / 10000 + 1,
-        //     pants: pantsValue / 10000 + 1
-        // }
-        return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1) * (glovesValue / 10000 + 1) * (shoulderValue / 10000 + 1);
-    };
+    //function hyperOffcialCombat() {
+    //    let hyperElements = Array.from(document.querySelectorAll(".armor-area .armor-item"));
+    //    let armoryElements = hyperElements.filter((element, index) => !(index >= 6));
+    //    let armoryHyperList = armoryElements.map(element => {
+    //        let hyper = Number(element.querySelector(".hyper-wrap select.hyper").value);
+    //        return hyper;
+    //    })
+    //    let armoryTotalHyper = armoryHyperList.reduce((a, b) => a + b) / 10000 + 1;
+//
+    //    let weaponElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[5].querySelector(".hyper-wrap select.hyper");
+    //    let weaponHyper = Number(weaponElement.value);
+//
+    //    let pantsElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[3].querySelector(".hyper-wrap select.hyper");
+    //    let pantsHyper = Number(pantsElement.value);
+//
+//
+    //    let weaponValue;
+    //    if (weaponHyper >= 20) {
+    //        weaponValue = 79;
+    //    } else if (weaponHyper >= 15) {
+    //        weaponValue = 56;
+    //    } else if (weaponHyper >= 10) {
+    //        weaponValue = 56;
+    //    } else if (weaponHyper >= 5) {
+    //        weaponValue = 56;
+    //    } else {
+    //        weaponValue = 0;
+    //    }
+//
+    //    let pantsValue;
+    //    if (pantsHyper >= 20) {
+    //        pantsValue = 170;
+    //    } else if (pantsHyper >= 15) {
+    //        pantsValue = 20;
+    //    } else if (pantsHyper >= 10) {
+    //        pantsValue = 10;
+    //    } else {
+    //        pantsValue = 0;
+    //    }
+//
+    //    return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1);
+    //};
+//
+    //function hyperOffcialCombatSupport() {
+    //    let hyperElements = Array.from(document.querySelectorAll(".armor-area .armor-item"));
+    //    let armoryElements = hyperElements.filter((element, index) => !(index >= 6));
+    //    let armoryHyperList = armoryElements.map(element => {
+    //        let hyper = Number(element.querySelector(".hyper-wrap select.hyper").value);
+    //        return hyper;
+    //    })
+    //    let armoryTotalHyper = armoryHyperList.reduce((a, b) => a + b) * 0.0003 + 1;
+//
+    //    let weaponElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[5].querySelector(".hyper-wrap select.hyper");
+    //    let weaponHyper = Number(weaponElement.value);
+//
+    //    let shoulderElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[1].querySelector(".hyper-wrap select.hyper");
+    //    let shoulderHyper = Number(shoulderElement.value);
+//
+    //    let pantsElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[3].querySelector(".hyper-wrap select.hyper");
+    //    let pantsHyper = Number(pantsElement.value);
+//
+    //    let glovesElement = Array.from(document.querySelectorAll(".armor-area .armor-item"))[4].querySelector(".hyper-wrap select.hyper");
+    //    let glovesHyper = Number(glovesElement.value);
+//
+//
+    //    let weaponValue;
+    //    if (weaponHyper >= 20) {
+    //        weaponValue = 630;
+    //    } else if (weaponHyper >= 15) {
+    //        weaponValue = 390;
+    //    } else if (weaponHyper >= 10) {
+    //        weaponValue = 270;
+    //    } else if (weaponHyper >= 5) {
+    //        weaponValue = 120;
+    //    } else {
+    //        weaponValue = 0;
+    //    }
+//
+    //    let shoulderValue;
+    //    if (shoulderHyper >= 20) {
+    //        shoulderValue = 225;
+    //    } else if (shoulderHyper >= 15) {
+    //        shoulderValue = 150;
+    //    } else if (shoulderHyper >= 10) {
+    //        shoulderValue = 75;
+    //    } else if (shoulderHyper >= 5) {
+    //        shoulderValue = 0;
+    //    } else {
+    //        shoulderValue = 0;
+    //    }
+//
+    //    let glovesValue;
+    //    if (glovesHyper >= 20) {
+    //        glovesValue = 225;
+    //    } else if (glovesHyper >= 15) {
+    //        glovesValue = 150;
+    //    } else if (glovesHyper >= 10) {
+    //        glovesValue = 75;
+    //    } else if (glovesHyper >= 5) {
+    //        glovesValue = 0;
+    //    } else {
+    //        glovesValue = 0;
+    //    }
+//
+//
+    //    let pantsValue;
+    //    if (pantsHyper >= 20) {
+    //        pantsValue = 450;
+    //    } else if (pantsHyper >= 15) {
+    //        pantsValue = 225;
+    //    } else if (pantsHyper >= 10) {
+    //        pantsValue = 113;
+    //    } else {
+    //        pantsValue = 0;
+    //    }
+//
+//
+    //    // let result = {
+    //    //     total: armoryTotalHyper,
+    //    //     weapon: weaponValue / 10000 + 1,
+    //    //     pants: pantsValue / 10000 + 1
+    //    // }
+    //    return armoryTotalHyper * (weaponValue / 10000 + 1) * (pantsValue / 10000 + 1) * (glovesValue / 10000 + 1) * (shoulderValue / 10000 + 1);
+    //};
 
     /* **********************************************************************************************************************
     * name		             :	 statsOffcialCombat
@@ -1126,6 +1126,8 @@ export async function simulatorToOffcialCombatObj() {
     function trinityValueOfficialCombat() {
         let trinityPower = 0;
         let trinityValue = 0;
+        let trinityCare = 0;
+        const trunc6 = (n) => Math.floor(n * 1e6) / 1e6;
         apiData.data.ArmoryEquipment.forEach(function (equip) {
             if (equip.Type == "보주") {
                 const tooltipObj = typeof equip.Tooltip === 'string'
@@ -1138,16 +1140,18 @@ export async function simulatorToOffcialCombatObj() {
                 const text = JSON.stringify(tooltipObj);
 
                 if (/(성창|비전)/.test(text)) {
-                    trinityValue = (20 + 800 * trinityPower / 100000000) / 10000 + 1
+                    trinityValue = trunc6((20 + 800 * trinityPower / 100000000) / 10000 + 1)
                 }
                 if (/자연/.test(text)) {
-                    trinityValue = (14 + 544 * trinityPower / 100000000) / 10000 + 1
+                    trinityValue = trunc6((14 + 544 * trinityPower / 100000000) / 10000 + 1)
+                    trinityCare += 1.013
                 }
             }
         });
-        return {trinityValue}
+        
+        return {trinityValue, trinityCare}
     }
-    //console.log(trinityValueOfficialCombat())
+
 
 
     let officialCombatObj = {
@@ -1156,12 +1160,12 @@ export async function simulatorToOffcialCombatObj() {
         ark: Number(characterArkToOffcialCombat()),
         karma: characterKarmaToOffcialCombat(),
         engraving: engravingToOffcialCombat(),
-        elixir: elixirToOffcialCombat(),
+        //elixir: elixirToOffcialCombat(),
         accessory: accessoryToOffcialCombat(),
         bangle: bangleOffcialCombat(),
         gem: gemOffcialCombat(),
         esther: estherOffcialCombat(),
-        hyper: hyperOffcialCombat(),
+        //hyper: hyperOffcialCombat(),
         stats: statsOffcialCombat(),
         card: cardOffcialCombat(),
         arkgridGem: arkgridGemOffcialCombat(),
@@ -1171,10 +1175,11 @@ export async function simulatorToOffcialCombatObj() {
 
     let officialCombatObjSupport_defense = {
         engraving: engravingToOffcialCombatSupport().resultArkValue_defense,
-        elixir: elixirToOffcialCombatSupport().eachElixirSum_defense,
+        //elixir: elixirToOffcialCombatSupport().eachElixirSum_defense,
         accessory: accessoryToOffcialCombatSupport().accessorySum_defense,
         bangle: bangleOffcialCombatSupport().bangleSum_defense,
-        arkgridCore: arkgridCoreOffcialCombatSupportDefense()
+        arkgridCore: arkgridCoreOffcialCombatSupportDefense(),
+        trinity: trinityValueOfficialCombat()
     };
 
     let officialCombatObjSupport_attack = {
@@ -1182,20 +1187,20 @@ export async function simulatorToOffcialCombatObj() {
         ark: characterArkToOffcialCombatSupport(),
         karma: characterKarmaToOffcialCombatSupport(),
         engraving: engravingToOffcialCombatSupport().resultArkValue_attack,
-        elixir: elixirToOffcialCombatSupport().eachElixirSum_attack,
+        //elixir: elixirToOffcialCombatSupport().eachElixirSum_attack,
         accessory: accessoryToOffcialCombatSupport().accessorySum_attack,
         bangle: bangleOffcialCombatSupport().bangleSum_attack,
         gem: gemOffcialCombatSupport(),
         esther: estherOffcialCombatSupport(),
-        hyper: hyperOffcialCombatSupport(),
+        //hyper: hyperOffcialCombatSupport(),
         stats: statsOffcialCombatSupport(),
         card: cardOffcialCombatSupport(),
         arkgridCore: arkgridCoreOffcialCombatSupport(),
         arkgridGem: arkgridGemOffcialCombatSupport()
     };
-    //console.log("delaer", officialCombatObj);
-    //console.log("sup_attack", officialCombatObjSupport_attack);
-    //console.log("sup_defense", officialCombatObjSupport_defense);
+    console.log("delaer", officialCombatObj);
+    console.log("sup_attack", officialCombatObjSupport_attack);
+    console.log("sup_defense", officialCombatObjSupport_defense);
     return {
         "dealer": officialCombatObj,
         "sup_attack": officialCombatObjSupport_attack,

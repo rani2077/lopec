@@ -26,8 +26,8 @@ export async function importModuleManager() {
         { key: 'simulatorFilter', path: '../filter/simulator-filter.js' },
         { key: 'simulatorData', path: '../filter/simulator-data.js' },
         { key: 'lopecOcr', path: '../custom-module/lopec-ocr.js' },
-        // { key: 'officialCombatSimulator', path: '../js/offiicial-combat-simulator.js' },
-        // { key: 'officialCombatCalculator', path: '../custom-module/official-combat-calculator.js' },
+        { key: 'officialCombatSimulator', path: '../js/offiicial-combat-simulator.js' },
+        { key: 'officialCombatCalculator', path: '../custom-module/official-combat-calculator.js' },
     ];
 
     const promisesToLoad = [];
@@ -522,145 +522,145 @@ async function simulatorInputCalc() {
     * description			: 	장비 엘릭서 스텟 수치를 추출함
     *********************************************************************************************************************** */
 
-    function armorElixirToObj() {
-        let arr = [];
-        let elements = document.querySelectorAll(".armor-item .elixir");
+    // function armorElixirToObj() {
+    //     let arr = [];
+    //     let elements = document.querySelectorAll(".armor-item .elixir");
 
-        // 각 엘릭서 요소 처리
-        elements.forEach(element => {
-            const valueString = element.value;
-            if (!valueString) return;
+    //     // 각 엘릭서 요소 처리
+    //     elements.forEach(element => {
+    //         const valueString = element.value;
+    //         if (!valueString) return;
 
-            // 엘릭서 장비 타입 식별 (투구, 장갑 등)
-            const elementType = element.className.includes("helmet") ? "helmet" :
-                element.className.includes("glove") ? "glove" :
-                    element.className.includes("shoulder") ? "shoulder" :
-                        element.className.includes("armor") ? "armor" :
-                            element.className.includes("pants") ? "pants" :
-                                element.className.includes("common") ? "common" : "unknown";
+    //         // 엘릭서 장비 타입 식별 (투구, 장갑 등)
+    //         const elementType = element.className.includes("helmet") ? "helmet" :
+    //             element.className.includes("glove") ? "glove" :
+    //                 element.className.includes("shoulder") ? "shoulder" :
+    //                     element.className.includes("armor") ? "armor" :
+    //                         element.className.includes("pants") ? "pants" :
+    //                             element.className.includes("common") ? "common" : "unknown";
 
-            const parts = valueString.split('|');
-            const text = element.options[element.selectedIndex].textContent.replace(/Lv.\d+/g, "").trim();
+    //         const parts = valueString.split('|');
+    //         const text = element.options[element.selectedIndex].textContent.replace(/Lv.\d+/g, "").trim();
 
-            parts.forEach(part => {
-                const [key, valStr] = part.split(':');
-                if (key && valStr !== undefined) {
-                    const value = Number(valStr);
-                    if (!isNaN(value)) {
-                        arr.push({ key: key, value: value, originalName: text, element: elementType });
-                    }
-                }
-            });
-        });
+    //         parts.forEach(part => {
+    //             const [key, valStr] = part.split(':');
+    //             if (key && valStr !== undefined) {
+    //                 const value = Number(valStr);
+    //                 if (!isNaN(value)) {
+    //                     arr.push({ key: key, value: value, originalName: text, element: elementType });
+    //                 }
+    //             }
+    //         });
+    //     });
 
-        // 엘릭서 이름 카운트 - 중복 없이 한 장비당 하나씩만 카운트
-        let elixirNameCounts = {};
-        let totalLevelSum = 0;
-        let processedElixirs = new Set(); // 처리된 엘릭서 조합 추적
+    //     // 엘릭서 이름 카운트 - 중복 없이 한 장비당 하나씩만 카운트
+    //     let elixirNameCounts = {};
+    //     let totalLevelSum = 0;
+    //     let processedElixirs = new Set(); // 처리된 엘릭서 조합 추적
 
-        arr.forEach(obj => {
-            if (obj.key === 'level') {
-                totalLevelSum += obj.value;
-            } else {
-                // 각 장비 요소별로 한 번만 카운트하기 위한 고유 식별자
-                const elementId = obj.element + "-" + obj.originalName;
-                if (!processedElixirs.has(elementId)) {
-                    processedElixirs.add(elementId);
-                    elixirNameCounts[obj.originalName] = (elixirNameCounts[obj.originalName] || 0) + 1;
-                }
-            }
-        });
+    //     arr.forEach(obj => {
+    //         if (obj.key === 'level') {
+    //             totalLevelSum += obj.value;
+    //         } else {
+    //             // 각 장비 요소별로 한 번만 카운트하기 위한 고유 식별자
+    //             const elementId = obj.element + "-" + obj.originalName;
+    //             if (!processedElixirs.has(elementId)) {
+    //                 processedElixirs.add(elementId);
+    //                 elixirNameCounts[obj.originalName] = (elixirNameCounts[obj.originalName] || 0) + 1;
+    //             }
+    //         }
+    //     });
 
-        // 데이터 그룹화 및 병합
-        const grouped = {};
-        arr.forEach(obj => {
-            if (obj && obj.hasOwnProperty('key')) {
-                const key = obj.key;
-                if (!grouped[key]) {
-                    grouped[key] = [];
-                }
-                grouped[key].push(obj.value);
-            }
-        });
+    //     // 데이터 그룹화 및 병합
+    //     const grouped = {};
+    //     arr.forEach(obj => {
+    //         if (obj && obj.hasOwnProperty('key')) {
+    //             const key = obj.key;
+    //             if (!grouped[key]) {
+    //                 grouped[key] = [];
+    //             }
+    //             grouped[key].push(obj.value);
+    //         }
+    //     });
 
-        // 기본 결과 객체 생성
-        const combinedObj = {
-            atkPlus: 0, atkBonus: 0, weaponAtkPlus: 0, atkPer: 0, atkBuff: 0,
-            carePower: 0, str: 0, int: 0, dex: 0, stats: 0, statHp: 0, identityUptime: 0, utilityPower: 0,
-            finalDamagePer: 1, level: totalLevelSum
-        };
+    //     // 기본 결과 객체 생성
+    //     const combinedObj = {
+    //         atkPlus: 0, atkBonus: 0, weaponAtkPlus: 0, atkPer: 0, atkBuff: 0,
+    //         carePower: 0, str: 0, int: 0, dex: 0, stats: 0, statHp: 0, identityUptime: 0, utilityPower: 0,
+    //         finalDamagePer: 1, level: totalLevelSum
+    //     };
 
-        // 값 결합하기
-        for (const key in grouped) {
-            if (key === "finalDamagePer") {
-                combinedObj[key] = grouped[key].reduce((acc, val) => acc * val, 1);
-            } else {
-                combinedObj[key] = grouped[key].reduce((acc, val) => acc + val, 0);
-            }
-        }
+    //     // 값 결합하기
+    //     for (const key in grouped) {
+    //         if (key === "finalDamagePer") {
+    //             combinedObj[key] = grouped[key].reduce((acc, val) => acc * val, 1);
+    //         } else {
+    //             combinedObj[key] = grouped[key].reduce((acc, val) => acc + val, 0);
+    //         }
+    //     }
 
-        // 중복 엘릭서 그룹 정의
-        const group1 = ["회심", "달인", "선봉대"];
-        const group2 = ["강맹", "칼날방패", "행운"];
-        const group3 = ["선각자", "신념"];
-        const group4 = ["진군"];
+    //     // 중복 엘릭서 그룹 정의
+    //     const group1 = ["회심", "달인", "선봉대"];
+    //     const group2 = ["강맹", "칼날방패", "행운"];
+    //     const group3 = ["선각자", "신념"];
+    //     const group4 = ["진군"];
 
-        // 중복된 엘릭서 찾기
-        let duplicateElixirName = null;
-        for (const name in elixirNameCounts) {
-            if (elixirNameCounts[name] >= 2) {
-                duplicateElixirName = name;
-                break;
-            }
-        }
+    //     // 중복된 엘릭서 찾기
+    //     let duplicateElixirName = null;
+    //     for (const name in elixirNameCounts) {
+    //         if (elixirNameCounts[name] >= 2) {
+    //             duplicateElixirName = name;
+    //             break;
+    //         }
+    //     }
 
-        // 중복 엘릭서의 그룹 찾기
-        let duplicateGroup = null;
-        if (duplicateElixirName) {
-            if (group1.includes(duplicateElixirName)) {
-                duplicateGroup = "group1";
-            } else if (group2.includes(duplicateElixirName)) {
-                duplicateGroup = "group2";
-            } else if (group3.includes(duplicateElixirName)) {
-                duplicateGroup = "group3";
-            } else if (group4.includes(duplicateElixirName)) {
-                duplicateGroup = "group4";
-            }
-        }
+    //     // 중복 엘릭서의 그룹 찾기
+    //     let duplicateGroup = null;
+    //     if (duplicateElixirName) {
+    //         if (group1.includes(duplicateElixirName)) {
+    //             duplicateGroup = "group1";
+    //         } else if (group2.includes(duplicateElixirName)) {
+    //             duplicateGroup = "group2";
+    //         } else if (group3.includes(duplicateElixirName)) {
+    //             duplicateGroup = "group3";
+    //         } else if (group4.includes(duplicateElixirName)) {
+    //             duplicateGroup = "group4";
+    //         }
+    //     }
 
-        // 중복 보너스 적용
-        if (duplicateGroup === "group1") {
-            if (totalLevelSum >= 40) {
-                combinedObj.finalDamagePer *= 1.12;
-            } else if (totalLevelSum >= 35) {
-                combinedObj.finalDamagePer *= 1.06;
-            }
-        } else if (duplicateGroup === "group2") {
-            if (totalLevelSum >= 40) {
-                combinedObj.finalDamagePer *= 1.08;
-            } else if (totalLevelSum >= 35) {
-                combinedObj.finalDamagePer *= 1.04;
-            }
-        } else if (duplicateGroup === "group3") {
-            if (totalLevelSum >= 40) {
-                combinedObj.atkBuff += 14;
-            } else if (totalLevelSum >= 35) {
-                combinedObj.atkBuff += 8;
-            }
-        } else if (duplicateGroup === "group4") {
-            if (totalLevelSum >= 40) {
-                combinedObj.atkBuff += 6;
-            } else if (totalLevelSum >= 35) {
-                combinedObj.atkBuff += 3;
-            }
-        }
+    //     // 중복 보너스 적용
+    //     if (duplicateGroup === "group1") {
+    //         if (totalLevelSum >= 40) {
+    //             combinedObj.finalDamagePer *= 1.12;
+    //         } else if (totalLevelSum >= 35) {
+    //             combinedObj.finalDamagePer *= 1.06;
+    //         }
+    //     } else if (duplicateGroup === "group2") {
+    //         if (totalLevelSum >= 40) {
+    //             combinedObj.finalDamagePer *= 1.08;
+    //         } else if (totalLevelSum >= 35) {
+    //             combinedObj.finalDamagePer *= 1.04;
+    //         }
+    //     } else if (duplicateGroup === "group3") {
+    //         if (totalLevelSum >= 40) {
+    //             combinedObj.atkBuff += 14;
+    //         } else if (totalLevelSum >= 35) {
+    //             combinedObj.atkBuff += 8;
+    //         }
+    //     } else if (duplicateGroup === "group4") {
+    //         if (totalLevelSum >= 40) {
+    //             combinedObj.atkBuff += 6;
+    //         } else if (totalLevelSum >= 35) {
+    //             combinedObj.atkBuff += 3;
+    //         }
+    //     }
 
-        // 마무리 정리
-        delete combinedObj.level;
-        combinedObj.str = combinedObj.stats ? combinedObj.stats : 0;
+    //     // 마무리 정리
+    //     delete combinedObj.level;
+    //     combinedObj.str = combinedObj.stats ? combinedObj.stats : 0;
 
-        return combinedObj;
-    }
+    //     return combinedObj;
+    // }
 
 
     /* **********************************************************************************************************************
@@ -966,8 +966,8 @@ async function simulatorInputCalc() {
                 }
 
                 let skill
-                if (!(gemInfo.Element_007.value.Element_001 == undefined)) {
-                    skill = gemInfo.Element_007.value.Element_001.match(/>([^<]+)</)[1]
+                if (!(gemInfo.Element_006.value.Element_001 == undefined)) {
+                    skill = gemInfo.Element_006.value.Element_001.match(/>([^<]+)</)[1]
                 } else {
                 }
 
@@ -975,7 +975,7 @@ async function simulatorInputCalc() {
                 atkBuff.forEach(function (buffSkill) {
                     if (skill == buffSkill && (type.includes("겁화") || type.includes("딜광휘"))) {
                         result.atkBuff += Number(level)
-                        //console.log(result.atkBuff)
+
                     }
                 })
 
@@ -1098,6 +1098,8 @@ async function simulatorInputCalc() {
 
     function arkPassiveValue() {
         let result = {
+            atkBuff: 0,
+            skillCool: 0,
             enlightenmentDamage: 0,
             enlightenmentBuff: 0,
             evolutionDamage: 0,
@@ -1247,6 +1249,8 @@ async function simulatorInputCalc() {
         result.stigmaPer += evloutionArkCheck().stigmaPer + supportEnlightNodeToValue().stigmaPer;
         result.cdrPercent = leapArkCheck().cdrPercent
         result.enlightenmentBuff += supportEnlightNodeToValue().enlightenmentBuff;
+        result.atkBuff += evloutionArkCheck().atkBuff
+        result.skillCool += evloutionArkCheck().skillCool
         return result
     }
     /* **********************************************************************************************************************
@@ -1255,11 +1259,14 @@ async function simulatorInputCalc() {
     *********************************************************************************************************************** */
     function evloutionArkCheck() {
         let result = {
+            atkBuff: 0,
+            skillCool: 0,
             evolutionBuff: 0,
             stigmaPer: 0,
         }
         let evloutionArkPassive = cachedData.ArkPassive.Effects.filter(data => data.Name === "진화");
         evloutionArkPassive = evloutionArkPassive.map(evloution => evloution.Description.match(/>([^<]+)</g)[2].slice(1, -1));
+        //console.log(evloutionArkPassive)
         evloutionArkPassive.forEach(arkPassive => {
             if (arkPassive === "정열의 춤사위 Lv.1") {
                 result.evolutionBuff = 7;
@@ -1273,6 +1280,17 @@ async function simulatorInputCalc() {
                     result.stigmaPer += 20;
                 }
             }
+            if (arkPassive === "선각자 Lv.1") {
+                result.skillCool = 0.05;
+                result.atkBuff += 22;
+            }
+            if (arkPassive === "진군 Lv.1") {
+                result.atkBuff += 24;
+            }
+            if (arkPassive === "기원 Lv.1") {
+                result.stigmaPer = 4;
+                result.atkBuff += 22;
+            }
         })
         if (result.stigmaPer === 0) {
             result.stigmaPer = 1;
@@ -1280,6 +1298,10 @@ async function simulatorInputCalc() {
         return result;
     }
 
+
+    // { name: "선각자", level: 1, skillCool:0.05, atkBuff: 22 },
+    // { name: "진군", level: 1, evolutionDamage: 0, atkBuff: 24 },
+    // { name: "기원", level: 1, evolutionDamage: 0, atkBuff: 22, stigmaPer : 4 },
 
 
     /* **********************************************************************************************************************
@@ -1533,7 +1555,7 @@ async function simulatorInputCalc() {
         extractValue.bangleObj = bangleOptionCalc();
         // extractValue.defaultObj = defaultObjChangeValue();
         defaultObjChangeValue();
-        extractValue.elixirObj = armorElixirToObj();
+        //extractValue.elixirObj = armorElixirToObj();
         extractValue.engObj = engOutputCalc(engExtract());
         // extractValue.etcObj = etcObjChangeValue();
         extractValue.gemObj = supportGemValueCalc();
@@ -1599,19 +1621,19 @@ async function simulatorInputCalc() {
     *********************************************************************************************************************** */
     // 계산값 변경을 추적할 수 있는 캐싱처리
     if (!officialCombatCachedFlag) {
-        // let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
-        // let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+        let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+        let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
 
         if (extractValue.etcObj.supportCheck === "서폿") {
-            // cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.support;
+            cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.support;
         } else {
-            // cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.dealer;
+            cachedDetailInfo.extractValue.defaultObj.combatPower = officialCombatCalcValue.dealer;
         }
         officialCombatCachedFlag = "flag";
     }
     // 공식 전투력 계산 함수 로드(스크립트 동작 순서로 인해 작성)
-    // let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
-    // let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
+    let officialCombatSimulatorObj = await Modules.officialCombatSimulator.simulatorToOffcialCombatObj();
+    let officialCombatCalcValue = await Modules.officialCombatCalculator.officialCombatCalculator(officialCombatSimulatorObj, extractValue);
     //console.log("공식전투력 계산결과", officialCombatCalcValue);
 
 
@@ -1704,13 +1726,13 @@ async function simulatorInputCalc() {
                 return `<em style="color:#fff;font-size:${fontSizeValue}">(▬0)</em>`;
             }
         }
-        //let combatInfo = [
-        //    { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.dealer) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.dealer), icon: "bolt-lightning-solid" },
-        //]
+        let combatInfo = [
+            { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.dealer) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.dealer), icon: "bolt-lightning-solid" },
+        ]
         let armorInfo = [
             { name: "공격력", value: Number(originSpecPoint.dealerAttackPowResult).toFixed(0) + compareValue(cachedDetailInfo.specPoint.dealerAttackPowResult, originSpecPoint.dealerAttackPowResult), icon: "bolt-solid" },
-            { name: "엘릭서", value: Number(originSpecPoint.dealerExlixirValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerExlixirValue, originSpecPoint.dealerExlixirValue), icon: "flask-solid" },
-            { name: "초월", value: Number(originSpecPoint.dealerHyperValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerHyperValue, originSpecPoint.dealerHyperValue), icon: "star-solid" },
+            //{ name: "엘릭서", value: Number(originSpecPoint.dealerExlixirValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerExlixirValue, originSpecPoint.dealerExlixirValue), icon: "flask-solid" },
+            //{ name: "초월", value: Number(originSpecPoint.dealerHyperValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerHyperValue, originSpecPoint.dealerHyperValue), icon: "star-solid" },
             { name: "악세", value: Number(originSpecPoint.dealerAccValue).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerAccValue, originSpecPoint.dealerAccValue), icon: "circle-notch-solid" },
             { name: "팔찌", value: Number(originSpecPoint.dealerBangleResult).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerBangleResult, originSpecPoint.dealerBangleResult), icon: "ring-solid" },
             { name: "각인", value: Number(originSpecPoint.dealerEngResult).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.dealerEngResult, originSpecPoint.dealerEngResult), icon: "book-solid" },
@@ -1772,7 +1794,7 @@ async function simulatorInputCalc() {
         }
         // extractValue.etcObj.supportCheck !== "서폿"
         if (!/서폿|회귀|심판자|진실된 용맹/.test(extractValue.etcObj.supportCheck) || (extractValue.engObj.dealpport === "true")) {
-            //result += infoWrap("전투력", combatInfo);
+            result += infoWrap("전투력", combatInfo);
             result += infoWrap("장비 효과", armorInfo);
             result += infoWrap("아크패시브", arkPassiveInfo);
             result += infoWrap("보석 효과", gemInfo);
@@ -3182,9 +3204,9 @@ async function selectCreate(data, Modules) {
                                 // armoryEnforceLimite(); // 해당 armor-name에 대한 option을 생성
                                 // hyperStageToStarCreate(); // 초월 N단계를 바탕으로 3N성 생성
                                 optionElementAutoCheck(armorUpgrade, armorUpgrade.dataset.advancedValue, 'value');
-                                setTimeout(() => {
-                                    optionElementAutoCheck(star, star.dataset.hyperStar, 'value');
-                                }, 0)
+                                // setTimeout(() => {
+                                // optionElementAutoCheck(star, star.dataset.hyperStar, 'value');
+                                // }, 0)
                             }
                         }
                     })

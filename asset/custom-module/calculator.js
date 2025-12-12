@@ -356,6 +356,8 @@ export async function specPointCalc(inputObj) {
              + inputObj.gemObj.atkBuff
              + inputObj.arkgridObj.atkBuff) / 100))
 
+             console.log(inputObj.gemObj.atkBuff)
+
     // 최종 공증
     let finalAtkBuff = (totalAtk2 * 0.22 * atkBuff) // 최종 공증
 
@@ -729,12 +731,14 @@ export async function specPointCalc(inputObj) {
     
 
     let calcAvgBuffPower = ((calcDoubleBuffUptime * calcDoubleBuffPower) + (calcOnlyIdentityUptime * calcOnlyIdentityPower) + (calcOnlyHyperUptime * calcOnlyHyperPower) + (calcNoBuffUptime * calcNoBuffPower)) * calcDefaultAtkBuff
+
     let calcSupportBuffPower = calcAvgBuffPower * inputObj.arkObj.leapBuff//** 4.185) * 29.5
     let calcSupportCarePower = (((finalCarePower / ((1 - calcCdrPercentOnlyCare)))) / 100 + 1)
     let calcSupportUtilityPower = finalUtilityPower / 100 + 1
 
     let calcSupportCombinedPower = (calcSupportBuffPower ** 0.935) * (calcSupportCarePower ** 0.035) * (calcSupportUtilityPower ** 0.03)
     let supportSpecPoint = ((calcSupportCombinedPower ** 4.195) * 69.127) * inputObj.arkgridObj.coreValue
+
 
 
     /* **********************************************************************************************************************
@@ -932,7 +936,7 @@ export async function specPointCalc(inputObj) {
     let supportCarePower_MinusBangle = (((finalCarePower_MinusBangle / ((1 - cdrPercentOnlyCare_MinusBangle)))) / 100 + 1)
 
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
-    let supportSpecPoint_MinusBangle = ((supportCombinedPower_MinusBangle ** 4.268) * 69.127) * inputObj.arkgridObj.coreValue
+    let supportSpecPoint_MinusBangle = ((supportCombinedPower_MinusBangle ** 4.195) * 69.127) * inputObj.arkgridObj.coreValue
     let supportBangleValue = Math.max(((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.52, 0)
     if (supportBangleValue < 0.02){
         supportBangleValue = 0

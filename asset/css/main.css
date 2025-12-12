@@ -543,6 +543,13 @@
     padding-bottom: 15px;
 }
 
+.sc-info .extra-area .extra-box .tag {
+    font-size: 13px;
+    color: #ff0000;
+    font-weight: 600;
+    padding: 5px 0;
+}
+
 .sc-info .detail-area .info-wrap .tag {
     font-size: 16px;
     color: #03dac5;
