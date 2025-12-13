@@ -92,7 +92,8 @@ async function simulatorInputCalc() {
         cachedDetailInfo.specPoint = specPoint;
         cachedData = data;
 
-        extraLoadSelection() // 아제나, 펫 설정 로드
+        extraElementCreate(); // 아제나, 펫 옵션을 서폿/딜러 다르게 생성
+        extraLoadSelection(); // 아제나, 펫 설정 로드
         // await Modules.fetchApi.clearLostarkApiCache(nameParam, document.querySelector(".sc-info .spec-area span.reset")); // 캐싱없이 api갱신
         await originSpecPointToHtml(specPoint, extractValue);
         const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -1459,6 +1460,99 @@ async function simulatorInputCalc() {
     }
 
     /* **********************************************************************************************************************
+    * function name		:	extraElementCreate
+    * description       : 	아제나, 펫 효과 radio버튼을 생성함
+    *********************************************************************************************************************** */
+    function extraElementCreate() {
+        const extraAreaElement = document.querySelector(".extra-area");
+
+        // if (supportCheck !== "서폿") {
+        if (false) {
+            extraAreaElement.innerHTML =
+                `<div class="extra-box azena">
+                    <span class="tag">제일 먼저 아래 항목 선택 후 새로고침을 해주세요.</span>
+                    <span class="text"></span>
+                    <span class="text">아제나의 축복</span>
+                    <div class="radio-item">
+                        <input type="radio" id="azena-false" name="azena" value="0">
+                        <label for="azena-false">미보유</label>
+                        <input type="radio" id="azena-true" name="azena" value="6000" checked>
+                        <label for="azena-true">보유</label>
+                    </div>
+                </div>
+                <div class="extra-box damage">
+                    <span class="text">펫 목장:추가 피해</span>
+                    <div class="radio-item">
+                        <input type="radio" id="damage0" name="damage" value="0">
+                        <label for="damage0">0%</label>
+                        <input type="radio" id="damage04" name="damage" value="0.4">
+                        <label for="damage04">0.4%</label>
+                        <input type="radio" id="damage07" name="damage" value="0.7">
+                        <label for="damage07">0.7%</label>
+                        <input type="radio" id="damage1" name="damage" value="1" checked>
+                        <label for="damage1">1%</label>
+                    </div>
+                </div>
+                <div class="extra-box stats">
+                    <span class="text">펫 목장:힘/민첩/지능</span>
+                    <div class="radio-item">
+                        <input type="radio" id="stats0" name="stats" value="0">
+                        <label for="stats0">0%</label>
+                        <input type="radio" id="stats04" name="stats" value="0.4">
+                        <label for="stats04">0.4%</label>
+                        <input type="radio" id="stats07" name="stats" value="0.7">
+                        <label for="stats07">0.7%</label>
+                        <input type="radio" id="stats1" name="stats" value="1" checked>
+                        <label for="stats1">1%</label>
+                    </div>
+                </div>`
+        } else {
+            extraAreaElement.innerHTML =
+                `<div class="extra-box azena">
+                    <span class="tag">제일 먼저 아래 항목 선택 후 새로고침을 해주세요.</span>
+                    <span class="text"></span>
+                    <span class="text">아제나의 축복</span>
+                    <div class="radio-item">
+                        <input type="radio" id="azena-false" name="azena" value="0">
+                        <label for="azena-false">미보유</label>
+                        <input type="radio" id="azena-true" name="azena" value="6000" checked>
+                        <label for="azena-true">보유</label>
+                    </div>
+                </div>
+                <div class="extra-box effect">
+                    <span class="text">펫 효과 : 최대 생명력 %</span>
+                    <div class="radio-item">
+                        <input type="radio" id="petEffect0" name="effect" value="0">
+                        <label for="petEffect0">0</label>
+                        <input type="radio" id="petEffect1" name="effect" value="1">
+                        <label for="petEffect1">1</label>
+                        <input type="radio" id="petEffect2" name="effect" value="2">
+                        <label for="petEffect2">2</label>
+                        <input type="radio" id="petEffect3" name="effect" value="3">
+                        <label for="petEffect3">3</label>
+                        <input type="radio" id="petEffect4" name="effect" value="4">
+                        <label for="petEffect4">4</label>
+                        <input type="radio" id="petEffect5" name="effect" value="5" checked>
+                        <label for="petEffect5">5</label>
+                    </div>
+                </div>
+                <div class="extra-box ranch">
+                    <span class="text">펫 목장 : 최대 생명력 %</span>
+                    <div class="radio-item">
+                        <input type="radio" id="petStats0" name="ranch" value="0">
+                        <label for="petStats0">0</label>
+                        <input type="radio" id="petStats1" name="ranch" value="0.8">
+                        <label for="petStats1">0.8</label>
+                        <input type="radio" id="petStats2" name="ranch" value="1.4">
+                        <label for="petStats2">1.4</label>
+                        <input type="radio" id="petStats3" name="ranch" value="2" checked>
+                        <label for="petStats3">2</label>
+                    </div>
+                </div>`
+        }
+    };
+
+    /* **********************************************************************************************************************
     * function name		:	extraSettingSelect
     * description       : 	아제나, 펫 효과 등 api상으로 알 수 없는 정보를 유저한테 선택시킴
     *********************************************************************************************************************** */
@@ -1471,12 +1565,21 @@ async function simulatorInputCalc() {
 
         const statsElement = document.querySelector(".extra-area .extra-box.stats input[name='stats']:checked");
         const statsValue = Number(statsElement?.value ?? 0);
+
+        const effectElement = document.querySelector(".extra-area .extra-box.effect input[name='effect']:checked");
+        const effectValue = Number(effectElement?.value ?? 0);
+
+        const ranchElement = document.querySelector(".extra-area .extra-box.ranch input[name='ranch']:checked");
+        const ranchValue = Number(ranchElement?.value ?? 0);
+
         return {
             azena: azenaValue,
             petAddDmg: damageValue,
-            petStats: statsValue
-        }
+            petStats: statsValue,
+            petHp: effectValue + ranchValue
+        };
     }
+
     /* **********************************************************************************************************************
     * function name		:	extraSaveSelection
     * description       : 	현재 선택된 값을 로컬 스토리지에 저장하는 함수
