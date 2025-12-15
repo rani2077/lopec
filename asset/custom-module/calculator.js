@@ -356,7 +356,6 @@ export async function specPointCalc(inputObj) {
              + inputObj.gemObj.atkBuff
              + inputObj.arkgridObj.atkBuff) / 100))
 
-             console.log(inputObj.gemObj.atkBuff)
 
     // 최종 공증
     let finalAtkBuff = (totalAtk2 * 0.22 * atkBuff) // 최종 공증

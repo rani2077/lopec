@@ -106,7 +106,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
          extractObj.accObj.statHp + 
          extractObj.arkObj.statHp +
          extractObj.arkgridObj.statHP) * 
-         extractObj.defaultObj.hpActive * 1.07).toFixed(0));
+         extractObj.defaultObj.hpActive * (1 + (extractObj.extraObj.petHp/100))).toFixed(0));
 
     if (!cacheCollectHealthSupport) {
         cacheCollectHealthSupport = originHealth - calcHealth
@@ -119,7 +119,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
     combatObj.sup_defense.bangle *
     combatObj.sup_defense.engraving *
     combatObj.sup_defense.arkgridCore *
-    combatObj.sup_defense.trinityCare
+    combatObj.sup_defense.trinity.trinityCare
 
     let originAttackCombat = extractObj.defaultObj.combatPower - calcCareCombat
     //console.log("originAttackCombat", originAttackCombat)

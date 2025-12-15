@@ -1861,9 +1861,9 @@ async function simulatorInputCalc() {
                 { name: "보석 보정치", value: Number(extractValue.etcObj.gemCheckFnc.specialSkill).toFixed(2) + compareValue(cachedDetailInfo.extractValue.etcObj.gemCheckFnc.specialSkill, extractValue.etcObj.gemCheckFnc.specialSkill), icon: "gem-solid", question: "보석에 포함되지 않는 스킬 및 효과를 보정하기 위한 계수. 직각 별로 고정값이며, 소수점 두 번째 자리까지만 표시" },
             ]
         }
-        //let supportCombatInfo = [
-        //    { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.support) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.support), icon: "bolt-lightning-solid" },
-        //]
+        let supportCombatInfo = [
+           { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.support) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.support), icon: "bolt-lightning-solid" },
+        ]
         let supportImportantBuffInfo = [
             //{ name: "공격력 증가", value: Number(originSpecPoint.supportFinalAtkBuff).toFixed(0) + compareValue(cachedDetailInfo.specPoint.supportFinalAtkBuff, originSpecPoint.supportFinalAtkBuff), icon: "bolt-solid" },
             { name: "종합 버프력", value: Number(originSpecPoint.supportAvgBuffPower).toFixed(2) + "%" + compareValue(cachedDetailInfo.specPoint.supportAvgBuffPower, originSpecPoint.supportAvgBuffPower), icon: "bolt-solid" },
@@ -1902,7 +1902,7 @@ async function simulatorInputCalc() {
             result += infoWrap("아크패시브", arkPassiveInfo);
             result += infoWrap("보석 효과", gemInfo);
         } else {
-            //result += infoWrap("전투력", supportCombatInfo);
+            result += infoWrap("전투력", supportCombatInfo);
             result += infoWrap("주요 버프", supportImportantBuffInfo);
             result += infoWrap("버프 정보", supportBuffInfo);
             result += infoWrap("가동률", supportUtilizationRate);

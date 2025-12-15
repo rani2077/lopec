@@ -106,7 +106,7 @@ async function mainSearchFunction() {
         //에스더 1300+
 
         let gradeImageSrc = "";
-        console.log(specPoint.tierInfoObj)
+        //console.log(specPoint.tierInfoObj)
         let gaugePercent = (specPoint.completeSpecPoint - specPoint.tierInfoObj.nowTierValue) / (specPoint.tierInfoObj.nextTierValue - specPoint.tierInfoObj.nowTierValue) * 100;
         let gauge = "";
         if (specPoint.tierInfoObj.nextTierNameEng) {
@@ -359,7 +359,7 @@ async function mainSearchFunction() {
         // }
 
         if (artifactData) {
-            console.log(artifactData);
+            //console.log(artifactData);
             element.innerHTML = `
                 <div class="img-box radius ultra-background">
                     <img src="${artifactData.Icon}" alt="보주 아이콘">

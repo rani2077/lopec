@@ -1686,76 +1686,93 @@ export async function getCharacterProfile(data, dataBase) {
 
     // 유저가 착용중인 보석,스킬 배열로 만들기
 
-    if (data.ArmoryGem.Gems != null) {
-        data.ArmoryGem.Gems.forEach(function (gem) {
+    function parseTooltip(tooltip) {
+        if (tooltip && typeof tooltip === "object") return tooltip;
+        if (typeof tooltip !== "string") return null;
 
-            data.ArmoryProfile.CharacterClassName
+        let s = tooltip.trim();
 
-            let regex = />([^<]*)</g;
-            let match;
-            let results = [];
-            while ((match = regex.exec(gem.Tooltip)) !== null) {
-                results.push(match[1]);
+        if (s.includes("<") && s.includes(">")) {
+            s = new DOMParser().parseFromString(s, "text/html").body.textContent?.trim() ?? s;
+        }
+
+        s = s.replace(/&quot;|&#34;/g, '"').replace(/&amp;/g, "&");
+
+        const a = s.indexOf("{");
+        const b = s.lastIndexOf("}");
+        if (a !== -1 && b !== -1) s = s.slice(a, b + 1);
+
+        try { return JSON.parse(s); } catch (_) { }
+        try { return JSON.parse(JSON.parse(s)); } catch (_) { }
+
+        return null;
+    }
+
+    function collectStrings(node, out = []) {
+        if (node == null) return out;
+        if (typeof node === "string") out.push(node);
+        else if (Array.isArray(node)) node.forEach(v => collectStrings(v, out));
+        else if (typeof node === "object") Object.values(node).forEach(v => collectStrings(v, out));
+        return out;
+    }
+
+    function extractSkill(effectText) {
+        const afterClass = effectText.replace(/^\[[^\]]+\]/, "");
+        return afterClass.split(/재사용|피해|지원|추가효과|기본공격력/)[0].trim();
+    }
+
+    function extractGemNameAndLevel(text) {
+        const gemName = (text.match(/홍염|작열|멸화|겁화|광휘|딜광휘|쿨광휘/) || [null])[0] ?? "기타보석";
+
+        const mLvl =
+            text.match(/(\d+)\s*레벨/) ||
+            text.match(/(?:보석레벨|Lv\.?)\s*\.?(\d+)/i);
+        const level = mLvl ? Number(mLvl[1]) : null;
+
+        return { gemName, level };
+    }
+
+    // -------------------- 메인 --------------------
+    if (data?.ArmoryGem?.Gems?.length) {
+        const className = data?.ArmoryProfile?.CharacterClassName ?? "";
+
+        data.ArmoryGem.Gems.forEach((gem) => {
+            const tooltipObj = parseTooltip(gem.Tooltip);
+
+            const allStrings = tooltipObj ? collectStrings(tooltipObj) : [];
+            const fallbackText =
+                typeof gem.Tooltip === "string"
+                    ? gem.Tooltip.replace(/<[^>]*>/g, " ")
+                    : String(gem.Tooltip ?? "");
+
+            const allText = (allStrings.length ? allStrings.join(" ") : fallbackText);
+
+            const effectText = tooltipObj?.Element_006?.value?.Element_001 ?? "" !== "" ? tooltipObj?.Element_006?.value?.Element_001 : tooltipObj?.Element_005?.value?.Element_001 ?? "";
+            // const effectText2 = tooltipObj?.Element_005?.value?.Element_001 ?? "";
+
+            // 보석 타입/레벨
+            let { gemName, level } = extractGemNameAndLevel(allText);
+
+            // 광휘 세부(딜/쿨) 분류: "효과"를 최우선으로 사용
+            if (gemName === "광휘" || gemName === "딜광휘" || gemName === "쿨광휘") {
+                const base = (effectText || allText).replace(/\u00A0/g, " ").replace(/\s+/g, "");
+                if (base.includes("재사용")) gemName = "쿨광휘";
+                else if (base.includes("피해") || base.includes("지원")) gemName = "딜광휘";
+                else gemName = "광휘"; // 애매하면 원형 유지
             }
 
+            // 내 직업 보석인지 판별: 효과 텍스트에 [직업]이 있으면 내 직업으로 간주
+            const isMine = effectText.includes(`[${className}]`);
+            // const isMine2 = effectText2.includes(`[${className}]`);
+            // console.log(isMine2)
 
-            results.forEach(function (toolTip, idx) {
 
-                toolTip = toolTip.replace(/"/g, '');
 
-                if (toolTip.includes(data.ArmoryProfile.CharacterClassName) && /(^|[^"])\[([^\[\]"]+)\](?=$|[^"])/.test(toolTip) && toolTip.includes("Element")) {
 
-                    let etcGemValue = results[idx + 2].substring(0, results[idx + 2].indexOf('"'))
-                    let gemName;
-                    let level = null;
-                    if (results[1].match(/홍염|작열|멸화|겁화|광휘/) != null) {
-                        gemName = results[1].match(/홍염|작열|멸화|겁화|광휘/)[0];
-                        level = Number(results[1].match(/(\d+)레벨/)[1])
+            const skill = isMine && effectText ? extractSkill(effectText) : "직업보석이 아닙니다";
 
-                        // '광휘' 보석 타입 구분
-                        if (gemName === '광휘') {
-                            // 툴팁 전체에서 HTML 태그를 제거하여 순수 텍스트만 남김
-                            const tooltipText = gem.Tooltip.replace(/<[^>]*>/g, ' ');
-
-                            if (tooltipText.includes('피해') || tooltipText.includes('지원')) {
-                                gemName = '딜광휘'; // 피해 옵션이 있으면 '딜광휘'로 이름 변경
-                            } else if (tooltipText.includes('재사용')) {
-                                gemName = '쿨광휘'; // 재사용(쿨타임) 옵션이 있으면 '쿨광휘'로 이름 변경
-                            }
-                        }
-                    } else {
-                        gemName = "기타보석"
-                    }
-                    // let obj = { name: results[idx+1], gem: gemName, level : level};
-                    let obj = { skill: results[idx + 1], name: gemName, level: level };
-                    gemSkillArry.push(obj)
-
-                } else if (!(toolTip.includes(data.ArmoryProfile.CharacterClassName)) && /(^|[^"])\[([^\[\]"]+)\](?=$|[^"])/.test(toolTip) && toolTip.includes("Element")) {  // 자신의 직업이 아닌 보석을 장착중인 경우
-
-                    //console.log(toolTip)
-                    let gemName;
-                    let level = null;
-                    const gemMatch = results[1].match(/홍염|작열|멸화|겁화|딜광휘|쿨광휘/);
-
-                    if (gemMatch) {
-                        gemName = gemMatch[0];
-
-                        const levelMatch = results[1].match(/(\d+)레벨/);
-                        if (levelMatch) {
-                            level = Number(levelMatch[1]);
-                        }
-                    } else {
-                        gemName = "기타보석";
-                    }
-                    let obj = { skill: "직업보석이 아닙니다", name: gemName, level: level };
-                    gemSkillArry.push(obj);
-
-                }
-
-            })
-
-        })
-
+            gemSkillArry.push({ skill, name: gemName, level });
+        });
     }
     htmlObj.gemSkillArry = gemSkillArry;
 
@@ -2518,10 +2535,51 @@ export async function getCharacterProfile(data, dataBase) {
             break;
         }
     }
+    
+
+    {
+        // (가장 간단하게) 보석체크용 헬퍼를 여기서 다시 선언해서 씀
+        const per = "홍염|작열|쿨광휘";
+        const dmg = "겁화|멸화|딜광휘";
+
+        function skillCheck(arr, ...nameAndGem) {
+            for (let i = 0; i < nameAndGem.length; i += 2) {
+                const name = nameAndGem[i];
+                const gemPattern = nameAndGem[i + 1];
+                const regex = new RegExp(gemPattern);
+                const found = arr.some(item => item.skill === name && regex.test(item.name));
+                if (!found) return false;
+            }
+            return true;
+        }
+        
+        const dmgGemCount = gemSkillArry.filter(item => new RegExp(dmg).test(item.name)).length;
+        //console.log(gemSkillArry)
+        if ( specialClass === "111 일격" && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
+            specialClass = "111 일격 호왕";
+        }
+        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 7){
+            specialClass = "111 잔재 7딜 어스"
+        }
+        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 6){
+            specialClass = "111 잔재 7딜 어스 6겁"
+        }
+        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 8){
+            specialClass = "111 잔재 8딜 어스"
+        }
+
+        // 코어가 "111 세맥"으로 확정 + dmgGemCount 5면 또 분기
+        else if (specialClass === "111 세맥" && dmgGemCount === 30) {
+            specialClass = "111 5멸 세맥";
+        }
+
+        // “고기” 계열 코어(111/311/333/노차징 등) 모두에 적용
+        else if (specialClass.includes("고기") && !skillCheck(gemSkillArry, "슈퍼울트라메가톤파워", dmg)) {
+            specialClass = "코어확정 + 5겁 고기";
+        }
+    }
+
     console.log("보석전용 직업 : ", specialClass)
-
-
-
 
 
 
