@@ -205,9 +205,11 @@ async function fetchLostArkRankingData(name, job) {
  * extractValue			  :   특성합
  *********************************************************************************************************************** */
 export async function dataBaseResponse(inputName, extractValue, data) {
+	const urlParam = inputName;
+	const decodedText = decodeURIComponent(urlParam);
 
 	let characterInfoObj = {
-		nickname: inputName,
+		nickname: decodedText,
 		characterClass: `${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`,
 		totalStatus: extractValue.defaultObj.totalStatus,
 		statusSpecial: extractValue.defaultObj.statusSpecial,
@@ -225,7 +227,7 @@ export async function dataBaseResponse(inputName, extractValue, data) {
 
 	let responseData = await response.json()
 	// console.log(`${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`)
-	let rankData = await fetchLostArkRankingData(inputName, `${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`)
+	let rankData = await fetchLostArkRankingData(decodedText, `${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`)
 	responseData.classRank = rankData.classRank;
 	responseData.totalRank = rankData.totalRank;
 	return responseData;
@@ -239,9 +241,13 @@ export async function dataBaseResponse(inputName, extractValue, data) {
  * inputName			  :	  닉네임
  * extractValue			  :   
  *********************************************************************************************************************** */
+
 export async function specPointUpdate(inputName, data, extractValue, calcValue) {
+	const urlParam = inputName;
+	const decodedText = decodeURIComponent(urlParam);
+
 	let characterInfoObj = {
-		nickname: inputName,
+		nickname: decodedText,
 		characterClass: `${extractValue.etcObj.supportCheck} ${extractValue.etcObj.characterClass}`,
 		totalSum: calcValue.completeSpecPoint,
 		itemLevel: Number(data.ArmoryProfile.ItemAvgLevel.replace(/,/g, ''))

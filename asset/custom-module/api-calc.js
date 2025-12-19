@@ -141,10 +141,10 @@ export async function apiCalcValue(inputName) {
     }
 
     if (
-        window.location.href.includes("lopec.kr") &&                                                 // url이 lopec.kr일 경우
-        window.location.href.includes("search") &&                                                   // 검색결과 페이지의 경우
+        // window.location.href.includes("lopec.kr") &&                                                 // url이 lopec.kr일 경우
+        // window.location.href.includes("search") &&                                                   // 검색결과 페이지의 경우
         (calcValue.completeSpecPoint > dataBase.totalSum ? dataBase.totalSum + 0.01 : 0) &&          // 계산된 스펙포인트가 DB값보다 큰 경우
-        !gemSetCheck  &&                                                                             // 저장된 보석설정을 로드하지 않은 경우
+        !gemSetCheck &&                                                                             // 저장된 보석설정을 로드하지 않은 경우
         !crawlingBot()                                                                               // 구글 봇이 아닐 경우
         //devilDmgCheck === "true" &&                                                                // 악추피 체크를 한 경우
     ) {

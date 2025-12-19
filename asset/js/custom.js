@@ -8,6 +8,7 @@ let mobileCheck = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini
  * description			: 	사용하는 모든 외부 module파일 import
  *********************************************************************************************************************** */
 export async function importModuleManager() {
+
     // 이 함수는 매개변수를 받지 않으며, 정의된 모든 모듈을 무조건 로드합니다.
     let interValTime = 60 * 1000;
     const cacheBuster = `?${Math.floor((new Date).getTime() / interValTime)}`;
