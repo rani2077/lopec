@@ -2402,6 +2402,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "222 비기",
+        skill: [
+            { name: "오버드라이브", per: 0.3 },
+            { name: "블러디 러쉬", per: 0.3 },
+            { name: "피니쉬 스트라이크", per: 0.06 },
+            { name: "헬 블레이드", per: 0.03 },
+            { name: "템페스트 슬래쉬", per: 0.02 },
+
+        ],
+    },
+    {
         class: "중수",
         skill: [
             { name: "중력 가중 스킬", per: 0.626 },
@@ -2700,6 +2711,35 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "121 오의",
+        skill: [
+            { name: "오의 : 창룡패황권", per: 0.255 },
+            { name: "오의 : 화룡천상", per: 0.24 },
+            { name: "오의 : 풍신초래", per: 0.19 },
+            { name: "오의 : 나선경", per: 0.1 },
+            { name: "보정치", per: -0.013},
+        ],
+    },
+    {
+        class: "123 오의",
+        skill: [
+            { name: "오의 : 창룡패황권", per: 0.34 },
+            { name: "오의 : 화룡천상", per: 0.24 },
+            { name: "오의 : 나선경", per: 0.13 },
+            { name: "오의 : 풍신초래", per: 0.11 },
+            { name: "보정치", per: -0.01 },
+        ],
+    },
+    {
+        class: "333 오의",
+        skill: [
+            { name: "오의 : 창룡패황권", per: 0.27 },
+            { name: "오의 : 풍신초래", per: 0.23 },
+            { name: "오의 : 화룡천상", per: 0.14 },
+            { name: "오의 : 나선경", per: 0.14 },
+        ],
+    },
+    {
         class: "밸패 오의",
         skill: [
             { name: "오의 : 창룡패황권", per: 0.311 },
@@ -2752,6 +2792,17 @@ export let classGemFilter = [
             { name: "여래신장", per: 0.10 },
             { name: "섬열파", per: 0.06 },
             { name: "환영격", per: 0.05 },
+        ],
+    },
+    {
+        class: "333 세맥",
+        skill: [
+            { name: "파쇄장", per: 0.17 },
+            { name: "난화격", per: 0.15 },
+            { name: "회선격추", per: 0.14 },
+            { name: "벽력장", per: 0.13 },
+            { name: "낙영장", per: 0.13 },
+            { name: "여래신장", per: 0.06 },
         ],
     },
     {
@@ -2814,13 +2865,13 @@ export let classGemFilter = [
         ],
     },
     {
-        class: "섬열파 역천",
+        class: "222 역천",
         skill: [
-            { name: "섬열파", per: 0.30 },
-            { name: "풍뢰일광포", per: 0.11 },
-            { name: "여래신장", per: 0.10 },
-            { name: "기공장", per: 0.08 },
-            { name: "무공탄", per: 0.052 },
+            { name: "섬열파", per: 0.36 },
+            { name: "무공탄", per: 0.17 },
+            { name: "여래신장", per: 0.1 },
+            { name: "풍뢰일광포", per: 0.09 },
+            { name: "기공장", per: 0.07 },
         ],
     },
     {
@@ -2847,6 +2898,17 @@ export let classGemFilter = [
             { name: "환영격", per: 0.07 },
             { name: "벽력장", per: 0.07 },
             { name: "보정치", per: -0.1 },
+        ],
+    },
+    {
+        class: "333 역천",
+        skill: [
+            { name: "번천장", per: 0.175 },
+            { name: "풍뢰일광포", per: 0.11 },
+            { name: "난화격", per: 0.1 },
+            { name: "여래신장", per: 0.09 },
+            { name: "섬열파", per: 0.08 },
+            { name: "환영격", per: 0.08 },
         ],
     },
     {
@@ -2880,6 +2942,17 @@ export let classGemFilter = [
             { name: "굉열파", per: 0.15 },
             { name: "유성강천", per: 0.10 },
             { name: "사두룡격", per: 0.06 },
+        ],
+    },
+    {
+        class: "333 절정",
+        skill: [
+            { name: "적룡포", per: 0.25 },
+            { name: "맹룡열파", per: 0.14 },
+            { name: "굉열파", per: 0.11 },
+            { name: "유성강천", per: 0.09 },
+            { name: "반월섬", per: 0.06 },
+            { name: "사두룡격", per: 0.04 },
         ],
     },
     {
@@ -3085,6 +3158,18 @@ export let classGemFilter = [
             { name: "오의 : 호왕출현", per: 0.215 },
             { name: "오의 : 폭쇄진", per: 0.136 },
             { name: "오의 : 뇌호격", per: 0.116 },
+            { name: "방천격", per: 0.116 },
+        ],
+    },
+    {
+        class: "111 난무",
+        skill: [
+            { name: "오의 : 풍신초래", per: 0.41 },
+            { name: "오의 : 호왕출현", per: 0.15 },
+            { name: "오의 : 뇌호격", per: 0.15 },
+            { name: "오의 : 폭쇄진", per: 0.11 },
+            { name: "방천격", per: 0.04 },
+            { name: "보정치", per: -0.04 },
         ],
     },
     {
@@ -3198,6 +3283,19 @@ export let classGemFilter = [
             { name: "샷건의 지배자", per: 0.12 },
             { name: "종말의 전조", per: 0.085 },
             { name: "데스페라도", per: 0.05 },
+        ],
+    },
+    {
+        class: "333 전탄",
+        skill: [
+            { name: "샷건의 지배자", per: 0.25 },
+            { name: "심판의 날", per: 0.17 },
+            { name: "샷건 연사", per: 0.13 },
+            { name: "최후의 만찬", per: 0.08 },
+            { name: "종말의 전조", per: 0.07 },
+            { name: "데스페라도", per: 0.03 },
+            { name: "원샷원킬", per: 0.03 },
+            { name: "보정치", per: -0.03 },
         ],
     },
     {
@@ -3547,6 +3645,16 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "233 황후",
+        skill: [
+            { name: "포 카드", per: 0.2 },
+            { name: "셀레스티얼 레인", per: 0.15 },
+            { name: "시크릿 가든", per: 0.11 },
+            { name: "세렌디피티", per: 0.09 },
+
+        ],
+    },
+    {
         class: "황제",
         skill: [
             { name: "다크 리저렉션", per: 0.167 },
@@ -3564,6 +3672,16 @@ export let classGemFilter = [
             { name: "이보크", per: 0.18 },
             { name: "언리미티드 셔플", per: 0.12 },
             { name: "셀레스티얼 레인", per: 0.03 },
+        ],
+    },
+    {
+        class: "212 황제",
+        skill: [
+            { name: "황제", per: 0.22 },
+            { name: "언리미티드 셔플", per: 0.18 },
+            { name: "댄싱 오브 스파인플라워", per: 0.11 },
+            { name: "이보크", per: 0.1 },
+            { name: "다크 리저렉션", per: 0.1 },
         ],
     },
     {
@@ -3776,6 +3894,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "112 갈증",
+        skill: [
+            { name: "레이지 스피어", per: 0.22 },
+            { name: "라스트 그래피티", per: 0.15 },
+            { name: "댄싱 오브 퓨리", per: 0.12 },
+            { name: "사일런트 스매셔", per: 0.09 },
+            { name: "쉐도우 스톰", per: 0.09 },
+
+        ],
+    },
+    {
         class: "갈증",
         skill: [
             { name: "레이지 스피어", per: 0.171 },
@@ -3981,6 +4110,17 @@ export let classGemFilter = [
         ],
     },
     {
+        class: "111 버스트",
+        skill: [
+            { name: "블레이드 버스트", per: 0.73 },
+            { name: "블레이드 댄스", per: 0.05 },
+            { name: "터닝 슬래쉬", per: 0.04 },
+            { name: "블리츠 러시", per: 0.03 },
+            { name: "어스 슬래쉬", per: 0.02 },
+
+        ],
+    },
+    {
         class: "만월",
         skill: [
             { name: "길로틴 스윙", per: 0.276 },
@@ -4116,6 +4256,18 @@ export let classGemFilter = [
             { name: "바람송곳", per: 0.11 },
             { name: "몰아치기", per: 0.10 },
             { name: "마주바람", per: 0.06 },
+            { name: "싹쓸바람", per: 0.04 },
+            { name: "여우비 스킬", per: 0.03 },
+
+        ],
+    },
+    {
+        class: "333 질풍 회걸",
+        skill: [
+            { name: "칼바람", per: 0.31 },
+            { name: "바람송곳", per: 0.11 },
+            { name: "몰아치기", per: 0.10 },
+            { name: "회오리 걸음", per: 0.06 },
             { name: "싹쓸바람", per: 0.04 },
             { name: "여우비 스킬", per: 0.03 },
 

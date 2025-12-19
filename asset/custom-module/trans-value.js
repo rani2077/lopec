@@ -2041,6 +2041,14 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "222 비기",
+            conditions: [
+                { core: "오버 파워", point: 14, support: "비기" },
+                { core: "오버 버스트", point: 17, support: "비기" },
+                { core: "오버플로우", point: 17, support: "비기" },
+            ]
+        },
+        {
             class: "러쉬 광기2",
             conditions: [
                 { core: "다크 파워", point: 14, support: "광기" },
@@ -2125,6 +2133,14 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "333 세맥",
+            conditions: [
+                { core: "적수공권", point: 14, support: "세맥" },
+                { core: "순섬보", point: 14, support: "세맥" },
+                { core: "쌍파연격", point: 14, support: "세맥" },
+            ]
+        },
+        {
             class: "111 역천",
             conditions: [
                 { core: "기강결", point: 14, support: "역천" },
@@ -2134,10 +2150,20 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
-            class: "섬열파 역천",
+            class: "333 역천",
             conditions: [
-                { core: "기류탄화", point: 17, support: "역천" },
-                { core: "진혼섬포", point: 17, support: "역천" },
+                { core: "맹공", point: 14, support: "역천" },
+                { core: "회기진천공", point: 14, support: "역천" },
+                { core: "번천귀류", point: 14, support: "역천" },
+
+            ]
+        },
+        {
+            class: "222 역천",
+            conditions: [
+                { core: "기류탄화", point: 14, support: "역천" },
+                { core: "열파전조", point: 14, support: "역천" },
+                { core: "진혼섬포", point: 14, support: "역천" },
 
             ]
         },
@@ -2162,6 +2188,33 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "121 오의",
+            conditions: [
+                { core: "패황불패", point: 14, support: "오의" },
+                { core: "화룡진천", point: 14, support: "오의" },
+                { core: "창풍극의", point: 14, support: "오의" },
+
+            ]
+        },
+        {
+            class: "123 오의",
+            conditions: [
+                { core: "패황불패", point: 14, support: "오의" },
+                { core: "화룡진천", point: 14, support: "오의" },
+                { core: "패황권", point: 14, support: "오의" },
+
+            ]
+        },
+        {
+            class: "333 오의",
+            conditions: [
+                { core: "오기강체", point: 14, support: "오의" },
+                { core: "심안", point: 14, support: "오의" },
+                { core: "패황권", point: 14, support: "오의" },
+
+            ]
+        },
+        {
             class: "111 절정",
             conditions: [
                 { core: "적룡의 기운", point: 14, support: "절정" },
@@ -2174,6 +2227,14 @@ export async function getCharacterProfile(data, dataBase) {
             conditions: [
                 { core: "적룡연격", point: 14, support: "절정" },
                 { core: "집중 강화", point: 14, support: "절정" },
+            ]
+        },
+        {
+            class: "333 절정",
+            conditions: [
+                { core: "연가 창식", point: 14, support: "절정" },
+                { core: "청룡기", point: 14, support: "절정" },
+                { core: "맹룡 회도", point: 14, support: "절정" },
             ]
         },
         {
@@ -2238,6 +2299,14 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "111 난무",
+            conditions: [
+                { core: "광파섬", point: 14, support: "난무" },
+                { core: "풍뢰보", point: 14, support: "난무" },
+                { core: "신왕화신", point: 14, support: "난무" },
+            ]
+        },
+        {
             class: "312 권왕",
             conditions: [
                 { core: "충전된 충격", point: 14, support: "권왕" },
@@ -2273,6 +2342,14 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "블러드 하운드", point: 14, support: "전탄" },
                 { core: "산탄강화", point: 14, support: "전탄" },
                 { core: "탄환 폭발", point: 14, support: "전탄" },
+            ]
+        },
+        {
+            class: "333 전탄",
+            conditions: [
+                { core: "샷건 오버로드", point: 14, support: "전탄" },
+                { core: "광란의 해결사", point: 14, support: "전탄" },
+                { core: "지배자의 탄환", point: 14, support: "전탄" },
             ]
         },
         {
@@ -2370,6 +2447,22 @@ export async function getCharacterProfile(data, dataBase) {
             ]
         },
         {
+            class: "112 갈증",
+            conditions: [
+                { core: "갈증의 악몽", point: 14, support: "갈증" },
+                { core: "치명적 악몽", point: 14, support: "갈증" },
+                { core: "치명적 연계", point: 14, support: "갈증" }
+            ]
+        },
+        {
+            class: "111 버스트",
+            conditions: [
+                { core: "블레이드 버스트", point: 14, support: "버스트" },
+                { core: "버스트 코어", point: 14, support: "버스트" },
+                { core: "일격", point: 14, support: "버스트" },
+            ]
+        },
+        {
             class: "111 잔재",
             conditions: [
                 { core: "아츠 마스터", point: 14, support: "잔재" },
@@ -2441,6 +2534,22 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "노말 인핸스", point: 14, support: "황제" },
                 { core: "황제의 심장", point: 14, support: "황제" },
                 { core: "다크 콜렉션", point: 14, support: "황제" },
+            ]
+        },
+        {
+            class: "212 황제",
+            conditions: [
+                { core: "노말 인핸스", point: 14, support: "황제" },
+                { core: "황제의 심장", point: 14, support: "황제" },
+                { core: "셔플 댄스", point: 14, support: "황제" },
+            ]
+        },
+        {
+            class: "233 황후",
+            conditions: [
+                { core: "인피니티 덱", point: 14, support: "황후" },
+                { core: "루인 풀셋", point: 14, support: "황후" },
+                { core: "루인 마이너셋", point: 14, support: "황후" },
             ]
         },
         {
@@ -2535,7 +2644,7 @@ export async function getCharacterProfile(data, dataBase) {
             break;
         }
     }
-    
+
 
     {
         // (가장 간단하게) 보석체크용 헬퍼를 여기서 다시 선언해서 씀
@@ -2552,21 +2661,25 @@ export async function getCharacterProfile(data, dataBase) {
             }
             return true;
         }
-        
+
         const dmgGemCount = gemSkillArry.filter(item => new RegExp(dmg).test(item.name)).length;
         //console.log(gemSkillArry)
-        if ( specialClass === "111 일격" && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
+        if (specialClass === "111 일격" && skillCheck(gemSkillArry, "오의 : 호왕출현", dmg)) {
             specialClass = "111 일격 호왕";
         }
-        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 7){
+        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 7) {
             specialClass = "111 잔재 7딜 어스"
         }
-        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 6){
+        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 6) {
             specialClass = "111 잔재 7딜 어스 6겁"
         }
-        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 8){
+        else if (specialClass === "111 잔재" && skillCheck(gemSkillArry, "어스 슬래쉬", dmg) && dmgGemCount === 8) {
             specialClass = "111 잔재 8딜 어스"
         }
+        else if (specialClass === "333 질풍" && skillCheck(gemSkillArry, "회오리 걸음", dmg) && dmgGemCount === 6) {
+            specialClass = "333 질풍 회걸"
+        }
+
 
         // 코어가 "111 세맥"으로 확정 + dmgGemCount 5면 또 분기
         else if (specialClass === "111 세맥" && dmgGemCount === 30) {
@@ -2574,7 +2687,7 @@ export async function getCharacterProfile(data, dataBase) {
         }
 
         // “고기” 계열 코어(111/311/333/노차징 등) 모두에 적용
-        else if (specialClass.includes("고기") && !skillCheck(gemSkillArry, "슈퍼울트라메가톤파워", dmg)) {
+        else if (specialClass.includes("고기") && skillCheck(gemSkillArry, "슈퍼울트라메가톤파워", dmg)) {
             specialClass = "코어확정 + 5겁 고기";
         }
     }
