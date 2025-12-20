@@ -1466,8 +1466,7 @@ async function simulatorInputCalc() {
     function extraElementCreate() {
         const extraAreaElement = document.querySelector(".extra-area");
 
-        // if (supportCheck !== "서폿") {
-        if (false) {
+        if (supportCheck !== "서폿") {
             extraAreaElement.innerHTML =
                 `<div class="extra-box azena">
                     <span class="tag">제일 먼저 아래 항목 선택 후 새로고침을 해주세요.</span>
@@ -1862,7 +1861,7 @@ async function simulatorInputCalc() {
             ]
         }
         let supportCombatInfo = [
-           { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.support) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.support), icon: "bolt-lightning-solid" },
+            { name: "예상 전투력 - Beta", value: Number(officialCombatCalcValue.support) + compareValue(cachedDetailInfo.extractValue.defaultObj.combatPower, officialCombatCalcValue.support), icon: "bolt-lightning-solid" },
         ]
         let supportImportantBuffInfo = [
             //{ name: "공격력 증가", value: Number(originSpecPoint.supportFinalAtkBuff).toFixed(0) + compareValue(cachedDetailInfo.specPoint.supportFinalAtkBuff, originSpecPoint.supportFinalAtkBuff), icon: "bolt-solid" },
