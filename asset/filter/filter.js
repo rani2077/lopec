@@ -2909,6 +2909,8 @@ export let classGemFilter = [
             { name: "여래신장", per: 0.09 },
             { name: "섬열파", per: 0.08 },
             { name: "환영격", per: 0.08 },
+            { name: "벽력장", per: 0.08 },
+            { name: "보정치", per: -0.08 },
         ],
     },
     {

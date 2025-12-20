@@ -2263,8 +2263,8 @@ export async function getCharacterProfile(data, dataBase) {
             class: "222 충단",
             conditions: [
                 { core: "충격파", point: 14, support: "충단" },
-                { core: "대지연타", point: 14, support: "충단" },
-                { core: "지면분쇄", point: 14, support: "충단" },
+                { core: "대지 연타", point: 14, support: "충단" },
+                { core: "지면 분쇄", point: 14, support: "충단" },
             ]
         },
         {
@@ -2692,7 +2692,7 @@ export async function getCharacterProfile(data, dataBase) {
         }
     }
 
-    //console.log("보석전용 직업 : ", specialClass)
+    console.log("보석전용 직업 : ", specialClass)
 
 
 
