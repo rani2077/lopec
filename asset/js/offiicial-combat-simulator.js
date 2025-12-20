@@ -1198,7 +1198,7 @@ export async function simulatorToOffcialCombatObj() {
         arkgridCore: arkgridCoreOffcialCombatSupport(),
         arkgridGem: arkgridGemOffcialCombatSupport()
     };
-    console.log("delaer", officialCombatObj);
+    //console.log("delaer", officialCombatObj);
     // console.log("sup_attack", officialCombatObjSupport_attack);
     // console.log("sup_defense", officialCombatObjSupport_defense);
     return {

@@ -79,6 +79,10 @@ export async function specPointCalc(inputObj) {
         + inputObj.arkgridObj.weaponAtkPlus) 
         * (inputObj.arkObj.weaponAtkPer 
         + (inputObj.accObj.weaponAtkPer / 100) + (inputObj.arkgridObj.weaponAtkPer / 100)))
+
+    let baseAtkPer = 0.01
+    let accAtkPer = (inputObj.accObj.atkPer)
+    const atkPer = (accAtkPer === 0) ? baseAtkPer : baseAtkPer + (accAtkPer/100);
     // 공격력
     let totalAtk = (((totalStat * totalWeaponAtk / 6) ** 0.5) * attackBonus 
     + (//inputObj.elixirObj.atkPlus 
@@ -86,7 +90,7 @@ export async function specPointCalc(inputObj) {
         + inputObj.accObj.atkPlus 
         //+ inputObj.elixirObj.atkBonus 
         + inputObj.arkgridObj.atkPlus)) 
-        * (((inputObj.accObj.atkPer + /*inputObj.elixirObj.atkPer +*/ inputObj.arkgridObj.atkPer) === 0 ? 1 : (inputObj.accObj.atkPer + /*inputObj.elixirObj.atkPer*/ + inputObj.arkgridObj.atkPer)) / 100 + 1)    
+        * (1 + atkPer + (inputObj.arkgridObj.atkPer/100))
 
     // 추피 총합
     let bangleAddDamageResult = ((inputObj.defaultObj.addDamagePer 
