@@ -92,7 +92,9 @@ async function simulatorInputCalc() {
         cachedDetailInfo.specPoint = specPoint;
         cachedData = data;
 
-        extraElementCreate(); // 아제나, 펫 옵션을 서폿/딜러 다르게 생성
+        const isSupport = await secondClassCheck(cachedData);
+
+        extraElementCreate(isSupport); // 아제나, 펫 옵션을 서폿/딜러 다르게 생성
         extraLoadSelection(); // 아제나, 펫 설정 로드
         // await Modules.fetchApi.clearLostarkApiCache(nameParam, document.querySelector(".sc-info .spec-area span.reset")); // 캐싱없이 api갱신
         await originSpecPointToHtml(specPoint, extractValue);
@@ -1463,10 +1465,11 @@ async function simulatorInputCalc() {
     * function name		:	extraElementCreate
     * description       : 	아제나, 펫 효과 radio버튼을 생성함
     *********************************************************************************************************************** */
-    function extraElementCreate() {
+    function extraElementCreate(supportCheck) {
         const extraAreaElement = document.querySelector(".extra-area");
 
         if (supportCheck !== "서폿") {
+            // if (false) {
             extraAreaElement.innerHTML =
                 `<div class="extra-box azena">
                     <span class="tag">제일 먼저 아래 항목 선택 후 새로고침을 해주세요.</span>
