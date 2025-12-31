@@ -426,21 +426,6 @@ html.dark-mode .sc-header .link-box:hover .text {
     position: relative;
 }
 
-.sc-profile:before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: url("/asset/image/santa-hat.png");
-    background-size:contain;
-    /* left: calc(72px / 2); */
-    left: 18px;
-    bottom: calc(100% - 30px);
-    /* transform:translate(-50%,0); */
-    z-index:3;
-}
-
 .sc-profile .group-img {
     width: 72px;
     height: 72px;
