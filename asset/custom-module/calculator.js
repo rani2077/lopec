@@ -941,8 +941,6 @@ export async function specPointCalc(inputObj) {
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
     let supportSpecPoint_MinusBangle = ((supportCombinedPower_MinusBangle ** 4.195) * 69.127) * inputObj.arkgridObj.coreValue
     let supportBangleValue = Math.max(((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.30, 0)
-    console.log(supportSpecPoint)
-    console.log(supportSpecPoint_MinusBangle)
     if (supportBangleValue < 0.02){
         supportBangleValue = 0
     }

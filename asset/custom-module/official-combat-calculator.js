@@ -106,19 +106,17 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         extractObj.accObj.statHp +
         extractObj.arkObj.statHp +
         extractObj.arkgridObj.statHP) *
-        extractObj.defaultObj.hpActive * (1 + (extractObj.extraObj.petHp / 100))).toFixed(0));
-
-    console.log("maxHP : ", originHealth) //maxHp (내실이 포함된 값)
-    console.log("calcHP : ", calcHealth) //파싱값으로 직접 계산한 최대생명력 (내실이 제외된 값)
+        extractObj.defaultObj.hpActive * (1 + (extractObj.extraObj.petHp / 100 + 0.12))).toFixed(0));
 
     if (!cacheCollectHealthSupport) {
         cacheCollectHealthSupport = originHealth - calcHealth
     }
 
-    let calcTotalHealth = calcHealth + cacheCollectHealthSupport
-    console.log("collectHP : ", cacheCollectHealthSupport)
+    // let calcTotalHealth = calcHealth + cacheCollectHealthSupport
+    // console.log("collectHP : ", cacheCollectHealthSupport)
+    // console.log(extractObj.etcObj.RealHealthStatus)
 
-    let calcCareCombat = calcTotalHealth * 12 / 10000 *
+    let calcCareCombat = extractObj.etcObj.RealHealthStatus * 12 / 10000 *
         combatObj.sup_defense.accessory *
         combatObj.sup_defense.bangle *
         combatObj.sup_defense.engraving *

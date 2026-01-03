@@ -62,6 +62,10 @@ let cachedData = null;
 let cachedDetailInfo = {};
 let officialCombatCachedFlag = null;
 let commonCachedFlag = null;
+let healthCached = {
+    originHealthStatus: null,
+    originHealth: null
+};
 let dataBaseResponse;
 async function simulatorInputCalc() {
     /* ************~**********************************************************************************************************
@@ -1408,18 +1412,27 @@ async function simulatorInputCalc() {
                         <label for="petStats3">2</label>
                     </div>
                 </div>
-                <div class="extra-box max-hp">
-                    <span class="text">최대 생명력</span>
-                    <input type="number" min=0 max=999999 placeholder="최대 생명력을 입력해주세요" >
+                <div class="extra-box stats">
+                    <span class="text">펫 목장:힘/민첩/지능</span>
+                    <div class="radio-item">
+                        <input type="radio" id="stats0" name="stats" value="0">
+                        <label for="stats0">0%</label>
+                        <input type="radio" id="stats04" name="stats" value="0.4">
+                        <label for="stats04">0.4%</label>
+                        <input type="radio" id="stats07" name="stats" value="0.7">
+                        <label for="stats07">0.7%</label>
+                        <input type="radio" id="stats1" name="stats" value="1" checked>
+                        <label for="stats1">1%</label>
+                    </div>
                 </div>
                 <div class="extra-box food">
                     <span class="text">현재 섭취중인 만찬</span>
                     <select>
-                        <option value="">없음</option>
-                        <option value="petHp:10">군고구마 세트</option>  -> 얘는 extraObj.petHp에 +10을 추가하면 됨
-                        <option value="RealHealthStatus에:5750">PC방 만찬</option> -> 얘네는 etcObj.RealHealthStatus에 +5750
-                        <option value="RealHealthStatus에:6000">만년 절임 특식</option> -> 얘네는 etcObj.RealHealthStatus에 +6000
-                        <option value="RealHealthStatus에:6000">운수 좋은 날</option> -> 얘네는 etcObj.RealHealthStatus에 +6000
+                        <option value="RealHealthStatus:0">없음</option>
+                        <option value="foodHp:10|foodHealth:10000">군고구마 세트</option> 
+                        <option value="RealHealthStatus:5750">PC방 만찬</option>
+                        <option value="RealHealthStatus:6000">만년 절임 특식</option>
+                        <option value="RealHealthStatus:6000">운수 좋은 날</option>
                     </select>
                 </div>
                 <div class="extra-box button" style="width:100%;flex-direction:row; justify-content: center; align-items: center;">
@@ -1453,7 +1466,7 @@ async function simulatorInputCalc() {
             azena: azenaValue,
             petAddDmg: damageValue,
             petStats: statsValue,
-            petHp: effectValue + ranchValue + foodValueExtract().petHp
+            petHp: effectValue + ranchValue
         };
     };
 
@@ -1462,40 +1475,50 @@ async function simulatorInputCalc() {
      */
     function foodValueExtract() {
         const foodElement = document.querySelector(".extra-area .extra-box.food select");
-        const foodName = foodElement.value.split(":")[0];
-        const foodValue = Number(foodElement.value.split(":")[1]);
+        const selectedValue = foodElement.value;
+
+        // 기본 결과값 구조
         let result = {
-            petHp: 0,
+            foodHp: 0,
+            foodHealth: 0,
             RealHealthStatus: 0
         };
-        result[foodName] = foodValue;
+
+        if (!selectedValue) return result;
+
+        // 1. "|"를 기준으로 각 속성을 나눕니다.
+        const parts = selectedValue.split("|");
+
+        // 2. 각 파트(예: "foodHp:10")를 다시 ":"로 나누어 result에 할당합니다.
+        parts.forEach(part => {
+            const [key, value] = part.split(":");
+            if (key && value !== undefined) {
+                result[key] = Number(value);
+            }
+        });
+
         return result;
     };
 
-    /**
-     * 유저의 최대 생명력을 직접 조절할 수 있게 함
-     */
-    function maxHpSelect() {
-        const maxHpElement = document.querySelector(".extra-area .extra-box.max-hp input");
-        if (!maxHpElement.value) return null;
-        const maxHpValue = Number(maxHpElement.value);
+    function saveFoodSelection() {
+        const foodElement = document.querySelector(".extra-area .extra-box.food select");
+        if (!commonCachedFlag) {
+            loadFoodSelection();
+            foodElement.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+            localStorage.setItem("foodSelection", foodElement.selectedIndex);
+        }
+        function loadFoodSelection() {
+            const savedIndex = Number(localStorage.getItem("foodSelection"));
+            if (savedIndex) {
+                foodElement.selectedIndex = savedIndex;
+            }
+        }
 
-        return maxHpValue;
-    };
-    /**
-     * 유저가 작성한 최대 생명력을 저장/복원함
-     */
-    function saveMaxHp() {
-        const maxHpValue = maxHpSelect();
-        const maxHpElement = document.querySelector(".extra-area .extra-box.max-hp input");
-        const maxValue = Number(maxHpElement.getAttribute('max'));
-        const saveMaxHpValue = localStorage.getItem('extraMaxHp');
-        if (maxHpValue) localStorage.setItem('extraMaxHp', JSON.stringify(maxHpValue));
-        if (maxHpElement.value > maxValue) maxHpElement.value = maxValue;
-        if (!commonCachedFlag) maxHpElement.value = saveMaxHpValue;
-        maxHpElement.addEventListener("keyup", saveMaxHp);
     }
-    saveMaxHp();
+    saveFoodSelection();
+    commonCachedFlag = true;
+
 
     function maxHpApplyAndReset() {
         const applyButton = document.querySelector(".extra-area .extra-box.button .apply");
@@ -1508,7 +1531,6 @@ async function simulatorInputCalc() {
 
     }
     maxHpApplyAndReset();
-    commonCachedFlag = true;
     /* **********************************************************************************************************************
     * function name		:	extraSaveSelection
     * description       : 	현재 선택된 값을 로컬 스토리지에 저장하는 함수
@@ -1580,8 +1602,29 @@ async function simulatorInputCalc() {
         }
         extractValue.etcObj.healthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + extractValue.arkgridObj.health) * extractValue.jobObj.healthPer + extractValue.arkgridObj.statHP;
         // extractValue.etcObj.RealHealthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + foodValueExtract().RealHealthStatus) * healthPer;
-        extractValue.etcObj.RealHealthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + 0) * healthPer;
+        // extractValue.etcObj.RealHealthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + 0) * healthPer;
+        let originHealthStatus = Math.ceil(((extractValue.defaultObj.maxHp / ((extractValue.defaultObj.hpActive).toFixed(5) * (1 + ((extractValue.extraObj.petHp + foodValueExtract().foodHp) / 100) + 0.12))) - (extractValue.bangleObj.statHp + extractValue.accObj.statHp + extractValue.arkObj.statHp + extractValue.arkgridObj.statHP + foodValueExtract().foodHealth)) / healthPer) - foodValueExtract().RealHealthStatus;
+        let originHealth = originHealthStatus - (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + foodValueExtract().RealHealthStatus);
+        if (!healthCached.originHealthStatus) {
+            healthCached.originHealthStatus = originHealthStatus;
+            healthCached.originHealth = originHealth;
+        }
+        let lopecHealth = healthCached.originHealth + (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + foodValueExtract().RealHealthStatus)
 
+        console.log(healthCached.originHealthStatus)
+        console.log(lopecHealth)
+        //let finalHealth = lopecHealth + originHealth
+        extractValue.etcObj.RealHealthStatus = Math.floor((lopecHealth * healthPer + (extractValue.bangleObj.statHp + extractValue.accObj.statHp + extractValue.arkObj.statHp + extractValue.arkgridObj.statHP)) * (extractValue.defaultObj.hpActive).toFixed(5) * (1 + extractValue.extraObj.petHp / 100 + 0.12));
+
+        // let originHP = extractObj.defaultObj.maxHp / 
+        // (1 + (extractObj.extraObj.petHp / 100)) / 
+        // extractObj.defaultObj.hpActive - 
+        // extractObj.bangleObj.statHp -
+        // extractObj.accObj.statHp -
+        // extractObj.arkObj.statHp -
+        // extractObj.arkgridObj.statHP
+        // 
+        // console.log(originHP)
 
         //console.log(accessoryInputHealthValue())
         extractValue.etcObj.gemCheckFnc.specialSkill = extractValue.etcObj.gemCheckFnc.specialSkill;
@@ -1607,7 +1650,6 @@ async function simulatorInputCalc() {
         // extractValue.etcObj = etcObjChangeValue();
         extractValue.gemObj = supportGemValueCalc();
         extractValue.extraObj = extraValueExtract();
-        if (maxHpSelect()) extractValue.defaultObj.maxHp = maxHpSelect();
         etcObjChangeValue()
     }
     simulatorDataToExtractValue()
