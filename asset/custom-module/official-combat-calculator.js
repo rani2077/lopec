@@ -12,11 +12,11 @@ let petAdd = 0;
 export async function officialCombatCalculator(combatObj, extractObj) {
     //console.log("공식전투력", combatObj);
     //console.log("오리진obj", extractObj);
-    if (extractObj.extraObj.petAddDmg == 1){
+    if (extractObj.extraObj.petAddDmg == 1) {
         petAdd = 1.0077
-    } else if (extractObj.extraObj.petAddDmg == 0.7){
+    } else if (extractObj.extraObj.petAddDmg == 0.7) {
         petAdd = 1.0054
-    } else if (extractObj.extraObj.petAddDmg == 0.4){
+    } else if (extractObj.extraObj.petAddDmg == 0.4) {
         petAdd = 1.0031
     } else {
         petAdd = 1
@@ -33,9 +33,9 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         extractObj.arkgridObj.weaponAtkPlus +
         extractObj.bangleObj.weaponAtkPlus) *
         (extractObj.arkObj.weaponAtkPer + (extractObj.accObj.weaponAtkPer / 100) + (extractObj.arkgridObj.weaponAtkPer / 100)))
-        //console.log(weaponAtk)
+    //console.log(weaponAtk)
 
-        
+
     let originBasePoint = originCombat /
         petAdd /
         combatObj.dealer.trinity.trinityValue /
@@ -62,7 +62,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         extractObj.bangleObj.str +
         extractObj.bangleObj.dex +
         extractObj.bangleObj.int) *
-        (extractObj.etcObj.avatarStats + extractObj.extraObj.petStats/100));
+        (extractObj.etcObj.avatarStats + extractObj.extraObj.petStats / 100));
 
     if (!cacheCollectStat) {
         cacheCollectStat = originTotalStat - calcBaseStat
@@ -90,53 +90,57 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.trinity.trinityValue *
         petAdd;
 
-        //console.log(petAdd)
+    //console.log(petAdd)
     //console.log("인게임 전투력", originCombat)
     //console.log("계산 전투력", Math.ceil(calcCombat * 100) / 100)
     //console.log("계산 전투력", (calcCombat * 100) / 100)
 
-/* **********************************************************************************************************************
- * function name		:	서폿 계산식
- * description			: 	시뮬레이터 전투력 obj와 오리진 obj를 사용하여 인겜 전투력을 계산해냄
- *********************************************************************************************************************** */
+    /* **********************************************************************************************************************
+     * function name		:	서폿 계산식
+     * description			: 	시뮬레이터 전투력 obj와 오리진 obj를 사용하여 인겜 전투력을 계산해냄
+     *********************************************************************************************************************** */
 
     let originHealth = extractObj.defaultObj.maxHp
-    let calcHealth = Number(((extractObj.etcObj.RealHealthStauts + 
-         extractObj.bangleObj.statHp + 
-         extractObj.accObj.statHp + 
-         extractObj.arkObj.statHp +
-         extractObj.arkgridObj.statHP) * 
-         extractObj.defaultObj.hpActive * (1 + (extractObj.extraObj.petHp/100))).toFixed(0));
+    let calcHealth = Number(((extractObj.etcObj.RealHealthStatus +
+        extractObj.bangleObj.statHp +
+        extractObj.accObj.statHp +
+        extractObj.arkObj.statHp +
+        extractObj.arkgridObj.statHP) *
+        extractObj.defaultObj.hpActive * (1 + (extractObj.extraObj.petHp / 100))).toFixed(0));
+
+    console.log("maxHP : ", originHealth) //maxHp (내실이 포함된 값)
+    console.log("calcHP : ", calcHealth) //파싱값으로 직접 계산한 최대생명력 (내실이 제외된 값)
 
     if (!cacheCollectHealthSupport) {
         cacheCollectHealthSupport = originHealth - calcHealth
     }
 
     let calcTotalHealth = calcHealth + cacheCollectHealthSupport
+    console.log("collectHP : ", cacheCollectHealthSupport)
 
-    let calcCareCombat = calcTotalHealth  * 12 / 10000 *
-    combatObj.sup_defense.accessory *
-    combatObj.sup_defense.bangle *
-    combatObj.sup_defense.engraving *
-    combatObj.sup_defense.arkgridCore *
-    combatObj.sup_defense.trinity.trinityCare
+    let calcCareCombat = calcTotalHealth * 12 / 10000 *
+        combatObj.sup_defense.accessory *
+        combatObj.sup_defense.bangle *
+        combatObj.sup_defense.engraving *
+        combatObj.sup_defense.arkgridCore *
+        combatObj.sup_defense.trinity.trinityCare
 
     let originAttackCombat = extractObj.defaultObj.combatPower - calcCareCombat
     //console.log("originAttackCombat", originAttackCombat)
 
     let originBaseAttack = originAttackCombat /
-    combatObj.sup_attack.accessory /
-    combatObj.sup_attack.ark /
-    combatObj.sup_attack.bangle /
-    combatObj.sup_attack.card /
-    combatObj.sup_attack.engraving /
-    combatObj.sup_attack.esther /
-    combatObj.sup_attack.gem /
-    combatObj.sup_attack.karma /
-    combatObj.sup_attack.level /
-    combatObj.sup_attack.stats /
-    combatObj.sup_attack.arkgridCore /
-    combatObj.sup_attack.arkgridGem
+        combatObj.sup_attack.accessory /
+        combatObj.sup_attack.ark /
+        combatObj.sup_attack.bangle /
+        combatObj.sup_attack.card /
+        combatObj.sup_attack.engraving /
+        combatObj.sup_attack.esther /
+        combatObj.sup_attack.gem /
+        combatObj.sup_attack.karma /
+        combatObj.sup_attack.level /
+        combatObj.sup_attack.stats /
+        combatObj.sup_attack.arkgridCore /
+        combatObj.sup_attack.arkgridGem
 
     let originAtkSupport = Math.floor(originBaseAttack * 1000000 / 124);
     let originTotalStatSupport = (((originAtkSupport / baseAttackBonus) ** 2) * 6) / weaponAtk;
@@ -145,7 +149,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         extractObj.bangleObj.str +
         extractObj.bangleObj.dex +
         extractObj.bangleObj.int) *
-        extractObj.etcObj.avatarStats + extractObj.extraObj.petStats/100);
+        extractObj.etcObj.avatarStats + extractObj.extraObj.petStats / 100);
 
     if (!cacheCollectStatSupport) {
         cacheCollectStatSupport = originTotalStatSupport - calcBaseStatSupport
@@ -169,7 +173,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.sup_attack.arkgridGem
 
     let calcCombatSupport = calcAttackCombat + calcCareCombat
-    
+
     //console.log("실제 전투력", originCombat)
     //console.log("계산 전투력", Math.ceil(calcCombatSupport * 100) / 100)
 

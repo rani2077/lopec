@@ -758,7 +758,7 @@ export async function specPointCalc(inputObj) {
         + inputObj.accObj.statHp
         + inputObj.arkObj.statHp 
         + inputObj.arkgridObj.statHP) 
-        * inputObj.defaultObj.hpActive * 1.07).toFixed(0));
+        * inputObj.defaultObj.hpActive * 1.07).toFixed(0));   
 
     let finalSpecial_MinusBangle = Math.min(inputObj.defaultObj.statusSpecial, 1200)
     let calcHaste_MinusBangle = (inputObj.defaultObj.statusHaste + finalSpecial_MinusBangle) * 0.75
@@ -940,7 +940,9 @@ export async function specPointCalc(inputObj) {
 
     let supportCombinedPower_MinusBangle= (supportBuffPower_MinusBangle ** 0.935) * (supportCarePower_MinusBangle ** 0.035) * (calcSupportUtilityPower ** 0.03)
     let supportSpecPoint_MinusBangle = ((supportCombinedPower_MinusBangle ** 4.195) * 69.127) * inputObj.arkgridObj.coreValue
-    let supportBangleValue = Math.max(((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.52, 0)
+    let supportBangleValue = Math.max(((supportSpecPoint - supportSpecPoint_MinusBangle) / supportSpecPoint_MinusBangle * 100) / 1.30, 0)
+    console.log(supportSpecPoint)
+    console.log(supportSpecPoint_MinusBangle)
     if (supportBangleValue < 0.02){
         supportBangleValue = 0
     }

@@ -61,6 +61,7 @@ let Modules = await importModuleManager();
 let cachedData = null;
 let cachedDetailInfo = {};
 let officialCombatCachedFlag = null;
+let commonCachedFlag = null;
 let dataBaseResponse;
 async function simulatorInputCalc() {
     /* ************~**********************************************************************************************************
@@ -487,6 +488,7 @@ async function simulatorInputCalc() {
      * description			: 	사용자가 선택한 장비 level stat special 객체 반환
      *********************************************************************************************************************** */
     let armorWeaponStatsObj = await armoryLevelCalc(Modules)
+    console.log(armorWeaponStatsObj);
     function defaultObjChangeValue() {
         extractValue.defaultObj.addDamagePer = defaultObjAddDamgerPerEdit();
         extractValue.defaultObj.weaponAtk = armorWeaponStatsObj.weaponStats;
@@ -519,151 +521,6 @@ async function simulatorInputCalc() {
         // return result
     }
     // console.log(defaultObjChangeValue())
-
-    /* **********************************************************************************************************************
-    * function name         :	armorElixirToObj()
-    * description			: 	장비 엘릭서 스텟 수치를 추출함
-    *********************************************************************************************************************** */
-
-    // function armorElixirToObj() {
-    //     let arr = [];
-    //     let elements = document.querySelectorAll(".armor-item .elixir");
-
-    //     // 각 엘릭서 요소 처리
-    //     elements.forEach(element => {
-    //         const valueString = element.value;
-    //         if (!valueString) return;
-
-    //         // 엘릭서 장비 타입 식별 (투구, 장갑 등)
-    //         const elementType = element.className.includes("helmet") ? "helmet" :
-    //             element.className.includes("glove") ? "glove" :
-    //                 element.className.includes("shoulder") ? "shoulder" :
-    //                     element.className.includes("armor") ? "armor" :
-    //                         element.className.includes("pants") ? "pants" :
-    //                             element.className.includes("common") ? "common" : "unknown";
-
-    //         const parts = valueString.split('|');
-    //         const text = element.options[element.selectedIndex].textContent.replace(/Lv.\d+/g, "").trim();
-
-    //         parts.forEach(part => {
-    //             const [key, valStr] = part.split(':');
-    //             if (key && valStr !== undefined) {
-    //                 const value = Number(valStr);
-    //                 if (!isNaN(value)) {
-    //                     arr.push({ key: key, value: value, originalName: text, element: elementType });
-    //                 }
-    //             }
-    //         });
-    //     });
-
-    //     // 엘릭서 이름 카운트 - 중복 없이 한 장비당 하나씩만 카운트
-    //     let elixirNameCounts = {};
-    //     let totalLevelSum = 0;
-    //     let processedElixirs = new Set(); // 처리된 엘릭서 조합 추적
-
-    //     arr.forEach(obj => {
-    //         if (obj.key === 'level') {
-    //             totalLevelSum += obj.value;
-    //         } else {
-    //             // 각 장비 요소별로 한 번만 카운트하기 위한 고유 식별자
-    //             const elementId = obj.element + "-" + obj.originalName;
-    //             if (!processedElixirs.has(elementId)) {
-    //                 processedElixirs.add(elementId);
-    //                 elixirNameCounts[obj.originalName] = (elixirNameCounts[obj.originalName] || 0) + 1;
-    //             }
-    //         }
-    //     });
-
-    //     // 데이터 그룹화 및 병합
-    //     const grouped = {};
-    //     arr.forEach(obj => {
-    //         if (obj && obj.hasOwnProperty('key')) {
-    //             const key = obj.key;
-    //             if (!grouped[key]) {
-    //                 grouped[key] = [];
-    //             }
-    //             grouped[key].push(obj.value);
-    //         }
-    //     });
-
-    //     // 기본 결과 객체 생성
-    //     const combinedObj = {
-    //         atkPlus: 0, atkBonus: 0, weaponAtkPlus: 0, atkPer: 0, atkBuff: 0,
-    //         carePower: 0, str: 0, int: 0, dex: 0, stats: 0, statHp: 0, identityUptime: 0, utilityPower: 0,
-    //         finalDamagePer: 1, level: totalLevelSum
-    //     };
-
-    //     // 값 결합하기
-    //     for (const key in grouped) {
-    //         if (key === "finalDamagePer") {
-    //             combinedObj[key] = grouped[key].reduce((acc, val) => acc * val, 1);
-    //         } else {
-    //             combinedObj[key] = grouped[key].reduce((acc, val) => acc + val, 0);
-    //         }
-    //     }
-
-    //     // 중복 엘릭서 그룹 정의
-    //     const group1 = ["회심", "달인", "선봉대"];
-    //     const group2 = ["강맹", "칼날방패", "행운"];
-    //     const group3 = ["선각자", "신념"];
-    //     const group4 = ["진군"];
-
-    //     // 중복된 엘릭서 찾기
-    //     let duplicateElixirName = null;
-    //     for (const name in elixirNameCounts) {
-    //         if (elixirNameCounts[name] >= 2) {
-    //             duplicateElixirName = name;
-    //             break;
-    //         }
-    //     }
-
-    //     // 중복 엘릭서의 그룹 찾기
-    //     let duplicateGroup = null;
-    //     if (duplicateElixirName) {
-    //         if (group1.includes(duplicateElixirName)) {
-    //             duplicateGroup = "group1";
-    //         } else if (group2.includes(duplicateElixirName)) {
-    //             duplicateGroup = "group2";
-    //         } else if (group3.includes(duplicateElixirName)) {
-    //             duplicateGroup = "group3";
-    //         } else if (group4.includes(duplicateElixirName)) {
-    //             duplicateGroup = "group4";
-    //         }
-    //     }
-
-    //     // 중복 보너스 적용
-    //     if (duplicateGroup === "group1") {
-    //         if (totalLevelSum >= 40) {
-    //             combinedObj.finalDamagePer *= 1.12;
-    //         } else if (totalLevelSum >= 35) {
-    //             combinedObj.finalDamagePer *= 1.06;
-    //         }
-    //     } else if (duplicateGroup === "group2") {
-    //         if (totalLevelSum >= 40) {
-    //             combinedObj.finalDamagePer *= 1.08;
-    //         } else if (totalLevelSum >= 35) {
-    //             combinedObj.finalDamagePer *= 1.04;
-    //         }
-    //     } else if (duplicateGroup === "group3") {
-    //         if (totalLevelSum >= 40) {
-    //             combinedObj.atkBuff += 14;
-    //         } else if (totalLevelSum >= 35) {
-    //             combinedObj.atkBuff += 8;
-    //         }
-    //     } else if (duplicateGroup === "group4") {
-    //         if (totalLevelSum >= 40) {
-    //             combinedObj.atkBuff += 6;
-    //         } else if (totalLevelSum >= 35) {
-    //             combinedObj.atkBuff += 3;
-    //         }
-    //     }
-
-    //     // 마무리 정리
-    //     delete combinedObj.level;
-    //     combinedObj.str = combinedObj.stats ? combinedObj.stats : 0;
-
-    //     return combinedObj;
-    // }
 
 
     /* **********************************************************************************************************************
@@ -1550,6 +1407,24 @@ async function simulatorInputCalc() {
                         <input type="radio" id="petStats3" name="ranch" value="2" checked>
                         <label for="petStats3">2</label>
                     </div>
+                </div>
+                <div class="extra-box max-hp">
+                    <span class="text">최대 생명력</span>
+                    <input type="number" min=0 max=999999 placeholder="최대 생명력을 입력해주세요" >
+                </div>
+                <div class="extra-box food">
+                    <span class="text">현재 섭취중인 만찬</span>
+                    <select>
+                        <option value="">없음</option>
+                        <option value="petHp:10">군고구마 세트</option>  -> 얘는 extraObj.petHp에 +10을 추가하면 됨
+                        <option value="RealHealthStatus에:5750">PC방 만찬</option> -> 얘네는 etcObj.RealHealthStatus에 +5750
+                        <option value="RealHealthStatus에:6000">만년 절임 특식</option> -> 얘네는 etcObj.RealHealthStatus에 +6000
+                        <option value="RealHealthStatus에:6000">운수 좋은 날</option> -> 얘네는 etcObj.RealHealthStatus에 +6000
+                    </select>
+                </div>
+                <div class="extra-box button" style="width:100%;flex-direction:row; justify-content: center; align-items: center;">
+                    <button class="apply" style="padding:3px;border-radius:3px;cursor:pointer;">적용</button>
+                    <button class="reset" style="padding:3px;border-radius:3px;cursor:pointer;">초기화</button>
                 </div>`
         }
     };
@@ -1578,10 +1453,62 @@ async function simulatorInputCalc() {
             azena: azenaValue,
             petAddDmg: damageValue,
             petStats: statsValue,
-            petHp: effectValue + ranchValue
+            petHp: effectValue + ranchValue + foodValueExtract().petHp
         };
-    }
+    };
 
+    /**
+     * 사용자가 선택한 만찬값을 반영함
+     */
+    function foodValueExtract() {
+        const foodElement = document.querySelector(".extra-area .extra-box.food select");
+        const foodName = foodElement.value.split(":")[0];
+        const foodValue = Number(foodElement.value.split(":")[1]);
+        let result = {
+            petHp: 0,
+            RealHealthStatus: 0
+        };
+        result[foodName] = foodValue;
+        return result;
+    };
+
+    /**
+     * 유저의 최대 생명력을 직접 조절할 수 있게 함
+     */
+    function maxHpSelect() {
+        const maxHpElement = document.querySelector(".extra-area .extra-box.max-hp input");
+        if (!maxHpElement.value) return null;
+        const maxHpValue = Number(maxHpElement.value);
+
+        return maxHpValue;
+    };
+    /**
+     * 유저가 작성한 최대 생명력을 저장/복원함
+     */
+    function saveMaxHp() {
+        const maxHpValue = maxHpSelect();
+        const maxHpElement = document.querySelector(".extra-area .extra-box.max-hp input");
+        const maxValue = Number(maxHpElement.getAttribute('max'));
+        const saveMaxHpValue = localStorage.getItem('extraMaxHp');
+        if (maxHpValue) localStorage.setItem('extraMaxHp', JSON.stringify(maxHpValue));
+        if (maxHpElement.value > maxValue) maxHpElement.value = maxValue;
+        if (!commonCachedFlag) maxHpElement.value = saveMaxHpValue;
+        maxHpElement.addEventListener("keyup", saveMaxHp);
+    }
+    saveMaxHp();
+
+    function maxHpApplyAndReset() {
+        const applyButton = document.querySelector(".extra-area .extra-box.button .apply");
+        const resetButton = document.querySelector(".extra-area .extra-box.button .reset");
+        applyButton.addEventListener("click", () => location.reload());
+        resetButton.addEventListener("click", () => {
+            localStorage.setItem('extraMaxHp', null);
+            location.reload();
+        });
+
+    }
+    maxHpApplyAndReset();
+    commonCachedFlag = true;
     /* **********************************************************************************************************************
     * function name		:	extraSaveSelection
     * description       : 	현재 선택된 값을 로컬 스토리지에 저장하는 함수
@@ -1591,7 +1518,9 @@ async function simulatorInputCalc() {
         const selection = {
             azena: document.querySelector("input[name='azena']:checked")?.value,
             damage: document.querySelector("input[name='damage']:checked")?.value,
-            stats: document.querySelector("input[name='stats']:checked")?.value
+            stats: document.querySelector("input[name='stats']:checked")?.value,
+            effect: document.querySelector("input[name='effect']:checked")?.value,
+            ranch: document.querySelector("input[name='ranch']:checked")?.value,
         };
 
         // 2. 객체를 JSON 문자열로 변환하여 로컬 스토리지에 저장
@@ -1639,7 +1568,20 @@ async function simulatorInputCalc() {
         extractValue.etcObj.gemsCoolAvg = extractValue.etcObj.gemsCoolAvg;
         extractValue.etcObj.supportCheck = supportCheck;
         // 여기에 체력 값 추가
-        extractValue.etcObj.healthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue()) * extractValue.jobObj.healthPer;
+        let healthPer = 0;
+        if (extractValue.etcObj.characterClass === "바드") {
+            healthPer = 2;
+        } else if (extractValue.etcObj.characterClass === "홀리나이트") {
+            healthPer = 2.1;
+        } else if (extractValue.etcObj.characterClass === "발키리") {
+            healthPer = 2.1;
+        } else if (extractValue.etcObj.characterClass === "도화가") {
+            healthPer = 2;
+        }
+        extractValue.etcObj.healthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + extractValue.arkgridObj.health) * extractValue.jobObj.healthPer + extractValue.arkgridObj.statHP;
+        // extractValue.etcObj.RealHealthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + foodValueExtract().RealHealthStatus) * healthPer;
+        extractValue.etcObj.RealHealthStatus = (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + 0) * healthPer;
+
 
         //console.log(accessoryInputHealthValue())
         extractValue.etcObj.gemCheckFnc.specialSkill = extractValue.etcObj.gemCheckFnc.specialSkill;
@@ -1665,6 +1607,7 @@ async function simulatorInputCalc() {
         // extractValue.etcObj = etcObjChangeValue();
         extractValue.gemObj = supportGemValueCalc();
         extractValue.extraObj = extraValueExtract();
+        if (maxHpSelect()) extractValue.defaultObj.maxHp = maxHpSelect();
         etcObjChangeValue()
     }
     simulatorDataToExtractValue()

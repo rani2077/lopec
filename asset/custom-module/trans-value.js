@@ -247,7 +247,7 @@ export async function getCharacterProfile(data, dataBase) {
         abilityAttackBonus: 0,
         armorStatus: 0,
         healthStatus: 0,
-        RealHealthStauts: 0,
+        RealHealthStatus: 0,
         avatarStats: 1,
         supportCheck: supportCheck(),
         characterClass: data.ArmoryProfile.CharacterClassName,
@@ -3023,7 +3023,7 @@ export async function getCharacterProfile(data, dataBase) {
         let toolTipProcess = toolTipOrigin.map(toolTip => {
             if (toolTip.includes("광휘")) {
                 // let shineTooltip = "";
-                if (toolTip.includes('피해') || toolTip.includes('지원')) {
+                if (toolTip.includes('피해') || toolTip.includes('지원 효과')) {
                     return toolTip.replace('광휘', '딜광휘');
                 } else if (toolTip.includes('재사용')) {
                     return toolTip.replace('광휘', '쿨광휘');
@@ -3498,8 +3498,8 @@ export async function getCharacterProfile(data, dataBase) {
     arkgridObj.damageBuff = arkgridObj.damageBuff + arkgridGemObj.damageBuff;
     arkgridObj.stigmaPer = arkgridObj.stigmaPer + arkgridGemObj.stigmaPer;
 
-    etcObj.healthStatus = Number((healthStatus() + arkgridObj.health) * jobObj.healthPer);
-    etcObj.RealHealthStauts = Number(healthStatus() + arkgridObj.health) * healthPer;
+    etcObj.healthStatus = Number((healthStatus() + arkgridObj.health) * jobObj.healthPer + arkgridObj.statHP);
+    etcObj.RealHealthStatus = Number(healthStatus() + arkgridObj.health) * healthPer + arkgridObj.statHP;
 
     //if (localStorage.getItem("devilDamage") === "false") {
     //    arkgridObj = getOriginarkgridObj();
