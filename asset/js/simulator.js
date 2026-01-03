@@ -1368,6 +1368,10 @@ async function simulatorInputCalc() {
                         <input type="radio" id="stats1" name="stats" value="1" checked>
                         <label for="stats1">1%</label>
                     </div>
+                </div>
+                <div class="extra-box button" style="width:100%;flex-direction:row; justify-content: center; align-items: center;">
+                    <button class="apply" style="padding:3px;border-radius:3px;cursor:pointer;">적용</button>
+                    <button class="reset" style="padding:3px;border-radius:3px;cursor:pointer;">초기화</button>
                 </div>`
         } else {
             extraAreaElement.innerHTML =
@@ -1475,14 +1479,16 @@ async function simulatorInputCalc() {
      */
     function foodValueExtract() {
         const foodElement = document.querySelector(".extra-area .extra-box.food select");
-        const selectedValue = foodElement.value;
-
         // 기본 결과값 구조
         let result = {
             foodHp: 0,
             foodHealth: 0,
             RealHealthStatus: 0
         };
+
+        if (!foodElement) return result;
+        const selectedValue = foodElement.value;
+
 
         if (!selectedValue) return result;
 
@@ -1502,6 +1508,7 @@ async function simulatorInputCalc() {
 
     function saveFoodSelection() {
         const foodElement = document.querySelector(".extra-area .extra-box.food select");
+        if (!foodElement) return;
         if (!commonCachedFlag) {
             loadFoodSelection();
             foodElement.dispatchEvent(new Event('change', { bubbles: true }));
