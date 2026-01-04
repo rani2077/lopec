@@ -2933,6 +2933,9 @@ async function selectCreate(data, Modules) {
                     levelEvolution += 20;
                 } else if (/T4 고대/.test(element.options[element.selectedIndex].text)) {
                     levelEvolution += 24;
+                } else if (/세르카/.test(element.options[element.selectedIndex].text)) {
+                    // ToDo 세르카 진화포인트 값
+                    levelEvolution += 24;
                 }
             }
         })
@@ -3416,6 +3419,7 @@ async function selectCreate(data, Modules) {
     function keppAdvancedUpgradeValue() {
         let advancedElements = document.querySelectorAll(".sc-info .armor-area .armor-item select.armor-upgrade");
         let normalElements = document.querySelectorAll(".sc-info .armor-area .armor-item select.armor-name");
+        let plusElements = document.querySelectorAll(".sc-info .armor-area .armor-item select.plus");
         advancedElements.forEach(element => {
             element.addEventListener("change", () => { valueAttribute() })
             function valueAttribute() {
@@ -3435,6 +3439,47 @@ async function selectCreate(data, Modules) {
                 }
             })
         })
+        // ToDo simulator.html에서 `value="1600">세르카` 를 검색해서 value값을 일치시키면 됨
+        plusElements.forEach((item) => {
+            const normalUpgradeElement = item.closest(".armor-item").querySelector("select.armor-name");
+            const normalUpgradeValue = Number(normalUpgradeElement.value);
+
+            let currentIndex = normalUpgradeElement.selectedIndex;
+
+            const advancedUpgradeElement = item.closest(".armor-item").querySelector("select.armor-upgrade");
+            const advancedUpgradeValue = Number(advancedUpgradeElement.getAttribute("data-advanced-value"));
+
+            // advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+
+            if (Number(item.value) === 1600 && Number(item.getAttribute("data-selected")) !== 1600) {
+                if (normalUpgradeValue <= 23) {
+                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 9);
+                } else if (normalUpgradeValue === 24) {
+                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 8);
+                } else if (normalUpgradeValue === 25) {
+                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 7);
+                }
+                normalUpgradeElement.dispatchEvent(new Event('change'));
+            } else if (Number(item.value) !== 1600 && Number(item.getAttribute("data-selected")) === 1600) {
+                if (normalUpgradeValue <= 14) {
+                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 9);
+                    normalUpgradeElement.dispatchEvent(new Event('change'));
+                    advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+                    advancedUpgradeElement.dispatchEvent(new Event('change'));
+                } else if (normalUpgradeValue <= 16) {
+                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 8);
+                    normalUpgradeElement.dispatchEvent(new Event('change'));
+                    advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+                    advancedUpgradeElement.dispatchEvent(new Event('change'));
+                } else if (normalUpgradeValue <= 18) {
+                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 7);
+                    normalUpgradeElement.dispatchEvent(new Event('change'));
+                    advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+                    advancedUpgradeElement.dispatchEvent(new Event('change'));
+                }
+            }
+            item.setAttribute("data-selected", item.value)
+        });
     }
     keppAdvancedUpgradeValue()
 
@@ -4331,6 +4376,8 @@ async function selectCreate(data, Modules) {
         showLeafInfo();
         enlightValueChange();
         avgLevelKarmaYN();
+
+        keppAdvancedUpgradeValue();
     })
 }
 

@@ -753,14 +753,28 @@
     font-size: 15px;
 }
 
-.sc-info .text-box .name-wrap .tag {}
+.sc-info .text-box .name-wrap-search {
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 3px;
+}
+
+.sc-info .text-box .name-wrap-search .tag {
+    padding: 3px;
+    background: #20cbea;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+}
 
 .sc-info .text-box .name-wrap .armor-name {}
 
 .sc-info .text-box .elixir-wrap {
-        font-size: 13px;
-        display: flex;
-        gap: 5px;
+    font-size: 13px;
+    display: flex;
+    gap: 5px;
 }
 
 .sc-info .text-box .elixir-wrap .elixir {

@@ -283,6 +283,17 @@ async function mainSearchFunction() {
                 backgroundClassName = "hero";
             }
 
+            let itemIag = "";
+            if (/운명의 업화/.test(item.name)) {
+                itemIag = "에기르"
+            } else if (/운명의 결단/.test(item.name)) {
+                itemIag = "에기르"
+            } else if (/명예의 낙인/.test(item.name)) {
+                itemIag = "일리아칸"
+            } else if (/세르카/.test(item.name)) {
+                itemIag = "세르카"
+            }
+
             let advancedLevel = "";
             if (item.advancedLevelIndex !== -1) {
                 advancedLevel = "X" + item.advancedLevel;
@@ -314,8 +325,8 @@ async function mainSearchFunction() {
                     <span class="progress ${progressClassName}-progressbar">${item.quality}</span>
                 </div>
                 <div class="text-box">
-                    <div class="name-wrap">
-                        <span class="tag"></span>
+                    <div class="name-wrap name-wrap-search">
+                        <span class="tag">${itemIag}</span>
                         <span class="armor-name">${item.name} <strong style="font-weight:600;">${advancedLevel}</strong></span>
                     </div>
                     ${elixirWrap}
