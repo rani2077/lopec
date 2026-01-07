@@ -3251,9 +3251,12 @@ async function selectCreate(data, Modules) {
 
                 if (armory.Type === partsName) {
                     normalUpgradeValue = numberExtract(betweenText.find(text => text.includes("+")));                           // +강화 수치값
-                    armoryTierName = betweenText.find(text => /고대|유물|에스더/.test(text));                                   // 고대 유물 티어 풀 문자열
-                    armoryTierName = armoryTierName.match(/(고대|유물|에스더)/g)[0];
-                    if (armoryTierName !== "에스더") {
+                    armoryTierName = betweenText.find(text => /고대|유물|에스더|전율/.test(text));                                   // 고대 유물 티어 풀 문자열
+                    armoryTierName = armoryTierName.match(/(고대|유물|에스더|전율)/g)[0];
+                    if (armoryTierName === "전율") {
+                        armoryTierName = "세르카"
+                    }
+                    else if (armoryTierName !== "에스더") {
                         armoryTierValue = tierValueExtract(betweenText.find(text => /\(\D*\d+\D*\)/.test(text)));                   // 티어 숫자값
                         armoryTierName = `T${armoryTierValue} ${armoryTierName}`;                                               // 등급 풀네임 조합 예) T4 고대
                     } else if (armoryTierName === "에스더") {
@@ -3283,6 +3286,8 @@ async function selectCreate(data, Modules) {
 
                             let plus = parent.querySelector(".plus");
                             optionElementAutoCheck(plus, armoryTierName, 'textContent');
+                            plus.dataset.skipTierConvert = "true";
+                            plus.dataset.prevTier = plus.value;
 
                             let armorName = parent.querySelector(".armor-name");
                             optionElementAutoCheck(armorName, normalUpgradeValue, 'value');
@@ -3450,36 +3455,45 @@ async function selectCreate(data, Modules) {
 
             const advancedUpgradeElement = item.closest(".armor-item").querySelector("select.armor-upgrade");
             const advancedUpgradeValue = Number(advancedUpgradeElement.getAttribute("data-advanced-value"));
+            const skipTierConvert = item.getAttribute("data-skip-tier-convert") === "true";
+            const previousTierValue = item.dataset.prevTier || item.getAttribute("data-selected");
+            const hasPreviousTier = previousTierValue !== null && previousTierValue !== "";
+            const fromSerka = Number(previousTierValue) === serkaValue;
+            const toSerka = Number(item.value) === serkaValue;
 
             // advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
 
-            if (Number(item.value) === serkaValue && Number(item.getAttribute("data-selected")) !== serkaValue) {
-                if (normalUpgradeValue <= 23) {
-                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 9);
-                } else if (normalUpgradeValue === 24) {
-                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 8);
-                } else if (normalUpgradeValue === 25) {
-                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 7);
-                }
-                normalUpgradeElement.dispatchEvent(new Event('change'));
-            } else if (Number(item.value) !== serkaValue && Number(item.getAttribute("data-selected")) === serkaValue) {
-                if (normalUpgradeValue <= 14) {
-                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 9);
+            if (!skipTierConvert && hasPreviousTier) {
+                if (toSerka && !fromSerka) {
+                    if (normalUpgradeValue <= 23) {
+                        normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 9);
+                    } else if (normalUpgradeValue === 24) {
+                        normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 8);
+                    } else if (normalUpgradeValue === 25) {
+                        normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 7);
+                    }
                     normalUpgradeElement.dispatchEvent(new Event('change'));
-                    advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
-                    advancedUpgradeElement.dispatchEvent(new Event('change'));
-                } else if (normalUpgradeValue <= 16) {
-                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 8);
-                    normalUpgradeElement.dispatchEvent(new Event('change'));
-                    advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
-                    advancedUpgradeElement.dispatchEvent(new Event('change'));
-                } else if (normalUpgradeValue <= 18) {
-                    normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 7);
-                    normalUpgradeElement.dispatchEvent(new Event('change'));
-                    advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
-                    advancedUpgradeElement.dispatchEvent(new Event('change'));
+                } else if (!toSerka && fromSerka) {
+                    if (normalUpgradeValue <= 14) {
+                        normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 9);
+                        normalUpgradeElement.dispatchEvent(new Event('change'));
+                        advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+                        advancedUpgradeElement.dispatchEvent(new Event('change'));
+                    } else if (normalUpgradeValue <= 16) {
+                        normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 8);
+                        normalUpgradeElement.dispatchEvent(new Event('change'));
+                        advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+                        advancedUpgradeElement.dispatchEvent(new Event('change'));
+                    } else if (normalUpgradeValue <= 18) {
+                        normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 7);
+                        normalUpgradeElement.dispatchEvent(new Event('change'));
+                        advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
+                        advancedUpgradeElement.dispatchEvent(new Event('change'));
+                    }
                 }
             }
+            item.removeAttribute("data-skip-tier-convert");
+            item.dataset.prevTier = item.value;
             item.setAttribute("data-selected", item.value)
             toggleSerkaAdvancedLock(item);
         });

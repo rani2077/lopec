@@ -290,7 +290,7 @@ async function mainSearchFunction() {
                 itemIag = "에기르"
             } else if (/명예의 낙인/.test(item.name)) {
                 itemIag = "일리아칸"
-            } else if (/세르카/.test(item.name)) {
+            } else if (/운명의 전율/.test(item.name)) {
                 itemIag = "세르카"
             }
 
