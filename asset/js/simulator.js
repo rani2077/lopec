@@ -25,6 +25,7 @@ export async function importModuleManager() {
         { key: 'originFilter', path: '../filter/filter.js' },
         { key: 'simulatorFilter', path: '../filter/simulator-filter.js' },
         { key: 'simulatorData', path: '../filter/simulator-data.js' },
+        { key: 'simulatorDataSerka', path: '../filter/simulator-data-serka.js' },
         { key: 'lopecOcr', path: '../custom-module/lopec-ocr.js' },
         { key: 'officialCombatSimulator', path: '../js/offiicial-combat-simulator.js' },
         { key: 'officialCombatCalculator', path: '../custom-module/official-combat-calculator.js' },
@@ -3417,6 +3418,7 @@ async function selectCreate(data, Modules) {
     * description		: 	상급재련의 강화수치가 초기화되지 않게 함
     *********************************************************************************************************************** */
     function keppAdvancedUpgradeValue() {
+        const serkaValue = 1675;
         let advancedElements = document.querySelectorAll(".sc-info .armor-area .armor-item select.armor-upgrade");
         let normalElements = document.querySelectorAll(".sc-info .armor-area .armor-item select.armor-name");
         let plusElements = document.querySelectorAll(".sc-info .armor-area .armor-item select.plus");
@@ -3451,7 +3453,7 @@ async function selectCreate(data, Modules) {
 
             // advancedUpgradeElement.selectedIndex = advancedUpgradeValue;
 
-            if (Number(item.value) === 1600 && Number(item.getAttribute("data-selected")) !== 1600) {
+            if (Number(item.value) === serkaValue && Number(item.getAttribute("data-selected")) !== serkaValue) {
                 if (normalUpgradeValue <= 23) {
                     normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 9);
                 } else if (normalUpgradeValue === 24) {
@@ -3460,7 +3462,7 @@ async function selectCreate(data, Modules) {
                     normalUpgradeElement.selectedIndex = Math.max(0, currentIndex - 7);
                 }
                 normalUpgradeElement.dispatchEvent(new Event('change'));
-            } else if (Number(item.value) !== 1600 && Number(item.getAttribute("data-selected")) === 1600) {
+            } else if (Number(item.value) !== serkaValue && Number(item.getAttribute("data-selected")) === serkaValue) {
                 if (normalUpgradeValue <= 14) {
                     normalUpgradeElement.selectedIndex = Math.max(0, currentIndex + 9);
                     normalUpgradeElement.dispatchEvent(new Event('change'));
@@ -3479,7 +3481,41 @@ async function selectCreate(data, Modules) {
                 }
             }
             item.setAttribute("data-selected", item.value)
+            toggleSerkaAdvancedLock(item);
         });
+
+        function toggleSerkaAdvancedLock(plusElement) {
+            const upgradeElement = plusElement.closest(".armor-item").querySelector("select.armor-upgrade");
+            if (!upgradeElement) {
+                return;
+            }
+
+            const isSerka = Number(plusElement.value) === serkaValue;
+            const preSerkaValue = upgradeElement.getAttribute("data-pre-serka");
+            if (isSerka) {
+                if (!preSerkaValue) {
+                    upgradeElement.setAttribute("data-pre-serka", upgradeElement.value);
+                }
+                setAdvancedUpgradeValue(upgradeElement, "40");
+                upgradeElement.disabled = true;
+            } else {
+                upgradeElement.disabled = false;
+                if (preSerkaValue && upgradeElement.querySelector(`option[value='${preSerkaValue}']`)) {
+                    setAdvancedUpgradeValue(upgradeElement, preSerkaValue);
+                }
+                upgradeElement.removeAttribute("data-pre-serka");
+            }
+        }
+
+        function setAdvancedUpgradeValue(upgradeElement, value) {
+            if (upgradeElement.value !== value) {
+                upgradeElement.value = value;
+                upgradeElement.setAttribute("data-selected", value);
+                upgradeElement.dispatchEvent(new Event('change', { bubbles: true }));
+            } else {
+                upgradeElement.setAttribute("data-selected", value);
+            }
+        }
     }
     keppAdvancedUpgradeValue()
 
@@ -5818,30 +5854,54 @@ createNumpad();
  *********************************************************************************************************************** */
 
 async function armoryLevelCalc(Modules) {
+    const serkaValue = 1675;
     let result = []
     let armorNameElements = document.querySelectorAll(".armor-item .armor-tag");
     let startLevelElements = document.querySelectorAll(".armor-item .plus");
     let normaleUpgradeLevelElements = document.querySelectorAll(".armor-item .armor-name");
     let advancedUpgradeLevelElements = document.querySelectorAll(".armor-item .armor-upgrade");
+    const serkaTags = new Set();
 
     for (let i = 0; i < armorNameElements.length; i++) {
         let startLevelValue = Number(startLevelElements[i].value)
         let normaleUpgradeLevelValue = Number(normaleUpgradeLevelElements[i].value * 5)
         let advancedUpgradeLevelValue = Number(advancedUpgradeLevelElements[i].value)
+        let calcLevel = startLevelValue + normaleUpgradeLevelValue + advancedUpgradeLevelValue;
+        if (startLevelValue === serkaValue) {
+            serkaTags.add(armorNameElements[i].textContent.trim());
+            calcLevel = startLevelValue + normaleUpgradeLevelValue;
+        }
         let obj = {
             name: armorNameElements[i].textContent,
-            level: startLevelValue + normaleUpgradeLevelValue + advancedUpgradeLevelValue,
+            level: calcLevel,
             special: advancedUpgradeLevelValue
         }
         result.push(obj)
     }
 
+    const baseData = Modules.simulatorData;
+    const serkaData = Modules.simulatorDataSerka;
+
+    function pickStatData(key, tag) {
+        if (serkaData && serkaTags.has(tag) && serkaData[key]) {
+            return serkaData[key];
+        }
+        return baseData[key];
+    }
+
+    function pickHealthData(key, tag) {
+        if (serkaData && serkaTags.has(tag) && serkaData[key]) {
+            return serkaData[key];
+        }
+        return baseData[key];
+    }
+
     let armorObj = []
-    armorPartObjCreate(Modules.simulatorData.helmetlevels, result[0].level, result[0].special, "투구", Modules.simulatorData.helmetHealthLevels)           // 투구
-    armorPartObjCreate(Modules.simulatorData.shoulderlevels, result[1].level, result[1].special, "어깨", Modules.simulatorData.shoulderHealthLevels)           // 어깨
-    armorPartObjCreate(Modules.simulatorData.toplevels, result[2].level, result[2].special, "상의", Modules.simulatorData.topHealthLevels)           // 상의
-    armorPartObjCreate(Modules.simulatorData.bottomlevels, result[3].level, result[3].special, "하의", Modules.simulatorData.bottomHealthLevels)           // 하의
-    armorPartObjCreate(Modules.simulatorData.gloveslevels, result[4].level, result[4].special, "장갑", Modules.simulatorData.gloveHealthLevels)           // 장갑
+    armorPartObjCreate(pickStatData("helmetlevels", "투구"), result[0].level, result[0].special, "투구", pickHealthData("helmetHealthLevels", "투구"))           // 투구
+    armorPartObjCreate(pickStatData("shoulderlevels", "어깨"), result[1].level, result[1].special, "어깨", pickHealthData("shoulderHealthLevels", "어깨"))           // 어깨
+    armorPartObjCreate(pickStatData("toplevels", "상의"), result[2].level, result[2].special, "상의", pickHealthData("topHealthLevels", "상의"))           // 상의
+    armorPartObjCreate(pickStatData("bottomlevels", "하의"), result[3].level, result[3].special, "하의", pickHealthData("bottomHealthLevels", "하의"))           // 하의
+    armorPartObjCreate(pickStatData("gloveslevels", "장갑"), result[4].level, result[4].special, "장갑", pickHealthData("gloveHealthLevels", "장갑"))           // 장갑
 
     if (result[5].level < 100) {
         let tierElement = document.querySelectorAll(".armor-area .armor-item")[5].querySelector(".plus").value;
@@ -5850,15 +5910,15 @@ async function armoryLevelCalc(Modules) {
         let advancedLevel = Number(advancedUpgradeLevelElements[5].value);
         if (tierElement === "1") { // 엘라1
             let normalLevel = ellaLevelArry1[Number(normaleUpgradeLevelElements[5].value)];
-            armorPartObjCreate(Modules.simulatorData.estherEllaLevels, normalLevel + advancedLevel, advancedLevel, "무기")           // 엘라1
+            armorPartObjCreate(baseData.estherEllaLevels, normalLevel + advancedLevel, advancedLevel, "무기")           // 엘라1
         } else if (tierElement === "2") { // 엘라2
             let normalLevel = ellaLevelArry2[Number(normaleUpgradeLevelElements[5].value)]
-            armorPartObjCreate(Modules.simulatorData.estherElla2Levels, normalLevel + advancedLevel, advancedLevel, "무기")           // 엘라2
+            armorPartObjCreate(baseData.estherElla2Levels, normalLevel + advancedLevel, advancedLevel, "무기")           // 엘라2
         } else if (tierElement === "0") { // 엘라0
-            armorPartObjCreate(Modules.simulatorData.estherEllaLevels, 0, 0, "무기")           // 엘라0
+            armorPartObjCreate(baseData.estherEllaLevels, 0, 0, "무기")           // 엘라0
         }
     } else {
-        armorPartObjCreate(Modules.simulatorData.weaponlevels, result[5].level, result[5].special, "무기")
+        armorPartObjCreate(pickStatData("weaponlevels", "무기"), result[5].level, result[5].special, "무기")
     }
 
     function armorPartObjCreate(armorData, resultObj, advancedLevel, tag, healthData) {
@@ -5868,10 +5928,13 @@ async function armoryLevelCalc(Modules) {
         obj.name = tag;
 
         let originalStat = obj.stat;
-        if (advancedLevel === 40) {
-            obj.stat = Math.floor(originalStat * 1.05);
-        } else if (advancedLevel >= 30) {
-            obj.stat = Math.floor(originalStat * 1.02);
+        const isSerka = serkaTags.has((tag || "").trim());
+        if (!isSerka) {
+            if (advancedLevel === 40) {
+                obj.stat = Math.floor(originalStat * 1.05);
+            } else if (advancedLevel >= 30) {
+                obj.stat = Math.floor(originalStat * 1.02);
+            }
         }
 
         // 체력
@@ -5881,10 +5944,12 @@ async function armoryLevelCalc(Modules) {
                 obj.health = healthObj.health;
 
                 let originalHealth = obj.health;
-                if (advancedLevel === 40) {
-                    obj.health = Math.floor(originalHealth * 1.05);
-                } else if (advancedLevel >= 30) {
-                    obj.health = Math.floor(originalHealth * 1.02);
+                if (!isSerka) {
+                    if (advancedLevel === 40) {
+                        obj.health = Math.floor(originalHealth * 1.05);
+                    } else if (advancedLevel >= 30) {
+                        obj.health = Math.floor(originalHealth * 1.02);
+                    }
                 }
             }
         }

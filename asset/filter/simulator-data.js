@@ -114,7 +114,16 @@ export const helmetlevels = [
   { level: 1752, stat: 104435 },
   { level: 1753, stat: 105037 },
   { level: 1754, stat: 105643 },
-  { level: 1755, stat: 106253 }
+  { level: 1755, stat: 106253 },
+  { level: 1760, stat: 114358 },
+  { level: 1765, stat: 117218 },
+  { level: 1770, stat: 120150 },
+  { level: 1775, stat: 123155 },
+  { level: 1780, stat: 126236 },
+  { level: 1785, stat: 129393 },
+  { level: 1790, stat: 132629 },
+  { level: 1795, stat: 135946 },
+  { level: 1800, stat: 139346 }
 ];
 
 
@@ -234,7 +243,16 @@ export const shoulderlevels = [
   { level: 1752, stat: 111149 },
   { level: 1753, stat: 111790 },
   { level: 1754, stat: 112435 },
-  { level: 1755, stat: 113084 }
+  { level: 1755, stat: 113084 },
+  { level: 1760, stat: 121709 },
+  { level: 1765, stat: 124754 },
+  { level: 1770, stat: 127874 },
+  { level: 1775, stat: 131072 },
+  { level: 1780, stat: 134351 },
+  { level: 1785, stat: 137711 },
+  { level: 1790, stat: 141155 },
+  { level: 1795, stat: 144686 },
+  { level: 1800, stat: 148304 }
 ];
 
 
@@ -354,7 +372,16 @@ export const toplevels = [
   { level: 1752, stat: 83549 },
   { level: 1753, stat: 84031 },
   { level: 1754, stat: 84515 },
-  { level: 1755, stat: 85003 }
+  { level: 1755, stat: 85003 },
+  { level: 1760, stat: 91486 },
+  { level: 1765, stat: 93775 },
+  { level: 1770, stat: 96120 },
+  { level: 1775, stat: 98524 },
+  { level: 1780, stat: 100989 },
+  { level: 1785, stat: 103514 },
+  { level: 1790, stat: 106103 },
+  { level: 1795, stat: 108757 },
+  { level: 1800, stat: 111477 }
 ];
 
 
@@ -474,7 +501,16 @@ export const bottomlevels = [
   { level: 1752, stat: 90262 },
   { level: 1753, stat: 90782 },
   { level: 1754, stat: 91306 },
-  { level: 1755, stat: 91833 }
+  { level: 1755, stat: 91833 },
+  { level: 1760, stat: 98838 },
+  { level: 1765, stat: 101310 },
+  { level: 1770, stat: 103844 },
+  { level: 1775, stat: 106441 },
+  { level: 1780, stat: 109104 },
+  { level: 1785, stat: 111833 },
+  { level: 1790, stat: 114630 },
+  { level: 1795, stat: 117497 },
+  { level: 1800, stat: 120435 }
 ];
 
 
@@ -594,7 +630,16 @@ export const gloveslevels = [
   { level: 1752, stat: 125323 },
   { level: 1753, stat: 126045 },
   { level: 1754, stat: 126772 },
-  { level: 1755, stat: 127504 }
+  { level: 1755, stat: 127504 },
+  { level: 1760, stat: 137229 },
+  { level: 1765, stat: 140662 },
+  { level: 1770, stat: 144180 },
+  { level: 1775, stat: 147786 },
+  { level: 1780, stat: 151483 },
+  { level: 1785, stat: 155271 },
+  { level: 1790, stat: 159155 },
+  { level: 1795, stat: 163136 },
+  { level: 1800, stat: 167216 }
 ];
 
 
@@ -714,7 +759,16 @@ export const weaponlevels = [
   { level: 1752, stat: 180919 },
   { level: 1753, stat: 181961 },
   { level: 1754, stat: 183010 },
-  { level: 1755, stat: 184067 }
+  { level: 1755, stat: 184067 },
+  { level: 1760, stat: 198101 },
+  { level: 1765, stat: 203054 },
+  { level: 1770, stat: 208130 },
+  { level: 1775, stat: 213333 },
+  { level: 1780, stat: 218667 },
+  { level: 1785, stat: 224133 },
+  { level: 1790, stat: 229737 },
+  { level: 1795, stat: 235480 },
+  { level: 1800, stat: 241367 }
 ];
 
 
@@ -2130,7 +2184,16 @@ export const helmetHealthLevels = [
   { level: 1752, health: 10344 },
   { level: 1753, health: 10377 },
   { level: 1754, health: 10411 },
-  { level: 1755, health: 10444 }
+  { level: 1755, health: 10444 },
+  { level: 1760, health: 11117 },
+  { level: 1765, health: 11270 },
+  { level: 1770, health: 11426 },
+  { level: 1775, health: 11584 },
+  { level: 1780, health: 11743 },
+  { level: 1785, health: 11906 },
+  { level: 1790, health: 12070 },
+  { level: 1795, health: 12236 },
+  { level: 1800, health: 12405 }
 ];
 
 
@@ -2250,7 +2313,16 @@ export const shoulderHealthLevels = [
   { level: 1752, health: 8965 },
   { level: 1753, health: 8994 },
   { level: 1754, health: 9023 },
-  { level: 1755, health: 9052 }
+  { level: 1755, health: 9052 },
+  { level: 1760, health: 9635 },
+  { level: 1765, health: 9768 },
+  { level: 1770, health: 9903 },
+  { level: 1775, health: 10039 },
+  { level: 1780, health: 10178 },
+  { level: 1785, health: 10318 },
+  { level: 1790, health: 10461 },
+  { level: 1795, health: 10605 },
+  { level: 1800, health: 10751 }
 ];
 
 
@@ -2370,7 +2442,16 @@ export const topHealthLevels = [
   { level: 1752, health: 13792 },
   { level: 1753, health: 13836 },
   { level: 1754, health: 13881 },
-  { level: 1755, health: 13925 }
+  { level: 1755, health: 13925 },
+  { level: 1760, health: 14823 },
+  { level: 1765, health: 15027 },
+  { level: 1770, health: 15234 },
+  { level: 1775, health: 15445 },
+  { level: 1780, health: 15658 },
+  { level: 1785, health: 15874 },
+  { level: 1790, health: 16093 },
+  { level: 1795, health: 16315 },
+  { level: 1800, health: 16540 }
 ];
 
 
@@ -2490,7 +2571,16 @@ export const bottomHealthLevels = [
   { level: 1752, health: 11723 },
   { level: 1753, health: 11761 },
   { level: 1754, health: 11799 },
-  { level: 1755, health: 11837 }
+  { level: 1755, health: 11837 },
+  { level: 1760, health: 12599 },
+  { level: 1765, health: 12773 },
+  { level: 1770, health: 12949 },
+  { level: 1775, health: 13128 },
+  { level: 1780, health: 13309 },
+  { level: 1785, health: 13493 },
+  { level: 1790, health: 13679 },
+  { level: 1795, health: 13868 },
+  { level: 1800, health: 14059 }
 ];
 
 
@@ -2610,5 +2700,14 @@ export const gloveHealthLevels = [
   { level: 1752, health: 6896 },
   { level: 1753, health: 6918 },
   { level: 1754, health: 6941 },
-  { level: 1755, health: 6963 }
+  { level: 1755, health: 6963 },
+  { level: 1760, health: 7412 },
+  { level: 1765, health: 7514 },
+  { level: 1770, health: 7617 },
+  { level: 1775, health: 7723 },
+  { level: 1780, health: 7829 },
+  { level: 1785, health: 7937 },
+  { level: 1790, health: 8047 },
+  { level: 1795, health: 8158 },
+  { level: 1800, health: 8270 }
 ]
