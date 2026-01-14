@@ -135,40 +135,61 @@ export var insertLopecCharacters = function (lchaCharacterNickname, lchaCharacte
  * job					  :   직업명(1차직업 + 뿌리직업)
  *********************************************************************************************************************** */
 async function fetchLostArkRankingData(name, job) {
-	const url = `https://api.lopec.kr/api/ranking?nickname=${name}&characterClass=${job}`;
-	const headers = {
-		'Accept': 'application/json'
-	};
+	const ROOT_KEY = 'LOPEC_RANKING_DATA';
+	const CACHE_EXPIRATION = 60 * 60 * 1000; // 1시간
+	const MAX_ITEMS = 100; // 최대 저장 개수
+
+	// 1. 전체 캐시 객체 가져오기
+	const rawCache = sessionStorage.getItem(ROOT_KEY);
+	let rootCache = rawCache ? JSON.parse(rawCache) : {};
+
+	// 2. 해당 캐릭터의 데이터 확인 (캐시 히트 체크)
+	const charCache = rootCache[name];
+	if (charCache) {
+		const now = new Date().getTime();
+		if (now - charCache.timestamp < CACHE_EXPIRATION) {
+			console.log(`[Cache Hit] ${name} 데이터 로드`);
+			return charCache.data;
+		}
+	}
+
+	// 3. 캐시가 없거나 만료된 경우 API 호출
+	console.log(`[Cache Miss/Expired] ${name} 데이터 요청`);
+	const url = `https://api.lopec.kr/api/ranking?nickname=${encodeURIComponent(name)}&characterClass=${encodeURIComponent(job)}`;
 
 	try {
-		// fetch 함수를 사용하여 GET 요청을 보냅니다.
-		// method는 기본값이 'GET'이지만 명시적으로 설정해줄 수도 있습니다.
 		const response = await fetch(url, {
 			method: 'GET',
-			headers: headers
+			headers: { 'Accept': 'application/json' }
 		});
 
-		// 응답 상태 코드가 200번대(성공)가 아니면 에러를 발생시킵니다.
-		if (!response.ok) {
-			// 에러 응답 본문을 확인하고 싶다면 여기서 response.json() 또는 response.text()를 사용할 수 있습니다.
-			const errorDetail = await response.text(); // 또는 response.json()
-			throw new Error(`HTTP error! status: ${response.status}, detail: ${errorDetail}`);
-		}
+		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-		// 응답 본문을 JSON 형태로 파싱합니다.
 		const data = await response.json();
 
-		// 파싱된 데이터를 반환합니다.
+		// 4. 저장 전 개수 제한 체크 (100개 초과 시 가장 오래된 것 삭제)
+		const keys = Object.keys(rootCache);
+		if (keys.length >= MAX_ITEMS && !rootCache[name]) {
+			// timestamp 기준 오름차순 정렬하여 가장 오래된 키 찾기
+			const oldestKey = keys.sort((a, b) => rootCache[a].timestamp - rootCache[b].timestamp)[0];
+			delete rootCache[oldestKey];
+			console.log(`[Cache Clean] 용량 초과로 인해 가장 오래된 데이터(${oldestKey})를 삭제했습니다.`);
+		}
+
+		// 5. 데이터 저장/갱신
+		rootCache[name] = {
+			data: data,
+			timestamp: new Date().getTime()
+		};
+		sessionStorage.setItem(ROOT_KEY, JSON.stringify(rootCache));
+
 		return data;
 
 	} catch (error) {
-		// 네트워크 오류 또는 응답 처리 중 발생한 오류를 잡습니다.
-		console.error('Error fetching Lost Ark ranking data:', error);
-		// 에러를 호출자에게 다시 throw하여 호출한 코드에서 에러 처리를 할 수 있도록 합니다.
+		console.error('Error:', error);
 		throw error;
 	}
 }
-
 /* **********************************************************************************************************************
  * name		              :	  evoKarmaDataBase
  * description            :   진화 카르마 계산에 필요한 값들을 백엔드 서버로 전송

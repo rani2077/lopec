@@ -234,14 +234,14 @@ function scHeaderCreate() {
     document.body.insertAdjacentHTML('afterbegin', headerElement());
 
     // 네비 현재 경로 on 표시
-    (function setActiveNav(){
-        try{
+    (function setActiveNav() {
+        try {
             const path = window.location.pathname || '';
             const rankLink = document.querySelector('.sc-header .group-link [data-page="rank"]');
             const toolLink = document.querySelector('.sc-header .group-link [data-page="tool"]');
-            if(path.startsWith('/rank') && rankLink){ rankLink.classList.add('on'); }
-            else if(path.startsWith('/tool') && toolLink){ toolLink.classList.add('on'); }
-        }catch(e){ /* noop */ }
+            if (path.startsWith('/rank') && rankLink) { rankLink.classList.add('on'); }
+            else if (path.startsWith('/tool') && toolLink) { toolLink.classList.add('on'); }
+        } catch (e) { /* noop */ }
     })();
 
     function injectMobileSearch() {

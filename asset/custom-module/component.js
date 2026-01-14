@@ -99,7 +99,7 @@ export async function scProfile(userData, extractValue, response) {
     let characterLevel = userData.ArmoryProfile.CharacterLevel;
     let userName = userData.ArmoryProfile.CharacterName;
     let totalLevel = userData.ArmoryProfile.ItemAvgLevel;
-    let title = userData.ArmoryProfile.Title? userData.ArmoryProfile.Title.replace(/<.*?>/g, "") : "없음";
+    let title = userData.ArmoryProfile.Title ? userData.ArmoryProfile.Title.replace(/<.*?>/g, "") : "없음";
     let guild = userData.ArmoryProfile.GuildName;
 
     let jobRankVariable = response.classRank.rank;
@@ -108,7 +108,7 @@ export async function scProfile(userData, extractValue, response) {
     let totalPercent = response.totalRank.percentage;
 
     let patreonBadge = await fetch(`https://api.lopec.kr/api/character/badge?nickname=${userName}`);
-    patreonBadge = await patreonBadge.json();   
+    patreonBadge = await patreonBadge.json();
     // console.log(patreonBadge)
     // patreonBadge = { // <== 응답값 예시
     //     "nickname": "로스트다람쥐",
