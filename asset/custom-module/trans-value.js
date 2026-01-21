@@ -316,7 +316,7 @@ export async function getCharacterProfile(data, dataBase) {
     })
 
     function findMaxtrinityPower(obj) {
-        const re = /시즌?1\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
+        const re = /시즌(?:1|2)\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
         let result = null;
 
         (function dfs(v) {
@@ -388,10 +388,10 @@ export async function getCharacterProfile(data, dataBase) {
 
             const text = JSON.stringify(tooltipObj);
 
-            if (/(성창|비전)/.test(text)) {
+            if (/(영험한 비전의 보주|신비로운 투영의 보주|응축된 자연의 보주|눈부신 비전의 보주)/.test(text)) {
                 defaultObj.trinityValue = (20 + 800 * defaultObj.trinityPower / 100000000) / 10000 + 1
             }
-            if (/자연/.test(text)) {
+            if (/신성한 자연의 보주|온화한 투영의 보주/.test(text)) {
                 defaultObj.trinityValue = (14 + 544 * defaultObj.trinityPower / 100000000) / 10000 + 1
             }
         }
@@ -1128,7 +1128,7 @@ export async function getCharacterProfile(data, dataBase) {
     } else {
         engObj.dealpport = "false";
     }
-
+    
 
     /* **********************************************************************************************************************
      * name		              :	  elixirObj{}
@@ -2022,7 +2022,7 @@ export async function getCharacterProfile(data, dataBase) {
                 { core: "종전", point: 14, support: "고기" },
                 { core: "랜스 차지", point: 14, support: "고기" },
                 { core: "방어 포격", point: 14, support: "고기" },
-            ]
+            ],
         },
         {
             class: "333 고기",
@@ -2923,9 +2923,9 @@ export async function getCharacterProfile(data, dataBase) {
                 return result;
             }
             let gemValue = getLevels(gemPerObj, realGemValue).reduce((gemResultValue, finalGemValue) => {
-                //console.log("gemResultValue" + gemResultValue)
-                //console.log("finalGemValue.per" + finalGemValue.per)
-                //console.log("finalGemValue.skillper" + finalGemValue.skillPer)
+                // console.log("gemResultValue" + gemResultValue)
+                // console.log("finalGemValue.per" + finalGemValue.per)
+                // console.log("finalGemValue.skillper" + finalGemValue.skillPer)
                 return gemResultValue + finalGemValue.per * finalGemValue.skillPer
             }, 0)
 
@@ -2936,10 +2936,12 @@ export async function getCharacterProfile(data, dataBase) {
                 classGemEquip[0].skill.forEach(function (skill) {
                     if (skill.per != "etc") {
                         result += skill.per;
+                       //console.log(result)
                     }
                 })
                 return 1 / result
             }
+            //console.log(specialSkillCalc())
 
             // 홍염,작열 평균레벨
             return {

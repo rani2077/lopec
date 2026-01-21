@@ -1106,7 +1106,7 @@ export async function simulatorToOffcialCombatObj() {
     * USE_TN                 :   사용
     *********************************************************************************************************************** */
     function findMaxtrinityPower(obj) {
-        const re = /시즌?1\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
+        const re = /시즌(?:1|2)\s*달성\s*최대\s*낙원력\s*:\s*([\d,]+)/;
         let result = null;
 
         (function dfs(v) {
@@ -1137,13 +1137,16 @@ export async function simulatorToOffcialCombatObj() {
                 trinityPower = (val ?? 0);
 
                 const text = JSON.stringify(tooltipObj);
+                console.log(text)
 
-                if (/(성창|비전)/.test(text)) {
+                if (/(영험한 비전의 보주|신비로운 투영의 보주|응축된 자연의 보주|눈부신 비전의 보주)/.test(text)) {
                     trinityValue = trunc6((20 + 800 * trinityPower / 100000000) / 10000 + 1)
+                    console.log("딜보주")
                 }
-                if (/자연/.test(text)) {
+                if (/신성한 자연의 보주|온화한 투영의 보주/.test(text)) {
                     trinityValue = trunc6((14 + 544 * trinityPower / 100000000) / 10000 + 1)
                     trinityCare += 1.013
+                    console.log("힐보주")
                 }
             }
         });
@@ -1197,7 +1200,7 @@ export async function simulatorToOffcialCombatObj() {
         arkgridCore: arkgridCoreOffcialCombatSupport(),
         arkgridGem: arkgridGemOffcialCombatSupport()
     };
-    //console.log("delaer", officialCombatObj);
+    console.log("delaer", officialCombatObj);
     // console.log("sup_attack", officialCombatObjSupport_attack);
     // console.log("sup_defense", officialCombatObjSupport_defense);
     return {

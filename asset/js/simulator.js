@@ -1619,8 +1619,8 @@ async function simulatorInputCalc() {
         }
         let lopecHealth = healthCached.originHealth + (armorWeaponStatsObj.healthStats + accessoryInputHealthValue() + stoneHealthValue() + foodValueExtract().RealHealthStatus)
 
-        console.log(healthCached.originHealthStatus)
-        console.log(lopecHealth)
+        //console.log(healthCached.originHealthStatus)
+        //console.log(lopecHealth)
         //let finalHealth = lopecHealth + originHealth
         extractValue.etcObj.RealHealthStatus = Math.floor((lopecHealth * healthPer + (extractValue.bangleObj.statHp + extractValue.accObj.statHp + extractValue.arkObj.statHp + extractValue.arkgridObj.statHP)) * (extractValue.defaultObj.hpActive).toFixed(5) * (1 + extractValue.extraObj.petHp / 100 + 0.12));
 

@@ -284,6 +284,22 @@ export async function specPointCalc(inputObj) {
         * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3)) 
         * inputObj.defaultObj.estherDeal)
 
+        // console.log("진피",evolutionDamageResult)
+        // console.log("적주피",bangleFinalDamageResult)
+        // console.log("보주",inputObj.defaultObj.trinityValue)
+        // console.log("도약",inputObj.arkObj.leapDamage )
+        // console.log("보석딜증",inputObj.etcObj.gemCheckFnc.gemValue )
+        // console.log("보석딜증2",inputObj.etcObj.gemCheckFnc.etcAverageValue)
+        // console.log("보석쿨감",gemsCoolValue)
+        // console.log("쿨감밸류",coolDownValue)
+        // console.log("스탯",(((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))
+        // console.log("에스더",inputObj.defaultObj.estherDeal)
+
+
+
+
+
+
     //악세 효율 
     let accAddDamageValue = (bangleAddDamageResult - (bangleAddDamageResult - inputObj.accObj.addDamagePer / 100)) / bangleAddDamageResult
     let minusAccValue = ((minusAccAtk) * evolutionDamageResult * minusAccFinal * enlightResult * inputObj.arkObj.leapDamage * inputObj.etcObj.gemCheckFnc.gemValue * inputObj.etcObj.gemCheckFnc.etcAverageValue * gemsCoolValue * (((inputObj.defaultObj.totalStatus + inputObj.bangleObj.crit + inputObj.bangleObj.haste + inputObj.bangleObj.special) / 100 * 2) / 100 + 1 + 0.3))

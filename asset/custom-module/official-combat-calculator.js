@@ -37,23 +37,25 @@ export async function officialCombatCalculator(combatObj, extractObj) {
 
 
     let originBasePoint = originCombat /
-        petAdd /
-        combatObj.dealer.trinity.trinityValue /
-        combatObj.dealer.arkgridGem /
-        combatObj.dealer.arkgridCore /
-        combatObj.dealer.weaponQuality /
-        combatObj.dealer.stats /
         combatObj.dealer.level /
+        combatObj.dealer.weaponQuality /
+        combatObj.dealer.ark /
         combatObj.dealer.karma /
+        combatObj.dealer.engraving /
+        combatObj.dealer.accessory /
+        combatObj.dealer.bangle /
         combatObj.dealer.gem /
         combatObj.dealer.esther /
-        combatObj.dealer.engraving /
         combatObj.dealer.card /
-        combatObj.dealer.bangle /
-        combatObj.dealer.ark /
-        combatObj.dealer.accessory;
+        combatObj.dealer.arkgridGem /
+        combatObj.dealer.arkgridCore /
+        1 /
+        combatObj.dealer.stats /
+        petAdd
 
     let originAtk = (originBasePoint * 1000000 / 288);
+    //console.log(originCombat)
+    //console.log(originAtk)
     //console.log(originAtk)
 
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
@@ -87,7 +89,7 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         combatObj.dealer.weaponQuality *
         combatObj.dealer.arkgridGem *
         combatObj.dealer.arkgridCore *
-        combatObj.dealer.trinity.trinityValue *
+        1 *
         petAdd;
 
     //console.log(petAdd)
