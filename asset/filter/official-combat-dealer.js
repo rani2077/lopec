@@ -2053,7 +2053,8 @@ export let officialCombatDealer = {
             "9": { //에스더 8강 이상 + 엘라0 1 2
                 "0": 95,
                 "1": 143,
-                "2": 190
+                "2": 190,
+                "3": 190,
             }
         },
         "transcendence_armor": 1,

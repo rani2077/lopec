@@ -640,7 +640,7 @@ export async function specPointCalc(inputObj) {
         / (1 + inputObj.bangleObj.skillCool)).toFixed(3)
     
     
-    // 아덴이 차지 않는 스킬 제외 쿨감감
+    // 아덴이 차지 않는 스킬 제외 쿨감
     let calcCdrPercentNoneCare = ((1 - ((1 - calcHaste * 0.0214739 / 100) 
         * (1 - inputObj.etcObj.gemCheckFnc.excludedGemAvg / 100) 
         * (1 - inputObj.engObj.cdrPercent)

@@ -54,9 +54,13 @@ export async function officialCombatCalculator(combatObj, extractObj) {
         petAdd
 
     let originAtk = (originBasePoint * 1000000 / 288);
+<<<<<<< Updated upstream
     //console.log(originCombat)
     //console.log(originAtk)
     //console.log(originAtk)
+=======
+    console.log(originAtk)
+>>>>>>> Stashed changes
 
     let originTotalStat = (((originAtk / baseAttackBonus) ** 2) * 6) / weaponAtk;
     let calcBaseStat = ((extractObj.etcObj.armorStatus +
